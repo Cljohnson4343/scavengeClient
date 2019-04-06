@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import AppBar from '../AppBar';
 import HomePage from '../HomePage';
 
 class App extends Component {
   render() {
     return (
-      <HomePage />
+      <div>
+        <AppBar />
+        <HomePage />
+      </div>
     );
   }
 }
