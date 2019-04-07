@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '../AppBar';
 import HomePage from '../HomePage';
 import { withStyles } from '@material-ui/core';
+import MuiTheme from '../theme';
 
 const styles = {
   appBarOffset: {
@@ -13,12 +15,12 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <MuiThemeProvider theme={MuiTheme}>
         <AppBar />
         <div className={classes.appBarOffset} >
           <HomePage />
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
