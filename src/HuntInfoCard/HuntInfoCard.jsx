@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 
@@ -20,12 +21,17 @@ function HuntInfoCard(props) {
     return (
         <Card >
             <CardHeader
+                avatar={
+                    <IconButton disabled >
+                        {ResolvedLockIcon}
+                    </ IconButton>
+                }
                 classes={{ action: classes.centerIcon }} 
                 title="Item 1"
                 subheader="April 5 2019 9:00 AM" 
                 action={
-                    <IconButton disabled >
-                        {ResolvedLockIcon}
+                    <IconButton aria-label="Expand" >
+                        <ExpandMoreIcon />
                     </ IconButton>
                 }
             />
