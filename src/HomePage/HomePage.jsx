@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import HuntInfoCard from '../HuntInfoCard';
 
 const styles = {
   root: {
@@ -14,9 +14,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
   },
-  huntItem: {
-
-  },
 };
 
 function HomePage(props) {
@@ -25,8 +22,8 @@ function HomePage(props) {
   return (
     <div className={classes.root}>
       <div className={classes.huntsContainer}>
-        <div className={classes.huntItem}>Item 1</div>
-        <div className={classes.huntItem}>Item 2</div>
+        <HuntInfoCard />
+        <HuntInfoCard isLocked={false} />
       </div>
       <Fab color="primary" aria-label="Add" className={classes.fab}>
         <AddIcon />
