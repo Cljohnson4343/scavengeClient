@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import HuntInfoCard from '../HuntInfoCard';
+import hunts from '../HuntInfoData'; 
 
 const styles = {
   root: {
@@ -27,8 +28,8 @@ function HomePage(props) {
   return (
     <div className={classes.root}>
       <div className={classes.huntsContainer}>
-        <HuntInfoCard />
-        <HuntInfoCard isLocked={false} />
+        <HuntInfoCard huntInfo={hunts[0]}/>
+        <HuntInfoCard huntInfo={hunts[1]}/>
       </div>
       <Fab color="primary" aria-label="Add" className={classes.fab}>
         <AddIcon />

@@ -29,14 +29,14 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit
     },
-    timeFieldsContainer: {
+    partnerFieldsContainer: {
         display: 'flex',
     }
 });
 
 function HuntInfoCard(props) {
-    const { classes } = props;
-    const ResolvedLockIcon = props.isLocked ? <LockIcon /> : <LockOpenIcon />;
+    const { classes, huntInfo } = props;
+    const ResolvedLockIcon = huntInfo.isOpen ? <LockOpenIcon /> : <LockIcon />;
 
     const [ isExpanded, setExpanded ] = useState(false);
 
@@ -49,8 +49,8 @@ function HuntInfoCard(props) {
                     </ IconButton>
                 }
                 classes={{ action: classes.centerIcon }} 
-                title="Item 1"
-                subheader="April 5 2019 9:00 AM" 
+                title={huntInfo.name}
+                subheader={huntInfo.startTime.toDateString()}
                 action={
                     <IconButton
                         className={classnames(classes.expand, {
@@ -67,10 +67,10 @@ function HuntInfoCard(props) {
             <Collapse in={isExpanded} timeout='auto' unmountOnExit>
                 <CardContent>
                     <div className={classes.textFieldContainer}>
-                        <div className={classes.timeFieldsContainer}>
+                        <div className={classes.partnerFieldsContainer}>
                             <TextField 
                                 className={classes.textField}
-                                defaultValue="9:00 AM"
+                                defaultValue={huntInfo.startTime.toLocaleTimeString('en-US')}
                                 label="Start Time"
                                 id="start-time-read-only"
                                 InputProps={{
@@ -81,7 +81,7 @@ function HuntInfoCard(props) {
                             />
                             <TextField 
                                 className={classes.textField}
-                                defaultValue="10:00 AM"
+                                defaultValue={huntInfo.endTime.toLocaleTimeString('en-US')}
                                 label="End Time"
                                 id="end-time-read-only"
                                 InputProps={{
@@ -91,20 +91,33 @@ function HuntInfoCard(props) {
                                 variant="outlined"
                             />
                         </div>
+                        <div className={classes.partnerFieldsContainer}>
+                            <TextField 
+                                className={classes.textField}
+                                defaultValue={`${huntInfo.numTeams}/${huntInfo.maxTeams}`}
+                                label="Number of Teams"
+                                id="team-number-read-only"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField 
+                                className={classes.textField}
+                                defaultValue={huntInfo.items.length}
+                                label="Number of Items"
+                                id="hunt-item-number-read-only"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                        </div>
                         <TextField 
                             className={classes.textField}
-                            defaultValue="2/4"
-                            label="Number of Teams"
-                            id="team-number-read-only"
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <TextField 
-                            className={classes.textField}
-                            defaultValue="Huntsville, Al"
+                            defaultValue={huntInfo.location}
                             label="Location"
                             id="location-read-only"
                             InputProps={{
@@ -120,13 +133,18 @@ function HuntInfoCard(props) {
     );
 };
 
-HuntInfoCard.defaultProps = {
-    isLocked: true,
-};
-
 HuntInfoCard.propTypes = {
     classes: PropTypes.object.isRequired,
-    isLocked: PropTypes.bool.isRequired,
+    huntInfo: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        startTime: PropTypes.instanceOf(Date).isRequired,
+        endTime: PropTypes.instanceOf(Date).isRequired,
+        maxTeams: PropTypes.number.isRequired,
+        numTeams: PropTypes.number.isRequired,
+        items: PropTypes.array.isRequired,
+        location: PropTypes.string.isRequired
+    }).isRequired
 };
 
 export default withTheme()(withStyles(styles)(HuntInfoCard));
