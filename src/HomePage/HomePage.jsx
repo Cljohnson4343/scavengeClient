@@ -14,6 +14,11 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
   },
+  fab: {
+    position: 'fixed',
+    bottom: '16px',
+    right: '16px'
+  }
 };
 
 function HomePage(props) {
