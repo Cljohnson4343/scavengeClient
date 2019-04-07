@@ -10,22 +10,20 @@ import UserAvatar from '../UserAvatar';
 
 const styles = theme => ({
   root: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: "space-between",
   },
-  button: {
-    margin: '10px'
-  },
   avatar: {
-    width: '30px',
-    height: '30px',
-    margin: '10px'
-  },
-  padRight: {
-    paddingRight: "10px"
+    width: '35px',
+    height: '35px',
+    margin: theme.spacing.unit
   },
   homeIconColor: {
     color: theme.palette.primary.contrastText
+  },
+  homeIcon: {
+    padding: theme.spacing.unit
   }
 });
 
@@ -35,11 +33,12 @@ function ScavengeAppBar(props) {
   return (
     <AppBar className={classes.root} position="fixed" > 
       <IconButton 
+        className={classes.homeIcon}
         aria-label="Home" 
         color="primary" 
         classes={{colorPrimary: classes.homeIconColor}}
       >
-         <LocationSearchingIcon />
+         <LocationSearchingIcon fontSize='large' />
       </IconButton>
       <UserAvatar className={classes.avatar} />
     </AppBar>

@@ -7,7 +7,7 @@ import MuiTheme from '../theme';
 
 const styles = {
   appBarOffset: {
-    marginTop: '50px',
+    marginTop: '70px',
   },
 }
 class App extends Component {
