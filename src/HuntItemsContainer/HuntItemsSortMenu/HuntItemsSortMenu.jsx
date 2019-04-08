@@ -1,21 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
-import { withTheme } from '@material-ui/core/styles';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-
-const styles = theme => ({
-        sortButton: {
-            paddingRight: theme.spacing.unit
-        },
-        sortMenuFont: {
-            fontSize: '0.5em',
-        },
-        sortMenu: {
-            backgroundColor: theme.palette.primary[200],
-        },
-
-});
+import { SortMenu } from '../../utils';
 
 const compareByCompleted = function(a, b){
     if(a.isDone && !b.isDone) return -1;
@@ -65,54 +50,9 @@ const sortFilters = {
 };
 
 function HuntItemsSortMenu(props) {
-    const { classes, handleChangeSort } = props;
-
-    const [ filter, setFilter ] = useState('unsorted');
-
-    const [ anchorEl, setAnchorEl ] = useState(null);
-    const handleSortMenuClick = function(e) {
-        setAnchorEl(e.currentTarget);
-    };
-
-    const handleSortMenuClose = function(e) {
-        setAnchorEl(null);
-    };
-
-    let sortMenuItems = [];
-    for (let sortFilter in sortFilters) {
-        sortMenuItems.push(
-            <MenuItem 
-                onClick={e => {
-                    setFilter(sortFilter);
-                    handleChangeSort(() => sortFilters[sortFilter].sortFunction);
-                    handleSortMenuClose(e);
-                }}
-                key={sortFilters[sortFilter].displayString}
-            >
-                {sortFilters[sortFilter].displayString}
-            </MenuItem>
-        );
-    };
 
     return (
-        <div className={classes.sortButton}>
-            <Button 
-                aria-owns='sort-menu'
-                aria-haspopup='true'
-                onClick={handleSortMenuClick}
-            >
-                <span className={classes.sortMenuFont}>Sort by: {sortFilters[filter].displayString}</span>
-            </Button>
-            <Menu
-                classes={{ paper: classes.sortMenu }}
-                id='sort-menu'
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)} 
-                onClose={handleSortMenuClose}
-            >
-                {sortMenuItems}
-            </Menu>
-        </div>
+       <SortMenu sortFilters={sortFilters} {...props} /> 
     );
 };
 
@@ -121,4 +61,4 @@ HuntItemsSortMenu.propTypes = {
     handleChangeSort: PropTypes.func.isRequired,
 };
 
-export default withTheme()(withStyles(styles)(HuntItemsSortMenu));
+export default HuntItemsSortMenu;
