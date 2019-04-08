@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles, Collapse, CardContent, TextField } from '@material-ui/core';
 import { withTheme } from '@material-ui/core/styles';
 import { Card } from '@material-ui/core';
-import { CardHeader } from '@material-ui/core';
+import { CardHeader, Divider } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LockIcon from '@material-ui/icons/Lock';
@@ -31,7 +31,7 @@ const styles = theme => ({
     },
     partnerFieldsContainer: {
         display: 'flex',
-    }
+    },
 });
 
 function HuntInfoCard(props) {
@@ -41,7 +41,7 @@ function HuntInfoCard(props) {
     const [ isExpanded, setExpanded ] = useState(false);
 
     return (
-        <Card >
+        <Card square={true} elevation={0}>
             <CardHeader
                 avatar={
                     <IconButton disabled >
@@ -129,6 +129,7 @@ function HuntInfoCard(props) {
                     </div>
                 </CardContent>
             </Collapse>
+            <Divider variant='inset' />
         </Card>
     );
 };

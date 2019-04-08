@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import HuntInfoCard from '../HuntInfoCard';
+import HuntInfoContainer from '../HuntInfoContainer';
 import hunts from '../HuntInfoData'; 
 
 const styles = {
@@ -28,8 +28,7 @@ function HomePage(props) {
   return (
     <div className={classes.root}>
       <div className={classes.huntsContainer}>
-        <HuntInfoCard huntInfo={hunts[0]}/>
-        <HuntInfoCard huntInfo={hunts[1]}/>
+        <HuntInfoContainer hunts={hunts}/>
       </div>
       <Fab color="primary" aria-label="Add" className={classes.fab}>
         <AddIcon />
