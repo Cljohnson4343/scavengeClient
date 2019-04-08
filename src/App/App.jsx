@@ -3,7 +3,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '../AppBar';
 import { withStyles } from '@material-ui/core';
 import MuiTheme from '../theme';
-import HuntPage from '../HuntPage';
+import HomePage from '../HomePage';
 
 const styles = {
   appBarOffset: {
@@ -18,7 +18,7 @@ class App extends Component {
       <MuiThemeProvider theme={MuiTheme}>
         <AppBar />
         <div className={classes.appBarOffset} >
-          <HuntPage />
+          <HomePage />
         </div>
       </MuiThemeProvider>
     );
