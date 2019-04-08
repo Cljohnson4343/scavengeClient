@@ -6,13 +6,14 @@ import { Button, Menu, MenuItem } from '@material-ui/core';
 
 const styles = theme => ({
         sortButton: {
-            paddingRight: theme.spacing.unit
+            marginRight: theme.spacing.unit,
+            backgroundColor: theme.palette.grey[200],
         },
         sortMenuFont: {
             fontSize: '0.5em',
         },
         sortMenu: {
-            backgroundColor: theme.palette.primary[200],
+            backgroundColor: theme.palette.grey[200],
         },
 });
 

@@ -7,19 +7,18 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
+    },
+    itemsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
         borderStyle: 'solid',
         borderColor: theme.palette.divider,
         borderWidth: 'thin',
         borderRadius: theme.shape.borderRadius,
     },
-    itemsContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
     itemsHeaderContainer: {
         display: 'flex',
         justifyContent: 'space-between',
-        backgroundColor: theme.palette.primary[200],
     },
     itemsHeaderContainerHeader: {
         paddingLeft: theme.spacing.unit
@@ -34,6 +33,7 @@ function CardContainer(props) {
         <div className={classes.root} > 
             <Paper 
                 className={classes.itemsHeaderContainer}
+                elevation={0}
                 square={true}
             >
                 <span className={classes.itemsHeaderContainerHeader}>{title}</span>
