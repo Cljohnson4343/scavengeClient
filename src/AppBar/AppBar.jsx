@@ -28,7 +28,7 @@ const styles = theme => ({
 });
 
 function ScavengeAppBar(props) {
-  const { classes, theme } = props;
+  const { classes } = props;
 
   return (
     <AppBar className={classes.root} position="fixed" > 

@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, CardHeader, IconButton } from '@material-ui/core';
+import { CardHeader, IconButton } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const styles = {
-
-};
-    
 function HuntItemCard(props) {
-    const { classes, huntInfo: { isDone } } = props;
+    const { huntInfo: { isDone } } = props;
 
     const ActionIcon = isDone ? <DeleteIcon /> : <VideocamIcon />;
 
@@ -43,7 +39,6 @@ function HuntItemCard(props) {
 };
     
 HuntItemCard.propTypes = {
-    classes: PropTypes.object.isRequired,
     huntInfo: PropTypes.shape({
         name: PropTypes.string.isRequired,
         isDone: PropTypes.bool.isRequired,
@@ -51,4 +46,4 @@ HuntItemCard.propTypes = {
     }).isRequired
 };
     
-export default withStyles(styles)(HuntItemCard);
+export default HuntItemCard;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { SortMenu } from '../../utils';
 
@@ -57,7 +57,6 @@ function HuntItemsSortMenu(props) {
 };
 
 HuntItemsSortMenu.propTypes = {
-    classes: PropTypes.object.isRequired,
     handleChangeSort: PropTypes.func.isRequired,
 };
 
