@@ -36,6 +36,7 @@ function HuntItemCard(props) {
                     </IconButton>
                 }
                 title={props.huntInfo.name}
+                subheader={`${props.huntInfo.points} pts`}
             />
         </Card>
     );
@@ -45,7 +46,8 @@ HuntItemCard.propTypes = {
     classes: PropTypes.object.isRequired,
     huntInfo: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        isDone: PropTypes.bool.isRequired
+        isDone: PropTypes.bool.isRequired,
+        points: PropTypes.number.isRequired
     }).isRequired
 };
     
