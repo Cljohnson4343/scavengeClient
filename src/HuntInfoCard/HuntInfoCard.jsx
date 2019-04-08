@@ -95,7 +95,7 @@ function HuntInfoCard(props) {
                             <TextField 
                                 className={classes.textField}
                                 defaultValue={`${huntInfo.numTeams}/${huntInfo.maxTeams}`}
-                                label="Number of Teams"
+                                label="Teams"
                                 id="team-number-read-only"
                                 InputProps={{
                                     readOnly: true,
@@ -106,7 +106,7 @@ function HuntInfoCard(props) {
                             <TextField 
                                 className={classes.textField}
                                 defaultValue={huntInfo.items.length}
-                                label="Number of Items"
+                                label="Items"
                                 id="hunt-item-number-read-only"
                                 InputProps={{
                                     readOnly: true,
