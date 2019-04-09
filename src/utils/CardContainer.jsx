@@ -18,16 +18,25 @@ const styles = theme => ({
     },
     itemsHeaderContainer: {
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     itemsHeaderContainerHeader: {
         paddingLeft: theme.spacing.unit
     },
+    headerFirstLine: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    filtersContainer: {
+        display: 'flex',
+
+    },
 
 });
 
 function CardContainer(props) {
-    const { children, classes, sort, title } = props;
+    const { children, classes, filters, sort, title } = props;
 
     return (
         <div className={classes.root} > 
@@ -36,8 +45,13 @@ function CardContainer(props) {
                 elevation={0}
                 square={true}
             >
-                <span className={classes.itemsHeaderContainerHeader}>{title}</span>
-                {Boolean(sort) && sort}
+                <div className={classes.headerFirstLine}>
+                    <span className={classes.itemsHeaderContainerHeader}>{title}</span>
+                    {Boolean(sort) && sort}
+                </div>
+                <div className={classes.filtersContainer}>
+                    {Boolean(filters) && filters}
+                </div>
             </Paper>
             <div className={classes.itemsContainer} >
                 {children}
