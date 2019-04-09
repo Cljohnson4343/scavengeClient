@@ -4,10 +4,12 @@ import { withStyles } from '@material-ui/core';
 import HuntInfoAddFiltersButton from '../HuntInfoAddFilterButton';
 import FilterButton from '../../utils/FilterButton';
 import FilterButtonText from '../../utils/FilterButtonText';
+import { addFilter, removeFilter } from './utils';
 
 const styles = {
     root: {
         display: 'flex',
+        flexWrap: 'wrap',
     },
     item: {
         marginRight: '2px',
@@ -19,10 +21,6 @@ function HuntInfoFilters(props) {
     const { classes } = props;
 
     const [ filters, setFilters ] = useState([]);
-    const addFilter = filter => {
-        const newFilters = filters.concat([filter]);
-        setFilters(newFilters);
-    };
 
     return (
         <div className={classes.root}>
@@ -31,7 +29,7 @@ function HuntInfoFilters(props) {
                     <FilterButtonText>{filter.displayString}</FilterButtonText>
                 </FilterButton>
             ))}
-            <HuntInfoAddFiltersButton addFilter={addFilter} classes={{ root: classes.item }} />
+            <HuntInfoAddFiltersButton addFilter={(filter) => setFilters(addFilter(filters, filter))} classes={{ root: classes.item }} />
         </div>
     );
 };
