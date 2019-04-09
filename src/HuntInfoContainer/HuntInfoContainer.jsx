@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import HuntInfoCard from '../HuntInfoCard';
 import { CardContainer } from '../utils';
 import HuntInfoSortMenu from './HuntInfoSortMenu';
+import HuntInfoFilters from './HuntInfoFilters';
 
 function HuntInfoContainer(props) {
     const { hunts } = props;
@@ -15,6 +16,9 @@ function HuntInfoContainer(props) {
             title="Hunts"
             sort={
                 <HuntInfoSortMenu handleChangeSort={setSortFn} />
+            }
+            filters={
+                <HuntInfoFilters />
             }
         >
             {hunts.sort(sortFn).map(item => (
