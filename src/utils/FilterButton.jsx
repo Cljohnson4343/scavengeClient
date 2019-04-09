@@ -6,7 +6,7 @@ const styles = theme => ({
     root: {
         borderColor: theme.palette.primary[400],
         minWidth: '26px',
-        minHeight: '26px',
+        height: '26px',
         padding: 'unset',
     },
     font: {
@@ -15,10 +15,10 @@ const styles = theme => ({
 });
 
 function HuntInfoAddFulterButton(props) {
-    const { children, classes } = props;
+    const { children, classes, ...other } = props;
 
     return (
-        <Button variant='outlined' className={classes.root}>
+        <Button variant='outlined' className={classes.root} {...other} >
             {React.cloneElement(children, {classes: {root: classes.font}})}
         </Button>
     );

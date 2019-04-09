@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import { withStyles, withTheme } from '@material-ui/core';
 import classNames from 'classnames';
 
-const styles = {
+const styles = theme => ({
     font: {
         fontSize: '0.4em',
+        paddingRight: theme.spacing.unit/2,
+        paddingLeft: theme.spacing.unit/2,
     },
     // Empty object to allow consumers to style text
     root: {
     },
-};
+});
 
 function FilterButtonText(props) {
-    const { classes } = props;
+    const { classes, ...other } = props;
 
     return (
         <span 
             className={classNames(classes.font, classes.root)}
-            {...props}
+            {...other}
         >
             {props.children}
         </span>
@@ -29,4 +31,4 @@ FilterButtonText.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FilterButtonText);
+export default withTheme()(withStyles(styles)(FilterButtonText));

@@ -30,7 +30,7 @@ const styles = theme => ({
     },
     filtersContainer: {
         display: 'flex',
-
+        marginBottom: theme.spacing.unit,
     },
 
 });
