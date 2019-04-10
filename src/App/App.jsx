@@ -4,6 +4,7 @@ import AppBar from '../AppBar';
 import { withStyles } from '@material-ui/core';
 import MuiTheme from '../theme';
 import HomePage from '../HomePage';
+import Location from '../Location';
 
 const styles = {
   pageWrapper: {
@@ -18,10 +19,12 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={MuiTheme}>
-        <div className={classes.pageWrapper} >
-          <AppBar />
-          <HomePage />
-        </div>
+        <Location>
+          <div className={classes.pageWrapper} >
+            <AppBar />
+            <HomePage />
+          </div>
+        </Location>
       </MuiThemeProvider>
     );
   }

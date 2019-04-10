@@ -6,6 +6,6 @@ const options = { units: 'miles' };
 // parameters should be [lat, long]
 export const distance = (p1, p2) => turfDistance(turfPoint(p1), turfPoint(p2), options);
 
-export const point = location => location.point;
+export const point = location => [location.coords.latitude, location.coords.longitude];
 
 export const name = location => location.name;

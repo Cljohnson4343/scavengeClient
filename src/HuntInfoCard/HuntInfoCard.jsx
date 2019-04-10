@@ -15,7 +15,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import classnames from 'classnames';
 import * as hunt from '../hunt';
-import * as loc from '../location';
+import * as loc from '../loc';
 
 const styles = theme => ({
     card: {
@@ -167,7 +167,7 @@ HuntInfoCard.propTypes = {
         items: PropTypes.array.isRequired,
         location: PropTypes.shape({
             name: PropTypes.string.isRequired,
-            point: PropTypes.array.isRequired,
+            coords: PropTypes.object.isRequired,
         }).isRequired
     }).isRequired
 };

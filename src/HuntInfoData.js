@@ -9,7 +9,10 @@ const hunts = [
         items: Array(12),
         location: {
             name: "Huntsville, Al",
-            point: [34.668644, -86.441818],
+            coords: {
+                latitude: 34.668644, 
+                longitude: -86.441818,
+            },
         },
     },
     {
@@ -22,7 +25,10 @@ const hunts = [
         items: Array(8),
         location: {
             name: "Guntersille, Al",
-            point: [32.688053, -86.810585],
+            coords: {
+                latitude: 32.688053,
+                longitude: -86.810585,
+            },
         },
     },
     {
@@ -35,7 +41,10 @@ const hunts = [
         items: Array(20),
         location: {
             name: "Madison, Al",
-            point: [34.773681, -86.567510],
+            coords: {
+                latitude: 34.773681,
+                longitude: -86.567510,
+            },
         },
     },
     {
@@ -48,7 +57,10 @@ const hunts = [
         items: Array(17),
         location: {
             name: "Athens, Al",
-            point: [34.779486, -86.91645],
+            coords: {
+                latitude: 34.779486,
+                longitude: -86.91645,
+            },
         },
     },
     {
@@ -61,7 +73,10 @@ const hunts = [
         items: Array(13),
         location: {
             name: "Huntsville, Al",
-            point: [34.759773, -86.684272],
+            coords: {
+                latitude: 34.759773,
+                longitude: -86.684272,
+            },
         },
     },
     {
@@ -74,7 +89,10 @@ const hunts = [
         items: Array(25),
         location: {
             name: "Huntsville, Al",
-            point: [34.757974, -86.552074],
+            coords: {
+                latitude: 34.757974,
+                longitude: -86.552074,
+            },
         },
     },
     {
@@ -87,7 +105,10 @@ const hunts = [
         items: Array(3),
         location: {
             name: "Huntsville, Al",
-            point: [34.777152, -86.590526],
+            coords: {
+                latitude: 34.777152,
+                longitude: -86.590526,
+            },
         },
     },
     {
@@ -100,7 +121,10 @@ const hunts = [
         items: Array(15),
         location: {
             name: "Huntsville, Al",
-            point: [34.606181, -86.545601],
+            coords: {
+                latitude: 34.606181,
+                longitude: -86.545601,
+            },
         },
     },
 ];
