@@ -1,15 +1,21 @@
 import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, Collapse, CardContent, TextField } from '@material-ui/core';
+import { Card,  
+    CardContent, 
+    CardHeader, 
+    Collapse, 
+    Divider, 
+    IconButton, 
+    TextField,
+    withStyles, } from '@material-ui/core';
 import { withTheme } from '@material-ui/core/styles';
-import { Card } from '@material-ui/core';
-import { CardHeader, Divider } from '@material-ui/core';
-import { IconButton } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import classnames from 'classnames';
+import * as hunt from '../hunt';
+import * as loc from '../location';
 
 const styles = theme => ({
     centerIcon: {
@@ -36,7 +42,7 @@ const styles = theme => ({
 
 function HuntInfoCard(props) {
     const { classes, huntInfo } = props;
-    const ResolvedLockIcon = huntInfo.isOpen ? <LockOpenIcon /> : <LockIcon />;
+    const ResolvedLockIcon = hunt.isOpen(huntInfo) ? <LockOpenIcon /> : <LockIcon />;
 
     const [ isExpanded, setExpanded ] = useState(false);
 
@@ -49,8 +55,8 @@ function HuntInfoCard(props) {
                     </ IconButton>
                 }
                 classes={{ action: classes.centerIcon }} 
-                title={huntInfo.name}
-                subheader={huntInfo.startTime.toDateString()}
+                title={hunt.name(huntInfo)}
+                subheader={hunt.starts(huntInfo).toDateString()}
                 action={
                     <IconButton
                         className={classnames(classes.expand, {
@@ -70,7 +76,7 @@ function HuntInfoCard(props) {
                         <div className={classes.partnerFieldsContainer}>
                             <TextField 
                                 className={classes.textField}
-                                defaultValue={huntInfo.startTime.toLocaleTimeString('en-US')}
+                                defaultValue={hunt.starts(huntInfo).toLocaleTimeString('en-US')}
                                 label="Start Time"
                                 id="start-time-read-only"
                                 InputProps={{
@@ -81,7 +87,7 @@ function HuntInfoCard(props) {
                             />
                             <TextField 
                                 className={classes.textField}
-                                defaultValue={huntInfo.endTime.toLocaleTimeString('en-US')}
+                                defaultValue={hunt.ends(huntInfo).toLocaleTimeString('en-US')}
                                 label="End Time"
                                 id="end-time-read-only"
                                 InputProps={{
@@ -94,7 +100,7 @@ function HuntInfoCard(props) {
                         <div className={classes.partnerFieldsContainer}>
                             <TextField 
                                 className={classes.textField}
-                                defaultValue={`${huntInfo.numTeams}/${huntInfo.maxTeams}`}
+                                defaultValue={`${hunt.numTeams(huntInfo)}/${hunt.maxTeams(huntInfo)}`}
                                 label="Teams"
                                 id="team-number-read-only"
                                 InputProps={{
@@ -105,7 +111,7 @@ function HuntInfoCard(props) {
                             />
                             <TextField 
                                 className={classes.textField}
-                                defaultValue={huntInfo.items.length}
+                                defaultValue={hunt.items(huntInfo).length}
                                 label="Items"
                                 id="hunt-item-number-read-only"
                                 InputProps={{
@@ -117,7 +123,7 @@ function HuntInfoCard(props) {
                         </div>
                         <TextField 
                             className={classes.textField}
-                            defaultValue={huntInfo.location}
+                            defaultValue={loc.name(hunt.location(huntInfo))}
                             label="Location"
                             id="location-read-only"
                             InputProps={{
@@ -144,7 +150,10 @@ HuntInfoCard.propTypes = {
         maxTeams: PropTypes.number.isRequired,
         numTeams: PropTypes.number.isRequired,
         items: PropTypes.array.isRequired,
-        location: PropTypes.string.isRequired
+        location: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            point: PropTypes.array.isRequired,
+        }).isRequired
     }).isRequired
 };
 
