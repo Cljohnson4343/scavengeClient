@@ -22,7 +22,11 @@ function HuntInfoFilters(props) {
     return (
         <div className={classes.root}>
             {filters.map(filter => (
-                <FilterButton classes={{ root: classes.item }} key={filter.displayString}>
+                <FilterButton 
+                    classes={{ root: classes.item }} 
+                    key={filter.displayString}
+                    onClick={e => setFilters(removeFilter(filters, filter))}
+                >
                     <FilterButtonText>{filter.displayString}</FilterButtonText>
                 </FilterButton>
             ))}

@@ -26,8 +26,8 @@ const hunts = [
         location: {
             name: "Guntersille, Al",
             coords: {
-                latitude: 32.688053,
-                longitude: -86.810585,
+                latitude: 34.346305,
+                longitude: -86.303388,
             },
         },
     },
