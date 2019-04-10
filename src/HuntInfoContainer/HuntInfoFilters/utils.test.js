@@ -21,7 +21,7 @@ test('addFilter adds a filter and returns a new array', () => {
     expect(newFilters.length).toBe(filtersArr.length + 1);
     expect(filtersArr.findIndex(isEqual(testFilter))).toBe(-1);
     expect(newFilters.findIndex(isEqual(testFilter))).toBeGreaterThan(-1);
-
+    expect(newFilters === filtersArr).toBeFalsy;
 });
 
 test('addFilter does not add  a duplicate filter', () => {
@@ -39,6 +39,7 @@ test('removeFilter removes a filter and returns a new array', () => {
 
     expect(origFilters.length).toBe(filtersArr.length);
     expect(origFilters.findIndex(isEqual(testFilter))).toBe(-1);
+    expect(origFilters === newFilters).toBeFalsy;
 });
 
 test("removeFilter does not remove a filter arg isn't in array", () => {
