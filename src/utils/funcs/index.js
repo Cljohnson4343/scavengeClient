@@ -1,0 +1,1 @@
+export { pipe, compose, trace } from './composition';
