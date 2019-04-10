@@ -1,6 +1,6 @@
 const hunts = [
     {
-        name: "First Hunt",
+        name: "Huntsville Hunt",
         isOpen: true,
         startTime: new Date(2019, 3, 7, 15),
         endTime: new Date(2019, 3, 7, 19),
@@ -16,7 +16,7 @@ const hunts = [
         },
     },
     {
-        name: "Second Hunt",
+        name: "Guntersville Hunt",
         isOpen: false,
         startTime: new Date(2019, 3, 8, 10),
         endTime: new Date(2019, 3, 8, 15),
@@ -32,7 +32,7 @@ const hunts = [
         },
     },
     {
-        name: "Third Hunt",
+        name: "Madison Hunt",
         isOpen: false,
         startTime: new Date(2019, 3, 18, 10),
         endTime: new Date(2019, 3, 18, 17),
@@ -48,7 +48,7 @@ const hunts = [
         },
     },
     {
-        name: "Fourth Hunt",
+        name: "Athens Hunt",
         isOpen: true,
         startTime: new Date(2019, 3, 12, 19),
         endTime: new Date(2019, 3, 12, 20),
@@ -80,7 +80,7 @@ const hunts = [
         },
     },
     {
-        name: "East-Town Hunt",
+        name: "East H-Town Hunt",
         isOpen: false,
         startTime: new Date(2019, 3, 29, 14),
         endTime: new Date(2019, 3, 29, 24),

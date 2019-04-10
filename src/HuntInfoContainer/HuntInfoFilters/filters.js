@@ -28,6 +28,8 @@ export const itemsGreaterThan = n => x => {
     return false;
 };
 
+export const needsBinding = x => x.displayString.includes('Within');
+
 const not = f => x => !f(x);
 
 export const filtersObj = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import HuntInfoAddFiltersButton from '../HuntInfoAddFilterButton';
@@ -14,13 +14,10 @@ const styles = {
     item: {
         marginRight: '2px',
     }
-
 };
 
 function HuntInfoFilters(props) {
-    const { classes } = props;
-
-    const [ filters, setFilters ] = useState([]);
+    const { classes, filters, setFilters } = props;
 
     return (
         <div className={classes.root}>
@@ -36,6 +33,8 @@ function HuntInfoFilters(props) {
 
 HuntInfoFilters.propTypes = {
     classes: PropTypes.object.isRequired,
+    filters: PropTypes.array.isRequired,
+    setFilters: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(HuntInfoFilters);
