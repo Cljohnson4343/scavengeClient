@@ -7,10 +7,14 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
+        paddingTop: theme.spacing.unit*2,
+        margin: `0 ${theme.spacing.unit}px`,
     },
     itemsContainer: {
         display: 'flex',
         flexDirection: 'column',
+        flex: '1 1 auto',
+        overflow: 'scroll',
         borderStyle: 'solid',
         borderColor: theme.palette.divider,
         borderWidth: 'thin',
@@ -20,9 +24,8 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-    },
-    itemsHeaderContainerHeader: {
-        paddingLeft: theme.spacing.unit
+        flex: '1 0 auto',
+        paddingLeft: theme.spacing.unit,
     },
     headerFirstLine: {
         display: 'flex',
@@ -32,7 +35,6 @@ const styles = theme => ({
         display: 'flex',
         marginBottom: theme.spacing.unit,
     },
-
 });
 
 function CardContainer(props) {
@@ -46,7 +48,7 @@ function CardContainer(props) {
                 square={true}
             >
                 <div className={classes.headerFirstLine}>
-                    <span className={classes.itemsHeaderContainerHeader}>{title}</span>
+                    <strong >{title}</strong>
                     {Boolean(sort) && sort}
                 </div>
                 <div className={classes.filtersContainer}>

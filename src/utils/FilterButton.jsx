@@ -4,13 +4,13 @@ import { Button, withStyles, withTheme } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
-        borderColor: theme.palette.primary[400],
+        borderColor: theme.palette.primary.main,
         minWidth: '26px',
         height: '26px',
         padding: 'unset',
     },
     font: {
-        color: theme.palette.primary[400],
+        color: theme.palette.primary.main,
     }
 });
 

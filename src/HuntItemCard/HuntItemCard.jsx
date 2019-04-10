@@ -1,12 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CardHeader, IconButton } from '@material-ui/core';
+import { withStyles, CardHeader, IconButton } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+const styles = {
+    root: {
+        flex: '0 0 auto',
+    },
+    title: {
+        fontSize: '0.7rem',
+        lineHeight: '1.2',
+    },
+    subheader: {
+
+    },
+};
+
 function HuntItemCard(props) {
-    const { huntInfo: { isDone } } = props;
+    const { classes, huntInfo: { isDone } } = props;
 
     const ActionIcon = isDone ? <DeleteIcon /> : <VideocamIcon />;
 
@@ -31,6 +44,10 @@ function HuntItemCard(props) {
                         {ActionIcon}
                     </IconButton>
                 }
+                classes={{ 
+                    title: classes.title,
+                    subheader: classes.subheader,
+                }}
                 title={props.huntInfo.name}
                 subheader={`${props.huntInfo.points} pts`}
             />
@@ -46,4 +63,4 @@ HuntItemCard.propTypes = {
     }).isRequired
 };
     
-export default HuntItemCard;
+export default withStyles(styles)(HuntItemCard);

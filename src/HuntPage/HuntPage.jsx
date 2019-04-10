@@ -6,7 +6,7 @@ import HuntItemsContainer from '../HuntItemsContainer';
 const styles = {
     itemContainer: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     }
 
 };

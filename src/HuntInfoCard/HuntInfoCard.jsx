@@ -18,6 +18,9 @@ import * as hunt from '../hunt';
 import * as loc from '../location';
 
 const styles = theme => ({
+    card: {
+        flex: '0 0 auto',
+    },
     centerIcon: {
         alignSelf: 'stretch',
     },
@@ -31,12 +34,20 @@ const styles = theme => ({
     expandOpen: {
         transform: 'rotate(180deg)',
     },
+    partnerFieldsContainer: {
+        display: 'flex',
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit
     },
-    partnerFieldsContainer: {
-        display: 'flex',
+    title: {
+        fontSize: '0.7rem', 
+        lineHeight: '1.2',
+    },
+    subheader: {
+        fontSize: '0.6rem',
+        fontWeight: '300',
     },
 });
 
@@ -47,14 +58,18 @@ function HuntInfoCard(props) {
     const [ isExpanded, setExpanded ] = useState(false);
 
     return (
-        <Card square={true} elevation={0}>
+        <Card className={classes.card} square={true} elevation={0}>
             <CardHeader
                 avatar={
                     <IconButton disabled >
                         {ResolvedLockIcon}
                     </ IconButton>
                 }
-                classes={{ action: classes.centerIcon }} 
+                classes={{ 
+                    action: classes.centerIcon,
+                    title: classes.title,
+                    subheader: classes.subheader,
+                }} 
                 title={hunt.name(huntInfo)}
                 subheader={hunt.starts(huntInfo).toDateString()}
                 action={

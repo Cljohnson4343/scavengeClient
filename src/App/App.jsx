@@ -6,8 +6,10 @@ import MuiTheme from '../theme';
 import HomePage from '../HomePage';
 
 const styles = {
-  appBarOffset: {
-    marginTop: '70px',
+  pageWrapper: {
+    boxSizing: 'border-box',
+    height: '100vh',
+    width: '100vw',
   },
 }
 class App extends Component {
@@ -16,8 +18,8 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={MuiTheme}>
-        <AppBar />
-        <div className={classes.appBarOffset} >
+        <div className={classes.pageWrapper} >
+          <AppBar />
           <HomePage />
         </div>
       </MuiThemeProvider>

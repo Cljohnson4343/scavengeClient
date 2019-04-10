@@ -7,13 +7,11 @@ import HuntInfoContainer from '../HuntInfoContainer';
 import hunts from '../HuntInfoData'; 
 
 const styles = {
-  root: {
+  page: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  huntsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    height: `calc(100vh - 51px - 56px - 32px)`,
+    boxSizing: 'border-box',
   },
   fab: {
     position: 'fixed',
@@ -26,10 +24,8 @@ function HomePage(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
-      <div className={classes.huntsContainer}>
-        <HuntInfoContainer hunts={hunts}/>
-      </div>
+    <div className={classes.page}>
+      <HuntInfoContainer hunts={hunts}/>
       <Fab color="primary" aria-label="Add" className={classes.fab}>
         <AddIcon />
       </Fab>
