@@ -4,16 +4,18 @@ import { withStyles, Paper } from '@material-ui/core';
 import { withTheme } from '@material-ui/core/styles';
 
 const styles = theme => ({
-    root: {
+    container: {
         display: 'flex',
         flexDirection: 'column',
         paddingTop: theme.spacing.unit*2,
         margin: `0 ${theme.spacing.unit}px`,
+        height: '100%',
+        boxSizing: 'border-box',
     },
     itemsContainer: {
         display: 'flex',
         flexDirection: 'column',
-        flex: '1 1 auto',
+        flex: '0 1 auto',
         overflow: 'scroll',
         borderStyle: 'solid',
         borderColor: theme.palette.divider,
@@ -24,7 +26,7 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        flex: '1 0 auto',
+        flex: '0 0 auto',
         paddingLeft: theme.spacing.unit,
     },
     headerFirstLine: {
@@ -41,7 +43,7 @@ function CardContainer(props) {
     const { children, classes, filters, sort, title } = props;
 
     return (
-        <div className={classes.root} > 
+        <div className={classes.container} > 
             <Paper 
                 className={classes.itemsHeaderContainer}
                 elevation={0}
