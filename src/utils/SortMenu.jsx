@@ -63,6 +63,16 @@ function SortMenu(props) {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)} 
                 onClose={handleSortMenuClose}
+                anchorOrigin={{
+                    horizontal: 'right',
+                    vertical: 'bottom',
+                }}
+                transformOrigin={{
+                    horizontal: 'right',
+                    vertical: 'top',
+                }}
+                anchorReference='anchorEl'
+                getContentAnchorEl={undefined}
             >
                 {sortMenuItems}
             </Menu>
