@@ -18,7 +18,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server:start": "cd ~/Workspaces/go/src/github.com/cljohnson4343/scavenge/ && make start",
+    "db:start": "cd ~/Workspaces/go/src/github.com/cljohnson4343/scavenge/ && make start-db"
   },
   "eslintConfig": {
     "extends": "react-app"
