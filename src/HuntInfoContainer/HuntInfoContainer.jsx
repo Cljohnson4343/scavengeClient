@@ -13,11 +13,9 @@ function HuntInfoContainer(props) {
 
     const defaultSortFn = () => -1;
     const [ sortFn, setSortFn ] = useState(() => defaultSortFn);
-
-    const [ filters, setFilters ] = useState([]);
-
     const location = useContext(LocationContext);
 
+    const [ filters, setFilters ] = useState([]);
     // make sure all of the filter functions are wrapped and the ones that
     // need to be bound with a location are bound
     const arrayOfFilterFns = filters.map(filterObj => {
@@ -27,7 +25,6 @@ function HuntInfoContainer(props) {
 
         return utils.filterWrapper(filterObj.filterFunction);
     });
-
     // compose all filter functions
     const filterFn = compose(...arrayOfFilterFns);
 
