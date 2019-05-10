@@ -1,5 +1,5 @@
 import * as hunt from "../../../hunt";
-import * as loc from "../../../loc";
+import * as loc from "../../../utils/loc";
 
 // within produces a function that needs to be partially applied with the user's location in
 // order to work as a filter function. This can be done by bind(null, location) before

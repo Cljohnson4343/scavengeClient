@@ -17,7 +17,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import classnames from "classnames";
 import * as hunt from "../../hunt";
-import * as loc from "../../loc";
+import * as loc from "../../utils/loc";
 
 const styles = theme => ({
   card: {
