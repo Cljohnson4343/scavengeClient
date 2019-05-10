@@ -1,4 +1,4 @@
-import * as hunt from "../../../hunt";
+import * as hunt from "../../../models/hunt";
 import * as loc from "../../../utils/loc";
 
 // within produces a function that needs to be partially applied with the user's location in
