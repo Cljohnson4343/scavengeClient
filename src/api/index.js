@@ -1,1 +1,2 @@
-export * from './hunts';
+export { LoginUser } from "./user";
+export { GetUser } from "./user";
