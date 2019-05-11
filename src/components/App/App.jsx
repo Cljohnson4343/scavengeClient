@@ -3,8 +3,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
-import HomePage from "../HomePage";
-import LoginPage from "../LoginPage";
+import HuntCreateForm from "../HuntCreateForm";
 import Location from "../Location";
 
 const styles = {
@@ -23,7 +22,7 @@ class App extends Component {
         <Location>
           <div className={classes.pageWrapper}>
             <AppBar />
-            <LoginPage />
+            <HuntCreateForm />
           </div>
         </Location>
       </MuiThemeProvider>

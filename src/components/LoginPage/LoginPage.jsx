@@ -7,8 +7,8 @@ import { LoginUser } from "../../api";
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unit * 5,
+    margin: theme.spacing(1),
+    marginRight: theme.spacing(5),
     alignSelf: "flex-end"
   },
   container: {

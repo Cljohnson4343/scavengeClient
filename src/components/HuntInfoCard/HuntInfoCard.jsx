@@ -11,12 +11,11 @@ import {
   TextField,
   withStyles
 } from "@material-ui/core";
-import { withTheme } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import classnames from "classnames";
-import * as hunt from "../../models/hunt";
+import * as hunt from "../../models/hunts";
 import * as loc from "../../utils/loc";
 
 const styles = theme => ({
@@ -176,4 +175,4 @@ HuntInfoCard.propTypes = {
   }).isRequired
 };
 
-export default withTheme()(withStyles(styles)(HuntInfoCard));
+export default withStyles(styles)(HuntInfoCard);

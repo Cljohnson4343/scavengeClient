@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { withTheme } from "@material-ui/core/styles";
 import { AppBar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
@@ -49,4 +48,4 @@ ScavengeAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withTheme()(withStyles(styles)(ScavengeAppBar));
+export default withStyles(styles)(ScavengeAppBar);
