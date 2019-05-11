@@ -7,8 +7,8 @@ import ClearIcon from "@material-ui/icons/Clear";
 const styles = theme => ({
   font: {
     fontSize: "0.6em",
-    paddingRight: theme.spacing.unit / 2,
-    paddingLeft: theme.spacing.unit / 2
+    paddingRight: theme.spacing(1) / 2,
+    paddingLeft: theme.spacing(1) / 2
   },
   // Empty object to allow consumers to style text
   root: {
@@ -22,7 +22,7 @@ const styles = theme => ({
   },
   icon: {
     fontSize: "0.7em",
-    paddingRight: theme.spacing.unit / 2
+    paddingRight: theme.spacing(1) / 2
   }
 });
 

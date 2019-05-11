@@ -16,13 +16,13 @@ const styles = theme => ({
   avatar: {
     width: "35px",
     height: "35px",
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   homeIconColor: {
     color: theme.palette.primary.contrastText
   },
   homeIcon: {
-    padding: theme.spacing.unit
+    padding: theme.spacing(1)
   }
 });
 

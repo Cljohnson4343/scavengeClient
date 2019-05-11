@@ -5,7 +5,7 @@ import { Button, Menu, MenuItem } from "@material-ui/core";
 
 const styles = theme => ({
   sortButton: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     backgroundColor: theme.palette.grey[200]
   },
   sortMenuFont: {

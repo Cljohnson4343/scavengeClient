@@ -6,8 +6,8 @@ const styles = theme => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    paddingTop: theme.spacing.unit * 2,
-    margin: `0 ${theme.spacing.unit}px`,
+    paddingTop: theme.spacing(1) * 2,
+    margin: `0 ${theme.spacing(1)}px`,
     height: "100%",
     boxSizing: "border-box"
   },
@@ -26,7 +26,7 @@ const styles = theme => ({
     flexDirection: "column",
     justifyContent: "space-between",
     flex: "0 0 auto",
-    paddingLeft: theme.spacing.unit
+    paddingLeft: theme.spacing(1)
   },
   headerFirstLine: {
     display: "flex",
@@ -34,7 +34,7 @@ const styles = theme => ({
   },
   filtersContainer: {
     display: "flex",
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing(1)
   }
 });
 
