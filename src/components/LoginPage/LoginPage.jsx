@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { withStyles, FormHelperText } from "@material-ui/core";
-import { Button, TextField } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { LoginUser } from "../../api";
 import SubmitButton from "../SubmitButton";
 

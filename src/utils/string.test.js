@@ -8,6 +8,6 @@ test.each`
 `(
   "returns $expected to be unique label for $name",
   ({ name, names, expected }) => {
-    expect(uniqueLabel(name, names)).toBe(expected);
+    expect(uniqueLabel(names, name)).toBe(expected);
   }
 );

@@ -17,12 +17,12 @@ const styles = theme => ({
 });
 
 function TeamListItem(props) {
-  const { classes, handleDeleteItem, name } = props;
+  const { classes, getLabel, handleDeleteItem, name } = props;
 
   return (
     <ListItem button disableGutters>
       <ListItemAvatar>
-        <Avatar>A</Avatar>
+        <Avatar>{getLabel(name)}</Avatar>
       </ListItemAvatar>
       <ListItemText primary={name} />
       <ListItemSecondaryAction className={classes.secondary}>
@@ -34,6 +34,7 @@ function TeamListItem(props) {
 
 TeamListItem.propTypes = {
   classes: PropTypes.object.isRequired,
+  getLabel: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired
 };

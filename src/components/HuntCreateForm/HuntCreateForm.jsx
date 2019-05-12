@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
@@ -21,10 +21,12 @@ const styles = theme => ({
 function HuntCreateForm(props) {
   const { classes } = props;
 
+  const [teams, setTeams] = useState([]);
+
   return (
     <div className={classes.container}>
       <HuntInfoForm />
-      <TeamsContainer />
+      <TeamsContainer teams={teams} setTeams={setTeams} />
       <Fab />
     </div>
   );

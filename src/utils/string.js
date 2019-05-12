@@ -1,5 +1,5 @@
 // returns one or two char unique label for the given name. Assumes that names are unique
-export function uniqueLabel(name, names) {
+export function uniqueLabel(names, name) {
   let lowerName = name.toLowerCase();
   let ns = names
     .map(n => n.toLowerCase())
