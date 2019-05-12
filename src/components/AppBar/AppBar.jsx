@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import { AppBar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
-import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
 
 import UserAvatar from "../UserAvatar";
 
@@ -37,7 +36,7 @@ function ScavengeAppBar(props) {
         color="primary"
         classes={{ colorPrimary: classes.homeIconColor }}
       >
-        <LocationSearchingIcon fontSize="large" />
+        Scavenge
       </IconButton>
       <UserAvatar className={classes.avatar} />
     </AppBar>
