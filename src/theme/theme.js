@@ -12,7 +12,10 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-    fontSize: 12
+    fontSize: 10,
+    fontWeightLight: 100,
+    fontWeightMedium: 200,
+    fontWeightRegular: 300
   },
   shape: {
     borderRadius: 6

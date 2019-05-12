@@ -11,6 +11,11 @@ const styles = theme => ({
   }
 });
 
+function uniqueLetterAvatar(teams, name) {
+  // remove name from teams
+  const ts = teams.filter(team => team !== name);
+}
+
 function TeamsContainer(props) {
   const { classes } = props;
 
