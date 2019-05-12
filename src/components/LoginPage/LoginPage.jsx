@@ -2,15 +2,10 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles, FormHelperText } from "@material-ui/core";
 import { Button, TextField } from "@material-ui/core";
-import SendIcon from "@material-ui/icons/Send";
 import { LoginUser } from "../../api";
+import SubmitButton from "../SubmitButton";
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-    marginRight: theme.spacing(5),
-    alignSelf: "flex-end"
-  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -107,15 +102,7 @@ function LoginPage(props) {
           required
         />
       </div>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        size="small"
-        onClick={e => LoginUser(getUserData())}
-      >
-        <SendIcon className={classes.rightIcon} />
-      </Button>
+      <SubmitButton handleSubmit={e => LoginUser(getUserData(e))} />
     </form>
   );
 }
