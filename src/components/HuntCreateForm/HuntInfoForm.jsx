@@ -8,6 +8,7 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import classNames from "classnames";
 
@@ -19,14 +20,25 @@ const styles = theme => ({
   dateField: {
     width: 220
   },
+  details: {
+    padding: `0px ${theme.spacing(2)}px`
+  },
   numberField: {
     width: 150
+  },
+  panel: {
+    backgroundColor: grey[100],
+    margin: `${theme.spacing(2)} 0`
   },
   root: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
   },
+  summary: {
+    margin: `${theme.spacing(1)} 0`
+  },
   textField: {
+    marginTop: `0px`,
     width: 220
   }
 });
@@ -40,8 +52,11 @@ function HuntInfoForm(props) {
   const [endTime, setEndTime] = useState(new Date());
 
   return (
-    <ExpansionPanel square={true}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+    <ExpansionPanel square={true} elevation={0} className={classes.panel}>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        className={classes.summary}
+      >
         <Typography className={classes.heading}>Hunt Info</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.details}>

@@ -30,7 +30,7 @@ function ScavengeAppBar(props) {
   const { classes } = props;
 
   return (
-    <AppBar className={classes.root} position="static">
+    <AppBar className={classes.root} position="static" elevation={3}>
       <IconButton
         className={classes.homeIcon}
         aria-label="Home"

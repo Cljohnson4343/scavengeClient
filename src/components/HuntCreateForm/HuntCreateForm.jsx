@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import HuntInfoForm from "./HuntInfoForm";
 import Fab from "../Fab";
 
@@ -10,8 +11,10 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   container: {
+    backgroundColor: grey[200],
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginTop: theme.spacing(2)
   }
 });
 
