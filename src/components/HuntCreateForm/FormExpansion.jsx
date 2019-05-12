@@ -7,22 +7,19 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { grey } from "@material-ui/core/colors";
 
 const styles = theme => ({
   details: {
     padding: `0px ${theme.spacing(2)}px`
   },
+  expanded: {
+    backgroundColor: grey[100],
+    marginTop: theme.spacing(1)
+  },
   heading: {
     color: theme.palette.primary.main
-  },
-  panel: {
-    backgroundColor: grey[100],
-    margin: `${theme.spacing(2)} 0`
-  },
-  summary: {
-    margin: `${theme.spacing(1)} 0`
   }
 });
 
@@ -33,15 +30,12 @@ function FormExpansion(props) {
 
   return (
     <ExpansionPanel
+      classes={{ root: classes.expanded }}
       square={true}
       elevation={0}
-      className={classes.panel}
       onChange={e => setIsOpen(!isOpen)}
     >
-      <ExpansionPanelSummary
-        expandIcon={<ExpandMoreIcon />}
-        className={classes.summary}
-      >
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={isOpen ? classes.heading : null}>
           {props.label}
         </Typography>

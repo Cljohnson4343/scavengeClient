@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
 import HuntInfoForm from "./HuntInfoForm";
+import TeamsContainer from "./TeamsContainer";
 import Fab from "../Fab";
 
 const styles = theme => ({
@@ -11,7 +11,7 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   container: {
-    backgroundColor: grey[200],
+    backgroundColor: "inherit",
     display: "flex",
     flexDirection: "column",
     marginTop: theme.spacing(2)
@@ -24,6 +24,7 @@ function HuntCreateForm(props) {
   return (
     <div className={classes.container}>
       <HuntInfoForm />
+      <TeamsContainer />
       <Fab />
     </div>
   );

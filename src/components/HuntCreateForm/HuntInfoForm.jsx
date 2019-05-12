@@ -35,7 +35,7 @@ function HuntInfoForm(props) {
 
   return (
     <FormExpansion label="Hunt Info">
-      <form className={classes.container}>
+      <form classes={classes.container}>
         <div className={classes.container}>
           <TextField
             id="hunt_name"
