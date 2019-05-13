@@ -28,12 +28,17 @@ const styles = theme => ({
 });
 
 function HuntInfoForm(props) {
-  const { classes } = props;
-
-  const [huntName, setHuntName] = useState("");
-  const [maxTeams, setMaxTeams] = useState(null);
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const {
+    classes,
+    endTime,
+    huntName,
+    maxTeams,
+    setEndTime,
+    setHuntName,
+    setMaxTeams,
+    setStartTime,
+    startTime
+  } = props;
 
   return (
     <FormExpansion label="Hunt Info">
@@ -86,7 +91,15 @@ function HuntInfoForm(props) {
 }
 
 HuntInfoForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  endTime: PropTypes.instanceOf(Date),
+  huntName: PropTypes.string,
+  maxTeams: PropTypes.number,
+  setEndTime: PropTypes.func.isRequired,
+  setHuntName: PropTypes.func.isRequired,
+  setMaxTeams: PropTypes.func.isRequired,
+  setStartTime: PropTypes.func.isRequired,
+  startTime: PropTypes.instanceOf(Date)
 };
 
 export default withStyles(styles)(HuntInfoForm);

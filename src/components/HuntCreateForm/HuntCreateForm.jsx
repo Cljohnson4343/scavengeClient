@@ -24,11 +24,24 @@ function HuntCreateForm(props) {
 
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [huntName, setHuntName] = useState("");
+  const [maxTeams, setMaxTeams] = useState(null);
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
 
   return (
     <div className={classes.container}>
-      <HuntInfoForm />
-      <TeamsContainer maxTeams={1} teams={teams} setTeams={setTeams} />
+      <HuntInfoForm
+        endTime={endTime}
+        huntName={huntName}
+        maxTeams={maxTeams}
+        setEndTime={setEndTime}
+        setHuntName={setHuntName}
+        setMaxTeams={setMaxTeams}
+        setStartTime={setStartTime}
+        startTime={startTime}
+      />
+      <TeamsContainer maxTeams={maxTeams} teams={teams} setTeams={setTeams} />
       <PlayersContainer players={players} setPlayers={setPlayers} />
       <Fab />
     </div>

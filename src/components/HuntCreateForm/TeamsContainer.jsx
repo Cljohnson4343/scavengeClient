@@ -65,7 +65,7 @@ function TeamsContainer(props) {
         <div className={classes.container}>
           <TextField
             id="team_name"
-            error={inErrorState}
+            error={inErrorState ? true : null}
             label="Name"
             type="text"
             className={classNames(classes.textField, classes.root)}
@@ -95,7 +95,7 @@ function TeamsContainer(props) {
 
 TeamsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  maxTeams: PropTypes.number.isRequired,
+  maxTeams: PropTypes.number,
   teams: PropTypes.array,
   setTeams: PropTypes.func.isRequired
 };
