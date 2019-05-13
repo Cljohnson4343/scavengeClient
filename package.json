@@ -32,6 +32,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "deep-freeze": "^0.0.1",
     "enzyme": "^3.9.0"
   }
 }
