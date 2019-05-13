@@ -50,7 +50,7 @@ export function players(state = [], action) {
     case "change_players_team":
       return state.map(player => {
         if (player.equals(action.payload.player)) {
-          return new Player(player.email, { ...action.payload.team });
+          return new Player(player.email, action.payload.team);
         }
         return Object.assign({}, player);
       });

@@ -1,6 +1,8 @@
+import Team from "../team";
+
 export default function Player(email, team) {
   this._email = email || "";
-  this._team = team ? Object.assign({}, team) : null;
+  this._team = team ? new Team(team.name, team.players) : null;
 
   Object.defineProperty(this, "email", {
     get: function() {
@@ -16,7 +18,7 @@ export default function Player(email, team) {
       return this._team;
     },
     set: function(team) {
-      this._team = Object.assign({}, team);
+      this._team = new Team(team.name, team.players);
     }
   });
 
