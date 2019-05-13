@@ -9,12 +9,13 @@ export default function Player(email) {
       this._email = str;
     }
   });
+
+  Object.defineProperty(this, "equals", {
+    value: function(obj) {
+      if (!(obj instanceof Player)) {
+        return false;
+      }
+      return this._email === obj._email;
+    }
+  });
 }
-
-Player.prototype.equals = function(obj) {
-  if (!(obj instanceof Player)) {
-    return false;
-  }
-
-  return this.email === obj.email;
-};

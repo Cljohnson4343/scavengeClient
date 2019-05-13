@@ -13,6 +13,7 @@ import {
   Select
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
+import { Player } from "../../models";
 
 const styles = theme => ({
   secondary: {
@@ -20,26 +21,62 @@ const styles = theme => ({
   }
 });
 
+function getTeam(teams, teamName) {
+  if (!teams) {
+    return null;
+  }
+
+  let ts = teams.filter(team => team.name === teamName);
+  if (ts && ts.length > 0) {
+    return ts[0];
+  }
+
+  return null;
+}
+
 function PlayerListItem(props) {
-  const { classes, email, handleDeleteItem, setTeam, team, teams } = props;
+  const {
+    classes,
+    handleDeletePlayer,
+    handleUpdateTeamPlayers,
+    player,
+    team,
+    teams
+  } = props;
 
   return (
     <ListItem button disableGutters>
-      <ListItemText primary={email} />
+      <ListItemText primary={player.email} />
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="team-helper">Team</InputLabel>
         <Select
-          value={team}
-          onChange={e => setTeam(e.target.value)}
+          onChange={e => {
+            if (team) {
+              team.removePlayer(player);
+              handleUpdateTeamPlayers(team);
+            }
+
+            let newTeam = getTeam(teams, e.target.value);
+            if (newTeam) {
+              newTeam.addPlayer(player);
+              handleUpdateTeamPlayers(newTeam);
+            }
+          }}
+          value={team ? team.email : "None"}
           input={<Input name="team" id="team-helper" />}
         >
-          <MenuItem value="" />
-          {teams && teams.map(t => <MenuItem value={t}>{t}</MenuItem>)}
+          <MenuItem value="None" />
+          {teams &&
+            teams.map(t => (
+              <MenuItem key={t.name} value={t.name}>
+                {t.name}
+              </MenuItem>
+            ))}
         </Select>
         <FormHelperText>Select the team for this player</FormHelperText>
       </FormControl>
       <ListItemSecondaryAction className={classes.secondary}>
-        <DeleteItemButton handleDelete={handleDeleteItem} />
+        <DeleteItemButton handleDelete={handleDeletePlayer} />
       </ListItemSecondaryAction>
     </ListItem>
   );
@@ -47,9 +84,9 @@ function PlayerListItem(props) {
 
 PlayerListItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  email: PropTypes.string.isRequired,
-  handleDeleteItem: PropTypes.func.isRequired,
-  setTeam: PropTypes.func.isRequired,
+  handleDeletePlayer: PropTypes.func.isRequired,
+  handleUpdateTeamPlayers: PropTypes.func.isRequired,
+  player: PropTypes.instanceOf(Player).isRequired,
   team: PropTypes.string,
   teams: PropTypes.array
 };
