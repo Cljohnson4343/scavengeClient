@@ -41,14 +41,14 @@ export function removePlayer(email) {
 export function updateHuntName(name) {
   return {
     type: "update_hunt_name",
-    payload: name
+    payload: String(name)
   };
 }
 
 export function updateMaxTeams(numTeams) {
   return {
     type: "update_max_teams",
-    payload: numTeams
+    payload: Number(numTeams)
   };
 }
 
