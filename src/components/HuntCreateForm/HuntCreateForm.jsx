@@ -5,6 +5,7 @@ import HuntInfoForm from "./HuntInfoForm";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
+import { Team } from "../../models";
 
 const styles = theme => ({
   button: {
@@ -42,7 +43,11 @@ function HuntCreateForm(props) {
         startTime={startTime}
       />
       <TeamsContainer maxTeams={maxTeams} teams={teams} setTeams={setTeams} />
-      <PlayersContainer players={players} setPlayers={setPlayers} />
+      <PlayersContainer
+        players={players}
+        setPlayers={setPlayers}
+        teams={teams}
+      />
       <Fab />
     </div>
   );

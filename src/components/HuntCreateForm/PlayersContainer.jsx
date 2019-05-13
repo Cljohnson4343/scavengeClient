@@ -4,6 +4,7 @@ import { Button, List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
+import { Team } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -27,7 +28,7 @@ const styles = theme => ({
 });
 
 function PlayersContainer(props) {
-  const { classes, players, setPlayers } = props;
+  const { classes, players, setPlayers, teams } = props;
 
   const [inputName, setInputName] = useState("");
 
@@ -41,6 +42,7 @@ function PlayersContainer(props) {
             handleDeleteItem={() => {
               setPlayers(players.filter(team => team !== email));
             }}
+            teams={teams}
           />
         ))}
         <div className={classes.container}>
@@ -74,7 +76,9 @@ function PlayersContainer(props) {
 PlayersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   players: PropTypes.array,
-  setPlayers: PropTypes.func.isRequired
+  setPlayers: PropTypes.func.isRequired,
+  teams: PropTypes.array,
+  team: PropTypes.instanceOf(Team)
 };
 
 export default withStyles(styles)(PlayersContainer);

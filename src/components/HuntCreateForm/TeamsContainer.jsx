@@ -5,6 +5,7 @@ import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
 import { uniqueLabel } from "../../utils";
+import { Team } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -29,6 +30,7 @@ const styles = theme => ({
 
 function TeamsContainer(props) {
   const { classes, maxTeams, teams, setTeams } = props;
+  const teamNames = teams.map(team => team.name);
 
   const [inputName, setInputName] = useState("");
 
@@ -41,7 +43,10 @@ function TeamsContainer(props) {
       return `Max number of teams is set to ${maxTeams}`;
     }
 
-    if (teams.includes(inputName)) {
+    const tns = teamNames.map(n => n.toLowerCase());
+    const inputNameLower = inputName.toLowerCase();
+
+    if (tns.includes(inputNameLower)) {
       return `${inputName} is already used.`;
     }
   }
@@ -52,13 +57,13 @@ function TeamsContainer(props) {
   return (
     <FormExpansion label="Teams">
       <List dense={true} className={classes.list}>
-        {teams.map(teamName => (
+        {teams.map(team => (
           <TeamListItem
-            name={teamName}
-            key={teamName}
-            getLabel={uniqueLabel.bind(null, teams)}
+            name={team.name}
+            key={team.name}
+            getLabel={uniqueLabel.bind(null, teamNames)}
             handleDeleteItem={() => {
-              setTeams(teams.filter(team => team !== teamName));
+              setTeams(teams.filter(t => !t.equals(team)));
             }}
           />
         ))}
@@ -80,7 +85,7 @@ function TeamsContainer(props) {
             size="small"
             color="primary"
             onClick={() => {
-              setTeams(teams.concat(inputName));
+              setTeams(teams.concat(new Team(inputName)));
               setInputName("");
             }}
             disabled={!inputName || inErrorState ? true : false}

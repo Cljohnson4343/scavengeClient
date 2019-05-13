@@ -35,7 +35,11 @@ function FormExpansion(props) {
       elevation={0}
       onChange={e => setIsOpen(!isOpen)}
     >
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanelSummary
+        expandIcon={
+          <ExpandMoreIcon classes={isOpen ? { root: classes.heading } : null} />
+        }
+      >
         <Typography className={isOpen ? classes.heading : null}>
           {props.label}
         </Typography>
