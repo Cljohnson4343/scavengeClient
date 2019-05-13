@@ -10,17 +10,19 @@ const styles = theme => ({
     flexDirection: "column"
   },
   dateField: {
-    width: 220
+    fontWeight: theme.typography.fontWeightLight,
+    marginTop: theme.spacing(1),
+    width: 200
   },
   numberField: {
     width: 150
   },
   root: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    marginTop: `0px`
   },
   textField: {
-    marginTop: `0px`,
     width: 220
   }
 });
@@ -61,7 +63,7 @@ function HuntInfoForm(props) {
             id="start_time"
             label="Start Time"
             type="datetime-local"
-            className={classNames(classes.root, classes.dateField)}
+            className={classNames(classes.dateField, classes.root)}
             margin="normal"
             onChange={e => setStartTime(e.currentTarget.value)}
             value={startTime}
@@ -71,7 +73,7 @@ function HuntInfoForm(props) {
             id="end_time"
             label="End Time"
             type="datetime-local"
-            className={classNames(classes.root, classes.dateField)}
+            className={classNames(classes.dateField, classes.root)}
             margin="normal"
             onChange={e => setEndTime(e.currentTarget.value)}
             value={endTime}

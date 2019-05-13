@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
 import TeamsContainer from "./TeamsContainer";
+import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
 
 const styles = theme => ({
@@ -22,11 +23,13 @@ function HuntCreateForm(props) {
   const { classes } = props;
 
   const [teams, setTeams] = useState([]);
+  const [players, setPlayers] = useState([]);
 
   return (
     <div className={classes.container}>
       <HuntInfoForm />
-      <TeamsContainer teams={teams} setTeams={setTeams} />
+      <TeamsContainer maxTeams={1} teams={teams} setTeams={setTeams} />
+      <PlayersContainer players={players} setPlayers={setPlayers} />
       <Fab />
     </div>
   );
