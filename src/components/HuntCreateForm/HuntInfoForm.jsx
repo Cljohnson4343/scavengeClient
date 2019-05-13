@@ -60,7 +60,7 @@ function HuntInfoForm(props) {
             type="number"
             className={classNames(classes.numberField, classes.root)}
             margin="normal"
-            onChange={e => setMaxTeams(e.currentTarget.value)}
+            onChange={e => setMaxTeams(Number(e.currentTarget.value))}
             defaultValue={maxTeams}
             required={true}
           />
