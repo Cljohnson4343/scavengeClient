@@ -175,3 +175,111 @@ describe("players", () => {
     });
   });
 });
+
+describe("huntName", () => {
+  describe("action updateHuntName", () => {
+    test("should update empty hunt name", () => {
+      const action = actions.updateHuntName("hunt name");
+      deepFreeze(action);
+      let state = "";
+      deepFreeze(state);
+
+      const result = huntName(state, action);
+
+      expect(typeof result === "string").toBeTruthy();
+      expect(result === "hunt name").toBeTruthy();
+    });
+    test("should update non-empty hunt name", () => {
+      const action = actions.updateHuntName("new");
+      deepFreeze(action);
+      let state = "old";
+      deepFreeze(state);
+
+      const result = huntName(state, action);
+
+      expect(typeof result === "string").toBeTruthy();
+      expect(result === "new").toBeTruthy();
+    });
+  });
+});
+
+describe("maxTeams", () => {
+  describe("action updateMaxTeams", () => {
+    test("should update empty max teams", () => {
+      const action = actions.updateMaxTeams(3);
+      deepFreeze(action);
+      let state = 0;
+      deepFreeze(state);
+
+      const result = maxTeams(state, action);
+
+      expect(typeof result === "number").toBeTruthy();
+      expect(result === 3).toBeTruthy();
+    });
+    test("should update non-empty hunt name", () => {
+      const action = actions.updateHuntName("new");
+      deepFreeze(action);
+      let state = "old";
+      deepFreeze(state);
+
+      const result = huntName(state, action);
+
+      expect(typeof result === "string").toBeTruthy();
+      expect(result === "new").toBeTruthy();
+    });
+  });
+});
+
+describe("startDate", () => {
+  describe("action updateStart", () => {
+    test("should update default start date", () => {
+      const testDate = new Date(2020, 11, 21, 10);
+      const action = actions.updateStart(testDate);
+      deepFreeze(action);
+      let state = null;
+
+      const result = startDate(state, action);
+
+      expect(result).toBeInstanceOf(Date);
+      expect(result.getTime() === testDate.getTime()).toBeTruthy();
+    });
+    test("should update non-default end date", () => {
+      const testDate = new Date(2020, 11, 21, 10);
+      const action = actions.updateStart(testDate);
+      deepFreeze(action);
+      let state = new Date(2019, 10, 13, 9);
+
+      const result = startDate(state, action);
+
+      expect(result).toBeInstanceOf(Date);
+      expect(result.getTime() === testDate.getTime()).toBeTruthy();
+    });
+  });
+
+  describe("endDate", () => {
+    describe("action updateEnd", () => {
+      test("should update default end date", () => {
+        const testDate = new Date(2020, 11, 21, 10);
+        const action = actions.updateEnd(testDate);
+        deepFreeze(action);
+        let state = null;
+
+        const result = endDate(state, action);
+
+        expect(result).toBeInstanceOf(Date);
+        expect(result.getTime() === testDate.getTime()).toBeTruthy();
+      });
+      test("should update non-default end date", () => {
+        const testDate = new Date(2020, 11, 21, 10);
+        const action = actions.updateEnd(testDate);
+        deepFreeze(action);
+        let state = new Date(2019, 10, 13, 9);
+
+        const result = endDate(state, action);
+
+        expect(result).toBeInstanceOf(Date);
+        expect(result.getTime() === testDate.getTime()).toBeTruthy();
+      });
+    });
+  });
+});
