@@ -25,6 +25,10 @@ export default function Team(teamName, players) {
   this.removePlayer = function(plr) {
     this.players(this.players.filter(player => plr !== player));
   };
+
+  this.hasPlayer = function(plr) {
+    this.players(this.players.includes(plr));
+  };
 }
 
 Team.prototype.equals = function(obj) {

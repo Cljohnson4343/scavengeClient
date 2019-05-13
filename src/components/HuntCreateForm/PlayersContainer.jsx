@@ -5,6 +5,7 @@ import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
 import { Team } from "../../models";
+import { Player } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -30,19 +31,20 @@ const styles = theme => ({
 function PlayersContainer(props) {
   const { classes, players, setPlayers, teams } = props;
 
-  const [inputName, setInputName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
 
   return (
     <FormExpansion label="Players">
       <List dense={true} className={classes.list}>
-        {players.map(email => (
+        {players.map(player => (
           <PlayerListItem
-            email={email}
-            key={email}
+            email={player.email}
+            key={player.email}
             handleDeleteItem={() => {
-              setPlayers(players.filter(team => team !== email));
+              setPlayers(players.filter(plr => plr.equals(player)));
             }}
             teams={teams}
+            team={teams}
           />
         ))}
         <div className={classes.container}>
@@ -52,18 +54,18 @@ function PlayersContainer(props) {
             type="email"
             className={classNames(classes.textField, classes.root)}
             margin="normal"
-            onChange={e => setInputName(e.currentTarget.value)}
-            value={inputName}
+            onChange={e => setInputEmail(e.currentTarget.value)}
+            value={inputEmail}
             required={true}
           />
           <Button
             size="small"
             color="primary"
             onClick={() => {
-              setPlayers(players.concat(inputName));
-              setInputName("");
+              setPlayers(players.concat(new Player(inputEmail)));
+              setInputEmail("");
             }}
-            disabled={inputName.length < 1 ? true : false}
+            disabled={inputEmail.length < 1 ? true : false}
           >
             Add
           </Button>
