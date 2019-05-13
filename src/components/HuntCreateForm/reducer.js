@@ -1,4 +1,6 @@
 import { combineReducers } from "../../utils";
+import { addPlayer, removePlayer } from "../../models/team";
+import { Player, Team } from "../../models";
 
 export const initialState = {
   teams: [],
@@ -18,7 +20,7 @@ export default combineReducers({
   endDate
 });
 
-function teams(state = [], action) {
+export function teams(state = [], action) {
   switch (action.type) {
     case "remove_team":
       return state.filter(team => !team.equals(action.payload));
@@ -27,10 +29,10 @@ function teams(state = [], action) {
     case "change_players_team":
       return state.map(team => {
         if (team.hasPlayer(action.payload.player)) {
-          team.removePlayer(action.payload.player);
+          return new Team(team.name, removePlayer(team, action.payload.player));
         }
         if (team.equals(action.payload.team)) {
-          team.addPlayer(action.payload.player);
+          return new Team(team.name, addPlayer(team, action.payload.player));
         }
         return Object.assign({}, team);
       });
@@ -39,7 +41,7 @@ function teams(state = [], action) {
   }
 }
 
-function players(state = [], action) {
+export function players(state = [], action) {
   switch (action.type) {
     case "remove_player":
       return state.filter(player => !player.equals(action.payload));
@@ -48,7 +50,7 @@ function players(state = [], action) {
     case "change_players_team":
       return state.map(player => {
         if (player.equals(action.payload.player)) {
-          player.team(action.payload.team);
+          return new Player(player.email, { ...action.payload.team });
         }
         return Object.assign({}, player);
       });
@@ -57,7 +59,7 @@ function players(state = [], action) {
   }
 }
 
-function huntName(state = "", action) {
+export function huntName(state = "", action) {
   switch (action.type) {
     case "update_hunt_name":
       return action.payload;
@@ -66,7 +68,7 @@ function huntName(state = "", action) {
   }
 }
 
-function maxTeams(state = 0, action) {
+export function maxTeams(state = 0, action) {
   switch (action.type) {
     case "update_max_teams":
       return action.payload;
@@ -75,7 +77,7 @@ function maxTeams(state = 0, action) {
   }
 }
 
-function startDate(state = new Date(), action) {
+export function startDate(state = new Date(), action) {
   switch (action.type) {
     case "update_start":
       return action.payload;
@@ -84,7 +86,7 @@ function startDate(state = new Date(), action) {
   }
 }
 
-function endDate(state = new Date(), action) {
+export function endDate(state = new Date(), action) {
   switch (action.type) {
     case "update_end":
       return action.payload;

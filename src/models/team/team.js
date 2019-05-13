@@ -52,3 +52,11 @@ export default function Team(teamName, players) {
     }
   });
 }
+
+export function removePlayer(team, plr) {
+  return team.players.filter(player => !player.equals(plr));
+}
+
+export function addPlayer(team, plr) {
+  return team.players.concat(plr);
+}
