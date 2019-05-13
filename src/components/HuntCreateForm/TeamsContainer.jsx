@@ -37,7 +37,6 @@ function TeamsContainer(props) {
       return "";
     }
 
-    console.log(`max teams: ${maxTeams} num teams: ${teams.length}`);
     if (teams.length >= maxTeams) {
       return `Max number of teams is set to ${maxTeams}`;
     }
@@ -84,7 +83,7 @@ function TeamsContainer(props) {
               setTeams(teams.concat(inputName));
               setInputName("");
             }}
-            disabled={inputName.length < 1 || inErrorState ? true : false}
+            disabled={!inputName || inErrorState ? true : false}
           >
             Add
           </Button>
