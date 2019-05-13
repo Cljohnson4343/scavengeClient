@@ -57,3 +57,12 @@ test("hasPlayer identifies when a team doesn't have a player", () => {
   const newPlayer = new Player("up");
   expect(team.hasPlayer(newPlayer)).toBeFalsy();
 });
+
+test("team should contain copy of name", () => {
+  let teamName = "Bills";
+  const team = new Team(teamName);
+
+  teamName = "Fins";
+
+  expect(team.name !== teamName).toBeTruthy();
+});

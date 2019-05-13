@@ -1,5 +1,6 @@
-export default function Player(email) {
+export default function Player(email, team) {
   this._email = email || "";
+  this._team = team ? Object.assign({}, team) : null;
 
   Object.defineProperty(this, "email", {
     get: function() {
@@ -7,6 +8,15 @@ export default function Player(email) {
     },
     set: function(str) {
       this._email = str;
+    }
+  });
+
+  Object.defineProperty(this, "team", {
+    get: function() {
+      return this._team;
+    },
+    set: function(team) {
+      this._team = Object.assign({}, team);
     }
   });
 
