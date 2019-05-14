@@ -4,8 +4,7 @@ import { Button, List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
-import { Team } from "../../models";
-import { Player } from "../../models";
+import * as action from "./actions";
 
 const styles = theme => ({
   container: {
@@ -28,21 +27,8 @@ const styles = theme => ({
   }
 });
 
-function getTeam(teams, player) {
-  if (!teams) {
-    return null;
-  }
-  let ts = teams.filter(team => team.hasPlayer(player));
-
-  if (ts && ts.length > 0) {
-    return ts[0];
-  }
-
-  return null;
-}
-
 function PlayersContainer(props) {
-  const { classes, players, setPlayers, setTeams, teams } = props;
+  const { classes, dispatch, players, teams } = props;
 
   const [inputEmail, setInputEmail] = useState("");
 
@@ -51,17 +37,11 @@ function PlayersContainer(props) {
       <List dense={true} className={classes.list}>
         {players.map(player => (
           <PlayerListItem
-            player={player}
+            dispatch={dispatch}
+            email={player.email}
             key={player.email}
-            handleDeletePlayer={() => {
-              setPlayers(players.filter(plr => plr.equals(player)));
-            }}
-            handleUpdateTeamPlayers={updatedTeam => {
-              let ts = teams.filter(team => team.equals(updatedTeam));
-              setTeams(ts.concat(updatedTeam));
-            }}
             teams={teams}
-            team={getTeam(teams, player)}
+            teamName={player.team ? player.team.name : ""}
           />
         ))}
         <div className={classes.container}>
@@ -79,7 +59,7 @@ function PlayersContainer(props) {
             size="small"
             color="primary"
             onClick={() => {
-              setPlayers(players.concat(new Player(inputEmail)));
+              dispatch(action.addPlayer(inputEmail));
               setInputEmail("");
             }}
             disabled={inputEmail.length < 1 ? true : false}
@@ -95,10 +75,8 @@ function PlayersContainer(props) {
 PlayersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   players: PropTypes.array,
-  setPlayers: PropTypes.func.isRequired,
-  setTeams: PropTypes.func.isRequired,
-  teams: PropTypes.array,
-  team: PropTypes.instanceOf(Team)
+  dispatch: PropTypes.func.isRequired,
+  teams: PropTypes.array
 };
 
 export default withStyles(styles)(PlayersContainer);

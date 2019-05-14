@@ -5,7 +5,7 @@ import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
 import { uniqueLabel } from "../../utils";
-import { Team } from "../../models";
+import * as action from "./actions";
 
 const styles = theme => ({
   container: {
@@ -29,7 +29,7 @@ const styles = theme => ({
 });
 
 function TeamsContainer(props) {
-  const { classes, maxTeams, teams, setTeams } = props;
+  const { classes, dispatch, maxTeams, teams } = props;
   const teamNames = teams.map(team => team.name);
 
   const [inputName, setInputName] = useState("");
@@ -61,10 +61,8 @@ function TeamsContainer(props) {
           <TeamListItem
             name={team.name}
             key={team.name}
-            getLabel={uniqueLabel.bind(null, teamNames)}
-            handleDeleteItem={() => {
-              setTeams(teams.filter(t => !t.equals(team)));
-            }}
+            label={uniqueLabel(teamNames, team.name)}
+            dispatch={dispatch}
           />
         ))}
         <div className={classes.container}>
@@ -85,7 +83,7 @@ function TeamsContainer(props) {
             size="small"
             color="primary"
             onClick={() => {
-              setTeams(teams.concat(new Team(inputName)));
+              dispatch(action.addTeam(inputName));
               setInputName("");
             }}
             disabled={!inputName || inErrorState ? true : false}
@@ -100,9 +98,9 @@ function TeamsContainer(props) {
 
 TeamsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
   maxTeams: PropTypes.number,
-  teams: PropTypes.array,
-  setTeams: PropTypes.func.isRequired
+  teams: PropTypes.array
 };
 
 export default withStyles(styles)(TeamsContainer);

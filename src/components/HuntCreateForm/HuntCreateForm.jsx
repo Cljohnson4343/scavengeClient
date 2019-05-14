@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
+import reducer, { initialState } from "./reducer";
 
 const styles = theme => ({
   button: {
@@ -22,31 +23,26 @@ const styles = theme => ({
 function HuntCreateForm(props) {
   const { classes } = props;
 
-  const [teams, setTeams] = useState([]);
-  const [players, setPlayers] = useState([]);
-  const [huntName, setHuntName] = useState("");
-  const [maxTeams, setMaxTeams] = useState(null);
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div className={classes.container}>
       <HuntInfoForm
-        endTime={endTime}
-        huntName={huntName}
-        maxTeams={maxTeams}
-        setEndTime={setEndTime}
-        setHuntName={setHuntName}
-        setMaxTeams={setMaxTeams}
-        setStartTime={setStartTime}
-        startTime={startTime}
+        dispatch={dispatch}
+        endDate={state.endDate}
+        huntName={state.huntName}
+        maxTeams={state.maxTeams}
+        startDate={state.startDate}
       />
-      <TeamsContainer maxTeams={maxTeams} teams={teams} setTeams={setTeams} />
+      <TeamsContainer
+        dispatch={dispatch}
+        maxTeams={state.maxTeams}
+        teams={state.teams}
+      />
       <PlayersContainer
-        players={players}
-        setPlayers={setPlayers}
-        setTeams={setTeams}
-        teams={teams}
+        dispatch={dispatch}
+        players={state.players}
+        teams={state.teams}
       />
       <Fab />
     </div>

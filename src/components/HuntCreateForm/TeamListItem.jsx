@@ -9,6 +9,7 @@ import {
   ListItemSecondaryAction
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
+import * as action from "./actions";
 
 const styles = theme => ({
   secondary: {
@@ -17,16 +18,18 @@ const styles = theme => ({
 });
 
 function TeamListItem(props) {
-  const { classes, getLabel, handleDeleteItem, name } = props;
+  const { classes, dispatch, label, name } = props;
 
   return (
     <ListItem button disableGutters>
       <ListItemAvatar>
-        <Avatar>{getLabel(name)}</Avatar>
+        <Avatar>{label}</Avatar>
       </ListItemAvatar>
       <ListItemText primary={name} />
       <ListItemSecondaryAction className={classes.secondary}>
-        <DeleteItemButton handleDelete={handleDeleteItem} />
+        <DeleteItemButton
+          handleDelete={() => dispatch(action.removeTeam(name))}
+        />
       </ListItemSecondaryAction>
     </ListItem>
   );
@@ -34,8 +37,8 @@ function TeamListItem(props) {
 
 TeamListItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  getLabel: PropTypes.func.isRequired,
-  handleDeleteItem: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
 

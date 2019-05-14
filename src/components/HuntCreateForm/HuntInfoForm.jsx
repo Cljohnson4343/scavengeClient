@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { TextField, withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
+import * as action from "./actions";
 
 const styles = theme => ({
   container: {
@@ -28,17 +29,7 @@ const styles = theme => ({
 });
 
 function HuntInfoForm(props) {
-  const {
-    classes,
-    endTime,
-    huntName,
-    maxTeams,
-    setEndTime,
-    setHuntName,
-    setMaxTeams,
-    setStartTime,
-    startTime
-  } = props;
+  const { classes, dispatch, endDate, huntName, maxTeams, startDate } = props;
 
   return (
     <FormExpansion label="Hunt Info">
@@ -50,7 +41,9 @@ function HuntInfoForm(props) {
             type="text"
             className={classNames(classes.textField, classes.root)}
             margin="normal"
-            onChange={e => setHuntName(e.currentTarget.value)}
+            onChange={e =>
+              dispatch(action.updateHuntName(e.currentTarget.value))
+            }
             value={huntName}
             required={true}
           />
@@ -60,7 +53,9 @@ function HuntInfoForm(props) {
             type="number"
             className={classNames(classes.numberField, classes.root)}
             margin="normal"
-            onChange={e => setMaxTeams(Number(e.currentTarget.value))}
+            onChange={e =>
+              dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
+            }
             defaultValue={maxTeams}
             required={true}
           />
@@ -70,8 +65,10 @@ function HuntInfoForm(props) {
             type="datetime-local"
             className={classNames(classes.dateField, classes.root)}
             margin="normal"
-            onChange={e => setStartTime(e.currentTarget.value)}
-            value={startTime}
+            onChange={e =>
+              dispatch(action.updateStart(new Date(e.currentTarget.value)))
+            }
+            value={startDate.toLocaleDateString()}
             required={true}
           />
           <TextField
@@ -80,8 +77,10 @@ function HuntInfoForm(props) {
             type="datetime-local"
             className={classNames(classes.dateField, classes.root)}
             margin="normal"
-            onChange={e => setEndTime(e.currentTarget.value)}
-            value={endTime}
+            onChange={e =>
+              dispatch(action.updateEnd(new Date(e.currentTarget.value)))
+            }
+            value={endDate.toLocaleDateString()}
             required={true}
           />
         </div>
@@ -92,14 +91,11 @@ function HuntInfoForm(props) {
 
 HuntInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  endTime: PropTypes.instanceOf(Date),
+  dispatch: PropTypes.func.isRequired,
+  endDate: PropTypes.instanceOf(Date),
   huntName: PropTypes.string,
   maxTeams: PropTypes.number,
-  setEndTime: PropTypes.func.isRequired,
-  setHuntName: PropTypes.func.isRequired,
-  setMaxTeams: PropTypes.func.isRequired,
-  setStartTime: PropTypes.func.isRequired,
-  startTime: PropTypes.instanceOf(Date)
+  startDate: PropTypes.instanceOf(Date)
 };
 
 export default withStyles(styles)(HuntInfoForm);

@@ -15,6 +15,7 @@ const styles = {
     width: "100vw"
   }
 };
+
 class App extends Component {
   render() {
     const { classes } = this.props;

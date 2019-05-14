@@ -25,7 +25,7 @@ export function teams(state = [], action) {
     case "remove_team":
       return state.filter(team => !team.equals(action.payload));
     case "add_team":
-      return state.concat(state, action.payload);
+      return [...state, action.payload];
     case "change_players_team":
       return state.map(team => {
         if (team.hasPlayer(action.payload.player)) {
@@ -34,7 +34,7 @@ export function teams(state = [], action) {
         if (team.equals(action.payload.team)) {
           return new Team(team.name, addPlayer(team, action.payload.player));
         }
-        return Object.assign({}, team);
+        return new Team(team.name, team.players);
       });
     default:
       return state;
@@ -46,13 +46,13 @@ export function players(state = [], action) {
     case "remove_player":
       return state.filter(player => !player.equals(action.payload));
     case "add_player":
-      return state.concat(state, action.payload);
+      return [...state, action.payload];
     case "change_players_team":
       return state.map(player => {
         if (player.equals(action.payload.player)) {
           return new Player(player.email, action.payload.team);
         }
-        return Object.assign({}, player);
+        return new Player(player.email, player.team);
       });
     default:
       return state;
