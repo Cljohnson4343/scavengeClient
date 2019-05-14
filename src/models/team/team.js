@@ -1,3 +1,5 @@
+import Player from "../player";
+
 export default function Team(teamName, players) {
   if (!(this instanceof Team)) {
     return new Team(teamName, players);
@@ -37,8 +39,11 @@ Object.defineProperty(Team.prototype, "copy", {
 
 Object.defineProperty(Team.prototype, "addPlayer", {
   value: function(plr) {
-    let players = [...this._players, plr];
-    return new Team(this._name, players);
+    if (plr && plr instanceof Player) {
+      let players = [...this._players, plr];
+      return new Team(this._name, players);
+    }
+    return this.copy();
   }
 });
 
@@ -68,11 +73,3 @@ Object.defineProperty(Team.prototype, "equals", {
     return this._name === obj.name;
   }
 });
-
-export function removePlayer(team, plr) {
-  return team.players.filter(player => !player.equals(plr));
-}
-
-export function addPlayer(team, plr) {
-  return team.players.concat(plr);
-}

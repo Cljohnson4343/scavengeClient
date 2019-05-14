@@ -1,4 +1,4 @@
-import { uniqueLabel } from "./string";
+import { uniqueLabel } from "./label";
 
 test.each`
   name        | names                                                       | expected

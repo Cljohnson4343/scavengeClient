@@ -1,5 +1,4 @@
 import { combineReducers } from "../../utils";
-import { addPlayer, removePlayer } from "../../models/team";
 import { Player, Team } from "../../models";
 
 export const initialState = {
@@ -28,13 +27,11 @@ export function teams(state = [], action) {
       return [...state, action.payload];
     case "change_players_team":
       return state.map(team => {
-        if (team.hasPlayer(action.payload.player)) {
-          return new Team(team.name, removePlayer(team, action.payload.player));
-        }
         if (team.equals(action.payload.team)) {
-          return new Team(team.name, addPlayer(team, action.payload.player));
+          return team.addPlayer(action.payload.player);
+        } else {
+          return team.removePlayer(action.payload.player);
         }
-        return new Team(team.name, team.players);
       });
     default:
       return state;

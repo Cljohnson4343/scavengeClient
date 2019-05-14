@@ -66,9 +66,9 @@ describe("teams", () => {
 
   describe("action changePlayersTeam", () => {
     test("should remove a player from team's player list", () => {
-      const bills = new Team("bills");
+      let bills = new Team("bills");
       const testPlayer = new Player("cj@gmail.com", bills);
-      bills.addPlayer(testPlayer);
+      bills = bills.addPlayer(testPlayer);
 
       const testState = [bills];
       const action = actions.changePlayersTeam("cj@gmail.com", "fins");
