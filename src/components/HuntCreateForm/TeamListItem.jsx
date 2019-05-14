@@ -18,12 +18,12 @@ const styles = theme => ({
 });
 
 function TeamListItem(props) {
-  const { classes, dispatch, label, name } = props;
+  const { avatarColor, classes, dispatch, label, name } = props;
 
   return (
     <ListItem button disableGutters>
       <ListItemAvatar>
-        <Avatar>{label}</Avatar>
+        <Avatar style={{ backgroundColor: avatarColor }}>{label}</Avatar>
       </ListItemAvatar>
       <ListItemText primary={name} />
       <ListItemSecondaryAction className={classes.secondary}>
@@ -36,6 +36,7 @@ function TeamListItem(props) {
 }
 
 TeamListItem.propTypes = {
+  avatarColor: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,

@@ -15,3 +15,17 @@ export function validateHuntDates(start, end) {
 
   return "";
 }
+
+const MinTeams = 1;
+const MaxTeams = 19;
+
+export function validateMaxTeams(numTeams) {
+  if (numTeams < MinTeams) {
+    return `Max teams must be at least ${MinTeams}`;
+  }
+
+  if (numTeams > MaxTeams) {
+    return `Max teams must be less than ${MaxTeams}`;
+  }
+  return "";
+}

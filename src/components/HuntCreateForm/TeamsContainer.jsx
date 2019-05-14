@@ -4,7 +4,7 @@ import { Button, List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
-import { uniqueLabel } from "../../utils";
+import { avatarColors, uniqueLabel } from "../../utils";
 import * as action from "./actions";
 
 const styles = theme => ({
@@ -33,7 +33,7 @@ const styles = theme => ({
 });
 
 function TeamsContainer(props) {
-  const { classes, dispatch, maxTeams, teams } = props;
+  const { classes, dispatch, huntName, maxTeams, teams } = props;
   const teamNames = teams.map(team => team.name);
 
   const [inputName, setInputName] = useState("");
@@ -58,11 +58,14 @@ function TeamsContainer(props) {
   const errMsg = validateTeamName(inputName);
   const nameInErrState = errMsg && errMsg.length > 0;
 
+  const colors = avatarColors(huntName, teams ? teams.length : 0);
+
   return (
     <FormExpansion label="Teams">
       <List dense={true} className={classes.list}>
-        {teams.map(team => (
+        {teams.map((team, index) => (
           <TeamListItem
+            avatarColor={colors[index]}
             name={team.name}
             key={team.name}
             label={uniqueLabel(teamNames, team.name)}
@@ -104,6 +107,7 @@ function TeamsContainer(props) {
 TeamsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  huntName: PropTypes.string.isRequired,
   maxTeams: PropTypes.number,
   teams: PropTypes.array
 };

@@ -4,7 +4,11 @@ import { TextField, withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "./actions";
-import { toDateTimeLocal, validateHuntDates } from "../../utils";
+import {
+  toDateTimeLocal,
+  validateHuntDates,
+  validateMaxTeams
+} from "../../utils";
 
 const styles = theme => ({
   container: {
@@ -36,7 +40,8 @@ const styles = theme => ({
 function HuntInfoForm(props) {
   const { classes, dispatch, endDate, huntName, maxTeams, startDate } = props;
 
-  const maxTeamsInErrState = maxTeams < 1 ? true : false;
+  const maxTeamsErrMsg = validateMaxTeams(maxTeams);
+  const maxTeamsInErrState = Boolean(maxTeamsErrMsg) ? true : false;
 
   const huntDateErrMsg = validateHuntDates(startDate, endDate);
   const huntDateInErrState = Boolean(huntDateErrMsg) ? true : false;
@@ -66,7 +71,7 @@ function HuntInfoForm(props) {
             className={classNames(classes.numberField, classes.root)}
             error={maxTeamsInErrState ? true : false}
             FormHelperTextProps={maxTeamsInErrState ? { error: true } : null}
-            helperText={maxTeamsInErrState ? "Must have 1 or more teams" : null}
+            helperText={maxTeamsInErrState ? maxTeamsErrMsg : null}
             margin="normal"
             onChange={e =>
               dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))

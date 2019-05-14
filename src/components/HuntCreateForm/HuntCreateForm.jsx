@@ -17,6 +17,12 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     marginTop: theme.spacing(2)
+  },
+  heading: {
+    color: theme.palette.primary.main,
+    fontSize: `${theme.typography.fontSize * 2}px`,
+    fontWeight: theme.typography.fontWeightMedium,
+    margin: `${theme.spacing(1)}px`
   }
 });
 
@@ -27,6 +33,7 @@ function HuntCreateForm(props) {
 
   return (
     <div className={classes.container}>
+      <div className={classes.heading}>Create Hunt</div>
       <HuntInfoForm
         dispatch={dispatch}
         endDate={state.endDate}
@@ -36,6 +43,7 @@ function HuntCreateForm(props) {
       />
       <TeamsContainer
         dispatch={dispatch}
+        huntName={state.huntName}
         maxTeams={state.maxTeams}
         teams={state.teams}
       />
