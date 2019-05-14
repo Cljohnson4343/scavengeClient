@@ -43,6 +43,7 @@ function TeamsContainer(props) {
     teams
   } = props;
   const teamNames = teams.map(team => team.name);
+  const numTeams = teams ? teams.length : 0;
 
   const [inputName, setInputName] = useState("");
 
@@ -72,7 +73,7 @@ function TeamsContainer(props) {
   return (
     <FormExpansion
       inError={teamErr.inError || containerError.inError}
-      label="Teams"
+      label={`Teams (${numTeams}/${maxTeams})`}
     >
       <List dense={true} className={classes.list}>
         {teams.map((team, index) => (

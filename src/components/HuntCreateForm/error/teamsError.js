@@ -1,4 +1,3 @@
-import { inError, msg } from "./error";
 import { Error } from "../../../utils";
 
 export function TeamsError(state) {

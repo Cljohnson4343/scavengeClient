@@ -34,13 +34,17 @@ const styles = theme => ({
 
 function PlayersContainer(props) {
   const { classes, dispatch, players, teams } = props;
+  const numPlayers = players ? players.length : 0;
 
   const [inputEmail, setInputEmail] = useState("");
 
   const emailError = validateEmail(inputEmail);
 
   return (
-    <FormExpansion inError={false} label="Players">
+    <FormExpansion
+      inError={emailError.inError && Boolean(inputEmail)}
+      label={`Players (${numPlayers})`}
+    >
       <List dense={true} className={classes.list}>
         {players.map(player => (
           <PlayerListItem
