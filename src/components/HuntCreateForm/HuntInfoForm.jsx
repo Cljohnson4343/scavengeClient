@@ -4,6 +4,7 @@ import { TextField, withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "./actions";
+import { toDateTimeLocal } from "../../utils";
 
 const styles = theme => ({
   container: {
@@ -76,10 +77,10 @@ function HuntInfoForm(props) {
             classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
             margin="normal"
-            onChange={e =>
-              dispatch(action.updateStart(new Date(e.currentTarget.value)))
-            }
-            value={startDate.toLocaleTimeString("en-US")}
+            onChange={e => {
+              dispatch(action.updateStart(new Date(e.currentTarget.value)));
+            }}
+            value={toDateTimeLocal(startDate)}
             required={true}
           />
           <TextField
@@ -92,7 +93,7 @@ function HuntInfoForm(props) {
             onChange={e =>
               dispatch(action.updateEnd(new Date(e.currentTarget.value)))
             }
-            value={endDate.toLocaleTimeString("en-US")}
+            value={toDateTimeLocal(endDate)}
             required={true}
           />
         </div>

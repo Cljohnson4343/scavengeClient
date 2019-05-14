@@ -72,7 +72,7 @@ function PlayersContainer(props) {
               dispatch(action.addPlayer(inputEmail));
               setInputEmail("");
             }}
-            disabled={inErrorState && inputEmail ? true : false}
+            disabled={inErrorState || !Boolean(inputEmail) ? true : false}
           >
             Add
           </Button>
