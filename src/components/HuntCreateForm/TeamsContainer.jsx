@@ -4,8 +4,9 @@ import { Button, List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
-import { avatarColors, uniqueLabel } from "../../utils";
+import { avatarColors, Error, uniqueLabel } from "../../utils";
 import * as action from "./actions";
+import { TeamsError } from "./error";
 
 const styles = theme => ({
   container: {
@@ -33,35 +34,46 @@ const styles = theme => ({
 });
 
 function TeamsContainer(props) {
-  const { classes, dispatch, huntName, maxTeams, teams } = props;
+  const {
+    classes,
+    containerError,
+    dispatch,
+    huntName,
+    maxTeams,
+    teams
+  } = props;
   const teamNames = teams.map(team => team.name);
 
   const [inputName, setInputName] = useState("");
 
   function validateTeamName(name) {
     if (!name) {
-      return "";
+      return new Error();
     }
 
     if (teams.length >= maxTeams) {
-      return `Max number of teams is set to ${maxTeams}`;
+      return new Error(`Max number of teams is set to ${maxTeams}`);
     }
 
     const tns = teamNames.map(n => n.toLowerCase());
     const inputNameLower = inputName.toLowerCase();
 
     if (tns.includes(inputNameLower)) {
-      return `${inputName} is already used.`;
+      return new Error(`${inputName} is already used.`);
     }
+    return new Error();
   }
 
-  const errMsg = validateTeamName(inputName);
-  const nameInErrState = errMsg && errMsg.length > 0;
+  const teamErr = validateTeamName(inputName);
 
   const colors = avatarColors(huntName, teams ? teams.length : 0);
 
+  console.log(`teamErr: ${teamErr} containerError: ${containerError.msg}`);
   return (
-    <FormExpansion inError={false} label="Teams">
+    <FormExpansion
+      inError={teamErr.inError || containerError.inError}
+      label="Teams"
+    >
       <List dense={true} className={classes.list}>
         {teams.map((team, index) => (
           <TeamListItem
@@ -75,7 +87,7 @@ function TeamsContainer(props) {
         <div className={classes.container}>
           <TextField
             id="team_name"
-            error={nameInErrState ? true : null}
+            error={teamErr.inError ? true : null}
             label="Name"
             type="text"
             classes={{ root: classes.font }}
@@ -83,8 +95,8 @@ function TeamsContainer(props) {
             margin="normal"
             onChange={e => setInputName(e.currentTarget.value)}
             value={inputName}
-            FormHelperTextProps={nameInErrState ? { error: true } : null}
-            helperText={nameInErrState ? errMsg : null}
+            FormHelperTextProps={teamErr.inError ? { error: true } : null}
+            helperText={teamErr.msg}
             required={true}
           />
           <Button
@@ -94,7 +106,7 @@ function TeamsContainer(props) {
               dispatch(action.addTeam(inputName));
               setInputName("");
             }}
-            disabled={!inputName || nameInErrState ? true : false}
+            disabled={!inputName || teamErr.inError ? true : false}
           >
             Add
           </Button>
@@ -106,6 +118,7 @@ function TeamsContainer(props) {
 
 TeamsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
+  containerError: PropTypes.instanceOf(TeamsError).isRequired,
   dispatch: PropTypes.func.isRequired,
   huntName: PropTypes.string.isRequired,
   maxTeams: PropTypes.number,

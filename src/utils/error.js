@@ -4,10 +4,8 @@ export function Error(msg) {
   }
 
   if (msg && typeof msg === "string") {
-    this._inError = true;
     this._msg = msg;
   } else {
-    this._inError = false;
     this._msg = null;
   }
 }
@@ -16,7 +14,7 @@ const e = Error.prototype;
 
 Object.defineProperty(e, "inError", {
   get: function() {
-    return this._inError;
+    return Boolean(this._msg);
   }
 });
 

@@ -45,6 +45,7 @@ function HuntCreateForm(props) {
         startDate={state.startDate}
       />
       <TeamsContainer
+        containerError={formError.teamsError}
         dispatch={dispatch}
         huntName={state.huntName}
         maxTeams={state.maxTeams}

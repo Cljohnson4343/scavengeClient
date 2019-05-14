@@ -29,6 +29,12 @@ Object.defineProperty(c, "huntInfoError", {
   }
 });
 
+Object.defineProperty(c, "teamsError", {
+  get: function() {
+    return this._state.teams;
+  }
+});
+
 Object.defineProperty(c, "msg", {
   get: function() {
     return msg(this._state);
