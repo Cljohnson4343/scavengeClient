@@ -37,7 +37,7 @@ function PlayersContainer(props) {
 
   const [inputEmail, setInputEmail] = useState("");
 
-  const inErrorState = inputEmail ? !validateEmail(inputEmail) : false;
+  const emailError = validateEmail(inputEmail);
 
   return (
     <FormExpansion label="Players">
@@ -58,12 +58,14 @@ function PlayersContainer(props) {
             type="email"
             classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
-            error={inErrorState ? true : null}
+            error={emailError.inError && Boolean(inputEmail) ? true : null}
             margin="normal"
             onChange={e => setInputEmail(e.currentTarget.value)}
             value={inputEmail}
-            FormHelperTextProps={inErrorState ? { error: true } : null}
-            helperText={inErrorState ? "Must be valid email" : null}
+            FormHelperTextProps={
+              emailError.inError && Boolean(inputEmail) ? { error: true } : null
+            }
+            helperText={emailError.msg}
             required={true}
           />
           <Button
@@ -73,7 +75,7 @@ function PlayersContainer(props) {
               dispatch(action.addPlayer(inputEmail));
               setInputEmail("");
             }}
-            disabled={inErrorState || !Boolean(inputEmail) ? true : false}
+            disabled={emailError.inError || !Boolean(inputEmail) ? true : false}
           >
             Add
           </Button>

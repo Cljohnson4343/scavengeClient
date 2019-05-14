@@ -4,7 +4,10 @@ export { avatarColors, uniqueLabel } from "./label";
 export { combineReducers } from "./reducers";
 export {
   validateEmail,
-  validateHuntDates,
-  validateMaxTeams
+  validateEndDate,
+  validateHuntName,
+  validateMaxTeams,
+  validateStartDate
 } from "./validation";
 export { toDateTimeLocal } from "./date";
+export { Error } from "./error";

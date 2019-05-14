@@ -4,11 +4,8 @@ import { TextField, withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "./actions";
-import {
-  toDateTimeLocal,
-  validateHuntDates,
-  validateMaxTeams
-} from "../../utils";
+import { toDateTimeLocal } from "../../utils";
+import { HuntInfoError } from "./error";
 
 const styles = theme => ({
   container: {
@@ -38,13 +35,15 @@ const styles = theme => ({
 });
 
 function HuntInfoForm(props) {
-  const { classes, dispatch, endDate, huntName, maxTeams, startDate } = props;
-
-  const maxTeamsErrMsg = validateMaxTeams(maxTeams);
-  const maxTeamsInErrState = Boolean(maxTeamsErrMsg) ? true : false;
-
-  const huntDateErrMsg = validateHuntDates(startDate, endDate);
-  const huntDateInErrState = Boolean(huntDateErrMsg) ? true : false;
+  const {
+    classes,
+    dispatch,
+    endDate,
+    huntName,
+    infoFormError,
+    maxTeams,
+    startDate
+  } = props;
 
   return (
     <FormExpansion label="Hunt Info">
@@ -56,6 +55,11 @@ function HuntInfoForm(props) {
             type="text"
             classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
+            error={infoFormError.huntName.inError ? true : false}
+            FormHelperTextProps={
+              infoFormError.huntName.inError ? { error: true } : null
+            }
+            helperText={infoFormError.huntName.msg}
             margin="normal"
             onChange={e =>
               dispatch(action.updateHuntName(e.currentTarget.value))
@@ -69,9 +73,11 @@ function HuntInfoForm(props) {
             type="number"
             classes={{ root: classes.font }}
             className={classNames(classes.numberField, classes.root)}
-            error={maxTeamsInErrState ? true : false}
-            FormHelperTextProps={maxTeamsInErrState ? { error: true } : null}
-            helperText={maxTeamsInErrState ? maxTeamsErrMsg : null}
+            error={infoFormError.maxTeams.inError ? true : false}
+            FormHelperTextProps={
+              infoFormError.maxTeams.inError ? { error: true } : null
+            }
+            helperText={infoFormError.maxTeams.msg}
             margin="normal"
             onChange={e =>
               dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
@@ -85,9 +91,11 @@ function HuntInfoForm(props) {
             type="datetime-local"
             classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
-            error={huntDateInErrState ? true : false}
-            FormHelperTextProps={huntDateInErrState ? { error: true } : null}
-            helperText={huntDateInErrState ? huntDateErrMsg : null}
+            error={infoFormError.startDate.inError ? true : false}
+            FormHelperTextProps={
+              infoFormError.startDate.inError ? { error: true } : null
+            }
+            helperText={infoFormError.startDate.msg}
             margin="normal"
             onChange={e => {
               dispatch(action.updateStart(new Date(e.currentTarget.value)));
@@ -101,9 +109,11 @@ function HuntInfoForm(props) {
             type="datetime-local"
             classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
-            error={huntDateInErrState ? true : false}
-            FormHelperTextProps={huntDateInErrState ? { error: true } : null}
-            helperText={huntDateInErrState ? huntDateErrMsg : null}
+            error={infoFormError.endDate.inError ? true : false}
+            FormHelperTextProps={
+              infoFormError.endDate.inError ? { error: true } : null
+            }
+            helperText={infoFormError.endDate.msg}
             margin="normal"
             onChange={e =>
               dispatch(action.updateEnd(new Date(e.currentTarget.value)))
@@ -122,6 +132,7 @@ HuntInfoForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   endDate: PropTypes.instanceOf(Date),
   huntName: PropTypes.string,
+  infoFormError: PropTypes.instanceOf(HuntInfoError).isRequired,
   maxTeams: PropTypes.number,
   startDate: PropTypes.instanceOf(Date)
 };

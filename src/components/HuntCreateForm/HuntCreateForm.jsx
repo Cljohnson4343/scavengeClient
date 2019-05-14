@@ -6,6 +6,7 @@ import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
 import reducer, { initialState } from "./reducer";
+import { CreateHuntFormError } from "./error";
 
 const styles = theme => ({
   button: {
@@ -30,11 +31,13 @@ function HuntCreateForm(props) {
   const { classes } = props;
 
   const [state, dispatch] = useReducer(reducer, initialState);
+  const formError = CreateHuntFormError(state);
 
   return (
     <div className={classes.container}>
       <div className={classes.heading}>Create Hunt</div>
       <HuntInfoForm
+        infoFormError={formError.huntInfoError}
         dispatch={dispatch}
         endDate={state.endDate}
         huntName={state.huntName}

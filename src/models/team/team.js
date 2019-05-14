@@ -9,13 +9,15 @@ export default function Team(teamName, players) {
   this._players = players && players instanceof Array ? players.slice(0) : [];
 }
 
-Object.defineProperty(Team.prototype, "name", {
+const t = Team.prototype;
+
+Object.defineProperty(t, "name", {
   get: function() {
     return this._name;
   }
 });
 
-Object.defineProperty(Team.prototype, "changeName", {
+Object.defineProperty(t, "changeName", {
   value: function(name) {
     if (name && typeof name === "string") {
       return new Team(name, this._players);
@@ -25,19 +27,19 @@ Object.defineProperty(Team.prototype, "changeName", {
   }
 });
 
-Object.defineProperty(Team.prototype, "players", {
+Object.defineProperty(t, "players", {
   get: function() {
     return this._players;
   }
 });
 
-Object.defineProperty(Team.prototype, "copy", {
+Object.defineProperty(t, "copy", {
   value: function() {
     return new Team(this._name, this._players);
   }
 });
 
-Object.defineProperty(Team.prototype, "addPlayer", {
+Object.defineProperty(t, "addPlayer", {
   value: function(plr) {
     if (plr && plr instanceof Player) {
       let players = [...this._players, plr];
@@ -47,14 +49,14 @@ Object.defineProperty(Team.prototype, "addPlayer", {
   }
 });
 
-Object.defineProperty(Team.prototype, "removePlayer", {
+Object.defineProperty(t, "removePlayer", {
   value: function(plr) {
     let players = this._players.filter(player => !player.equals(plr));
     return new Team(this._name, players);
   }
 });
 
-Object.defineProperty(Team.prototype, "hasPlayer", {
+Object.defineProperty(t, "hasPlayer", {
   value: function(plr) {
     let ps = this._players.filter(player => player.equals(plr));
     if (ps && ps.length > 0) {
@@ -64,7 +66,7 @@ Object.defineProperty(Team.prototype, "hasPlayer", {
   }
 });
 
-Object.defineProperty(Team.prototype, "equals", {
+Object.defineProperty(t, "equals", {
   value: function(obj) {
     if (!(obj instanceof Team)) {
       return false;
