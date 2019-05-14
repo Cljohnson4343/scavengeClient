@@ -5,6 +5,7 @@ import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
 import * as action from "./actions";
+import { validateEmail } from "../../utils";
 
 const styles = theme => ({
   container: {
@@ -35,6 +36,8 @@ function PlayersContainer(props) {
 
   const [inputEmail, setInputEmail] = useState("");
 
+  const inErrorState = inputEmail ? !validateEmail(inputEmail) : false;
+
   return (
     <FormExpansion label="Players">
       <List dense={true} className={classes.list}>
@@ -54,9 +57,12 @@ function PlayersContainer(props) {
             type="email"
             classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
+            error={inErrorState ? true : null}
             margin="normal"
             onChange={e => setInputEmail(e.currentTarget.value)}
             value={inputEmail}
+            FormHelperTextProps={inErrorState ? { error: true } : null}
+            helperText={inErrorState ? "Must be valid email" : null}
             required={true}
           />
           <Button
@@ -66,7 +72,7 @@ function PlayersContainer(props) {
               dispatch(action.addPlayer(inputEmail));
               setInputEmail("");
             }}
-            disabled={inputEmail.length < 1 ? true : false}
+            disabled={inErrorState && inputEmail ? true : false}
           >
             Add
           </Button>

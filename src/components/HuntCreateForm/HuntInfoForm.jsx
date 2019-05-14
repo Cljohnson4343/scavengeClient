@@ -61,7 +61,7 @@ function HuntInfoForm(props) {
             onChange={e =>
               dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
             }
-            defaultValue={maxTeams}
+            value={maxTeams}
             required={true}
           />
           <TextField
@@ -74,7 +74,7 @@ function HuntInfoForm(props) {
             onChange={e =>
               dispatch(action.updateStart(new Date(e.currentTarget.value)))
             }
-            value={startDate.toLocaleDateString()}
+            value={startDate.toLocaleTimeString("en-US")}
             required={true}
           />
           <TextField
@@ -87,7 +87,7 @@ function HuntInfoForm(props) {
             onChange={e =>
               dispatch(action.updateEnd(new Date(e.currentTarget.value)))
             }
-            value={endDate.toLocaleDateString()}
+            value={endDate.toLocaleTimeString("en-US")}
             required={true}
           />
         </div>
