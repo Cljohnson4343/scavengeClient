@@ -6,7 +6,7 @@ export const initialState = {
   teams: [],
   players: [],
   huntName: "",
-  maxTeams: 0,
+  maxTeams: 1,
   startDate: new Date(),
   endDate: new Date()
 };
@@ -68,7 +68,7 @@ export function huntName(state = "", action) {
   }
 }
 
-export function maxTeams(state = 0, action) {
+export function maxTeams(state = 1, action) {
   switch (action.type) {
     case "update_max_teams":
       return action.payload;

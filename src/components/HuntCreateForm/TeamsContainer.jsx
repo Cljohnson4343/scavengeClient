@@ -55,7 +55,7 @@ function TeamsContainer(props) {
   }
 
   const errMsg = validateTeamName(inputName);
-  const inErrorState = errMsg && errMsg.length > 0;
+  const nameInErrState = errMsg && errMsg.length > 0;
 
   return (
     <FormExpansion label="Teams">
@@ -71,7 +71,7 @@ function TeamsContainer(props) {
         <div className={classes.container}>
           <TextField
             id="team_name"
-            error={inErrorState ? true : null}
+            error={nameInErrState ? true : null}
             label="Name"
             type="text"
             classes={{ root: classes.font }}
@@ -79,8 +79,8 @@ function TeamsContainer(props) {
             margin="normal"
             onChange={e => setInputName(e.currentTarget.value)}
             value={inputName}
-            FormHelperTextProps={inErrorState ? { error: true } : null}
-            helperText={inErrorState ? errMsg : null}
+            FormHelperTextProps={nameInErrState ? { error: true } : null}
+            helperText={nameInErrState ? errMsg : null}
             required={true}
           />
           <Button
@@ -90,7 +90,7 @@ function TeamsContainer(props) {
               dispatch(action.addTeam(inputName));
               setInputName("");
             }}
-            disabled={!inputName || inErrorState ? true : false}
+            disabled={!inputName || nameInErrState ? true : false}
           >
             Add
           </Button>

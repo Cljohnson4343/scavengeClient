@@ -34,6 +34,8 @@ const styles = theme => ({
 function HuntInfoForm(props) {
   const { classes, dispatch, endDate, huntName, maxTeams, startDate } = props;
 
+  const maxTeamsInErrState = maxTeams < 1 ? true : false;
+
   return (
     <FormExpansion label="Hunt Info">
       <form classes={classes.container}>
@@ -57,6 +59,9 @@ function HuntInfoForm(props) {
             type="number"
             classes={{ root: classes.font }}
             className={classNames(classes.numberField, classes.root)}
+            error={maxTeamsInErrState ? true : false}
+            FormHelperTextProps={maxTeamsInErrState ? { error: true } : null}
+            helperText={maxTeamsInErrState ? "Must have 1 or more teams" : null}
             margin="normal"
             onChange={e =>
               dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
