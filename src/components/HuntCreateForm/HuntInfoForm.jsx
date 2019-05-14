@@ -15,6 +15,9 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     width: 200
   },
+  font: {
+    fontWeight: theme.typography.fontWeightLight
+  },
   numberField: {
     width: 150
   },
@@ -39,6 +42,7 @@ function HuntInfoForm(props) {
             id="hunt_name"
             label="Hunt Name"
             type="text"
+            classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
             margin="normal"
             onChange={e =>
@@ -51,6 +55,7 @@ function HuntInfoForm(props) {
             id="max_teams"
             label="Max Teams"
             type="number"
+            classes={{ root: classes.font }}
             className={classNames(classes.numberField, classes.root)}
             margin="normal"
             onChange={e =>
@@ -63,6 +68,7 @@ function HuntInfoForm(props) {
             id="start_time"
             label="Start Time"
             type="datetime-local"
+            classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
             margin="normal"
             onChange={e =>
@@ -75,6 +81,7 @@ function HuntInfoForm(props) {
             id="end_time"
             label="End Time"
             type="datetime-local"
+            classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
             margin="normal"
             onChange={e =>

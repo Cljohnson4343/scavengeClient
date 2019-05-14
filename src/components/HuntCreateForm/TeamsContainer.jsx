@@ -12,6 +12,9 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
+  font: {
+    fontWeight: theme.typography.fontWeightLight
+  },
   list: {
     width: `100%`,
     maxWidth: `400px`
@@ -71,6 +74,7 @@ function TeamsContainer(props) {
             error={inErrorState ? true : null}
             label="Name"
             type="text"
+            classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
             margin="normal"
             onChange={e => setInputName(e.currentTarget.value)}

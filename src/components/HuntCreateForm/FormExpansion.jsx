@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
+  Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -13,6 +14,9 @@ import { grey } from "@material-ui/core/colors";
 const styles = theme => ({
   details: {
     padding: `0px ${theme.spacing(2)}px`
+  },
+  divider: {
+    color: theme.palette.primary.main
   },
   expanded: {
     backgroundColor: grey[100],
@@ -44,6 +48,7 @@ function FormExpansion(props) {
           {props.label}
         </Typography>
       </ExpansionPanelSummary>
+      {isOpen && <Divider className={classes.divider} variant="middle" />}
       <ExpansionPanelDetails className={classes.details}>
         {props.children}
       </ExpansionPanelDetails>

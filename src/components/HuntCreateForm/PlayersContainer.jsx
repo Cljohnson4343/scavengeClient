@@ -11,6 +11,9 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
+  font: {
+    fontWeight: theme.typography.fontWeightLight
+  },
   list: {
     width: `100%`,
     maxWidth: `400px`
@@ -49,6 +52,7 @@ function PlayersContainer(props) {
             id="email"
             label="Email"
             type="email"
+            classes={{ root: classes.font }}
             className={classNames(classes.textField, classes.root)}
             margin="normal"
             onChange={e => setInputEmail(e.currentTarget.value)}

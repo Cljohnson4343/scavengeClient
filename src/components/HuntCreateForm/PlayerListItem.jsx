@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import {
   FormControl,
-  FormHelperText,
   Input,
   InputLabel,
   ListItem,
@@ -18,6 +17,10 @@ import * as action from "./actions";
 const styles = theme => ({
   secondary: {
     right: theme.spacing(1)
+  },
+  select: {
+    width: `100px`,
+    marginRight: theme.spacing(3)
   }
 });
 
@@ -27,7 +30,7 @@ function PlayerListItem(props) {
   return (
     <ListItem button disableGutters>
       <ListItemText primary={email} />
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.select}>
         <InputLabel htmlFor="team-helper">Team</InputLabel>
         <Select
           onChange={e => {
@@ -44,7 +47,6 @@ function PlayerListItem(props) {
               </MenuItem>
             ))}
         </Select>
-        <FormHelperText>Select the team for this player</FormHelperText>
       </FormControl>
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
