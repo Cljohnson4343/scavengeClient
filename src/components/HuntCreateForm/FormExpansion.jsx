@@ -18,6 +18,9 @@ const styles = theme => ({
   divider: {
     color: theme.palette.primary.main
   },
+  error: {
+    color: theme.palette.error.main
+  },
   expanded: {
     backgroundColor: grey[100],
     marginTop: theme.spacing(1)
@@ -28,9 +31,11 @@ const styles = theme => ({
 });
 
 function FormExpansion(props) {
-  const { classes } = props;
+  const { classes, label, inError } = props;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const colorObj = inError ? classes.error : isOpen ? classes.heading : null;
 
   return (
     <ExpansionPanel
@@ -40,13 +45,9 @@ function FormExpansion(props) {
       onChange={e => setIsOpen(!isOpen)}
     >
       <ExpansionPanelSummary
-        expandIcon={
-          <ExpandMoreIcon classes={isOpen ? { root: classes.heading } : null} />
-        }
+        expandIcon={<ExpandMoreIcon classes={{ root: colorObj }} />}
       >
-        <Typography className={isOpen ? classes.heading : null}>
-          {props.label}
-        </Typography>
+        <Typography className={colorObj}>{label}</Typography>
       </ExpansionPanelSummary>
       {isOpen && <Divider className={classes.divider} variant="middle" />}
       <ExpansionPanelDetails className={classes.details}>
@@ -58,6 +59,7 @@ function FormExpansion(props) {
 
 FormExpansion.propTypes = {
   classes: PropTypes.object.isRequired,
+  inError: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired
 };
 

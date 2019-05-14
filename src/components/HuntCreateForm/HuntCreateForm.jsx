@@ -55,7 +55,7 @@ function HuntCreateForm(props) {
         players={state.players}
         teams={state.teams}
       />
-      <Fab />
+      <Fab inError={formError.inError} />
     </div>
   );
 }

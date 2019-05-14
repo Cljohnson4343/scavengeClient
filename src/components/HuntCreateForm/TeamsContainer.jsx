@@ -61,7 +61,7 @@ function TeamsContainer(props) {
   const colors = avatarColors(huntName, teams ? teams.length : 0);
 
   return (
-    <FormExpansion label="Teams">
+    <FormExpansion inError={false} label="Teams">
       <List dense={true} className={classes.list}>
         {teams.map((team, index) => (
           <TeamListItem

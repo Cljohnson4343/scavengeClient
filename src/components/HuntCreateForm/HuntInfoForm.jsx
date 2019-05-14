@@ -46,7 +46,7 @@ function HuntInfoForm(props) {
   } = props;
 
   return (
-    <FormExpansion label="Hunt Info">
+    <FormExpansion inError={infoFormError.inError} label="Hunt Info">
       <form classes={classes.container}>
         <div className={classes.container}>
           <TextField
