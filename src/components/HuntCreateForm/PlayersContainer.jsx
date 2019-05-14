@@ -17,6 +17,7 @@ const styles = theme => ({
   },
   list: {
     width: `100%`,
+    paddingTop: `0px`,
     maxWidth: `400px`
   },
   root: {

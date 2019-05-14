@@ -4,7 +4,7 @@ import { TextField, withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "./actions";
-import { toDateTimeLocal } from "../../utils";
+import { toDateTimeLocal, validateHuntDates } from "../../utils";
 
 const styles = theme => ({
   container: {
@@ -25,7 +25,8 @@ const styles = theme => ({
   root: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    marginTop: `0px`
+    marginTop: `0px`,
+    paddingBottom: theme.spacing(1)
   },
   textField: {
     width: 220
@@ -36,6 +37,9 @@ function HuntInfoForm(props) {
   const { classes, dispatch, endDate, huntName, maxTeams, startDate } = props;
 
   const maxTeamsInErrState = maxTeams < 1 ? true : false;
+
+  const huntDateErrMsg = validateHuntDates(startDate, endDate);
+  const huntDateInErrState = Boolean(huntDateErrMsg) ? true : false;
 
   return (
     <FormExpansion label="Hunt Info">
@@ -76,6 +80,9 @@ function HuntInfoForm(props) {
             type="datetime-local"
             classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
+            error={huntDateInErrState ? true : false}
+            FormHelperTextProps={huntDateInErrState ? { error: true } : null}
+            helperText={huntDateInErrState ? huntDateErrMsg : null}
             margin="normal"
             onChange={e => {
               dispatch(action.updateStart(new Date(e.currentTarget.value)));
@@ -89,6 +96,9 @@ function HuntInfoForm(props) {
             type="datetime-local"
             classes={{ root: classes.font }}
             className={classNames(classes.dateField, classes.root)}
+            error={huntDateInErrState ? true : false}
+            FormHelperTextProps={huntDateInErrState ? { error: true } : null}
+            helperText={huntDateInErrState ? huntDateErrMsg : null}
             margin="normal"
             onChange={e =>
               dispatch(action.updateEnd(new Date(e.currentTarget.value)))
