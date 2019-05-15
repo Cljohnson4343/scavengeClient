@@ -9,7 +9,7 @@ import { grey } from "@material-ui/core/colors";
 
 const styles = {
   pageWrapper: {
-    backgroundColor: grey[300],
+    backgroundColor: grey[200],
     boxSizing: "border-box",
     height: "100vh",
     width: "100vw"

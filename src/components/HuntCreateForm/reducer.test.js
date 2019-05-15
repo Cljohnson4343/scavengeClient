@@ -79,7 +79,6 @@ describe("teams", () => {
     });
     test("should add a player to team's player list", () => {
       const fins = new Team("fins");
-      const testPlayer = new Player("cj@gmail.com");
 
       const testState = new Teams([fins]);
       const action = actions.changePlayersTeam("cj@gmail.com", "fins");

@@ -1,6 +1,6 @@
-export function Error(msg) {
-  if (!(this instanceof Error)) {
-    return new Error(msg);
+export function ScavengeError(msg) {
+  if (!(this instanceof ScavengeError)) {
+    return new ScavengeError(msg);
   }
 
   if (msg && typeof msg === "string") {
@@ -10,7 +10,7 @@ export function Error(msg) {
   }
 }
 
-const e = Error.prototype;
+const e = ScavengeError.prototype;
 
 Object.defineProperty(e, "inError", {
   get: function() {

@@ -1,4 +1,4 @@
-import { Error } from "../../utils";
+import { ScavengeError } from "../../utils";
 import { Player, Team } from "../../models";
 
 export function Teams(teams = []) {
@@ -9,7 +9,7 @@ export function Teams(teams = []) {
   this._teams = teams instanceof Array ? [...teams] : [];
 }
 
-Object.defineProperty(Teams.prototype, "teams", {
+Object.defineProperty(Teams.prototype, "array", {
   get: function() {
     return this._teams;
   }
@@ -24,11 +24,11 @@ Object.defineProperty(Teams.prototype, "length", {
 Object.defineProperty(Teams.prototype, "validateTeamName", {
   value: function(maxTeams, name, ignore) {
     if (!name || typeof name !== "string") {
-      return new Error("Must have non-nil name");
+      return new ScavengeError("Must have non-nil name");
     }
 
     if (this._teams.length >= maxTeams) {
-      return new Error(`Max number of teams is set to ${maxTeams}`);
+      return new ScavengeError(`Max number of teams is set to ${maxTeams}`);
     }
 
     let tns = this._teams.map(team => team.name.toLowerCase());
@@ -39,9 +39,9 @@ Object.defineProperty(Teams.prototype, "validateTeamName", {
 
     const nameLower = name.toLowerCase();
     if (tns.includes(nameLower)) {
-      return new Error(`${name} is already used.`);
+      return new ScavengeError(`${name} is already used.`);
     }
-    return new Error();
+    return new ScavengeError();
   }
 });
 

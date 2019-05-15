@@ -10,4 +10,4 @@ export {
   validateStartDate
 } from "./validation";
 export { toDateTimeLocal } from "./date";
-export { Error } from "./error";
+export { ScavengeError } from "./error";

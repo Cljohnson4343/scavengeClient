@@ -636,7 +636,7 @@ assign(Base.prototype, Events, {
   // expose safeSet method
   _safeSet: function safeSet(property, value) {
     if (property in this) {
-      throw new Error(
+      throw new ScavengeError(
         "Encountered namespace collision while setting instance property `" +
           property +
           "`"

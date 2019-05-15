@@ -43,7 +43,7 @@ function TeamsContainer(props) {
     maxTeams,
     teams
   } = props;
-  const teamNames = teams.teams.map(team => team.name);
+  const teamNames = teams.array.map(team => team.name);
   const numTeams = teams ? teams.length : 0;
 
   const [inputName, setInputName] = useState("");
@@ -58,7 +58,7 @@ function TeamsContainer(props) {
       label={`Teams (${numTeams}/${maxTeams})`}
     >
       <List dense={true} className={classes.list}>
-        {teams.teams.map((team, index) => (
+        {teams.array.map((team, index) => (
           <TeamListItem
             avatarColor={colors[index]}
             dispatch={dispatch}

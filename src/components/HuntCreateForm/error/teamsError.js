@@ -1,4 +1,4 @@
-import { Error } from "../../../utils";
+import { ScavengeError } from "../../../utils";
 
 export function TeamsError(state) {
   if (!(this instanceof TeamsError)) {
@@ -9,7 +9,7 @@ export function TeamsError(state) {
     state.maxTeams < state.teams.length
       ? "More teams than the maximum number of teams"
       : null;
-  this._state = new Error(err);
+  this._state = new ScavengeError(err);
 }
 
 Object.defineProperty(TeamsError.prototype, "inError", {
