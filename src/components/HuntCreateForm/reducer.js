@@ -26,7 +26,7 @@ export function teams(state = new Teams(), action) {
     case "add_team":
       return state.add(action.payload);
     case "update_team":
-      return state.update(action.payload);
+      return state.update(action.payload.old, action.payload.new);
     case "change_players_team":
       return state.change(action.payload.player, action.payload.team);
     default:
@@ -40,6 +40,13 @@ export function players(state = [], action) {
       return state.filter(player => !player.equals(action.payload));
     case "add_player":
       return [...state, action.payload];
+    case "update_team":
+      return state.map(p => {
+        if (p.team.equals(action.payload.old)) {
+          return p.changeTeam(action.payload.new);
+        }
+        return p.copy();
+      });
     case "change_players_team":
       return state.map(player => {
         if (player.equals(action.payload.player)) {

@@ -6,6 +6,7 @@ import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
 import * as action from "./actions";
 import { validateEmail } from "../../utils";
+import { Teams } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -90,7 +91,7 @@ PlayersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   players: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
-  teams: PropTypes.array
+  teams: PropTypes.instanceOf(Teams)
 };
 
 export default withStyles(styles)(PlayersContainer);

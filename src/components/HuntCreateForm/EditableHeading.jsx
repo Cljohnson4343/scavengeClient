@@ -15,27 +15,40 @@ const styles = theme => ({
 });
 
 function EditableHeading(props) {
-  const { classes, name, validate } = props;
+  const { classes, createAction, dispatch, name, validate } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [inputText, setInputText] = useState(name);
 
-  const err = validate(inputText);
+  const err = validate(inputText, name);
 
   if (isEditing) {
     return (
-      <TextField
-        id="editable_heading"
-        type="text"
-        classes={{ root: classes.font }}
-        margin="normal"
-        onChange={e => setInputText(e.currentTarget.value)}
-        value={inputText}
-        error={err.inError ? true : null}
-        FormHelperTextProps={err.inError ? { error: true } : null}
-        helperText={err.msg}
-        variant="standard"
-      />
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          dispatch(createAction(name, inputText));
+          setIsEditing(false);
+        }}
+      >
+        <TextField
+          autoFocus={true}
+          classes={{ root: classes.font }}
+          error={err.inError ? true : null}
+          FormHelperTextProps={err.inError ? { error: true } : null}
+          helperText={err.msg}
+          id="editable_heading"
+          margin="normal"
+          onBlur={e => {
+            dispatch(createAction(name, inputText));
+            setIsEditing(false);
+          }}
+          onChange={e => setInputText(e.currentTarget.value)}
+          type="text"
+          value={inputText}
+          variant="standard"
+        />
+      </form>
     );
   }
 
@@ -51,6 +64,8 @@ function EditableHeading(props) {
 
 EditableHeading.propTypes = {
   classes: PropTypes.object.isRequired,
+  createAction: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   validate: PropTypes.func.isRequired
 };

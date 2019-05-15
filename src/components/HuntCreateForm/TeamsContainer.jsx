@@ -4,9 +4,10 @@ import { Button, List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
-import { avatarColors, Error, uniqueLabel } from "../../utils";
+import { avatarColors, uniqueLabel } from "../../utils";
 import * as action from "./actions";
 import { TeamsError } from "./error";
+import { Teams } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -42,12 +43,14 @@ function TeamsContainer(props) {
     maxTeams,
     teams
   } = props;
-  const teamNames = teams.map(team => team.name);
+  const teamNames = teams.teams.map(team => team.name);
   const numTeams = teams ? teams.length : 0;
 
   const [inputName, setInputName] = useState("");
 
   const colors = avatarColors(huntName, teams ? teams.length : 0);
+
+  const teamErr = teams.validateTeamName(maxTeams, inputName);
 
   return (
     <FormExpansion
@@ -55,19 +58,19 @@ function TeamsContainer(props) {
       label={`Teams (${numTeams}/${maxTeams})`}
     >
       <List dense={true} className={classes.list}>
-        {teams.map((team, index) => (
+        {teams.teams.map((team, index) => (
           <TeamListItem
             avatarColor={colors[index]}
-            name={team.name}
+            dispatch={dispatch}
             key={team.name}
             label={uniqueLabel(teamNames, team.name)}
-            dispatch={dispatch}
+            name={team.name}
+            validateName={teams.validateTeamName.bind(teams, maxTeams + 1)}
           />
         ))}
         <div className={classes.container}>
           <TextField
             id="team_name"
-            error={teamErr.inError ? true : null}
             label="Name"
             type="text"
             classes={{ root: classes.font }}
@@ -75,7 +78,10 @@ function TeamsContainer(props) {
             margin="normal"
             onChange={e => setInputName(e.currentTarget.value)}
             value={inputName}
-            FormHelperTextProps={teamErr.inError ? { error: true } : null}
+            FormHelperTextProps={
+              teamErr.inError && inputName ? { error: true } : null
+            }
+            error={teamErr.inError && inputName ? true : null}
             helperText={teamErr.msg}
             required={true}
           />
@@ -102,7 +108,7 @@ TeamsContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   huntName: PropTypes.string.isRequired,
   maxTeams: PropTypes.number,
-  teams: PropTypes.array
+  teams: PropTypes.instanceOf(Teams).isRequired
 };
 
 export default withStyles(styles)(TeamsContainer);

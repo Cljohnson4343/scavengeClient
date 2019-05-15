@@ -19,14 +19,23 @@ const styles = theme => ({
 });
 
 function TeamListItem(props) {
-  const { avatarColor, classes, dispatch, label, name } = props;
+  const { avatarColor, classes, dispatch, label, name, validateName } = props;
 
   return (
     <ListItem disableGutters>
       <ListItemAvatar>
         <Avatar style={{ backgroundColor: avatarColor }}>{label}</Avatar>
       </ListItemAvatar>
-      <ListItemText primary={<EditableHeading name={name} validate={} />} />
+      <ListItemText
+        primary={
+          <EditableHeading
+            dispatch={dispatch}
+            createAction={action.updateTeam}
+            name={name}
+            validate={validateName}
+          />
+        }
+      />
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
           handleDelete={() => dispatch(action.removeTeam(name))}
@@ -41,7 +50,8 @@ TeamListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  validateName: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(TeamListItem);

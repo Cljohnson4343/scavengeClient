@@ -22,18 +22,22 @@ Object.defineProperty(Teams.prototype, "length", {
 });
 
 Object.defineProperty(Teams.prototype, "validateTeamName", {
-  value: function(name, maxTeams) {
-    if (!name || typeof name === "string") {
-      return new Error();
+  value: function(maxTeams, name, ignore) {
+    if (!name || typeof name !== "string") {
+      return new Error("Must have non-nil name");
     }
 
     if (this._teams.length >= maxTeams) {
       return new Error(`Max number of teams is set to ${maxTeams}`);
     }
 
-    const tns = this._teams.map(team => team.name.toLowerCase());
-    const nameLower = name.toLowerCase();
+    let tns = this._teams.map(team => team.name.toLowerCase());
+    if (ignore) {
+      let lowerIgnore = ignore.toLowerCase();
+      tns = tns.filter(ns => ns !== lowerIgnore);
+    }
 
+    const nameLower = name.toLowerCase();
     if (tns.includes(nameLower)) {
       return new Error(`${name} is already used.`);
     }
@@ -67,17 +71,19 @@ Object.defineProperty(Teams.prototype, "copy", {
   }
 });
 
-Teams.prototype.update = function(team) {
-  if (!(team instanceof Team)) {
+Teams.prototype.update = function(oldTeam, newTeam) {
+  if (!(oldTeam instanceof Team) || !(newTeam instanceof Team)) {
     return this.copy();
   }
 
-  return this._teams.map(t => {
-    if (t.equal(team)) {
-      return team.copy();
-    }
-    return t.copy();
-  });
+  return new Teams(
+    this._teams.map(t => {
+      if (t.equals(oldTeam)) {
+        return newTeam.copy();
+      }
+      return t.copy();
+    })
+  );
 };
 
 Teams.prototype.change = function(player, team) {
