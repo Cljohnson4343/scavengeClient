@@ -1,23 +1,27 @@
 import { ScavengeError } from "../../utils";
 import { Player, Team } from "../../models";
+import Container from "../container";
 
 export function Teams(teams = []) {
   if (!(this instanceof Teams)) {
     return new Teams(teams);
   }
 
-  this._teams = teams instanceof Array ? [...teams] : [];
+  this._container = new Container(
+    Team.prototype,
+    teams instanceof Array ? teams : []
+  );
 }
 
 Object.defineProperty(Teams.prototype, "array", {
   get: function() {
-    return this._teams;
+    return this._container.array;
   }
 });
 
 Object.defineProperty(Teams.prototype, "length", {
   get: function() {
-    return this._teams.length;
+    return this._container.length;
   }
 });
 
@@ -27,11 +31,11 @@ Object.defineProperty(Teams.prototype, "validateTeamName", {
       return new ScavengeError("Must have non-nil name");
     }
 
-    if (this._teams.length >= maxTeams) {
+    if (this.length >= maxTeams) {
       return new ScavengeError(`Max number of teams is set to ${maxTeams}`);
     }
 
-    let tns = this._teams.map(team => team.name.toLowerCase());
+    let tns = this.array.map(team => team.name.toLowerCase());
     if (ignore) {
       let lowerIgnore = ignore.toLowerCase();
       tns = tns.filter(ns => ns !== lowerIgnore);
@@ -47,43 +51,24 @@ Object.defineProperty(Teams.prototype, "validateTeamName", {
 
 Object.defineProperty(Teams.prototype, "add", {
   value: function(team) {
-    if (!(team instanceof Team) || Boolean(this.getByTeam(team))) {
-      return this.copy();
-    }
-
-    return new Teams([...this._teams, team]);
+    return new Teams(this._container.add(team));
   }
 });
 
 Object.defineProperty(Teams.prototype, "remove", {
   value: function(team) {
-    if (!(team instanceof Team)) {
-      return this.copy();
-    }
-
-    return new Teams(this._teams.filter(t => !t.equals(team)));
+    return new Teams(this._container.remove(team));
   }
 });
 
 Object.defineProperty(Teams.prototype, "copy", {
   value: function() {
-    return new Teams(this._teams);
+    return new Teams(this.array);
   }
 });
 
 Teams.prototype.update = function(oldTeam, newTeam) {
-  if (!(oldTeam instanceof Team) || !(newTeam instanceof Team)) {
-    return this.copy();
-  }
-
-  return new Teams(
-    this._teams.map(t => {
-      if (t.equals(oldTeam)) {
-        return newTeam.copy();
-      }
-      return t.copy();
-    })
-  );
+  return new Teams(this._container.update(oldTeam, newTeam));
 };
 
 Teams.prototype.change = function(player, team) {
@@ -92,7 +77,7 @@ Teams.prototype.change = function(player, team) {
   }
 
   return new Teams(
-    this._teams.map(t => {
+    this.array.map(t => {
       if (t.equals(team)) {
         return t.addPlayer(player);
       }
@@ -102,11 +87,7 @@ Teams.prototype.change = function(player, team) {
 };
 
 Teams.prototype.getByName = function(name) {
-  const t = this._teams.filter(x => x.name === name);
-  if (t.length > 0) {
-    return t[0].copy();
-  }
-  return null;
+  return this._container.get(x => x.name === name);
 };
 
 Teams.prototype.getByTeam = function(team) {
@@ -114,9 +95,5 @@ Teams.prototype.getByTeam = function(team) {
     return null;
   }
 
-  const t = this._teams.filter(x => x.equals(team));
-  if (t.length > 0) {
-    return t[0].copy();
-  }
-  return null;
+  return this._container.get(x => x.equals(team));
 };
