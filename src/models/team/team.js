@@ -41,7 +41,7 @@ Object.defineProperty(t, "copy", {
 
 Object.defineProperty(t, "addPlayer", {
   value: function(plr) {
-    if (plr && plr instanceof Player) {
+    if (plr instanceof Player) {
       let players = [...this._players, plr];
       return new Team(this._name, players);
     }

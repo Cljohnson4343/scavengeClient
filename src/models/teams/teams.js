@@ -47,7 +47,7 @@ Object.defineProperty(Teams.prototype, "validateTeamName", {
 
 Object.defineProperty(Teams.prototype, "add", {
   value: function(team) {
-    if (!(team instanceof Team)) {
+    if (!(team instanceof Team) || Boolean(this.getByTeam(team))) {
       return this.copy();
     }
 
@@ -87,7 +87,7 @@ Teams.prototype.update = function(oldTeam, newTeam) {
 };
 
 Teams.prototype.change = function(player, team) {
-  if (!(player instanceof Player) || !(team instanceof Team)) {
+  if (!(player instanceof Player)) {
     return this.copy();
   }
 
@@ -99,4 +99,24 @@ Teams.prototype.change = function(player, team) {
       return t.removePlayer(player);
     })
   );
+};
+
+Teams.prototype.getByName = function(name) {
+  const t = this._teams.filter(x => x.name === name);
+  if (t.length > 0) {
+    return t[0].copy();
+  }
+  return null;
+};
+
+Teams.prototype.getByTeam = function(team) {
+  if (!(team instanceof Team)) {
+    return null;
+  }
+
+  const t = this._teams.filter(x => x.equals(team));
+  if (t.length > 0) {
+    return t[0].copy();
+  }
+  return null;
 };
