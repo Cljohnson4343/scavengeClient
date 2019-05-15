@@ -93,3 +93,15 @@ describe("action updateEnd", () => {
     expect(result.payload).toBeInstanceOf(Date);
   });
 });
+
+describe("action updateTeam", () => {
+  test("should return an update team action", () => {
+    const old = "Dolphins";
+    const newName = "fins";
+    const result = a.updateTeam(old, newName);
+
+    expect(result.type).toBe("update_team");
+    expect(result.payload.new).toBeInstanceOf(Team);
+    expect(result.payload.old).toBeInstanceOf(Team);
+  });
+});

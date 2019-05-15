@@ -41,10 +41,7 @@ function PlayersContainer(props) {
   const emailError = validateEmail(inputEmail);
 
   return (
-    <FormExpansion
-      inError={emailError.inError && Boolean(inputEmail)}
-      label={`Players (${numPlayers})`}
-    >
+    <FormExpansion inError={false} label={`Players (${numPlayers})`}>
       <List dense={true} className={classes.list}>
         {players.map(player => (
           <PlayerListItem

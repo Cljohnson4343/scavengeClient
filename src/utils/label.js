@@ -53,6 +53,10 @@ function random(seed, min, max) {
 
 // returns one or two char unique label for the given name. Assumes that names are unique
 export function uniqueLabel(names, name) {
+  if (!Boolean(name) || typeof name !== "string") {
+    return "";
+  }
+
   let lowerName = name.toLowerCase();
   let ns = names
     .map(n => n.toLowerCase())

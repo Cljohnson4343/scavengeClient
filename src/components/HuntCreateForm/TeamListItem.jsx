@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
 import * as action from "./actions";
+import EditableHeading from "./EditableHeading";
 
 const styles = theme => ({
   secondary: {
@@ -21,11 +22,11 @@ function TeamListItem(props) {
   const { avatarColor, classes, dispatch, label, name } = props;
 
   return (
-    <ListItem button disableGutters>
+    <ListItem disableGutters>
       <ListItemAvatar>
         <Avatar style={{ backgroundColor: avatarColor }}>{label}</Avatar>
       </ListItemAvatar>
-      <ListItemText primary={name} />
+      <ListItemText primary={<EditableHeading name={name} validate={} />} />
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
           handleDelete={() => dispatch(action.removeTeam(name))}

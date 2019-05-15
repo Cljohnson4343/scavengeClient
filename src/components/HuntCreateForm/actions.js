@@ -14,6 +14,16 @@ export function removeTeam(teamName) {
   };
 }
 
+export function updateTeam(oldName, newName) {
+  return {
+    type: "update_team",
+    payload: {
+      old: new Team(oldName),
+      new: new Team(newName)
+    }
+  };
+}
+
 export function changePlayersTeam(email, teamName) {
   return {
     type: "change_players_team",

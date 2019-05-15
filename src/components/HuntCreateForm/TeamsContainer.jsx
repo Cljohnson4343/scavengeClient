@@ -47,32 +47,11 @@ function TeamsContainer(props) {
 
   const [inputName, setInputName] = useState("");
 
-  function validateTeamName(name) {
-    if (!name) {
-      return new Error();
-    }
-
-    if (teams.length >= maxTeams) {
-      return new Error(`Max number of teams is set to ${maxTeams}`);
-    }
-
-    const tns = teamNames.map(n => n.toLowerCase());
-    const inputNameLower = inputName.toLowerCase();
-
-    if (tns.includes(inputNameLower)) {
-      return new Error(`${inputName} is already used.`);
-    }
-    return new Error();
-  }
-
-  const teamErr = validateTeamName(inputName);
-
   const colors = avatarColors(huntName, teams ? teams.length : 0);
 
-  console.log(`teamErr: ${teamErr} containerError: ${containerError.msg}`);
   return (
     <FormExpansion
-      inError={teamErr.inError || containerError.inError}
+      inError={containerError.inError}
       label={`Teams (${numTeams}/${maxTeams})`}
     >
       <List dense={true} className={classes.list}>

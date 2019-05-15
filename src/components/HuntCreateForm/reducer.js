@@ -1,8 +1,8 @@
 import { combineReducers } from "../../utils";
-import { Player } from "../../models";
+import { Player, Teams } from "../../models";
 
 export const initialState = {
-  teams: [],
+  teams: new Teams(),
   players: [],
   huntName: "",
   maxTeams: 1,
@@ -19,20 +19,16 @@ export default combineReducers({
   endDate
 });
 
-export function teams(state = [], action) {
+export function teams(state = new Teams(), action) {
   switch (action.type) {
     case "remove_team":
-      return state.filter(team => !team.equals(action.payload));
+      return state.remove(action.payload);
     case "add_team":
-      return [...state, action.payload];
+      return state.add(action.payload);
+    case "update_team":
+      return state.update(action.payload);
     case "change_players_team":
-      return state.map(team => {
-        if (team.equals(action.payload.team)) {
-          return team.addPlayer(action.payload.player);
-        } else {
-          return team.removePlayer(action.payload.player);
-        }
-      });
+      return state.change(action.payload.player, action.payload.team);
     default:
       return state;
   }
