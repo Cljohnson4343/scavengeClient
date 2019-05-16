@@ -16,6 +16,9 @@ import * as action from "./actions";
 import { Player, Team, Teams } from "../../models";
 
 const styles = theme => ({
+  font: {
+    fontWeight: theme.typography.fontWeightLight
+  },
   secondary: {
     right: theme.spacing(1)
   },
@@ -34,12 +37,13 @@ function PlayerListItem(props) {
       <FormControl className={classes.select}>
         <InputLabel htmlFor="team-helper">Team</InputLabel>
         <Select
+          className={classes.font}
+          input={<Input name="team" id="team-helper" />}
           onChange={e => {
             dispatch(action.changePlayersTeam(player, e.target.value));
           }}
-          value={player.team}
           renderValue={team => team.name}
-          input={<Input name="team" id="team-helper" />}
+          value={player.team}
         >
           <MenuItem value={new Team()}>Unassigned</MenuItem>
           {teams.array.map(t => (

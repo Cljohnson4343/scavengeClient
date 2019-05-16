@@ -45,6 +45,7 @@ function PlayersContainer(props) {
       <List dense={true} className={classes.list}>
         {players.array.map(player => (
           <PlayerListItem
+            className={classes.font}
             dispatch={dispatch}
             player={player}
             key={player.email}
