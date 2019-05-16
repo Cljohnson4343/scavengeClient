@@ -38,8 +38,9 @@ describe("teams", () => {
 
   describe("action removeTeam", () => {
     test("should remove a team", () => {
-      const testState = new Teams([new Team("Bills")]);
-      const action = actions.removeTeam("Bills");
+      const bills = new Team("Bills");
+      const testState = new Teams([bills]);
+      const action = actions.removeTeam(bills);
       deepFreeze(action);
       deepFreeze(testState);
 
@@ -49,8 +50,9 @@ describe("teams", () => {
       expect(result.length).toBe(0);
     });
     test("should remove the correct team", () => {
-      const testState = new Teams([new Team("fins"), new Team("pats")]);
-      const action = actions.removeTeam("pats");
+      const pats = new Team("pats");
+      const testState = new Teams([new Team("fins"), pats]);
+      const action = actions.removeTeam(pats);
       deepFreeze(action);
       deepFreeze(testState);
 

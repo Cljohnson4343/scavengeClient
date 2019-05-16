@@ -44,7 +44,6 @@ function TeamsContainer(props) {
     teams
   } = props;
   const teamNames = teams.array.map(team => team.name);
-  const numTeams = teams ? teams.length : 0;
 
   const [inputName, setInputName] = useState("");
 
@@ -55,7 +54,7 @@ function TeamsContainer(props) {
   return (
     <FormExpansion
       inError={containerError.inError}
-      label={`Teams (${numTeams}/${maxTeams})`}
+      label={`Teams (${teams.length}/${maxTeams})`}
     >
       <List dense={true} className={classes.list}>
         {teams.array.map((team, index) => (
@@ -64,7 +63,7 @@ function TeamsContainer(props) {
             dispatch={dispatch}
             key={team.name}
             label={uniqueLabel(teamNames, team.name)}
-            name={team.name}
+            team={team}
             validateName={teams.validateTeamName.bind(teams, maxTeams + 1)}
           />
         ))}

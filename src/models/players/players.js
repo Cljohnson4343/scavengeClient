@@ -1,5 +1,6 @@
 import { Player } from "../../models";
 import Container from "../container";
+import Team from "../team";
 
 export default function Players(players = []) {
   if (!(this instanceof Players)) {
@@ -78,4 +79,15 @@ Players.prototype.getByPlayer = function(player) {
   }
 
   return this._container.get(x => x.equals(player));
+};
+
+Players.prototype.removeTeam = function(team) {
+  return new Players(
+    this.array.map(p => {
+      if (p.team.equals(team)) {
+        return p.changeTeam(new Team());
+      }
+      return p.copy();
+    })
+  );
 };

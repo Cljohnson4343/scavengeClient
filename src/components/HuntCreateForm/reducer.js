@@ -22,7 +22,7 @@ export default combineReducers({
 export function teams(state = new Teams(), action) {
   switch (action.type) {
     case "remove_team":
-      return state.remove(action.payload);
+      return state.remove(action.payload.team);
     case "add_team":
       return state.add(action.payload);
     case "change_team_name":
@@ -50,6 +50,8 @@ export function players(state = new Players(), action) {
       );
     case "change_players_team":
       return state.change(action.payload.player, action.payload.team);
+    case "remove_team":
+      return state.removeTeam(action.payload.team);
     default:
       return state;
   }

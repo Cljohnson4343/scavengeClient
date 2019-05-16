@@ -14,11 +14,11 @@ describe("action addTeam", () => {
 
 describe("action removeTeam", () => {
   test("should return a remove team action", () => {
-    const teamName = "Dolphins";
-    const result = a.removeTeam(teamName);
+    const team = new Team("Dolphins");
+    const result = a.removeTeam(team);
 
     expect(result.type).toBe("remove_team");
-    expect(result.payload).toBeInstanceOf(Team);
+    expect(result.payload.team).toBeInstanceOf(Team);
   });
 });
 

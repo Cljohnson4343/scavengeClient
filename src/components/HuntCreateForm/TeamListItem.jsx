@@ -11,6 +11,7 @@ import {
 import DeleteItemButton from "./DeleteItemButton";
 import * as action from "./actions";
 import EditableHeading from "./EditableHeading";
+import { Team } from "../../models";
 
 const styles = theme => ({
   secondary: {
@@ -19,7 +20,7 @@ const styles = theme => ({
 });
 
 function TeamListItem(props) {
-  const { avatarColor, classes, dispatch, label, name, validateName } = props;
+  const { avatarColor, classes, dispatch, label, team, validateName } = props;
 
   return (
     <ListItem disableGutters>
@@ -31,14 +32,14 @@ function TeamListItem(props) {
           <EditableHeading
             dispatch={dispatch}
             createAction={action.changeTeamName}
-            name={name}
+            name={team.name}
             validate={validateName}
           />
         }
       />
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
-          handleDelete={() => dispatch(action.removeTeam(name))}
+          handleDelete={() => dispatch(action.removeTeam(team))}
         />
       </ListItemSecondaryAction>
     </ListItem>
@@ -50,7 +51,7 @@ TeamListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  team: PropTypes.instanceOf(Team).isRequired,
   validateName: PropTypes.func.isRequired
 };
 

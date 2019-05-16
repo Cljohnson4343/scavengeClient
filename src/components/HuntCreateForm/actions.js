@@ -7,10 +7,12 @@ export function addTeam(teamName) {
   };
 }
 
-export function removeTeam(teamName) {
+export function removeTeam(team) {
   return {
     type: "remove_team",
-    payload: new Team(teamName)
+    payload: {
+      team: team
+    }
   };
 }
 
