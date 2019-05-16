@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
 import * as action from "./actions";
+import { Player, Team } from "../../models";
 
 const styles = theme => ({
   secondary: {
@@ -25,24 +26,24 @@ const styles = theme => ({
 });
 
 function PlayerListItem(props) {
-  const { classes, dispatch, email, teamName, teams } = props;
+  const { classes, dispatch, player, teams } = props;
 
   return (
     <ListItem button disableGutters>
-      <ListItemText primary={email} />
+      <ListItemText primary={player.email} />
       <FormControl className={classes.select}>
         <InputLabel htmlFor="team-helper">Team</InputLabel>
         <Select
           onChange={e => {
-            dispatch(action.changePlayersTeam(email, e.target.value));
+            dispatch(action.changePlayersTeam(player, e.target.value));
           }}
-          value={teamName ? teamName : ""}
+          value={player.team.name}
           input={<Input name="team" id="team-helper" />}
         >
-          <MenuItem value="" />
+          <MenuItem value={new Team()} />
           {teams &&
             teams.map(t => (
-              <MenuItem key={t.name} value={t.name}>
+              <MenuItem key={t.name} value={t}>
                 {t.name}
               </MenuItem>
             ))}
@@ -60,8 +61,7 @@ function PlayerListItem(props) {
 PlayerListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  teamName: PropTypes.string,
+  player: PropTypes.instanceOf(Player).isRequired,
   teams: PropTypes.array
 };
 

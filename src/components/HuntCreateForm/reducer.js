@@ -1,9 +1,9 @@
 import { combineReducers } from "../../utils";
-import { Player, Teams } from "../../models";
+import { Player, Players, Teams } from "../../models";
 
 export const initialState = {
   teams: new Teams(),
-  players: [],
+  players: new Players(),
   huntName: "",
   maxTeams: 1,
   startDate: new Date(),
@@ -25,8 +25,11 @@ export function teams(state = new Teams(), action) {
       return state.remove(action.payload);
     case "add_team":
       return state.add(action.payload);
-    case "update_team":
-      return state.update(action.payload.old, action.payload.new);
+    case "change_team_name":
+      return state.changeTeamName(
+        action.payload.oldName,
+        action.payload.newName
+      );
     case "change_players_team":
       return state.change(action.payload.player, action.payload.team);
     default:
@@ -34,26 +37,19 @@ export function teams(state = new Teams(), action) {
   }
 }
 
-export function players(state = [], action) {
+export function players(state = new Players(), action) {
   switch (action.type) {
     case "remove_player":
-      return state.filter(player => !player.equals(action.payload));
+      return state.remove(action.payload);
     case "add_player":
-      return [...state, action.payload];
-    case "update_team":
-      return state.map(p => {
-        if (p.team.equals(action.payload.old)) {
-          return p.changeTeam(action.payload.new);
-        }
-        return p.copy();
-      });
+      return state.add(action.payload);
+    case "change_team_name":
+      return state.changeTeamName(
+        action.payload.oldName,
+        action.payload.newName
+      );
     case "change_players_team":
-      return state.map(player => {
-        if (player.equals(action.payload.player)) {
-          return new Player(player.email, action.payload.team);
-        }
-        return new Player(player.email, player.team);
-      });
+      return state.change(action.payload.player, action.payload.team);
     default:
       return state;
   }

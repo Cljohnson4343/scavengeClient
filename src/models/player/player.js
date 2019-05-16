@@ -6,7 +6,7 @@ export default function Player(email, team) {
   }
 
   this._email = email || "";
-  this._team = team && team instanceof Team ? team.copy() : null;
+  this._team = team && team instanceof Team ? team.copy() : new Team();
 }
 
 Object.defineProperty(Player.prototype, "email", {
@@ -27,7 +27,7 @@ Object.defineProperty(Player.prototype, "changeTeam", {
       return new Player(this._email, newTeam);
     }
 
-    return new Player(this._email, null);
+    return new Player(this._email, new Team());
   }
 });
 

@@ -67,8 +67,15 @@ Object.defineProperty(Teams.prototype, "copy", {
   }
 });
 
-Teams.prototype.update = function(oldTeam, newTeam) {
-  return new Teams(this._container.update(oldTeam, newTeam));
+Teams.prototype.changeTeamName = function(oldName, newName) {
+  return new Teams(
+    this.array.map(t => {
+      if (t.name === oldName) {
+        return t.changeName(newName);
+      }
+      return t.copy();
+    })
+  );
 };
 
 Teams.prototype.change = function(player, team) {

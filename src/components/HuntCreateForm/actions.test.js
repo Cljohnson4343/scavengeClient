@@ -24,9 +24,9 @@ describe("action removeTeam", () => {
 
 describe("action changePlayersTeam", () => {
   test("should return a change players team action", () => {
-    const teamName = "Dolphins";
-    const email = "cj@gmail.com";
-    const result = a.changePlayersTeam(email, teamName);
+    const team = new Team("Dolphins");
+    const player = new Player("cj@gmail.com");
+    const result = a.changePlayersTeam(player, team);
 
     expect(result.type).toBe("change_players_team");
     expect(result.payload.player).toBeInstanceOf(Player);
@@ -94,14 +94,14 @@ describe("action updateEnd", () => {
   });
 });
 
-describe("action updateTeam", () => {
-  test("should return an update team action", () => {
-    const old = "Dolphins";
+describe("action changeTeamName", () => {
+  test("should return a change team name action", () => {
+    const oldName = "Dolphins";
     const newName = "fins";
-    const result = a.updateTeam(old, newName);
+    const result = a.changeTeamName(oldName, newName);
 
-    expect(result.type).toBe("update_team");
-    expect(result.payload.new).toBeInstanceOf(Team);
-    expect(result.payload.old).toBeInstanceOf(Team);
+    expect(result.type).toBe("change_team_name");
+    expect(result.payload.newName).toBe(newName);
+    expect(result.payload.oldName).toBe(oldName);
   });
 });

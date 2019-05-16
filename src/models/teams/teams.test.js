@@ -206,14 +206,14 @@ describe("teams", () => {
     const cases = [
       {
         name: "valid player",
-        args: [afc.pats, afc.fins],
+        args: [afc.pats.addPlayer(plrs.tom), afc.fins],
         oldTeam: afc.pats,
         player: plrs.tom,
         newTeam: afc.fins
       },
       {
         name: "valid player",
-        args: [afc.pats, afc.fins],
+        args: [afc.pats, afc.fins.addPlayer(plrs.tom)],
         oldTeam: afc.fins,
         player: plrs.tom,
         newTeam: null
@@ -222,14 +222,12 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         let teams = new Teams(c.args);
-        let oldTeam = c.oldTeam.addPlayer(c.player);
-        teams = teams.update(c.oldTeam, oldTeam);
         deepFreeze(teams);
 
         const result = teams.change(c.player, c.newTeam);
         expect(result).toBeInstanceOf(Teams);
 
-        oldTeam = result.getByTeam(oldTeam);
+        const oldTeam = result.getByTeam(c.oldTeam);
         expect(oldTeam.hasPlayer(c.player)).toBeFalsy();
 
         if (c.newTeam instanceof Team) {
@@ -240,13 +238,13 @@ describe("teams", () => {
     }
   });
 
-  describe("update", () => {
+  describe("changeTeamName", () => {
     const cases = [
       {
-        name: "valid old team and new team",
+        name: "valid old name and new name",
         args: [afc.fins, afc.pats],
-        oldTeam: afc.pats,
-        newTeam: afc.jets
+        oldName: afc.pats.name,
+        newName: afc.jets.name
       }
     ];
     for (let c of cases) {
@@ -254,11 +252,11 @@ describe("teams", () => {
         const teams = new Teams(c.args);
         deepFreeze(teams);
 
-        const result = teams.update(c.oldTeam, c.newTeam);
+        const result = teams.changeTeamName(c.oldName, c.newName);
         expect(result).toBeInstanceOf(Teams);
 
-        expect(Boolean(result.getByTeam(c.oldTeam))).toBeFalsy();
-        expect(result.getByTeam(c.newTeam).equals(c.newTeam)).toBeTruthy();
+        expect(Boolean(result.getByName(c.oldName))).toBeFalsy();
+        expect(Boolean(result.getByName(c.newName))).toBeTruthy();
       });
     }
   });

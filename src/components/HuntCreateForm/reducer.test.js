@@ -8,7 +8,7 @@ import {
   teams
 } from "./reducer";
 import * as actions from "./actions";
-import { Player, Team, Teams } from "../../models";
+import { Player, Team, Teams, Players } from "../../models";
 
 describe("teams", () => {
   describe("action addTeam", () => {
@@ -68,7 +68,7 @@ describe("teams", () => {
       bills = bills.addPlayer(testPlayer);
 
       const testState = new Teams([bills]);
-      const action = actions.changePlayersTeam("cj@gmail.com", "fins");
+      const action = actions.changePlayersTeam(testPlayer, new Team("fins"));
       deepFreeze(action);
       deepFreeze(testState);
 
@@ -79,9 +79,10 @@ describe("teams", () => {
     });
     test("should add a player to team's player list", () => {
       const fins = new Team("fins");
+      const testPlayer = new Player("cj@gmail.com", fins);
 
       const testState = new Teams([fins]);
-      const action = actions.changePlayersTeam("cj@gmail.com", "fins");
+      const action = actions.changePlayersTeam(testPlayer, fins);
       deepFreeze(action);
       deepFreeze(testState);
 
@@ -89,6 +90,7 @@ describe("teams", () => {
 
       expect(result).toBeInstanceOf(Teams);
       expect(result.length).toBe(1);
+      expect(result.getByTeam(fins).hasPlayer(testPlayer)).toBeTruthy();
     });
   });
 });
@@ -98,74 +100,73 @@ describe("players", () => {
     test("should add a player when state is empty", () => {
       const action = actions.addPlayer("cj@gmail.com");
       deepFreeze(action);
-      let state = [];
+      let state = new Players();
       deepFreeze(state);
 
       const result = players(state, action);
 
-      expect(result).toBeInstanceOf(Array);
+      expect(result).toBeInstanceOf(Players);
       expect(result.length).toBeGreaterThan(0);
-      expect(result[0]).toBeInstanceOf(Player);
+      expect(result.getByEmail("cj@gmail.com")).toBeInstanceOf(Player);
     });
     test("should add player when state isn't empty", () => {
-      const testState = [new Player("cj@yahoo.com")];
+      const testState = new Players([new Player("cj@yahoo.com")]);
       const action = actions.addPlayer("cj@gmail.com");
       deepFreeze(action);
       deepFreeze(testState);
 
       const result = players(testState, action);
 
-      expect(result).toBeInstanceOf(Array);
+      expect(result).toBeInstanceOf(Players);
       expect(result.length).toBeGreaterThan(1);
-      expect(result[1]).toBeInstanceOf(Player);
+      expect(result.getByEmail("cj@gmail.com")).toBeInstanceOf(Player);
     });
   });
 
   describe("action removePlayer", () => {
     test("should remove a player", () => {
-      const testState = [new Player("cj@gmail.com")];
+      const testState = new Players([new Player("cj@gmail.com")]);
       const action = actions.removePlayer("cj@gmail.com");
       deepFreeze(action);
       deepFreeze(testState);
 
       const result = players(testState, action);
 
-      expect(result).toBeInstanceOf(Array);
+      expect(result).toBeInstanceOf(Players);
       expect(result.length).toBe(0);
     });
     test("should remove the correct team", () => {
-      const testState = [
+      const testState = new Players([
         new Player("cj@gmail.com"),
         new Player("cj@yahoo.com")
-      ];
+      ]);
       const action = actions.removePlayer("cj@gmail.com");
       deepFreeze(action);
       deepFreeze(testState);
 
       const result = players(testState, action);
 
-      expect(result).toBeInstanceOf(Array);
+      expect(result).toBeInstanceOf(Players);
       expect(result.length).toBeGreaterThan(0);
-      expect(result[0]).toBeInstanceOf(Player);
+      expect(Boolean(result.getByEmail("cj@gmail.com"))).toBeFalsy();
     });
   });
 
   describe("action changePlayersTeam", () => {
     test("should update a player's team", () => {
-      const gmail = new Player("cj@gmail.com");
       const fins = new Team("fins");
+      const gmail = new Player("cj@gmail.com");
 
-      const testState = [gmail];
-      const action = actions.changePlayersTeam("cj@gmail.com", "fins");
+      const testState = new Players([gmail]);
+      const action = actions.changePlayersTeam(gmail, fins);
       deepFreeze(action);
       deepFreeze(testState);
 
       const result = players(testState, action);
 
-      expect(result).toBeInstanceOf(Array);
+      expect(result).toBeInstanceOf(Players);
       expect(result.length).toBe(1);
-      expect(result[0].team).toBeInstanceOf(Team);
-      expect(result[0].team.equals(fins)).toBeTruthy();
+      expect(result.getByPlayer(gmail).team.equals(fins)).toBeTruthy();
     });
   });
 });

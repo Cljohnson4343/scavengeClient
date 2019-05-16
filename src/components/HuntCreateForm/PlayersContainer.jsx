@@ -47,10 +47,9 @@ function PlayersContainer(props) {
         {players.map(player => (
           <PlayerListItem
             dispatch={dispatch}
-            email={player.email}
+            player={player}
             key={player.email}
             teams={teams}
-            teamName={player.team ? player.team.name : ""}
           />
         ))}
         <div className={classes.container}>
