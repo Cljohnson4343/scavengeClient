@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, List, TextField, withStyles } from "@material-ui/core";
+import { List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
+import TextAddButton from "./TextAddButton";
 import { avatarColors, uniqueLabel } from "../../utils";
 import * as action from "./actions";
 import { TeamsError } from "./error";
@@ -84,17 +85,13 @@ function TeamsContainer(props) {
             helperText={teamErr.msg}
             required={true}
           />
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
+          <TextAddButton
+            handleClick={() => {
               dispatch(action.addTeam(inputName));
               setInputName("");
             }}
-            disabled={!inputName || teamErr.inError ? true : false}
-          >
-            Add
-          </Button>
+            isDisabled={!inputName || teamErr.inError ? true : false}
+          />
         </div>
       </List>
     </FormExpansion>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, List, TextField, withStyles } from "@material-ui/core";
+import { List, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
+import TextAddButton from "./TextAddButton";
 import * as action from "./actions";
 import { validateEmail } from "../../utils";
 import { Players, Teams } from "../../models";
@@ -67,17 +68,15 @@ function PlayersContainer(props) {
             helperText={emailError.msg}
             required={true}
           />
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
+          <TextAddButton
+            handleClick={() => {
               dispatch(action.addPlayer(inputEmail));
               setInputEmail("");
             }}
-            disabled={emailError.inError || !Boolean(inputEmail) ? true : false}
-          >
-            Add
-          </Button>
+            isDisabled={
+              emailError.inError || !Boolean(inputEmail) ? true : false
+            }
+          />
         </div>
       </List>
     </FormExpansion>
