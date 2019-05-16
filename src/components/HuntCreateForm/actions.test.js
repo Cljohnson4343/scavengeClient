@@ -1,6 +1,7 @@
 import deepFreeze from "deep-freeze";
 import { Player, Team } from "../../models";
 import * as a from "./actions.js";
+import { Item } from "../../models";
 
 describe("action addTeam", () => {
   test("should return an add team action", () => {
@@ -112,7 +113,51 @@ describe("action changeTeamName", () => {
     const result = a.changeTeamName(oldName, newName);
 
     expect(result.type).toBe("change_team_name");
-    expect(result.payload.newName).toBe(newName);
-    expect(result.payload.oldName).toBe(oldName);
+    expect(result.payload.newName).toStrictEqual(newName);
+    expect(result.payload.oldName).toStrictEqual(oldName);
+  });
+});
+
+describe("action changeItemPoints", () => {
+  test("should return a change item points action", () => {
+    const item = new Item("Dolphins", 43);
+    const points = 23;
+    const result = a.changeItemPoints(item, points);
+
+    expect(result.type).toBe("change_item_points");
+    expect(result.payload.item.equals(item)).toBeTruthy();
+    expect(result.payload.points).toStrictEqual(points);
+  });
+});
+
+describe("action changeItemName", () => {
+  test("should return a change item name action", () => {
+    const item = new Item("Dolphins", 43);
+    const newName = "fins";
+    const result = a.changeItemName(item, newName);
+
+    expect(result.type).toBe("change_item_name");
+    expect(result.payload.item.equals(item)).toBeTruthy();
+    expect(result.payload.name).toBe(newName);
+  });
+});
+
+describe("action addItem", () => {
+  test("should return a add item action", () => {
+    const item = new Item("Dolphins", 43);
+    const result = a.addItem(item);
+
+    expect(result.type).toBe("add_item");
+    expect(result.payload.equals(item)).toBeTruthy();
+  });
+});
+
+describe("action removeItem", () => {
+  test("should return a remove item action", () => {
+    const item = new Item("Dolphins", 43);
+    const result = a.removeItem(item);
+
+    expect(result.type).toBe("remove_item");
+    expect(result.payload.equals(item)).toBeTruthy();
   });
 });

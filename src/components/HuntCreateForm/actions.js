@@ -88,3 +88,37 @@ export function updateEnd(endDate) {
     payload: endDate
   };
 }
+
+export function addItem(item) {
+  return {
+    type: "add_item",
+    payload: item
+  };
+}
+
+export function removeItem(item) {
+  return {
+    type: "remove_item",
+    payload: item
+  };
+}
+
+export function changeItemName(item, name) {
+  return {
+    type: "change_item_name",
+    payload: {
+      item: item,
+      name: name
+    }
+  };
+}
+
+export function changeItemPoints(item, points) {
+  return {
+    type: "change_item_points",
+    payload: {
+      item: item,
+      points: points
+    }
+  };
+}
