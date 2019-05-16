@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select
 } from "@material-ui/core";
+import EditableHeading from "./EditableHeading";
 import DeleteItemButton from "./DeleteItemButton";
 import * as action from "./actions";
 import { Player, Team, Teams } from "../../models";
@@ -29,11 +30,20 @@ const styles = theme => ({
 });
 
 function PlayerListItem(props) {
-  const { classes, dispatch, player, teams } = props;
+  const { classes, dispatch, player, teams, validateEmail } = props;
 
   return (
     <ListItem button disableGutters>
-      <ListItemText primary={player.email} />
+      <ListItemText
+        primary={
+          <EditableHeading
+            dispatch={dispatch}
+            createAction={action.changePlayerEmail.bind(null, player)}
+            name={player.email}
+            validate={validateEmail}
+          />
+        }
+      />
       <FormControl className={classes.select}>
         <InputLabel htmlFor="team-helper">Team</InputLabel>
         <Select
@@ -66,7 +76,8 @@ PlayerListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   player: PropTypes.instanceOf(Player).isRequired,
-  teams: PropTypes.instanceOf(Teams).isRequired
+  teams: PropTypes.instanceOf(Teams).isRequired,
+  validateEmail: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(PlayerListItem);

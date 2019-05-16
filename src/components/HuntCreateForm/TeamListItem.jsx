@@ -31,7 +31,7 @@ function TeamListItem(props) {
         primary={
           <EditableHeading
             dispatch={dispatch}
-            createAction={action.changeTeamName}
+            createAction={action.changeTeamName.bind(null, team.name)}
             name={team.name}
             validate={validateName}
           />

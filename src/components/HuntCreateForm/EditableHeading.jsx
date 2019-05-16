@@ -27,7 +27,7 @@ function EditableHeading(props) {
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(createAction(name, inputText));
+          dispatch(createAction(inputText));
           setIsEditing(false);
         }}
       >

@@ -26,12 +26,23 @@ export function changeTeamName(oldName, newName) {
   };
 }
 
+// TODO refactor name to be changePlayerTeam
 export function changePlayersTeam(player, team) {
   return {
     type: "change_players_team",
     payload: {
       player: player,
       team: team
+    }
+  };
+}
+
+export function changePlayerEmail(player, email) {
+  return {
+    type: "change_player_email",
+    payload: {
+      player: player,
+      email: email
     }
   };
 }

@@ -47,9 +47,10 @@ function PlayersContainer(props) {
           <PlayerListItem
             className={classes.font}
             dispatch={dispatch}
-            player={player}
             key={player.email}
+            player={player}
             teams={teams}
+            validateEmail={validateEmail}
           />
         ))}
         <div className={classes.container}>
