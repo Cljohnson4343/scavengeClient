@@ -104,3 +104,11 @@ Teams.prototype.getByTeam = function(team) {
 
   return this._container.get(x => x.equals(team));
 };
+
+Teams.prototype.changePlayerEmail = function(player, email) {
+  return new Teams(
+    this.array.map(t => {
+      return t.changePlayerEmail(player, email);
+    })
+  );
+};

@@ -22,6 +22,17 @@ describe("action removeTeam", () => {
   });
 });
 
+describe("action changePlayerEmail", () => {
+  test("should return a change player email action", () => {
+    const player = new Player("cj@gmail.com");
+    const result = a.changePlayerEmail(player, "cj@yahoo.com");
+
+    expect(result.type).toBe("change_player_email");
+    expect(result.payload.player).toBeInstanceOf(Player);
+    expect(typeof result.payload.email === "string").toBeTruthy();
+  });
+});
+
 describe("action changePlayersTeam", () => {
   test("should return a change players team action", () => {
     const team = new Team("Dolphins");

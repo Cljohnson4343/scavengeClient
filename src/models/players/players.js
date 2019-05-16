@@ -91,3 +91,14 @@ Players.prototype.removeTeam = function(team) {
     })
   );
 };
+
+Players.prototype.changePlayerEmail = function(player, email) {
+  return new Players(
+    this.array.map(p => {
+      if (p.equals(player)) {
+        return p.changeEmail(email);
+      }
+      return p.copy();
+    })
+  );
+};

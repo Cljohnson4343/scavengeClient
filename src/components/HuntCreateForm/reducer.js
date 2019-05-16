@@ -32,6 +32,11 @@ export function teams(state = new Teams(), action) {
       );
     case "change_players_team":
       return state.change(action.payload.player, action.payload.team);
+    case "change_player_email":
+      return state.changePlayerEmail(
+        action.payload.player,
+        action.payload.email
+      );
     default:
       return state;
   }
@@ -47,6 +52,12 @@ export function players(state = new Players(), action) {
       return state.changeTeamName(
         action.payload.oldName,
         action.payload.newName
+      );
+
+    case "change_player_email":
+      return state.changePlayerEmail(
+        action.payload.player,
+        action.payload.email
       );
     case "change_players_team":
       return state.change(action.payload.player, action.payload.team);

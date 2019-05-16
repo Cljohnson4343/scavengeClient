@@ -75,3 +75,17 @@ Object.defineProperty(t, "equals", {
     return this._name === obj.name;
   }
 });
+
+Object.defineProperty(t, "changePlayerEmail", {
+  value: function(player, email) {
+    return new Team(
+      this._name,
+      this._players.map(p => {
+        if (p.equals(player)) {
+          return p.changeEmail(email);
+        }
+        p.copy();
+      })
+    );
+  }
+});

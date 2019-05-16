@@ -10,6 +10,16 @@ import {
 import * as actions from "./actions";
 import { Player, Team, Teams, Players } from "../../models";
 
+const plrs = {
+  dan: new Player("danMarino@gmail.com"),
+  pat: new Player("patSurtain@gmailcom"),
+  tom: new Player("tomBrady@gmail.com"),
+  wes: new Player("wesWelker@gmailcom"),
+  jim: new Player("jimKelly@gmail.com"),
+  bruce: new Player("bruceSmith@gmailcom"),
+  vinny: new Player("vinnyT@gmailcom")
+};
+
 describe("teams", () => {
   describe("action addTeam", () => {
     test("should add a team when state is empty", () => {
@@ -170,6 +180,32 @@ describe("players", () => {
       expect(result.length).toBe(1);
       expect(result.getByPlayer(gmail).team.equals(fins)).toBeTruthy();
     });
+  });
+
+  describe("action changePlayerEmail", () => {
+    const cases = [
+      {
+        name: "valid player",
+        args: [plrs.dan, plrs.jim],
+        player: plrs.dan,
+        email: "dan_the_man@greatest.com"
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        const state = new Players(c.args);
+        const action = actions.changePlayerEmail(c.player, c.email);
+        deepFreeze(state);
+        deepFreeze(action);
+
+        const result = players(state, action);
+
+        expect(result).toBeInstanceOf(Players);
+        expect(Boolean(result.getByEmail(c.player.email))).toBeFalsy();
+        expect(Boolean(result.getByEmail(c.email))).toBeTruthy();
+      });
+    }
   });
 });
 
