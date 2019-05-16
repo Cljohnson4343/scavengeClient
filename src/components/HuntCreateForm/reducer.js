@@ -1,5 +1,5 @@
 import { combineReducers } from "../../utils";
-import { Player, Players, Teams } from "../../models";
+import { Players, Teams } from "../../models";
 
 export const initialState = {
   teams: new Teams(),

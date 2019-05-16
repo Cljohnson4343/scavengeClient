@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
 import * as action from "./actions";
-import { Player, Team } from "../../models";
+import { Player, Team, Teams } from "../../models";
 
 const styles = theme => ({
   secondary: {
@@ -37,21 +37,21 @@ function PlayerListItem(props) {
           onChange={e => {
             dispatch(action.changePlayersTeam(player, e.target.value));
           }}
-          value={player.team.name}
+          value={player.team}
+          renderValue={team => team.name}
           input={<Input name="team" id="team-helper" />}
         >
-          <MenuItem value={new Team()} />
-          {teams &&
-            teams.map(t => (
-              <MenuItem key={t.name} value={t}>
-                {t.name}
-              </MenuItem>
-            ))}
+          <MenuItem value={new Team()}>Unassigned</MenuItem>
+          {teams.array.map(t => (
+            <MenuItem key={t.name} value={t}>
+              {t.name}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
-          handleDelete={e => dispatch(action.removePlayer(email))}
+          handleDelete={e => dispatch(action.removePlayer(player.email))}
         />
       </ListItemSecondaryAction>
     </ListItem>
@@ -62,7 +62,7 @@ PlayerListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   player: PropTypes.instanceOf(Player).isRequired,
-  teams: PropTypes.array
+  teams: PropTypes.instanceOf(Teams).isRequired
 };
 
 export default withStyles(styles)(PlayerListItem);

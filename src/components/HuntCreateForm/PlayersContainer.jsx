@@ -6,7 +6,7 @@ import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
 import * as action from "./actions";
 import { validateEmail } from "../../utils";
-import { Teams } from "../../models";
+import { Players, Teams } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -35,16 +35,14 @@ const styles = theme => ({
 
 function PlayersContainer(props) {
   const { classes, dispatch, players, teams } = props;
-  const numPlayers = players ? players.length : 0;
 
   const [inputEmail, setInputEmail] = useState("");
-
   const emailError = validateEmail(inputEmail);
 
   return (
-    <FormExpansion inError={false} label={`Players (${numPlayers})`}>
+    <FormExpansion inError={false} label={`Players (${players.length})`}>
       <List dense={true} className={classes.list}>
-        {players.map(player => (
+        {players.array.map(player => (
           <PlayerListItem
             dispatch={dispatch}
             player={player}
@@ -88,9 +86,9 @@ function PlayersContainer(props) {
 
 PlayersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  players: PropTypes.array,
+  players: PropTypes.instanceOf(Players).isRequired,
   dispatch: PropTypes.func.isRequired,
-  teams: PropTypes.instanceOf(Teams)
+  teams: PropTypes.instanceOf(Teams).isRequired
 };
 
 export default withStyles(styles)(PlayersContainer);
