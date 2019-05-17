@@ -2,7 +2,7 @@ import { ScavengeError } from "../../utils";
 import { Player, Team } from "../../models";
 import Container from "../container";
 
-export function Teams(teams = []) {
+export default function Teams(teams = []) {
   if (!(this instanceof Teams)) {
     return new Teams(teams);
   }

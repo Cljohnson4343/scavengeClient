@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func */
-import { Teams } from "./teams";
+import Teams from "./teams";
 import deepFreeze from "deep-freeze";
 import Team from "../team";
 import { ScavengeError } from "../../utils";
