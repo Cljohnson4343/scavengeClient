@@ -6,6 +6,8 @@ export {
   validateEmail,
   validateEndDate,
   validateHuntName,
+  validateItemName,
+  validateItemPoints,
   validateMaxTeams,
   validateStartDate
 } from "./validation";

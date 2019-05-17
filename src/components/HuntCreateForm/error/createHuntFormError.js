@@ -1,4 +1,5 @@
 import { HuntInfoError } from "./huntInfoError";
+import { ItemsError } from "./itemsError";
 import { PlayersError } from "./playersError";
 import { TeamsError } from "./teamsError";
 import { inError, msg } from "./error";
@@ -10,6 +11,7 @@ export function CreateHuntFormError(state) {
 
   this._state = {
     huntInfo: HuntInfoError(state),
+    items: ItemsError(state),
     players: PlayersError(state),
     teams: TeamsError(state)
   };
@@ -32,6 +34,12 @@ Object.defineProperty(c, "huntInfoError", {
 Object.defineProperty(c, "teamsError", {
   get: function() {
     return this._state.teams;
+  }
+});
+
+Object.defineProperty(c, "itemsError", {
+  get: function() {
+    return this._state.items;
   }
 });
 

@@ -15,7 +15,7 @@ function DeleteItemButton(props) {
 
   return (
     <Button className={classes.button} onClick={e => handleDelete()}>
-      <DeleteIcon color="action" />
+      <DeleteIcon color="primary" />
     </Button>
   );
 }

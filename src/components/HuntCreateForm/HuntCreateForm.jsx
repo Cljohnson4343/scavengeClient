@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
+import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
@@ -43,6 +44,11 @@ function HuntCreateForm(props) {
         huntName={state.huntName}
         maxTeams={state.maxTeams}
         startDate={state.startDate}
+      />
+      <ItemsContainer
+        containerError={formError.itemsError}
+        dispatch={dispatch}
+        items={state.items}
       />
       <TeamsContainer
         containerError={formError.teamsError}

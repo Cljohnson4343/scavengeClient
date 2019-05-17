@@ -47,3 +47,22 @@ export function validateStartDate(start) {
 
   return new ScavengeError();
 }
+
+export function validateItemName(name) {
+  if (typeof name !== "string") {
+    return new ScavengeError("Item name must be a string");
+  }
+
+  return new ScavengeError();
+}
+
+export function validateItemPoints(points) {
+  if (typeof points !== "number") {
+    return new ScavengeError("Item points must be a number");
+  }
+
+  if (points < 1) {
+    return new ScavengeError("Item points must be greater than 0");
+  }
+  return new ScavengeError();
+}

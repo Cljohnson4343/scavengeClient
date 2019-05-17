@@ -11,11 +11,21 @@ const styles = theme => ({
   icon: {
     color: theme.palette.primary.main,
     fontSize: theme.typography.fontSize * 1.2
+  },
+  label: {
+    alignItem: "center"
   }
 });
 
 function EditableHeading(props) {
-  const { classes, createAction, dispatch, name, validate } = props;
+  const {
+    classes,
+    createAction,
+    dispatch,
+    name,
+    type = "text",
+    validate
+  } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [inputText, setInputText] = useState(name);
@@ -33,7 +43,7 @@ function EditableHeading(props) {
       >
         <TextField
           autoFocus={true}
-          classes={{ root: classes.font }}
+          className={classes.input}
           error={err.inError ? true : null}
           FormHelperTextProps={err.inError ? { error: true } : null}
           helperText={err.msg}
@@ -44,7 +54,7 @@ function EditableHeading(props) {
             setIsEditing(false);
           }}
           onChange={e => setInputText(e.currentTarget.value)}
-          type="text"
+          type={type}
           value={inputText}
           variant="standard"
         />
@@ -67,6 +77,7 @@ EditableHeading.propTypes = {
   createAction: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string,
   validate: PropTypes.func.isRequired
 };
 
