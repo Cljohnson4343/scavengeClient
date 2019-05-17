@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import HuntInfoContainer from "../HuntInfoContainer";
 import hunts from "../../HuntInfoData";
 import Fab from "../Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 const styles = {
   page: {
@@ -20,7 +21,7 @@ function HomePage(props) {
   return (
     <div className={classes.page}>
       <HuntInfoContainer hunts={hunts} />
-      <Fab />
+      <Fab icon={<AddIcon />} />
     </div>
   );
 }

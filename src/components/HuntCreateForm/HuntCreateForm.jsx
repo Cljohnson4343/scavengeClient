@@ -6,6 +6,7 @@ import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
+import SendIcon from "@material-ui/icons/Send";
 import reducer, { initialState } from "./reducer";
 import { CreateHuntFormError } from "./error";
 
@@ -62,7 +63,7 @@ function HuntCreateForm(props) {
         players={state.players}
         teams={state.teams}
       />
-      <Fab inError={formError.inError} />
+      <Fab icon={<SendIcon />} inError={formError.inError} />
     </div>
   );
 }

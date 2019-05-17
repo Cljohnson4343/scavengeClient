@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 function Fab(props) {
-  const { classes, inError } = props;
+  const { classes, icon, inError } = props;
 
   return (
     <FAB
@@ -22,13 +22,14 @@ function Fab(props) {
       color={inError ? "inherit" : "primary"}
       disabled={inError}
     >
-      <AddIcon />
+      {icon}
     </FAB>
   );
 }
 
 Fab.propTypes = {
   classes: PropTypes.object.isRequired,
+  icon: PropTypes.node,
   inError: PropTypes.bool
 };
 
