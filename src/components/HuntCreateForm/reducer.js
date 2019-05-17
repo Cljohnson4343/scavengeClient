@@ -1,9 +1,10 @@
 import { combineReducers } from "../../utils";
-import { Players, Teams } from "../../models";
+import { Items, Players, Teams } from "../../models";
 
 export const initialState = {
   teams: new Teams(),
   players: new Players(),
+  items: new Items(),
   huntName: "",
   maxTeams: 1,
   startDate: new Date(),
@@ -13,6 +14,7 @@ export const initialState = {
 export default combineReducers({
   teams,
   players,
+  items,
   huntName,
   maxTeams,
   startDate,
@@ -63,6 +65,21 @@ export function players(state = new Players(), action) {
       return state.change(action.payload.player, action.payload.team);
     case "remove_team":
       return state.removeTeam(action.payload.team);
+    default:
+      return state;
+  }
+}
+
+export function items(state = new Items(), action) {
+  switch (action.type) {
+    case "add_item":
+      return state.add(action.payload);
+    case "remove_item":
+      return state.remove(action.payload);
+    case "change_item_name":
+      return state.changeItemName(action.payload.item, action.payload.name);
+    case "change_item_points":
+      return state.changeItemPoints(action.payload.item, action.payload.points);
     default:
       return state;
   }
