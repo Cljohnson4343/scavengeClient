@@ -288,14 +288,14 @@ describe("items", () => {
         name: "should change item name",
         args: [i[0]],
         item: i[0],
-        name: "new name",
+        newName: "new name",
         expected: "new name"
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        const action = actions.changeItemName(c.item, c.name);
+        const action = actions.changeItemName(c.item, c.newName);
         deepFreeze(action);
         let state = new Items(c.args);
         deepFreeze(state);
@@ -303,7 +303,7 @@ describe("items", () => {
         const result = items(state, action);
 
         expect(result).toBeInstanceOf(Items);
-        expect(result.getByName(c.name).name).toStrictEqual(c.expected);
+        expect(result.getByName(c.newName).name).toStrictEqual(c.expected);
       });
     }
   });

@@ -2,9 +2,13 @@ import Items from "../items";
 import Players from "../players";
 import Teams from "../teams";
 
-export default function Hunt(hunt = {}) {
+export default function Hunt(hunt) {
   if (!(this instanceof Hunt)) {
     return new Hunt(hunt);
+  }
+
+  if (!Boolean(hunt)) {
+    hunt = {};
   }
 
   if (hunt instanceof Hunt) {
@@ -16,23 +20,13 @@ export default function Hunt(hunt = {}) {
     this._players = new Players(hunt.players.array);
     this._teams = new Teams(hunt.teams.array);
   } else {
-    const {
-      huntName = "",
-      maxTeams = 2,
-      startDate = new Date(),
-      endDate = new Date(),
-      items = new Items(),
-      players = new Players(),
-      teams = new Teams()
-    } = hunt;
-
-    this._huntName = huntName;
-    this._maxTeams = maxTeams;
-    this._startDate = startDate;
-    this._endDate = endDate;
-    this._items = items;
-    this._players = players;
-    this._teams = teams;
+    this._huntName = hunt.huntName ? hunt.huntName : "";
+    this._maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
+    this._startDate = hunt.startDate ? hunt.startDate : new Date();
+    this._endDate = hunt.endDate ? hunt.endDate : new Date();
+    this._items = hunt.items ? hunt.items : new Items();
+    this._players = hunt.players ? hunt.players : new Players();
+    this._teams = hunt.teams ? hunt.teams : new Teams();
   }
 }
 

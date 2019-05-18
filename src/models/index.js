@@ -5,3 +5,4 @@ export * from "./hunts";
 export { default as Players } from "./players";
 export { default as Item } from "./item";
 export { default as Items } from "./items";
+export { default as ScavengeResource } from "./scavengeResource";
