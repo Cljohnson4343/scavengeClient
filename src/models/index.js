@@ -8,3 +8,4 @@ export { default as Items } from "./items";
 export { default as ScavengeResource } from "./scavengeResource";
 export { default as Hunt } from "./hunt";
 export { default as Hunts } from "./hunts";
+export { default as ScavengeMethod } from "./scavengeMethod";
