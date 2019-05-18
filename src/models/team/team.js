@@ -1,13 +1,18 @@
 import Player from "../player";
+import ScavengeResource from "../scavengeResource";
 
-export default function Team(teamName, players) {
-  if (!(this instanceof Team)) {
-    return new Team(teamName, players);
+const Team = ScavengeResource.extend({
+  constructor: function(teamName, players) {
+    if (!(this instanceof Team)) {
+      return new Team(teamName, players);
+    }
+
+    this._name = teamName || "";
+    this._players = players && players instanceof Array ? players.slice(0) : [];
+
+    ScavengeResource.call(this);
   }
-
-  this._name = teamName || "";
-  this._players = players && players instanceof Array ? players.slice(0) : [];
-}
+});
 
 const t = Team.prototype;
 
@@ -89,3 +94,5 @@ Object.defineProperty(t, "changePlayerEmail", {
     );
   }
 });
+
+export default Team;

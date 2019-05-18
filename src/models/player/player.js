@@ -1,13 +1,18 @@
 import Team from "../team";
+import ScavengeResource from "../scavengeResource";
 
-export default function Player(email, team) {
-  if (!(this instanceof Player)) {
-    return new Player(email, team);
+const Player = ScavengeResource.extend({
+  constructor: function(email, team) {
+    if (!(this instanceof Player)) {
+      return new Player(email, team);
+    }
+
+    this._email = email || "";
+    this._team = team && team instanceof Team ? team.copy() : new Team();
+
+    ScavengeResource.call(this);
   }
-
-  this._email = email || "";
-  this._team = team && team instanceof Team ? team.copy() : new Team();
-}
+});
 
 Object.defineProperty(Player.prototype, "email", {
   get: function() {
@@ -55,3 +60,5 @@ Object.defineProperty(Player.prototype, "copy", {
     return new Player(this._email, this._team);
   }
 });
+
+export default Player;

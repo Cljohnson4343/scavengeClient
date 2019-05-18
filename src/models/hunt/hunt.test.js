@@ -1,5 +1,6 @@
 import Hunt from "./hunt";
 import { Item, Items, Player, Players, Team, Teams } from "../../models";
+import ScavengeResource from "../scavengeResource";
 
 const afc = {
   fins: new Team("fins"),
@@ -80,6 +81,7 @@ describe("hunt", () => {
         const result = new Hunt(c.args);
 
         expect(result).toBeInstanceOf(Hunt);
+        expect(result).toBeInstanceOf(ScavengeResource);
       });
     }
   });

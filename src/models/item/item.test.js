@@ -1,5 +1,6 @@
 import Item from "./item";
 import deepFreeze from "deep-freeze";
+import ScavengeResource from "../scavengeResource";
 
 describe("Item", () => {
   describe("constructor", () => {
@@ -21,6 +22,7 @@ describe("Item", () => {
         const result = new Item(c.name, c.points);
 
         expect(result).toBeInstanceOf(Item);
+        expect(result).toBeInstanceOf(ScavengeResource);
       });
     }
   });

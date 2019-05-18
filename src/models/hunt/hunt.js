@@ -1,34 +1,39 @@
 import Items from "../items";
 import Players from "../players";
 import Teams from "../teams";
+import ScavengeResource from "../scavengeResource";
 
-export default function Hunt(hunt) {
-  if (!(this instanceof Hunt)) {
-    return new Hunt(hunt);
-  }
+const Hunt = ScavengeResource.extend({
+  constructor: function(hunt) {
+    if (!(this instanceof Hunt)) {
+      return new Hunt(hunt);
+    }
 
-  if (!Boolean(hunt)) {
-    hunt = {};
-  }
+    if (!Boolean(hunt)) {
+      hunt = {};
+    }
 
-  if (hunt instanceof Hunt) {
-    this._huntName = hunt.name;
-    this._maxTeams = hunt.maxTeams;
-    this._startDate = hunt.starts;
-    this._endDate = hunt.ends;
-    this._items = new Items(hunt.items.array);
-    this._players = new Players(hunt.players.array);
-    this._teams = new Teams(hunt.teams.array);
-  } else {
-    this._huntName = hunt.huntName ? hunt.huntName : "";
-    this._maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
-    this._startDate = hunt.startDate ? hunt.startDate : new Date();
-    this._endDate = hunt.endDate ? hunt.endDate : new Date();
-    this._items = hunt.items ? hunt.items : new Items();
-    this._players = hunt.players ? hunt.players : new Players();
-    this._teams = hunt.teams ? hunt.teams : new Teams();
+    if (hunt instanceof Hunt) {
+      this._huntName = hunt.name;
+      this._maxTeams = hunt.maxTeams;
+      this._startDate = hunt.starts;
+      this._endDate = hunt.ends;
+      this._items = new Items(hunt.items.array);
+      this._players = new Players(hunt.players.array);
+      this._teams = new Teams(hunt.teams.array);
+    } else {
+      this._huntName = hunt.huntName ? hunt.huntName : "";
+      this._maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
+      this._startDate = hunt.startDate ? hunt.startDate : new Date();
+      this._endDate = hunt.endDate ? hunt.endDate : new Date();
+      this._items = hunt.items ? hunt.items : new Items();
+      this._players = hunt.players ? hunt.players : new Players();
+      this._teams = hunt.teams ? hunt.teams : new Teams();
+    }
+
+    ScavengeResource.call(this);
   }
-}
+});
 
 Object.defineProperty(Hunt.prototype, "name", {
   get: function() {
@@ -115,3 +120,5 @@ Object.defineProperty(Hunt.prototype, "copy", {
     return new Hunt(this);
   }
 });
+
+export default Hunt;

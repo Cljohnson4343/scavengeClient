@@ -1,11 +1,17 @@
-export default function Item(name = "", pts = 1) {
-  if (!(this instanceof Item)) {
-    return new Item(name, pts);
-  }
+import ScavengeResource from "../scavengeResource";
 
-  this._name = typeof name === "string" ? name : "";
-  this._points = typeof pts === "number" ? Math.floor(pts) : 1;
-}
+const Item = ScavengeResource.extend({
+  constructor: function(name = "", pts = 1) {
+    if (!(this instanceof Item)) {
+      return new Item(name, pts);
+    }
+
+    this._name = typeof name === "string" ? name : "";
+    this._points = typeof pts === "number" ? Math.floor(pts) : 1;
+
+    ScavengeResource.call(this);
+  }
+});
 
 Object.defineProperty(Item.prototype, "name", {
   get: function() {
@@ -53,3 +59,5 @@ Object.defineProperty(Item.prototype, "copy", {
     return new Item(this._name, this._points);
   }
 });
+
+export default Item;

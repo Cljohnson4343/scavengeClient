@@ -1,6 +1,7 @@
 import deepFreeze from "deep-freeze";
 import Team from "../team";
 import Player from "./player";
+import ScavengeResource from "../scavengeResource";
 
 describe("Player", () => {
   const afcEast = {
@@ -27,6 +28,7 @@ describe("Player", () => {
     deepFreeze(player);
 
     expect(player).toBeInstanceOf(Player);
+    expect(player).toBeInstanceOf(ScavengeResource);
     expect(player.email).toBe(expected);
   });
 
