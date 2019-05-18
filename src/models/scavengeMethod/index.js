@@ -1,1 +1,1 @@
-export { scavengeMethod } from "./scavengeMethod";
+export { default } from "./scavengeMethod";

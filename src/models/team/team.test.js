@@ -22,6 +22,7 @@ describe("Team", () => {
     expect(team).toBeInstanceOf(Team);
     expect(team).toBeInstanceOf(ScavengeResource);
     expect(team.name).toBe(expected);
+    expect(team.path).toStrictEqual("/teams");
   });
 
   test.each`
