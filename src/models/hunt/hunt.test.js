@@ -82,6 +82,7 @@ describe("hunt", () => {
 
         expect(result).toBeInstanceOf(Hunt);
         expect(result).toBeInstanceOf(ScavengeResource);
+        expect(result.path).toStrictEqual("/hunts");
       });
     }
   });

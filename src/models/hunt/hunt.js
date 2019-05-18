@@ -2,8 +2,11 @@ import Items from "../items";
 import Players from "../players";
 import Teams from "../teams";
 import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
 const Hunt = ScavengeResource.extend({
+  path: "/hunts",
+
   constructor: function(hunt) {
     if (!(this instanceof Hunt)) {
       return new Hunt(hunt);
@@ -32,7 +35,52 @@ const Hunt = ScavengeResource.extend({
     }
 
     ScavengeResource.call(this);
-  }
+  },
+
+  apiRetrieveHunts: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  }),
+
+  apiRetrieveHunt: ScavengeMethod({
+    path: "/{huntID}",
+    method: "GET"
+  }),
+
+  apiCreateHunt: ScavengeMethod({
+    path: "/",
+    method: "POST"
+  }),
+
+  apiDeleteHunt: ScavengeMethod({
+    path: "/{huntID}",
+    method: "DELETE"
+  }),
+
+  apiUpdateHunt: ScavengeMethod({
+    path: "/{huntID}",
+    method: "PATCH"
+  }),
+
+  apiRetrieveItems: ScavengeMethod({
+    path: "/{huntID}/items/",
+    method: "GET"
+  }),
+
+  apiDeleteItem: ScavengeMethod({
+    path: "/{huntID}/items/{itemID}",
+    method: "DELETE"
+  }),
+
+  apiCreateItem: ScavengeMethod({
+    path: "/{huntID}/items/",
+    method: "POST"
+  }),
+
+  apiUpdateItem: ScavengeMethod({
+    path: "/{huntID}/items/{itemID}",
+    method: "PATCH"
+  })
 });
 
 Object.defineProperty(Hunt.prototype, "name", {
