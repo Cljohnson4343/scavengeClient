@@ -80,7 +80,7 @@ Object.defineProperty(Hunt.prototype, "players", {
 
 Object.defineProperty(Hunt.prototype, "inProgess", {
   get: function() {
-    return this._startDate.getTime() <= new Date().getTime();
+    return this._startDate <= new Date() && this._endDate > new Date();
   }
 });
 

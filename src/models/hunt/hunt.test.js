@@ -325,4 +325,54 @@ describe("hunt", () => {
       });
     }
   });
+
+  describe("inProgress", () => {
+    const cases = [
+      {
+        name: "started an hour ago",
+        args: Object.assign({}, hs.football, {
+          startDate: new Date(new Date().getTime() - hour)
+        }),
+        expected: true
+      },
+      {
+        name: "ended an hour ago",
+        args: Object.assign({}, hs.football, {
+          startDate: new Date(new Date().getTime() - 2 * hour),
+          endDate: new Date(new Date().getTime() - 1 * hour)
+        }),
+        expected: false
+      },
+      {
+        name: "starts in an hour",
+        args: new Hunt(
+          Object.assign({}, hs.xmas, {
+            startDate: new Date(new Date().getTime() + hour)
+          })
+        ),
+        expected: false
+      },
+      {
+        name: "hunt value that has already ended",
+        args: new Hunt(
+          Object.assign({}, hs.xmas, {
+            startDate: new Date(new Date().getTime() - hour),
+            endDate: new Date(new Date().getTime() - 2 * hour)
+          })
+        ),
+        expected: false
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        const hunt = new Hunt(c.args);
+
+        const result = hunt.inProgess;
+
+        expect(typeof result === "boolean").toBeTruthy();
+        expect(result).toStrictEqual(c.expected);
+      });
+    }
+  });
 });
