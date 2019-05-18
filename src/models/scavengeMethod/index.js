@@ -1,0 +1,1 @@
+export { scavengeMethod } from "./scavengeMethod";
