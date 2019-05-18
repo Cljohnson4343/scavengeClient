@@ -1,5 +1,4 @@
 import Hunt from "./hunt";
-import deepFreeze from "deep-freeze";
 import { Item, Items, Player, Players, Team, Teams } from "../../models";
 
 const afc = {

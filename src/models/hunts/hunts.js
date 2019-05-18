@@ -10,15 +10,12 @@ export const location = hunt => hunt.location;
 export const name = hunt => hunt.name;
 export const numTeams = hunt => hunt.numTeams;
 
-export default function Hunts(hunts = []) {
+export default function Hunts(hunts) {
   if (!(this instanceof Hunts)) {
     return new Hunts(hunts);
   }
 
-  this._container = new Container(
-    Hunt.prototype,
-    hunts instanceof Array ? hunts : []
-  );
+  this._container = new Container(Hunt.prototype, hunts);
 }
 
 Object.defineProperty(Hunts.prototype, "array", {
@@ -40,7 +37,7 @@ Object.defineProperty(Hunts.prototype, "add", {
 });
 
 Object.defineProperty(Hunts.prototype, "remove", {
-  get: function(hunt) {
+  value: function(hunt) {
     return new Hunts(this._container.remove(hunt));
   }
 });
