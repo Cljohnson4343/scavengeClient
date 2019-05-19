@@ -41,11 +41,6 @@ const Team = ScavengeResource.extend({
   apiUpdateTeam: ScavengeMethod({
     path: "/{teamID}",
     method: "PATCH"
-  }),
-
-  apiRetrieveMedia: ScavengeMethod({
-    path: "/{teamID}/media/",
-    method: "GET"
   })
 });
 
@@ -118,7 +113,7 @@ Object.defineProperty(t, "changePlayerEmail", {
         if (p.equals(player)) {
           return p.changeEmail(email);
         }
-        p.copy();
+        return p.copy();
       }),
       this.huntID,
       this.teamID
