@@ -28,21 +28,6 @@ const Team = ScavengeResource.extend({
     method: "GET"
   }),
 
-  apiRetrievePlayers: ScavengeMethod({
-    path: "/{teamID}/players/",
-    method: "GET"
-  }),
-
-  apiCreatePlayer: ScavengeMethod({
-    path: "/{teamID}/players/",
-    method: "POST"
-  }),
-
-  apiDeletePlayer: ScavengeMethod({
-    path: "/{teamID}/players/{playerID}",
-    method: "DELETE"
-  }),
-
   apiDeleteTeam: ScavengeMethod({
     path: "/{teamID}",
     method: "DELETE"
@@ -56,6 +41,11 @@ const Team = ScavengeResource.extend({
   apiUpdateTeam: ScavengeMethod({
     path: "/{teamID}",
     method: "PATCH"
+  }),
+
+  apiRetrievePlayers: ScavengeMethod({
+    path: "/{teamID}/players/",
+    method: "GET"
   }),
 
   apiRetrieveLocations: ScavengeMethod({

@@ -1,17 +1,31 @@
 import Team from "../team";
 import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
 const Player = ScavengeResource.extend({
-  constructor: function(email, team) {
+  path: "/teams/{teamID}/players",
+  constructor: function(email, team, teamID, playerID) {
     if (!(this instanceof Player)) {
       return new Player(email, team);
     }
 
     this._email = email || "";
+    this.teamID = teamID;
+    this.userID = playerID;
     this._team = team && team instanceof Team ? team.copy() : new Team();
 
     ScavengeResource.call(this);
-  }
+  },
+
+  apiCreatePlayer: ScavengeMethod({
+    path: "/",
+    method: "POST"
+  }),
+
+  apiDeletePlayer: ScavengeMethod({
+    path: "/{userID}",
+    method: "DELETE"
+  })
 });
 
 Object.defineProperty(Player.prototype, "email", {

@@ -2,6 +2,8 @@ import deepFreeze from "deep-freeze";
 import Team from "../team";
 import Player from "./player";
 import ScavengeResource from "../scavengeResource";
+import { addTestModel } from "../../testUtils";
+import { BASE_PATH } from "../../config";
 
 describe("Player", () => {
   const afcEast = {
@@ -104,5 +106,57 @@ describe("Player", () => {
     const newPlr = plr.copy();
     expect(newPlr).toBeInstanceOf(Player);
     expect(plr.equals(newPlr)).toBeTruthy();
+  });
+
+  describe("apiCreatePlayer", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Player("email", new Team(), 43, 23)),
+        expected: {
+          url: BASE_PATH + "/teams/43/players/",
+          method: "POST"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiCreatePlayer"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiDeletePlayer", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Player("email", new Team(), 43, 23)),
+        expected: {
+          url: BASE_PATH + "/teams/43/players/23",
+          method: "DELETE"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiDeletePlayer"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
   });
 });
