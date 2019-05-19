@@ -73,10 +73,3 @@ Object.defineProperty(Item.prototype, "copy", {
 });
 
 export default Item;
-
-/*
-router.Get("/{huntID}/items/", getItemsHandler(env))
-router.Delete("/{huntID}/items/{itemID}", deleteItemHandler(env))
-router.Post("/{huntID}/items/", createItemHandler(env))
-router.Patch("/{huntID}/items/{itemID}", patchItemHandler(env))
-*/
