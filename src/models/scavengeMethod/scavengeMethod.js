@@ -8,12 +8,13 @@ export default function ScavengeMethod(config) {
     // add the resource path to the specific endpoint provided by method
     let path = self.path + config.path;
 
-    config.data = Object.create(data);
-    config.url = self.basePath + pathInterpolator(path)(self);
-
+    let spec = Object.assign({}, config, {
+      data: data,
+      url: self.basePath + pathInterpolator(path)(self)
+    });
     if (self.hasOwnProperty("recordRequest")) {
-      return self.recordRequest(config);
+      return self.recordRequest(spec);
     }
-    return axios(config);
+    return axios(spec);
   };
 }

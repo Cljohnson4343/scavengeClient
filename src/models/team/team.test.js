@@ -1,7 +1,9 @@
 import deepFreeze from "deep-freeze";
+import { addTestModel } from "../../testUtils";
 import Team from "./team";
 import Player from "../player";
 import ScavengeResource from "../scavengeResource";
+import { BASE_PATH } from "../../config";
 
 describe("Team", () => {
   const afcEast = {
@@ -23,6 +25,7 @@ describe("Team", () => {
     expect(team).toBeInstanceOf(ScavengeResource);
     expect(team.name).toBe(expected);
     expect(team.path).toStrictEqual("/teams");
+    expect(team.basePath).toStrictEqual(BASE_PATH);
   });
 
   test.each`
@@ -131,8 +134,116 @@ describe("team", () => {
   describe("apiRetrieve", () => {
     const cases = [
       {
-        name: "generates the correct path"
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Team("name", [], 43, 23)),
+        data: { name: "name" },
+        expected: {
+          url: BASE_PATH + "/teams/23",
+          method: "GET"
+        }
       }
     ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieve"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiRetrievePoints", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Team("name", [], 43, 23)),
+        data: { name: "name" },
+        expected: {
+          url: BASE_PATH + "/teams/23/points/",
+          method: "GET"
+        }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrievePoints"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiDeleteTeam", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Team("name", [], 43, 23)),
+        data: { name: "name" },
+        expected: {
+          url: BASE_PATH + "/teams/23",
+          method: "DELETE"
+        }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiDeleteTeam"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiCreateTeam", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Team("name", [], 43, 23)),
+        data: { name: "name" },
+        expected: {
+          url: BASE_PATH + "/teams/",
+          method: "POST"
+        }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiCreateTeam"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiUpdateTeam", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Team("name", [], 43, 23)),
+        expected: {
+          url: BASE_PATH + "/teams/23",
+          method: "PATCH"
+        },
+        data: { name: "name" }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiUpdateTeam"](c.data);
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
+      });
+    }
   });
 });

@@ -1,9 +1,8 @@
 import Item from "./item";
 import deepFreeze from "deep-freeze";
 import ScavengeResource from "../scavengeResource";
-import addTestModel from "../testModel";
+import { addTestModel } from "../../testUtils";
 import { BASE_PATH } from "../../config";
-import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
 
 describe("Item", () => {
   describe("constructor", () => {
@@ -239,6 +238,7 @@ describe("Item", () => {
       {
         name: "creates a valid url path",
         model: addTestModel(new Item("item", 1, 43)),
+        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/",
           method: "GET"
@@ -253,6 +253,7 @@ describe("Item", () => {
         const result = c.model.lastRequest();
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
       });
     }
   });
@@ -262,6 +263,7 @@ describe("Item", () => {
       {
         name: "creates a valid config for api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
+        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/23",
           method: "DELETE"
@@ -274,6 +276,7 @@ describe("Item", () => {
         const result = c.model.lastRequest();
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
       });
     }
   });
@@ -283,6 +286,7 @@ describe("Item", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
+        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/",
           method: "POST"
@@ -296,6 +300,7 @@ describe("Item", () => {
         const result = c.model.lastRequest();
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
       });
     }
   });
@@ -305,6 +310,7 @@ describe("Item", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
+        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/23",
           method: "PATCH"
@@ -317,6 +323,7 @@ describe("Item", () => {
         const result = c.model.lastRequest();
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toBeDeepEqual(c.data);
       });
     }
   });

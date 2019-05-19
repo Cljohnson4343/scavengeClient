@@ -5,17 +5,17 @@ import ScavengeResource from "../scavengeResource";
 const Team = ScavengeResource.extend({
   path: "/teams",
 
-  constructor: function(teamName, players) {
+  constructor: function(teamName = "", players = [], huntID, teamID) {
     if (!(this instanceof Team)) {
       return new Team(teamName, players);
     }
 
     this.name = teamName || "";
-    this.huntID = null;
-    this.teamID = null;
+    this.huntID = huntID;
+    this.teamID = teamID;
     this._players = players && players instanceof Array ? players.slice(0) : [];
 
-    ScavengeMethod.call(this);
+    ScavengeResource.call(this);
   },
 
   apiRetrieve: ScavengeMethod({

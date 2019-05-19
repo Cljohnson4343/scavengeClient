@@ -1,6 +1,5 @@
-import addTestModel from "./testModel";
-import Team from "../team";
-import ScavengeResource from "../scavengeResource";
+import { addTestModel } from "./testUtils";
+import { ScavengeResource, Team } from "../models";
 
 describe("TestModel", () => {
   describe("constructor", () => {
