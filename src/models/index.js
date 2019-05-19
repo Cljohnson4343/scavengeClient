@@ -12,3 +12,5 @@ export { default as ScavengeMethod } from "./scavengeMethod";
 export { default as Location } from "./location";
 export { default as Locations } from "./locations";
 export { default as Media } from "./media";
+export { default as Medias } from "./medias";
+export { default as User } from "./user";
