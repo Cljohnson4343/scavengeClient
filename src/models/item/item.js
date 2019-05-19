@@ -34,7 +34,12 @@ const Item = ScavengeResource.extend({
 
 Object.defineProperty(Item.prototype, "changeName", {
   value: function(name) {
-    return new Item(typeof name === "string" ? name : this.name, this.points);
+    return new Item(
+      typeof name === "string" ? name : this.name,
+      this.points,
+      this.huntID,
+      this.itemID
+    );
   }
 });
 
@@ -42,7 +47,9 @@ Object.defineProperty(Item.prototype, "changePoints", {
   value: function(pts) {
     return new Item(
       this.name,
-      typeof pts === "number" && pts > 0 ? Math.floor(pts) : 1
+      typeof pts === "number" && pts > 0 ? Math.floor(pts) : 1,
+      this.huntID,
+      this.itemID
     );
   }
 });
@@ -63,7 +70,7 @@ Object.defineProperty(Item.prototype, "equals", {
 
 Object.defineProperty(Item.prototype, "copy", {
   value: function() {
-    return new Item(this.name, this.points);
+    return new Item(this.name, this.points, this.huntID, this.itemID);
   }
 });
 

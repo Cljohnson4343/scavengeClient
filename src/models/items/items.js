@@ -41,13 +41,13 @@ Object.defineProperty(Items.prototype, "length", {
 
 Object.defineProperty(Items.prototype, "add", {
   value: function(item) {
-    return new Items(this._container.add(item));
+    return new Items(this._container.add(item), this.huntID);
   }
 });
 
 Object.defineProperty(Items.prototype, "remove", {
   value: function(item) {
-    return new Items(this._container.remove(item));
+    return new Items(this._container.remove(item), this.huntID);
   }
 });
 
@@ -59,7 +59,8 @@ Object.defineProperty(Items.prototype, "changeItemName", {
           return i.changeName(name);
         }
         return i.copy();
-      })
+      }),
+      this.huntID
     );
   }
 });
@@ -72,7 +73,8 @@ Object.defineProperty(Items.prototype, "changeItemPoints", {
           return i.changePoints(points);
         }
         return i.copy();
-      })
+      }),
+      this.huntID
     );
   }
 });

@@ -41,19 +41,19 @@ Object.defineProperty(Players.prototype, "length", {
 
 Object.defineProperty(Players.prototype, "add", {
   value: function(player) {
-    return new Players(this._container.add(player));
+    return new Players(this._container.add(player), this.teamID);
   }
 });
 
 Object.defineProperty(Players.prototype, "remove", {
   value: function(player) {
-    return new Players(this._container.remove(player));
+    return new Players(this._container.remove(player), this.teamID);
   }
 });
 
 Object.defineProperty(Players.prototype, "copy", {
   value: function() {
-    return new Players(this.array);
+    return new Players(this.array, this.teamID);
   }
 });
 
@@ -64,7 +64,8 @@ Players.prototype.changeTeamName = function(oldName, newName) {
         return new Player(p.email, p.team.changeName(newName));
       }
       return p.copy();
-    })
+    }),
+    this.teamID
   );
 };
 
@@ -75,12 +76,13 @@ Players.prototype.change = function(player, team) {
         return p.changeTeam(team);
       }
       return p.copy();
-    })
+    }),
+    this.teamID
   );
 };
 
 Players.prototype.getByTeam = function(team) {
-  return new Players(this.array.filter(p => p.team.equals(team)));
+  return new Players(this.array.filter(p => p.team.equals(team)), this.teamID);
 };
 
 Players.prototype.getByEmail = function(email) {
@@ -102,7 +104,8 @@ Players.prototype.removeTeam = function(team) {
         return p.changeTeam(new Team());
       }
       return p.copy();
-    })
+    }),
+    this.teamID
   );
 };
 
@@ -113,7 +116,8 @@ Players.prototype.changePlayerEmail = function(player, email) {
         return p.changeEmail(email);
       }
       return p.copy();
-    })
+    }),
+    this.teamID
   );
 };
 

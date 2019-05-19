@@ -130,7 +130,7 @@ Object.defineProperty(Hunt.prototype, "equals", {
 
 Object.defineProperty(Hunt.prototype, "copy", {
   value: function() {
-    return new Hunt(this);
+    return new Hunt(this, this.huntID);
   }
 });
 

@@ -43,17 +43,17 @@ Object.defineProperty(Player.prototype, "team", {
 Object.defineProperty(Player.prototype, "changeTeam", {
   value: function(newTeam) {
     if (newTeam && newTeam instanceof Team) {
-      return new Player(this._email, newTeam);
+      return new Player(this._email, newTeam, this.teamID, this.playerID);
     }
 
-    return new Player(this._email, new Team());
+    return new Player(this._email, new Team(), this.teamID, this.playerID);
   }
 });
 
 Object.defineProperty(Player.prototype, "changeEmail", {
   value: function(email) {
     if (email && typeof email === "string") {
-      return new Player(email, this._team);
+      return new Player(email, this._team, this.teamID, this.playerID);
     }
 
     return this.copy();
@@ -71,7 +71,7 @@ Object.defineProperty(Player.prototype, "equals", {
 
 Object.defineProperty(Player.prototype, "copy", {
   value: function() {
-    return new Player(this._email, this._team);
+    return new Player(this._email, this._team, this.teamID, this.playerID);
   }
 });
 

@@ -45,13 +45,13 @@ Object.defineProperty(Locations.prototype, "length", {
 
 Object.defineProperty(Locations.prototype, "add", {
   value: function(item) {
-    return new Locations(this._container.add(item));
+    return new Locations(this._container.add(item), this.teamID);
   }
 });
 
 Object.defineProperty(Locations.prototype, "remove", {
   value: function(item) {
-    return new Locations(this._container.remove(item));
+    return new Locations(this._container.remove(item), this.teamID);
   }
 });
 

@@ -69,10 +69,10 @@ const t = Team.prototype;
 Object.defineProperty(t, "changeName", {
   value: function(name) {
     if (name && typeof name === "string") {
-      return new Team(name, this._players);
+      return new Team(name, this._players, this.huntID, this.teamID);
     }
 
-    return new Team(null, this._players);
+    return new Team(null, this._players, this.huntID, this.teamID);
   }
 });
 
@@ -84,7 +84,7 @@ Object.defineProperty(t, "players", {
 
 Object.defineProperty(t, "copy", {
   value: function() {
-    return new Team(this.name, this._players);
+    return new Team(this.name, this._players, this.huntID, this.teamID);
   }
 });
 
@@ -92,7 +92,7 @@ Object.defineProperty(t, "addPlayer", {
   value: function(plr) {
     if (plr instanceof Player) {
       let players = [...this._players, plr];
-      return new Team(this.name, players);
+      return new Team(this.name, players, this.huntID, this.teamID);
     }
     return this.copy();
   }
@@ -101,7 +101,7 @@ Object.defineProperty(t, "addPlayer", {
 Object.defineProperty(t, "removePlayer", {
   value: function(plr) {
     let players = this._players.filter(player => !player.equals(plr));
-    return new Team(this.name, players);
+    return new Team(this.name, players, this.huntID, this.teamID);
   }
 });
 
@@ -134,7 +134,9 @@ Object.defineProperty(t, "changePlayerEmail", {
           return p.changeEmail(email);
         }
         p.copy();
-      })
+      }),
+      this.huntID,
+      this.teamID
     );
   }
 });
