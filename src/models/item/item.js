@@ -7,6 +7,7 @@ const Item = ScavengeResource.extend({
     }
 
     this.name = typeof name === "string" ? name : "";
+    this.itemID = null;
     this.points = typeof pts === "number" ? Math.floor(pts) : 1;
 
     ScavengeResource.call(this);

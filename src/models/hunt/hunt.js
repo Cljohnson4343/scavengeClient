@@ -16,6 +16,8 @@ const Hunt = ScavengeResource.extend({
       hunt = {};
     }
 
+    this.huntID = null;
+
     if (hunt instanceof Hunt) {
       this.name = hunt.name;
       this.maxTeams = hunt.maxTeams;

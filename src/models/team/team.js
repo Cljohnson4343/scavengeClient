@@ -12,7 +12,7 @@ const Team = ScavengeResource.extend({
 
     this.name = teamName || "";
     this.huntID = null;
-    this.id = null;
+    this.teamID = null;
     this._players = players && players instanceof Array ? players.slice(0) : [];
 
     ScavengeMethod.call(this);
