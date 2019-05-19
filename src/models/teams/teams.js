@@ -1,17 +1,30 @@
 import { ScavengeError } from "../../utils";
 import { Player, Team } from "../../models";
 import Container from "../container";
+import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
-export default function Teams(teams = []) {
-  if (!(this instanceof Teams)) {
-    return new Teams(teams);
-  }
+const Teams = ScavengeResource.extend({
+  path: "/teams",
 
-  this._container = new Container(
-    Team.prototype,
-    teams instanceof Array ? teams : []
-  );
-}
+  constructor: function(teams = []) {
+    if (!(this instanceof Teams)) {
+      return new Teams(teams);
+    }
+
+    this._container = new Container(
+      Team.prototype,
+      teams instanceof Array ? teams : []
+    );
+
+    ScavengeResource.call(this);
+  },
+
+  apiRetrieveTeams: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  })
+});
 
 Object.defineProperty(Teams.prototype, "array", {
   get: function() {
@@ -112,3 +125,5 @@ Teams.prototype.changePlayerEmail = function(player, email) {
     })
   );
 };
+
+export default Teams;

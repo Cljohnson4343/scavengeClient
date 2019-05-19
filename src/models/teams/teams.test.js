@@ -4,6 +4,9 @@ import deepFreeze from "deep-freeze";
 import Team from "../team";
 import { ScavengeError } from "../../utils";
 import Player from "../player";
+import ScavengeResource from "../scavengeResource";
+import { addTestModel } from "../../testUtils";
+import { BASE_PATH } from "../../config";
 
 const afc = {
   fins: new Team("fins"),
@@ -30,6 +33,7 @@ describe("teams", () => {
         const result = new Teams(c[1]);
 
         expect(result).toBeInstanceOf(Teams);
+        expect(result).toBeInstanceOf(ScavengeResource);
       });
     }
   });
@@ -349,6 +353,32 @@ describe("teams", () => {
           expect(result).toBeInstanceOf(Team);
           expect(result.equals(c.input)).toBeTruthy();
         }
+      });
+    }
+  });
+
+  describe("apiRetrieveTeams", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Teams([], 43)),
+        expected: {
+          url: BASE_PATH + "/teams/",
+          method: "GET"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieveTeams"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
       });
     }
   });
