@@ -1,16 +1,31 @@
 import Container from "../container";
 import Item from "../item";
+import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
-export default function Items(items = []) {
-  if (!(this instanceof Items)) {
-    return new Items(items);
-  }
+const Items = ScavengeResource.extend({
+  path: "/hunts/{huntID}/items",
 
-  this._container = new Container(
-    Item.prototype,
-    items instanceof Array ? items : []
-  );
-}
+  constructor: function(items = [], huntID) {
+    if (!(this instanceof Items)) {
+      return new Items(items);
+    }
+
+    this.huntID = huntID;
+
+    this._container = new Container(
+      Item.prototype,
+      items instanceof Array ? items : []
+    );
+
+    ScavengeResource.call(this);
+  },
+
+  apiRetrieveItems: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  })
+});
 
 Object.defineProperty(Items.prototype, "array", {
   get: function() {
@@ -73,3 +88,5 @@ Object.defineProperty(Items.prototype, "getByItem", {
     return this._container.get(i => i.equals(item));
   }
 });
+
+export default Items;

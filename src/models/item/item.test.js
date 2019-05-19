@@ -233,31 +233,6 @@ describe("Item", () => {
     }
   });
 
-  describe("apiRetrieveItems", () => {
-    const cases = [
-      {
-        name: "creates a valid url path",
-        model: addTestModel(new Item("item", 1, 43)),
-        data: { name: "test value" },
-        expected: {
-          url: BASE_PATH + "/hunts/43/items/",
-          method: "GET"
-        }
-      }
-    ];
-
-    for (let c of cases) {
-      test(c.name, () => {
-        c.model["apiRetrieveItems"](c.data);
-
-        const result = c.model.lastRequest();
-        expect(result.url).toStrictEqual(c.expected.url);
-        expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toBeDeepEqual(c.data);
-      });
-    }
-  });
-
   describe("apiDeleteItem", () => {
     const cases = [
       {

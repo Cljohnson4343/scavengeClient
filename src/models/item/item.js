@@ -16,11 +16,6 @@ const Item = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiRetrieveItems: ScavengeMethod({
-    path: "/",
-    method: "GET"
-  }),
-
   apiDeleteItem: ScavengeMethod({
     path: "/{itemID}",
     method: "DELETE"
