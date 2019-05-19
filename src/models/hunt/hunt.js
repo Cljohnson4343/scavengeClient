@@ -39,11 +39,6 @@ const Hunt = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiRetrieveHunts: ScavengeMethod({
-    path: "/",
-    method: "GET"
-  }),
-
   apiRetrieveHunt: ScavengeMethod({
     path: "/{huntID}",
     method: "GET"

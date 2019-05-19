@@ -1,5 +1,6 @@
 /* eslint-disable no-loop-func */
 import deepFreeze from "deep-freeze";
+import ScavengeResource from "../scavengeResource";
 import {
   Hunt,
   Hunts,
@@ -10,6 +11,8 @@ import {
   Player,
   Players
 } from "../../models";
+import { BASE_PATH } from "../../config";
+import { addTestModel } from "../../testUtils";
 
 const afc = {
   fins: new Team("fins"),
@@ -85,6 +88,8 @@ describe("hunts", () => {
         const result = new Hunts(c.args);
 
         expect(result).toBeInstanceOf(Hunts);
+        expect(result).toBeInstanceOf(ScavengeResource);
+        expect(result.basePath).toStrictEqual(BASE_PATH);
       });
     }
   });
@@ -195,6 +200,32 @@ describe("hunts", () => {
 
         expect(result).toBeInstanceOf(Hunts);
         expect(result.length).toBe(c.expected);
+      });
+    }
+  });
+
+  describe("apiRetrieveHunts", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Hunts()),
+        expected: {
+          url: BASE_PATH + "/hunts/",
+          method: "GET"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieveHunts"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
       });
     }
   });

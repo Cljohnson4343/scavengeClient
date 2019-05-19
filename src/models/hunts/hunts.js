@@ -1,5 +1,7 @@
 import Container from "../container";
 import Hunt from "../hunt";
+import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
 export const isOpen = hunt => hunt.isOpen;
 export const starts = hunt => hunt.startTime;
@@ -10,13 +12,24 @@ export const location = hunt => hunt.location;
 export const name = hunt => hunt.name;
 export const numTeams = hunt => hunt.numTeams;
 
-export default function Hunts(hunts) {
-  if (!(this instanceof Hunts)) {
-    return new Hunts(hunts);
-  }
+const Hunts = ScavengeResource.extend({
+  path: "/hunts",
 
-  this._container = new Container(Hunt.prototype, hunts);
-}
+  constructor: function(hunts) {
+    if (!(this instanceof Hunts)) {
+      return new Hunts(hunts);
+    }
+
+    this._container = new Container(Hunt.prototype, hunts);
+
+    ScavengeResource.call(this);
+  },
+
+  apiRetrieveHunts: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  })
+});
 
 Object.defineProperty(Hunts.prototype, "array", {
   get: function() {
@@ -41,3 +54,5 @@ Object.defineProperty(Hunts.prototype, "remove", {
     return new Hunts(this._container.remove(hunt));
   }
 });
+
+export default Hunts;
