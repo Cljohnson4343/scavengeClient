@@ -126,3 +126,13 @@ describe("Team", () => {
     }
   );
 });
+
+describe("team", () => {
+  describe("apiRetrieve", () => {
+    const cases = [
+      {
+        name: "generates the correct path"
+      }
+    ];
+  });
+});

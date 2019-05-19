@@ -17,18 +17,18 @@ const Hunt = ScavengeResource.extend({
     }
 
     if (hunt instanceof Hunt) {
-      this._huntName = hunt.name;
-      this._maxTeams = hunt.maxTeams;
-      this._startDate = hunt.starts;
-      this._endDate = hunt.ends;
+      this.name = hunt.name;
+      this.maxTeams = hunt.maxTeams;
+      this.startTime = hunt.starts;
+      this.endDate = hunt.ends;
       this._items = new Items(hunt.items.array);
       this._players = new Players(hunt.players.array);
       this._teams = new Teams(hunt.teams.array);
     } else {
-      this._huntName = hunt.huntName ? hunt.huntName : "";
-      this._maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
-      this._startDate = hunt.startDate ? hunt.startDate : new Date();
-      this._endDate = hunt.endDate ? hunt.endDate : new Date();
+      this.name = hunt.huntName ? hunt.huntName : "";
+      this.maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
+      this.startTime = hunt.startDate ? hunt.startDate : new Date();
+      this.endDate = hunt.endDate ? hunt.endDate : new Date();
       this._items = hunt.items ? hunt.items : new Items();
       this._players = hunt.players ? hunt.players : new Players();
       this._teams = hunt.teams ? hunt.teams : new Teams();
@@ -83,27 +83,15 @@ const Hunt = ScavengeResource.extend({
   })
 });
 
-Object.defineProperty(Hunt.prototype, "name", {
-  get: function() {
-    return this._huntName;
-  }
-});
-
 Object.defineProperty(Hunt.prototype, "starts", {
   get: function() {
-    return this._startDate;
+    return this.startTime;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "ends", {
   get: function() {
-    return this._endDate;
-  }
-});
-
-Object.defineProperty(Hunt.prototype, "maxTeams", {
-  get: function() {
-    return this._maxTeams;
+    return this.endDate;
   }
 });
 
@@ -133,19 +121,19 @@ Object.defineProperty(Hunt.prototype, "players", {
 
 Object.defineProperty(Hunt.prototype, "inProgess", {
   get: function() {
-    return this._startDate <= new Date() && this._endDate > new Date();
+    return this.startTime <= new Date() && this.endDate > new Date();
   }
 });
 
 Object.defineProperty(Hunt.prototype, "startsIn", {
   get: function() {
-    return new Date() - this._startDate;
+    return new Date() - this.startTime;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "endsIn", {
   get: function() {
-    return this._endDate - new Date();
+    return this.endDate - new Date();
   }
 });
 

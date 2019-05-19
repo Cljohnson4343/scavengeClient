@@ -10,7 +10,9 @@ const Team = ScavengeResource.extend({
       return new Team(teamName, players);
     }
 
-    this._name = teamName || "";
+    this.name = teamName || "";
+    this.huntID = null;
+    this.id = null;
     this._players = players && players instanceof Array ? players.slice(0) : [];
 
     ScavengeMethod.call(this);
@@ -84,12 +86,6 @@ const Team = ScavengeResource.extend({
 
 const t = Team.prototype;
 
-Object.defineProperty(t, "name", {
-  get: function() {
-    return this._name;
-  }
-});
-
 Object.defineProperty(t, "changeName", {
   value: function(name) {
     if (name && typeof name === "string") {
@@ -108,7 +104,7 @@ Object.defineProperty(t, "players", {
 
 Object.defineProperty(t, "copy", {
   value: function() {
-    return new Team(this._name, this._players);
+    return new Team(this.name, this._players);
   }
 });
 
@@ -116,7 +112,7 @@ Object.defineProperty(t, "addPlayer", {
   value: function(plr) {
     if (plr instanceof Player) {
       let players = [...this._players, plr];
-      return new Team(this._name, players);
+      return new Team(this.name, players);
     }
     return this.copy();
   }
@@ -125,7 +121,7 @@ Object.defineProperty(t, "addPlayer", {
 Object.defineProperty(t, "removePlayer", {
   value: function(plr) {
     let players = this._players.filter(player => !player.equals(plr));
-    return new Team(this._name, players);
+    return new Team(this.name, players);
   }
 });
 
@@ -145,14 +141,14 @@ Object.defineProperty(t, "equals", {
       return false;
     }
 
-    return this._name === obj.name;
+    return this.name === obj.name;
   }
 });
 
 Object.defineProperty(t, "changePlayerEmail", {
   value: function(player, email) {
     return new Team(
-      this._name,
+      this.name,
       this._players.map(p => {
         if (p.equals(player)) {
           return p.changeEmail(email);
