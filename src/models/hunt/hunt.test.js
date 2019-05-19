@@ -1,6 +1,8 @@
 import Hunt from "./hunt";
 import { Item, Items, Player, Players, Team, Teams } from "../../models";
 import ScavengeResource from "../scavengeResource";
+import { addTestModel } from "../../testUtils";
+import { BASE_PATH } from "../../config";
 
 const afc = {
   fins: new Team("fins"),
@@ -374,6 +376,110 @@ describe("hunt", () => {
 
         expect(typeof result === "boolean").toBeTruthy();
         expect(result).toStrictEqual(c.expected);
+      });
+    }
+  });
+
+  describe("apiRetrieveHunt", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Hunt({}, 43)),
+        expected: {
+          url: BASE_PATH + "/hunts/43",
+          method: "GET"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieveHunt"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiCreateHunt", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Hunt({}, 43)),
+        expected: {
+          url: BASE_PATH + "/hunts/",
+          method: "POST"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiCreateHunt"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiDeleteHunt", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Hunt({}, 43)),
+        expected: {
+          url: BASE_PATH + "/hunts/43",
+          method: "DELETE"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiDeleteHunt"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
+  });
+
+  describe("apiUpdateHunt", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Hunt({}, 43)),
+        expected: {
+          url: BASE_PATH + "/hunts/43",
+          method: "PATCH"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiUpdateHunt"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
       });
     }
   });

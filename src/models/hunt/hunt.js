@@ -7,7 +7,7 @@ import ScavengeMethod from "../scavengeMethod";
 const Hunt = ScavengeResource.extend({
   path: "/hunts",
 
-  constructor: function(hunt) {
+  constructor: function(hunt = {}, huntID) {
     if (!(this instanceof Hunt)) {
       return new Hunt(hunt);
     }
@@ -16,7 +16,7 @@ const Hunt = ScavengeResource.extend({
       hunt = {};
     }
 
-    this.huntID = null;
+    this.huntID = huntID;
 
     if (hunt instanceof Hunt) {
       this.name = hunt.name;
