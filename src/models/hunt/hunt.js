@@ -62,26 +62,6 @@ const Hunt = ScavengeResource.extend({
   apiUpdateHunt: ScavengeMethod({
     path: "/{huntID}",
     method: "PATCH"
-  }),
-
-  apiRetrieveItems: ScavengeMethod({
-    path: "/{huntID}/items/",
-    method: "GET"
-  }),
-
-  apiDeleteItem: ScavengeMethod({
-    path: "/{huntID}/items/{itemID}",
-    method: "DELETE"
-  }),
-
-  apiCreateItem: ScavengeMethod({
-    path: "/{huntID}/items/",
-    method: "POST"
-  }),
-
-  apiUpdateItem: ScavengeMethod({
-    path: "/{huntID}/items/{itemID}",
-    method: "PATCH"
   })
 });
 

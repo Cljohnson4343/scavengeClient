@@ -1,5 +1,3 @@
-import { extend } from "../../utils";
-
 const proto = {
   _requests: [],
   recordRequest: function(request) {
@@ -7,6 +5,9 @@ const proto = {
   },
   get requests() {
     return this._requests;
+  },
+  lastRequest: function() {
+    return this._requests[this._requests.length - 1];
   }
 };
 

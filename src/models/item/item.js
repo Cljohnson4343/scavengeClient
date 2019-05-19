@@ -1,17 +1,40 @@
 import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
 const Item = ScavengeResource.extend({
-  constructor: function(name = "", pts = 1) {
+  path: "/hunts/{huntID}/items",
+  constructor: function(name = "", pts = 1, huntID, itemID) {
     if (!(this instanceof Item)) {
       return new Item(name, pts);
     }
 
     this.name = typeof name === "string" ? name : "";
-    this.itemID = null;
+    this.itemID = itemID;
+    this.huntID = huntID;
     this.points = typeof pts === "number" ? Math.floor(pts) : 1;
 
     ScavengeResource.call(this);
-  }
+  },
+
+  apiRetrieveItems: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  }),
+
+  apiDeleteItem: ScavengeMethod({
+    path: "/{itemID}",
+    method: "DELETE"
+  }),
+
+  apiCreateItem: ScavengeMethod({
+    path: "/",
+    method: "POST"
+  }),
+
+  apiUpdateItem: ScavengeMethod({
+    path: "/{itemID}",
+    method: "PATCH"
+  })
 });
 
 Object.defineProperty(Item.prototype, "changeName", {
@@ -50,3 +73,10 @@ Object.defineProperty(Item.prototype, "copy", {
 });
 
 export default Item;
+
+/*
+router.Get("/{huntID}/items/", getItemsHandler(env))
+router.Delete("/{huntID}/items/{itemID}", deleteItemHandler(env))
+router.Post("/{huntID}/items/", createItemHandler(env))
+router.Patch("/{huntID}/items/{itemID}", patchItemHandler(env))
+*/

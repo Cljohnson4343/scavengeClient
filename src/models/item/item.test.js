@@ -1,6 +1,9 @@
 import Item from "./item";
 import deepFreeze from "deep-freeze";
 import ScavengeResource from "../scavengeResource";
+import addTestModel from "../testModel";
+import { BASE_PATH } from "../../config";
+import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
 
 describe("Item", () => {
   describe("constructor", () => {
@@ -227,6 +230,93 @@ describe("Item", () => {
 
         const result = item.copy();
         expect(result.equals(c.expected)).toBeTruthy();
+      });
+    }
+  });
+
+  describe("apiRetrieveItems", () => {
+    const cases = [
+      {
+        name: "creates a valid url path",
+        model: addTestModel(new Item("item", 1, 43)),
+        expected: {
+          url: BASE_PATH + "/hunts/43/items/",
+          method: "GET"
+        }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieveItems"](c.data);
+
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+      });
+    }
+  });
+
+  describe("apiDeleteItem", () => {
+    const cases = [
+      {
+        name: "creates a valid config for api method call",
+        model: addTestModel(new Item("item", 1, 43, 23)),
+        expected: {
+          url: BASE_PATH + "/hunts/43/items/23",
+          method: "DELETE"
+        }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiDeleteItem"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+      });
+    }
+  });
+
+  describe("apiCreateItem", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Item("item", 1, 43, 23)),
+        expected: {
+          url: BASE_PATH + "/hunts/43/items/",
+          method: "POST"
+        }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiCreateItem"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+      });
+    }
+  });
+
+  describe("apiUpdateItem", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Item("item", 1, 43, 23)),
+        expected: {
+          url: BASE_PATH + "/hunts/43/items/23",
+          method: "PATCH"
+        }
+      }
+    ];
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiUpdateItem"](c.data);
+        const result = c.model.lastRequest();
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
       });
     }
   });
