@@ -1,7 +1,7 @@
-export { default as Player } from "./player";
 export { default as Team } from "./team";
 export { default as Teams } from "./teams";
 export * from "./hunts";
+export { default as Player } from "./player";
 export { default as Players } from "./players";
 export { default as Item } from "./item";
 export { default as Items } from "./items";
@@ -9,3 +9,6 @@ export { default as ScavengeResource } from "./scavengeResource";
 export { default as Hunt } from "./hunt";
 export { default as Hunts } from "./hunts";
 export { default as ScavengeMethod } from "./scavengeMethod";
+export { default as Location } from "./location";
+export { default as Locations } from "./locations";
+export { default as Media } from "./media";

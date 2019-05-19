@@ -46,21 +46,6 @@ const Team = ScavengeResource.extend({
   apiRetrieveMedia: ScavengeMethod({
     path: "/{teamID}/media/",
     method: "GET"
-  }),
-
-  apiCreateMedia: ScavengeMethod({
-    path: "/{teamID}/media/",
-    method: "POST"
-  }),
-
-  apiDeleteMedia: ScavengeMethod({
-    path: "/{teamID}/media/{mediaID}",
-    method: "DELETE"
-  }),
-
-  apiRetrieveLocations: ScavengeMethod({
-    path: "/{teamID}/locations/",
-    method: "GET"
   })
 });
 
