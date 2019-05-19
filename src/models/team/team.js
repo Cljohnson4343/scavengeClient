@@ -7,7 +7,7 @@ const Team = ScavengeResource.extend({
 
   constructor: function(teamName = "", players = [], huntID, teamID) {
     if (!(this instanceof Team)) {
-      return new Team(teamName, players);
+      return new Team(...[].slice.call(arguments));
     }
 
     this.name = teamName || "";

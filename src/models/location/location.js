@@ -6,7 +6,7 @@ const Location = ScavengeResource.extend({
 
   constructor: function(location) {
     if (!(this instanceof Location)) {
-      return new Location(location);
+      return new Location(...[].slice.call(arguments));
     }
 
     const { teamID, locationID, latitude, longitude, timestamp } = location

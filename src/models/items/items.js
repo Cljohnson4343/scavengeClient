@@ -8,7 +8,7 @@ const Items = ScavengeResource.extend({
 
   constructor: function(items = [], huntID) {
     if (!(this instanceof Items)) {
-      return new Items(items);
+      return new Items(...[].slice.call(arguments));
     }
 
     this.huntID = huntID;

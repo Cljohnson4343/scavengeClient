@@ -9,7 +9,7 @@ const Teams = ScavengeResource.extend({
 
   constructor: function(teams = []) {
     if (!(this instanceof Teams)) {
-      return new Teams(teams);
+      return new Teams(...[].slice.call(arguments));
     }
 
     this._container = new Container(

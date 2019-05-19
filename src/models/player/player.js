@@ -6,7 +6,7 @@ const Player = ScavengeResource.extend({
   path: "/teams/{teamID}/players",
   constructor: function(email, team, teamID, playerID) {
     if (!(this instanceof Player)) {
-      return new Player(email, team);
+      return new Player(...[].slice.call(arguments));
     }
 
     this._email = email || "";

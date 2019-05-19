@@ -5,7 +5,7 @@ const Item = ScavengeResource.extend({
   path: "/hunts/{huntID}/items",
   constructor: function(name = "", pts = 1, huntID, itemID) {
     if (!(this instanceof Item)) {
-      return new Item(name, pts);
+      return new Item(...[].slice.call(arguments));
     }
 
     this.name = typeof name === "string" ? name : "";

@@ -9,7 +9,7 @@ const Hunt = ScavengeResource.extend({
 
   constructor: function(hunt = {}, huntID) {
     if (!(this instanceof Hunt)) {
-      return new Hunt(hunt);
+      return new Hunt(...[].slice.call(arguments));
     }
 
     if (!Boolean(hunt)) {
