@@ -160,4 +160,30 @@ describe("Locations", () => {
       });
     }
   });
+
+  describe("apiRetrieveLocations", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Locations(testData, 43)),
+        expected: {
+          url: BASE_PATH + `/teams/43/locations/`,
+          method: "GET"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrieveLocations"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
+      });
+    }
+  });
 });

@@ -21,7 +21,7 @@ const Locations = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiRetrieveItems: ScavengeMethod({
+  apiRetrieveLocations: ScavengeMethod({
     path: "/",
     method: "GET"
   }),
