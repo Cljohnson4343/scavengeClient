@@ -3,6 +3,9 @@ import Players from "./players";
 import deepFreeze from "deep-freeze";
 import Team from "../team";
 import Player from "../player";
+import ScavengeResource from "../scavengeResource";
+import { BASE_PATH } from "../../config";
+import { addTestModel } from "../../testUtils";
 
 const afc = {
   fins: new Team("fins"),
@@ -29,6 +32,8 @@ describe("players", () => {
         const result = new Players(c[1]);
 
         expect(result).toBeInstanceOf(Players);
+        expect(result).toBeInstanceOf(ScavengeResource);
+        expect(result.basePath).toStrictEqual(BASE_PATH);
       });
     }
   });

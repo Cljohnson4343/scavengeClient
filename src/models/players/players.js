@@ -1,17 +1,31 @@
 import { Player } from "../../models";
 import Container from "../container";
 import Team from "../team";
+import ScavengeResource from "../scavengeResource";
+import ScavengeMethod from "../scavengeMethod";
 
-export default function Players(players = []) {
-  if (!(this instanceof Players)) {
-    return new Players(players);
-  }
+const Players = ScavengeResource.extend({
+  path: "/teams/{teamID}/players",
 
-  this._container = new Container(
-    Player.prototype,
-    players instanceof Array ? players : []
-  );
-}
+  constructor: function(players = [], teamID) {
+    if (!(this instanceof Players)) {
+      return new Players(players);
+    }
+
+    this.teamID = teamID;
+    this._container = new Container(
+      Player.prototype,
+      players instanceof Array ? players : []
+    );
+
+    ScavengeResource.call(this);
+  },
+
+  apiRetrievePlayers: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  })
+});
 
 Object.defineProperty(Players.prototype, "array", {
   get: function() {
@@ -102,3 +116,5 @@ Players.prototype.changePlayerEmail = function(player, email) {
     })
   );
 };
+
+export default Players;

@@ -43,11 +43,6 @@ const Team = ScavengeResource.extend({
     method: "PATCH"
   }),
 
-  apiRetrievePlayers: ScavengeMethod({
-    path: "/{teamID}/players/",
-    method: "GET"
-  }),
-
   apiRetrieveMedia: ScavengeMethod({
     path: "/{teamID}/media/",
     method: "GET"
