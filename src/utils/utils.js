@@ -19,7 +19,7 @@ export function extend(sub) {
   Generates a function that replaces variable values in a path.
   For example:
     let fn = pathInterpolator(`/teams/{teamID}/locations/{locationID}`);
-    let path = fn(43, 3); // returns `/teams/43/locations/3`
+    let path = fn({teamID: 43, locationID: 3}); // returns `/teams/43/locations/3`
 */
 export function pathInterpolator(str) {
   let re = /\{(\w+)\}/g;
@@ -30,17 +30,9 @@ export function pathInterpolator(str) {
     matches.push(match);
   }
 
-  return function() {
-    let args = [].slice.call(arguments);
-
-    if (matches.length !== args.length) {
-      throw new Error(
-        `pathInterpolator expected ${matches.length} but got ${args.length}`
-      );
-    }
-
+  return function(obj) {
     return matches.reduce(
-      (acc, v, i) => (acc = acc.replace(v[0], String(args[i]))),
+      (acc, v) => (acc = acc.replace(v[0], String(obj[v[1]]))),
       str
     );
   };
