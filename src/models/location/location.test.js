@@ -7,6 +7,7 @@ describe("location", () => {
   const testData = {
     teamID: 43,
     locationID: 23,
+    latitude: 23.32,
     longitude: 43.43,
     timestamp: new Date()
   };
@@ -100,8 +101,7 @@ describe("location", () => {
         expected: {
           url: BASE_PATH + `/teams/${testData.teamID}/locations/`,
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
@@ -113,7 +113,13 @@ describe("location", () => {
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).toInclude("teamID");
+        expect(result.data).toInclude("latitude");
+        expect(result.data).toInclude("longitude");
+        expect(result.data).toInclude("timestamp");
+
+        expect(result.data).not.toInclude("locationID");
       });
     }
   });

@@ -238,7 +238,7 @@ describe("Item", () => {
       {
         name: "creates a valid config for api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
-        data: { name: "test value" },
+        data: {},
         expected: {
           url: BASE_PATH + "/hunts/43/items/23",
           method: "DELETE"
@@ -247,8 +247,10 @@ describe("Item", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeleteItem"](c.data);
+        c.model["apiDeleteItem"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
         expect(result.data).toBeDeepEqual(c.data);
@@ -261,7 +263,6 @@ describe("Item", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
-        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/",
           method: "POST"
@@ -271,11 +272,18 @@ describe("Item", () => {
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiCreateItem"](c.data);
+        c.model["apiCreateItem"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toBeDeepEqual(c.data);
+
+        expect(result.data).toInclude("huntID");
+        expect(result.data).toInclude("itemName");
+        expect(result.data).toInclude("points");
+
+        expect(result.data).not.toInclude("itemID");
       });
     }
   });
@@ -285,7 +293,6 @@ describe("Item", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Item("item", 1, 43, 23)),
-        data: { name: "test value" },
         expected: {
           url: BASE_PATH + "/hunts/43/items/23",
           method: "PATCH"
@@ -294,11 +301,14 @@ describe("Item", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiUpdateItem"](c.data);
+        c.model["apiUpdateItem"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toBeDeepEqual(c.data);
+
+        expect(result.data).not.toInclude("itemID");
       });
     }
   });

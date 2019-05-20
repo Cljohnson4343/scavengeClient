@@ -167,13 +167,13 @@ describe("Locations", () => {
           url: BASE_PATH + `/teams/43/locations/`,
           method: "GET"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieveLocations"](c.data);
+        c.model["apiRetrieveLocations"]();
 
         const result = c.model.lastRequest();
 

@@ -1,5 +1,6 @@
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getDataProperties, deleteProperties } from "../../utils";
 
 const Item = ScavengeResource.extend({
   path: "/hunts/{huntID}/items",
@@ -23,15 +24,21 @@ const Item = ScavengeResource.extend({
     method: "DELETE"
   }),
 
-  apiCreateItem: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateItem: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self => getDataProperties(self.data, ["huntID", "itemName", "points"])
+  ),
 
-  apiUpdateItem: ScavengeMethod({
-    path: "/{itemID}",
-    method: "PATCH"
-  })
+  apiUpdateItem: ScavengeMethod(
+    {
+      path: "/{itemID}",
+      method: "PATCH"
+    },
+    self => deleteProperties(self.data, ["itemID"])
+  )
 });
 
 Object.defineProperty(Item.prototype, "changeName", {

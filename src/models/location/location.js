@@ -1,5 +1,6 @@
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getDataProperties } from "../../utils";
 
 const Location = ScavengeResource.extend({
   path: "/teams/{teamID}/locations",
@@ -24,10 +25,19 @@ const Location = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiCreateLocation: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateLocation: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self =>
+      getDataProperties(self.data, [
+        "teamID",
+        "latitude",
+        "longitude",
+        "timestamp"
+      ])
+  ),
 
   copy: function() {
     return Object.assign(new Location(), this);
