@@ -136,7 +136,7 @@ describe("team", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Team("name", [], 43, 23)),
-        data: { name: "name" },
+        data: {},
         expected: {
           url: BASE_PATH + "/teams/23",
           method: "GET"
@@ -145,8 +145,10 @@ describe("team", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieve"](c.data);
+        c.model["apiRetrieve"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
         expect(result.data).toBeDeepEqual(c.data);
@@ -159,7 +161,7 @@ describe("team", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Team("name", [], 43, 23)),
-        data: { name: "name" },
+        data: {},
         expected: {
           url: BASE_PATH + "/teams/23/points/",
           method: "GET"
@@ -168,8 +170,10 @@ describe("team", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrievePoints"](c.data);
+        c.model["apiRetrievePoints"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
         expect(result.data).toBeDeepEqual(c.data);
@@ -182,7 +186,7 @@ describe("team", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Team("name", [], 43, 23)),
-        data: { name: "name" },
+        data: {},
         expected: {
           url: BASE_PATH + "/teams/23",
           method: "DELETE"
@@ -191,8 +195,10 @@ describe("team", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeleteTeam"](c.data);
+        c.model["apiDeleteTeam"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
         expect(result.data).toBeDeepEqual(c.data);
@@ -205,7 +211,6 @@ describe("team", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(new Team("name", [], 43, 23)),
-        data: { name: "name" },
         expected: {
           url: BASE_PATH + "/teams/",
           method: "POST"
@@ -214,11 +219,17 @@ describe("team", () => {
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiCreateTeam"](c.data);
+        c.model["apiCreateTeam"]();
+
         const result = c.model.lastRequest();
+
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toBeDeepEqual(c.data);
+
+        expect(result.data).toInclude("teamName");
+        expect(result.data).toInclude("huntID");
+
+        expect(result.data).not.toInclude("teamID");
       });
     }
   });
@@ -231,18 +242,19 @@ describe("team", () => {
         expected: {
           url: BASE_PATH + "/teams/23",
           method: "PATCH"
-        },
-        data: { name: "name" }
+        }
       }
     ];
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiUpdateTeam"](c.data);
+        c.model["apiUpdateTeam"]();
+
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toBeDeepEqual(c.data);
+
+        expect(result.data).not.toInclude("teamID");
       });
     }
   });

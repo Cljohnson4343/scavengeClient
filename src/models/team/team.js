@@ -1,6 +1,7 @@
 import Player from "../player";
 import ScavengeMethod from "../scavengeMethod";
 import ScavengeResource from "../scavengeResource";
+import { getDataProperties, deleteProperties } from "../../utils";
 
 const Team = ScavengeResource.extend({
   path: "/teams",
@@ -35,15 +36,21 @@ const Team = ScavengeResource.extend({
     method: "DELETE"
   }),
 
-  apiCreateTeam: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateTeam: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self => getDataProperties(self.data, ["huntID", "teamName"])
+  ),
 
-  apiUpdateTeam: ScavengeMethod({
-    path: "/{teamID}",
-    method: "PATCH"
-  })
+  apiUpdateTeam: ScavengeMethod(
+    {
+      path: "/{teamID}",
+      method: "PATCH"
+    },
+    self => deleteProperties(self.data, ["teamID"])
+  )
 });
 
 const t = Team.prototype;
