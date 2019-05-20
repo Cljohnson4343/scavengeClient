@@ -116,20 +116,20 @@ describe("Player", () => {
         expected: {
           url: BASE_PATH + "/teams/43/players/",
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiCreatePlayer"](c.data);
+        c.model["apiCreatePlayer"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).toInclude("userID");
       });
     }
   });
@@ -143,13 +143,13 @@ describe("Player", () => {
           url: BASE_PATH + "/teams/43/players/23",
           method: "DELETE"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeletePlayer"](c.data);
+        c.model["apiDeletePlayer"]();
 
         const result = c.model.lastRequest();
 

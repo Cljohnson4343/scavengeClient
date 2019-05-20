@@ -1,6 +1,7 @@
 import Team from "../team";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getDataProperties } from "../../utils";
 
 const Player = ScavengeResource.extend({
   path: "/teams/{teamID}/players",
@@ -20,10 +21,13 @@ const Player = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiCreatePlayer: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreatePlayer: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self => getDataProperties(self.data, ["userID"])
+  ),
 
   apiDeletePlayer: ScavengeMethod({
     path: "/{userID}",

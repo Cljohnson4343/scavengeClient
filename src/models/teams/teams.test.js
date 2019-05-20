@@ -357,13 +357,13 @@ describe("teams", () => {
           url: BASE_PATH + "/teams/",
           method: "GET"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieveTeams"](c.data);
+        c.model["apiRetrieveTeams"]();
 
         const result = c.model.lastRequest();
 
