@@ -245,4 +245,17 @@ describe("user", () => {
       });
     }
   });
+  /*
+  describe("integration", () => {
+    test("login", () => {
+      const user = new User(testData);
+      expect.assertions(1);
+      return user.apiLogin(user.create.json()).then(response => )
+
+
+
+    })
+
+  });
+  */
 });

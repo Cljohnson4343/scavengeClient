@@ -8,10 +8,12 @@ const Item = ScavengeResource.extend({
       return new Item(...[].slice.call(arguments));
     }
 
-    this.name = typeof name === "string" ? name : "";
-    this.itemID = itemID;
-    this.huntID = huntID;
-    this.points = typeof pts === "number" ? Math.floor(pts) : 1;
+    this.data = {
+      itemName: typeof name === "string" ? name : "",
+      itemID: itemID,
+      huntID: huntID,
+      points: typeof pts === "number" ? Math.floor(pts) : 1
+    };
 
     ScavengeResource.call(this);
   },
@@ -71,6 +73,30 @@ Object.defineProperty(Item.prototype, "equals", {
 Object.defineProperty(Item.prototype, "copy", {
   value: function() {
     return new Item(this.name, this.points, this.huntID, this.itemID);
+  }
+});
+
+Object.defineProperty(Item.prototype, "itemID", {
+  get: function() {
+    return this.data.itemID;
+  }
+});
+
+Object.defineProperty(Item.prototype, "huntID", {
+  get: function() {
+    return this.data.huntID;
+  }
+});
+
+Object.defineProperty(Item.prototype, "points", {
+  get: function() {
+    return this.data.points;
+  }
+});
+
+Object.defineProperty(Item.prototype, "name", {
+  get: function() {
+    return this.data.itemName;
   }
 });
 

@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-import deepFreeze from "deep-freeze";
 import {
   endDate,
   huntName,
@@ -26,9 +25,7 @@ describe("teams", () => {
   describe("action addTeam", () => {
     test("should add a team when state is empty", () => {
       const action = actions.addTeam("Dolphins");
-      deepFreeze(action);
-      let state = new Teams();
-      deepFreeze(state);
+      let state = new Teams([]);
 
       const result = teams(state, action);
 
@@ -38,8 +35,6 @@ describe("teams", () => {
     test("should add team when state isn't empty", () => {
       const testState = new Teams([new Team("Bills")]);
       const action = actions.addTeam("Fins");
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = teams(testState, action);
 
@@ -53,8 +48,6 @@ describe("teams", () => {
       const bills = new Team("Bills");
       const testState = new Teams([bills]);
       const action = actions.removeTeam(bills);
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = teams(testState, action);
 
@@ -65,8 +58,6 @@ describe("teams", () => {
       const pats = new Team("pats");
       const testState = new Teams([new Team("fins"), pats]);
       const action = actions.removeTeam(pats);
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = teams(testState, action);
 
@@ -83,8 +74,6 @@ describe("teams", () => {
 
       const testState = new Teams([bills]);
       const action = actions.changePlayersTeam(testPlayer, new Team("fins"));
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = teams(testState, action);
 
@@ -97,8 +86,6 @@ describe("teams", () => {
 
       const testState = new Teams([fins]);
       const action = actions.changePlayersTeam(testPlayer, fins);
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = teams(testState, action);
 
@@ -113,9 +100,7 @@ describe("players", () => {
   describe("action addPlayer", () => {
     test("should add a player when state is empty", () => {
       const action = actions.addPlayer("cj@gmail.com");
-      deepFreeze(action);
       let state = new Players();
-      deepFreeze(state);
 
       const result = players(state, action);
 
@@ -126,8 +111,6 @@ describe("players", () => {
     test("should add player when state isn't empty", () => {
       const testState = new Players([new Player("cj@yahoo.com")]);
       const action = actions.addPlayer("cj@gmail.com");
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = players(testState, action);
 
@@ -141,8 +124,6 @@ describe("players", () => {
     test("should remove a player", () => {
       const testState = new Players([new Player("cj@gmail.com")]);
       const action = actions.removePlayer("cj@gmail.com");
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = players(testState, action);
 
@@ -155,8 +136,6 @@ describe("players", () => {
         new Player("cj@yahoo.com")
       ]);
       const action = actions.removePlayer("cj@gmail.com");
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = players(testState, action);
 
@@ -173,8 +152,6 @@ describe("players", () => {
 
       const testState = new Players([gmail]);
       const action = actions.changePlayersTeam(gmail, fins);
-      deepFreeze(action);
-      deepFreeze(testState);
 
       const result = players(testState, action);
 
@@ -198,8 +175,6 @@ describe("players", () => {
       test(c.name, () => {
         const state = new Players(c.args);
         const action = actions.changePlayerEmail(c.player, c.email);
-        deepFreeze(state);
-        deepFreeze(action);
 
         const result = players(state, action);
 
@@ -238,9 +213,7 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const action = actions.addItem(c.item);
-        deepFreeze(action);
         let state = new Items(c.args);
-        deepFreeze(state);
 
         const result = items(state, action);
 
@@ -270,9 +243,7 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const action = actions.removeItem(c.item);
-        deepFreeze(action);
         let state = new Items(c.args);
-        deepFreeze(state);
 
         const result = items(state, action);
 
@@ -296,9 +267,7 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const action = actions.changeItemName(c.item, c.newName);
-        deepFreeze(action);
         let state = new Items(c.args);
-        deepFreeze(state);
 
         const result = items(state, action);
 
@@ -322,9 +291,7 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const action = actions.changeItemPoints(c.item, c.points);
-        deepFreeze(action);
         let state = new Items(c.args);
-        deepFreeze(state);
 
         const result = items(state, action);
 
@@ -339,9 +306,7 @@ describe("huntName", () => {
   describe("action updateHuntName", () => {
     test("should update empty hunt name", () => {
       const action = actions.updateHuntName("hunt name");
-      deepFreeze(action);
       let state = "";
-      deepFreeze(state);
 
       const result = huntName(state, action);
 
@@ -350,9 +315,7 @@ describe("huntName", () => {
     });
     test("should update non-empty hunt name", () => {
       const action = actions.updateHuntName("new");
-      deepFreeze(action);
       let state = "old";
-      deepFreeze(state);
 
       const result = huntName(state, action);
 
@@ -366,9 +329,7 @@ describe("maxTeams", () => {
   describe("action updateMaxTeams", () => {
     test("should update empty max teams", () => {
       const action = actions.updateMaxTeams(3);
-      deepFreeze(action);
       let state = 0;
-      deepFreeze(state);
 
       const result = maxTeams(state, action);
 
@@ -377,9 +338,7 @@ describe("maxTeams", () => {
     });
     test("should update non-empty hunt name", () => {
       const action = actions.updateHuntName("new");
-      deepFreeze(action);
       let state = "old";
-      deepFreeze(state);
 
       const result = huntName(state, action);
 
@@ -394,7 +353,6 @@ describe("startDate", () => {
     test("should update default start date", () => {
       const testDate = new Date(2020, 11, 21, 10);
       const action = actions.updateStart(testDate);
-      deepFreeze(action);
       let state = null;
 
       const result = startDate(state, action);
@@ -405,7 +363,6 @@ describe("startDate", () => {
     test("should update non-default end date", () => {
       const testDate = new Date(2020, 11, 21, 10);
       const action = actions.updateStart(testDate);
-      deepFreeze(action);
       let state = new Date(2019, 10, 13, 9);
 
       const result = startDate(state, action);
@@ -420,7 +377,6 @@ describe("startDate", () => {
       test("should update default end date", () => {
         const testDate = new Date(2020, 11, 21, 10);
         const action = actions.updateEnd(testDate);
-        deepFreeze(action);
         let state = null;
 
         const result = endDate(state, action);
@@ -431,7 +387,6 @@ describe("startDate", () => {
       test("should update non-default end date", () => {
         const testDate = new Date(2020, 11, 21, 10);
         const action = actions.updateEnd(testDate);
-        deepFreeze(action);
         let state = new Date(2019, 10, 13, 9);
 
         const result = endDate(state, action);

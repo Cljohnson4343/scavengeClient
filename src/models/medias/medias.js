@@ -11,7 +11,9 @@ const Medias = ScavengeResource.extend({
       return new Medias(...[].slice.call(arguments));
     }
 
-    this.teamID = teamID;
+    this.data = {
+      teamID: teamID
+    };
 
     this._container = new Container(
       Media.prototype,
@@ -28,6 +30,12 @@ const Medias = ScavengeResource.extend({
 
   getByID: function(id) {
     return this._container.get(m => m.mediaID === id);
+  }
+});
+
+Object.defineProperty(Medias.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
   }
 });
 

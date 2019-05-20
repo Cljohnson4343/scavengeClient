@@ -9,7 +9,7 @@ const User = ScavengeResource.extend({
       return new User(...[].slice.call(arguments));
     }
 
-    data = data ? data : {};
+    this.data = Object.assign({}, data ? data : {});
 
     Object.assign(this, data);
 

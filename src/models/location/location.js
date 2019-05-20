@@ -13,11 +13,13 @@ const Location = ScavengeResource.extend({
       ? location
       : {};
 
-    this.teamID = teamID;
-    this.locationID = locationID;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.timestamp = timestamp;
+    this.data = {
+      teamID: teamID,
+      locationID: locationID,
+      latitude: latitude,
+      longitude: longitude,
+      timestamp: timestamp
+    };
 
     ScavengeResource.call(this);
   },
@@ -47,6 +49,36 @@ const Location = ScavengeResource.extend({
     }
 
     return false;
+  }
+});
+
+Object.defineProperty(Location.prototype, "locationID", {
+  get: function() {
+    return this.data.locationID;
+  }
+});
+
+Object.defineProperty(Location.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
+  }
+});
+
+Object.defineProperty(Location.prototype, "latitude", {
+  get: function() {
+    return this.data.latitude;
+  }
+});
+
+Object.defineProperty(Location.prototype, "longitude", {
+  get: function() {
+    return this.data.longitude;
+  }
+});
+
+Object.defineProperty(Location.prototype, "timestamp", {
+  get: function() {
+    return this.data.timestamp;
   }
 });
 

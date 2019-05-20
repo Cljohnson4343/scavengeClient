@@ -1,6 +1,5 @@
 /* eslint-disable no-loop-func */
 import Teams from "./teams";
-import deepFreeze from "deep-freeze";
 import Team from "../team";
 import { ScavengeError } from "../../utils";
 import Player from "../player";
@@ -87,7 +86,7 @@ describe("teams", () => {
       {
         name: "array constructor w/ invalid name",
         args: [afc.fins, afc.jets],
-        input: afc.fins.name,
+        input: afc.fins.teamName,
         maxTeams: 5,
         ignore: null,
         expected: false
@@ -119,9 +118,9 @@ describe("teams", () => {
       {
         name: "invalid name but name is ignored",
         args: [afc.fins],
-        input: afc.fins.name,
+        input: afc.fins.teamName,
         maxTeams: 12,
-        ignore: afc.fins.name,
+        ignore: afc.fins.teamName,
         expected: true
       }
     ];
@@ -129,7 +128,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
         const result = teams.validateTeamName(c.maxTeams, c.input, c.ignore);
 
         expect(result).toBeInstanceOf(ScavengeError);
@@ -162,7 +160,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.add(c.input);
 
@@ -196,7 +193,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
         const result = teams.remove(c.input);
 
         expect(result).toBeInstanceOf(Teams);
@@ -226,7 +222,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         let teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.change(c.player, c.newTeam);
         expect(result).toBeInstanceOf(Teams);
@@ -247,14 +242,13 @@ describe("teams", () => {
       {
         name: "valid old name and new name",
         args: [afc.fins, afc.pats],
-        oldName: afc.pats.name,
-        newName: afc.jets.name
+        oldName: afc.pats.teamName,
+        newName: afc.jets.teamName
       }
     ];
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.changeTeamName(c.oldName, c.newName);
         expect(result).toBeInstanceOf(Teams);
@@ -275,7 +269,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.copy();
         expect(result).toBeInstanceOf(Teams);
@@ -288,13 +281,13 @@ describe("teams", () => {
       {
         name: "member team",
         args: [afc.fins],
-        input: afc.fins.name,
+        input: afc.fins.teamName,
         expected: true
       },
       {
         name: "non-member team",
         args: [afc.fins],
-        input: afc.bills.name,
+        input: afc.bills.teamName,
         expected: false
       },
       {
@@ -307,14 +300,13 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.getByName(c.input);
         expect(Boolean(result)).toBe(c.expected);
 
         if (c.expected) {
           expect(result).toBeInstanceOf(Team);
-          expect(result.name === c.input).toBeTruthy();
+          expect(result.teamName === c.input).toBeTruthy();
         }
       });
     }
@@ -344,7 +336,6 @@ describe("teams", () => {
     for (let c of cases) {
       test(c.name, () => {
         const teams = new Teams(c.args);
-        deepFreeze(teams);
 
         const result = teams.getByTeam(c.input);
         expect(Boolean(result)).toBe(c.expected);

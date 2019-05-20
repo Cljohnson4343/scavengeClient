@@ -4,7 +4,6 @@ import Location from "../location";
 import ScavengeResource from "../scavengeResource";
 import { addTestModel } from "../../testUtils";
 import { BASE_PATH } from "../../config";
-import deepFreeze from "deep-freeze";
 
 const testData = {
   teamID: 43,
@@ -114,7 +113,6 @@ describe("Locations", () => {
     for (let c of cases) {
       test(c.name, () => {
         const locations = new Locations(c.args);
-        deepFreeze(locations);
 
         const result = locations.add(c.input);
 
@@ -151,7 +149,6 @@ describe("Locations", () => {
     for (let c of cases) {
       test(c.name, () => {
         const locations = new Locations(c.args);
-        deepFreeze(locations);
         const result = locations.remove(c.input);
 
         expect(result).toBeInstanceOf(Locations);

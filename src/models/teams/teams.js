@@ -11,13 +11,12 @@ const Teams = ScavengeResource.extend({
     if (!(this instanceof Teams)) {
       return new Teams(...[].slice.call(arguments));
     }
+    ScavengeResource.call(this);
 
     this._container = new Container(
       Team.prototype,
       teams instanceof Array ? teams : []
     );
-
-    ScavengeResource.call(this);
   },
 
   apiRetrieveTeams: ScavengeMethod({
@@ -48,7 +47,7 @@ Object.defineProperty(Teams.prototype, "validateTeamName", {
       return new ScavengeError(`Max number of teams is set to ${maxTeams}`);
     }
 
-    let tns = this.array.map(team => team.name.toLowerCase());
+    let tns = this.array.map(team => team.teamName.toLowerCase());
     if (ignore) {
       let lowerIgnore = ignore.toLowerCase();
       tns = tns.filter(ns => ns !== lowerIgnore);
@@ -83,7 +82,7 @@ Object.defineProperty(Teams.prototype, "copy", {
 Teams.prototype.changeTeamName = function(oldName, newName) {
   return new Teams(
     this.array.map(t => {
-      if (t.name === oldName) {
+      if (t.teamName === oldName) {
         return t.changeName(newName);
       }
       return t.copy();
@@ -107,7 +106,7 @@ Teams.prototype.change = function(player, team) {
 };
 
 Teams.prototype.getByName = function(name) {
-  return this._container.get(x => x.name === name);
+  return this._container.get(x => x.teamName === name);
 };
 
 Teams.prototype.getByTeam = function(team) {

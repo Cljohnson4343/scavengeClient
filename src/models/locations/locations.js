@@ -11,7 +11,9 @@ const Locations = ScavengeResource.extend({
       return new Locations(...[].slice.call(arguments));
     }
 
-    this.teamID = teamID;
+    this.data = {
+      teamID: teamID
+    };
 
     this._container = new Container(
       Location.prototype,
@@ -34,6 +36,12 @@ const Locations = ScavengeResource.extend({
 Object.defineProperty(Locations.prototype, "array", {
   get: function() {
     return this._container.array;
+  }
+});
+
+Object.defineProperty(Locations.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
   }
 });
 

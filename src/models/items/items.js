@@ -11,7 +11,9 @@ const Items = ScavengeResource.extend({
       return new Items(...[].slice.call(arguments));
     }
 
-    this.huntID = huntID;
+    this.data = {
+      huntID: huntID
+    };
 
     this._container = new Container(
       Item.prototype,
@@ -25,6 +27,12 @@ const Items = ScavengeResource.extend({
     path: "/",
     method: "GET"
   })
+});
+
+Object.defineProperty(Items.prototype, "huntID", {
+  get: function() {
+    return this.data.huntID;
+  }
 });
 
 Object.defineProperty(Items.prototype, "array", {

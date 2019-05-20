@@ -35,8 +35,8 @@ const hs = {
   football: {
     huntName: "football hunt",
     maxTeams: 4,
-    startDate: new Date(new Date().getTime() + hour),
-    endDate: new Date(new Date().getTime() + hour * 3),
+    startTime: new Date(new Date().getTime() + hour),
+    endTime: new Date(new Date().getTime() + hour * 3),
     items: new Items([i[0], i[1]]),
     players: new Players([ps.dan, ps.pat]),
     teams: new Teams([afc.fins, afc.pats])
@@ -44,8 +44,8 @@ const hs = {
   xmas: {
     huntName: "xmas hunt",
     maxTeams: 3,
-    startDate: new Date(new Date().getTime() + 2 * hour),
-    endDate: new Date(new Date().getTime() + hour * 6),
+    startTime: new Date(new Date().getTime() + 2 * hour),
+    endTime: new Date(new Date().getTime() + hour * 6),
     items: new Items([i[3], i[2]]),
     players: new Players([ps.tom, ps.wes]),
     teams: new Teams([afc.fins, afc.jets])
@@ -53,8 +53,8 @@ const hs = {
   bball: {
     huntName: "bball hunt",
     maxTeams: 8,
-    startDate: new Date(new Date().getTime() + 11 * hour),
-    endDate: new Date(new Date().getTime() + hour * 19),
+    startTime: new Date(new Date().getTime() + 11 * hour),
+    endTime: new Date(new Date().getTime() + hour * 19),
     items: new Items([i[3], i[2]]),
     players: new Players([ps.tom, ps.wes]),
     teams: new Teams([afc.pats, afc.bills])
@@ -129,12 +129,12 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football,
-        expected: hs.football.startDate
+        expected: hs.football.startTime
       },
       {
         name: "hunt value",
         args: new Hunt(hs.xmas),
-        expected: hs.xmas.startDate
+        expected: hs.xmas.startTime
       }
     ];
 
@@ -161,12 +161,12 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football,
-        expected: hs.football.endDate
+        expected: hs.football.endTime
       },
       {
         name: "hunt value",
         args: new Hunt(hs.xmas),
-        expected: hs.xmas.endDate
+        expected: hs.xmas.endTime
       }
     ];
 
@@ -335,15 +335,15 @@ describe("hunt", () => {
       {
         name: "started an hour ago",
         args: Object.assign({}, hs.football, {
-          startDate: new Date(new Date().getTime() - hour)
+          startTime: new Date(new Date().getTime() - hour)
         }),
         expected: true
       },
       {
         name: "ended an hour ago",
         args: Object.assign({}, hs.football, {
-          startDate: new Date(new Date().getTime() - 2 * hour),
-          endDate: new Date(new Date().getTime() - 1 * hour)
+          startTime: new Date(new Date().getTime() - 2 * hour),
+          endTime: new Date(new Date().getTime() - 1 * hour)
         }),
         expected: false
       },
@@ -351,7 +351,7 @@ describe("hunt", () => {
         name: "starts in an hour",
         args: new Hunt(
           Object.assign({}, hs.xmas, {
-            startDate: new Date(new Date().getTime() + hour)
+            startTime: new Date(new Date().getTime() + hour)
           })
         ),
         expected: false
@@ -360,8 +360,8 @@ describe("hunt", () => {
         name: "hunt value that has already ended",
         args: new Hunt(
           Object.assign({}, hs.xmas, {
-            startDate: new Date(new Date().getTime() - hour),
-            endDate: new Date(new Date().getTime() - 2 * hour)
+            startTime: new Date(new Date().getTime() - hour),
+            endTime: new Date(new Date().getTime() - 2 * hour)
           })
         ),
         expected: false

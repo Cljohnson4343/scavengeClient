@@ -16,21 +16,21 @@ const Hunt = ScavengeResource.extend({
       hunt = {};
     }
 
-    this.huntID = huntID;
+    let data = hunt instanceof Hunt ? hunt.data : hunt ? hunt : {};
+
+    this.data = {
+      huntID: huntID,
+      huntName: data.huntName ? data.huntName : "",
+      maxTeams: data.maxTeams ? data.maxTeams : 2,
+      startTime: data.startTime ? data.startTime : new Date(),
+      endTime: data.endTime ? data.endTime : new Date()
+    };
 
     if (hunt instanceof Hunt) {
-      this.name = hunt.name;
-      this.maxTeams = hunt.maxTeams;
-      this.startTime = hunt.starts;
-      this.endDate = hunt.ends;
       this._items = new Items(hunt.items.array);
       this._players = new Players(hunt.players.array);
       this._teams = new Teams(hunt.teams.array);
     } else {
-      this.name = hunt.huntName ? hunt.huntName : "";
-      this.maxTeams = hunt.maxTeams ? hunt.maxTeams : 1;
-      this.startTime = hunt.startDate ? hunt.startDate : new Date();
-      this.endDate = hunt.endDate ? hunt.endDate : new Date();
       this._items = hunt.items ? hunt.items : new Items();
       this._players = hunt.players ? hunt.players : new Players();
       this._teams = hunt.teams ? hunt.teams : new Teams();
@@ -62,13 +62,13 @@ const Hunt = ScavengeResource.extend({
 
 Object.defineProperty(Hunt.prototype, "starts", {
   get: function() {
-    return this.startTime;
+    return this.data.startTime;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "ends", {
   get: function() {
-    return this.endDate;
+    return this.data.endTime;
   }
 });
 
@@ -98,19 +98,37 @@ Object.defineProperty(Hunt.prototype, "players", {
 
 Object.defineProperty(Hunt.prototype, "inProgess", {
   get: function() {
-    return this.startTime <= new Date() && this.endDate > new Date();
+    return this.starts <= new Date() && this.ends > new Date();
   }
 });
 
 Object.defineProperty(Hunt.prototype, "startsIn", {
   get: function() {
-    return new Date() - this.startTime;
+    return new Date() - this.starts;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "endsIn", {
   get: function() {
-    return this.endDate - new Date();
+    return this.ends - new Date();
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "maxTeams", {
+  get: function() {
+    return this.data.maxTeams;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "huntID", {
+  get: function() {
+    return this.data.huntID;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "name", {
+  get: function() {
+    return this.data.huntName;
   }
 });
 

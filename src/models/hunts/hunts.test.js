@@ -45,8 +45,8 @@ const hs = {
   football: new Hunt({
     huntName: "football hunt",
     maxTeams: 4,
-    startDate: new Date(new Date().getTime() + hour),
-    endDate: new Date(new Date().getTime() + hour * 3),
+    startTime: new Date(new Date().getTime() + hour),
+    endTime: new Date(new Date().getTime() + hour * 3),
     items: new Items([i.santa, i.helmet]),
     players: new Players([ps.dan, ps.pat]),
     teams: new Teams([afc.fins, afc.pats])
@@ -54,8 +54,8 @@ const hs = {
   xmas: new Hunt({
     huntName: "xmas hunt",
     maxTeams: 3,
-    startDate: new Date(new Date().getTime() + 2 * hour),
-    endDate: new Date(new Date().getTime() + hour * 6),
+    startTime: new Date(new Date().getTime() + 2 * hour),
+    endTime: new Date(new Date().getTime() + hour * 6),
     items: new Items([i.tree, i.star]),
     players: new Players([ps.tom, ps.wes]),
     teams: new Teams([afc.fins, afc.jets])
@@ -63,8 +63,8 @@ const hs = {
   bball: new Hunt({
     huntName: "bball hunt",
     maxTeams: 8,
-    startDate: new Date(new Date().getTime() + 11 * hour),
-    endDate: new Date(new Date().getTime() + hour * 19),
+    startTime: new Date(new Date().getTime() + 11 * hour),
+    endTime: new Date(new Date().getTime() + hour * 19),
     items: new Items([i.grinch, i.cleat]),
     players: new Players([ps.tom, ps.wes]),
     teams: new Teams([afc.pats, afc.bills])

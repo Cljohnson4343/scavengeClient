@@ -12,7 +12,10 @@ const Players = ScavengeResource.extend({
       return new Players(...[].slice.call(arguments));
     }
 
-    this.teamID = teamID;
+    this.data = {
+      teamID: teamID
+    };
+
     this._container = new Container(
       Player.prototype,
       players instanceof Array ? players : []
@@ -25,6 +28,12 @@ const Players = ScavengeResource.extend({
     path: "/",
     method: "GET"
   })
+});
+
+Object.defineProperty(Players.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
+  }
 });
 
 Object.defineProperty(Players.prototype, "array", {

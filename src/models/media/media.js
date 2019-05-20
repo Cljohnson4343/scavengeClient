@@ -10,12 +10,13 @@ const Media = ScavengeResource.extend({
     }
 
     const { itemID, location, mediaID, teamID, url } = data ? data : {};
-
-    this.itemID = itemID;
-    this.location = location;
-    this.mediaID = mediaID;
-    this.teamID = teamID;
-    this.url = url;
+    this.data = {
+      itemID: itemID,
+      location: location,
+      mediaID: mediaID,
+      teamID: teamID,
+      url: url
+    };
 
     ScavengeResource.call(this);
   },
@@ -49,6 +50,36 @@ const Media = ScavengeResource.extend({
     }
 
     return false;
+  }
+});
+
+Object.defineProperty(Media.prototype, "itemID", {
+  get: function() {
+    return this.data.itemID;
+  }
+});
+
+Object.defineProperty(Media.prototype, "location", {
+  get: function() {
+    return this.data.location;
+  }
+});
+
+Object.defineProperty(Media.prototype, "mediaID", {
+  get: function() {
+    return this.data.mediaID;
+  }
+});
+
+Object.defineProperty(Media.prototype, "url", {
+  get: function() {
+    return this.data.url;
+  }
+});
+
+Object.defineProperty(Media.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
   }
 });
 

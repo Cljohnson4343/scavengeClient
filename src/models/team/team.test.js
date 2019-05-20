@@ -23,7 +23,7 @@ describe("Team", () => {
 
     expect(team).toBeInstanceOf(Team);
     expect(team).toBeInstanceOf(ScavengeResource);
-    expect(team.name).toBe(expected);
+    expect(team.teamName).toBe(expected);
     expect(team.path).toStrictEqual("/teams");
     expect(team.basePath).toStrictEqual(BASE_PATH);
   });
@@ -95,7 +95,7 @@ describe("Team", () => {
 
     teamName = "Fins";
 
-    expect(team.name !== teamName).toBeTruthy();
+    expect(team.teamName !== teamName).toBeTruthy();
   });
 
   test("copy returns a new team that is equal to original team", () => {
@@ -108,10 +108,10 @@ describe("Team", () => {
   });
 
   test.each`
-    team            | originalName         | newName
-    ${afcEast.fins} | ${afcEast.fins.name} | ${"new Name"}
-    ${afcEast.fins} | ${afcEast.fins.name} | ${""}
-    ${afcEast.fins} | ${afcEast.fins.name} | ${null}
+    team            | originalName             | newName
+    ${afcEast.fins} | ${afcEast.fins.teamName} | ${"new Name"}
+    ${afcEast.fins} | ${afcEast.fins.teamName} | ${""}
+    ${afcEast.fins} | ${afcEast.fins.teamName} | ${null}
   `(
     "changeName returns a new Team with name added w/out modifying original Team",
     ({ team, originalName, newName }) => {
@@ -121,10 +121,10 @@ describe("Team", () => {
 
       expect(newTeam).toBeInstanceOf(Team);
       if (newName) {
-        expect(newTeam.name).toBe(newName);
+        expect(newTeam.teamName).toBe(newName);
       }
       if (originalName) {
-        expect(team.name).toBe(originalName);
+        expect(team.teamName).toBe(originalName);
       }
     }
   );

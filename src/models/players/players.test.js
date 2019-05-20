@@ -1,6 +1,5 @@
 /* eslint-disable no-loop-func */
 import Players from "./players";
-import deepFreeze from "deep-freeze";
 import Team from "../team";
 import Player from "../player";
 import ScavengeResource from "../scavengeResource";
@@ -90,7 +89,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         const players = new Players(c.args);
-        deepFreeze(players);
 
         const result = players.add(c.input);
 
@@ -125,7 +123,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         const players = new Players(c.args);
-        deepFreeze(players);
         const result = players.remove(c.input);
 
         expect(result).toBeInstanceOf(Players);
@@ -155,7 +152,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         let players = new Players(c.args);
-        deepFreeze(players);
 
         const result = players.change(c.player, c.newTeam);
         expect(result).toBeInstanceOf(Players);
@@ -184,8 +180,6 @@ describe("players", () => {
       test(c.name, () => {
         let players = new Players(c.args);
 
-        deepFreeze(players);
-
         const result = players.changeTeamName(c.oldName, c.newName);
         expect(result).toBeInstanceOf(Players);
 
@@ -206,7 +200,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         const players = new Players(c.args);
-        deepFreeze(players);
 
         const result = players.copy();
         expect(result).toBeInstanceOf(Players);
@@ -238,7 +231,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         const players = new Players(c.args);
-        deepFreeze(players);
 
         const result = players.getByTeam(c.input);
         expect(result).toBeInstanceOf(Players);
@@ -274,7 +266,6 @@ describe("players", () => {
     for (let c of cases) {
       test(c.name, () => {
         const players = new Players(c.args);
-        deepFreeze(players);
 
         const result = players.getByEmail(c.input);
         expect(Boolean(result)).toBe(c.expected);
@@ -283,6 +274,32 @@ describe("players", () => {
           expect(result).toBeInstanceOf(Player);
           expect(result.email === c.input).toBeTruthy();
         }
+      });
+    }
+  });
+
+  describe("apiRetrievePlayers", () => {
+    const cases = [
+      {
+        name: "create a valid config for an api method call",
+        model: addTestModel(new Players([afc.fins, afc.jets], 43)),
+        expected: {
+          url: BASE_PATH + `/teams/43/players/`,
+          method: "GET"
+        },
+        data: { test: "data" }
+      }
+    ];
+
+    for (let c of cases) {
+      test(c.name, () => {
+        c.model["apiRetrievePlayers"](c.data);
+
+        const result = c.model.lastRequest();
+
+        expect(result.url).toStrictEqual(c.expected.url);
+        expect(result.method).toStrictEqual(c.expected.method);
+        expect(result.data).toStrictEqual(c.data);
       });
     }
   });

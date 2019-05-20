@@ -9,9 +9,12 @@ const Player = ScavengeResource.extend({
       return new Player(...[].slice.call(arguments));
     }
 
-    this._email = email || "";
-    this.teamID = teamID;
-    this.userID = playerID;
+    this.data = {
+      email: email || "",
+      teamID: teamID,
+      userID: playerID
+    };
+
     this._team = team && team instanceof Team ? team.copy() : new Team();
 
     ScavengeResource.call(this);
@@ -28,9 +31,21 @@ const Player = ScavengeResource.extend({
   })
 });
 
+Object.defineProperty(Player.prototype, "teamID", {
+  get: function() {
+    return this.data.teamID;
+  }
+});
+
+Object.defineProperty(Player.prototype, "userID", {
+  get: function() {
+    return this.data.userID;
+  }
+});
+
 Object.defineProperty(Player.prototype, "email", {
   get: function() {
-    return this._email;
+    return this.data.email;
   }
 });
 
@@ -43,10 +58,10 @@ Object.defineProperty(Player.prototype, "team", {
 Object.defineProperty(Player.prototype, "changeTeam", {
   value: function(newTeam) {
     if (newTeam && newTeam instanceof Team) {
-      return new Player(this._email, newTeam, this.teamID, this.playerID);
+      return new Player(this.email, newTeam, this.teamID, this.playerID);
     }
 
-    return new Player(this._email, new Team(), this.teamID, this.playerID);
+    return new Player(this.email, new Team(), this.teamID, this.playerID);
   }
 });
 
@@ -65,13 +80,13 @@ Object.defineProperty(Player.prototype, "equals", {
     if (!(obj instanceof Player)) {
       return false;
     }
-    return this._email === obj._email;
+    return this.email === obj.email;
   }
 });
 
 Object.defineProperty(Player.prototype, "copy", {
   value: function() {
-    return new Player(this._email, this._team, this.teamID, this.playerID);
+    return new Player(this.email, this._team, this.teamID, this.playerID);
   }
 });
 

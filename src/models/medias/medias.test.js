@@ -5,8 +5,6 @@ import Media from "../media";
 import ScavengeResource from "../scavengeResource";
 import { addTestModel } from "../../testUtils";
 import { BASE_PATH } from "../../config";
-import deepFreeze from "deep-freeze";
-
 const testData = {
   itemID: 43,
   location: new Location(),
@@ -115,7 +113,6 @@ describe("Medias", () => {
     for (let c of cases) {
       test(c.name, () => {
         const medias = new Medias(c.args);
-        deepFreeze(medias);
 
         const result = medias.add(c.input);
 
@@ -152,7 +149,6 @@ describe("Medias", () => {
     for (let c of cases) {
       test(c.name, () => {
         const medias = new Medias(c.args);
-        deepFreeze(medias);
         const result = medias.remove(c.input);
 
         expect(result).toBeInstanceOf(Medias);

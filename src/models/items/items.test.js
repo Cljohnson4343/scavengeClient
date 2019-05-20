@@ -1,6 +1,5 @@
 /* eslint-disable no-loop-func */
 import Items from "./items";
-import deepFreeze from "deep-freeze";
 import Item from "../item";
 import ScavengeResource from "../scavengeResource";
 import { BASE_PATH } from "../../config";
@@ -105,7 +104,6 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const items = new Items(c.args);
-        deepFreeze(items);
 
         const result = items.add(c.input);
 
@@ -139,7 +137,6 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const items = new Items(c.args);
-        deepFreeze(items);
         const result = items.remove(c.input);
 
         expect(result).toBeInstanceOf(Items);
@@ -161,7 +158,6 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const items = new Items(c.args);
-        deepFreeze(items);
 
         const result = items.changeItemName(c.input, c.newName);
         expect(result).toBeInstanceOf(Items);
@@ -184,7 +180,6 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const items = new Items(c.args);
-        deepFreeze(items);
 
         const result = items.changeItemPoints(c.input, c.points);
 
@@ -218,7 +213,6 @@ describe("items", () => {
     for (let c of cases) {
       test(c.name, () => {
         const items = new Items(c.args);
-        deepFreeze(items);
 
         const result = items.getByName(c.input);
         expect(Boolean(result)).toBe(c.expected);
