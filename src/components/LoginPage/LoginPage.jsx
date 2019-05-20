@@ -4,38 +4,41 @@ import { Button, TextField, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
 
-const styles = theme => ({
-  button: {
-    backgroundColor: theme.palette.grey[200],
-    border: `thin outset ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
-    margin: `${theme.spacing(2)}px 0`,
-    width: 250
-  },
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyItems: "center",
-    alignContent: "center",
-    maxWidth: 550
-  },
-  duoContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    justifyItems: "center"
-  },
-  inputContainer: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 250
-  }
-});
+const styles = theme => {
+  const fieldWidth = 300;
+  return {
+    button: {
+      backgroundColor: theme.palette.grey[200],
+      border: `thin outset ${theme.palette.divider}`,
+      borderRadius: theme.shape.borderRadius,
+      margin: `${theme.spacing(2)}px 0`,
+      width: fieldWidth
+    },
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyItems: "center",
+      alignContent: "center",
+      maxWidth: 550
+    },
+    duoContainer: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      justifyItems: "center"
+    },
+    inputContainer: {
+      display: "flex",
+      flexDirection: "column"
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: fieldWidth
+    }
+  };
+};
 
 function LoginPage(props) {
   const { classes } = props;

@@ -12,7 +12,7 @@ const styles = theme => ({
   header: {
     fontSize: theme.typography.fontSize * 1.5,
     fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.dark,
     margin: theme.spacing(2)
   }
 });
