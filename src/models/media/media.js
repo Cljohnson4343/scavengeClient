@@ -1,5 +1,6 @@
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getDataProperties } from "../../utils";
 
 const Media = ScavengeResource.extend({
   path: "/teams/{teamID}/media",
@@ -21,10 +22,14 @@ const Media = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiCreateMedia: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateMedia: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self =>
+      getDataProperties(self.data, ["itemID", "teamID", "location", "url"])
+  ),
 
   apiDeleteMedia: ScavengeMethod({
     path: "/{mediaID}",

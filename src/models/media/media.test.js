@@ -98,8 +98,7 @@ describe("media", () => {
         expected: {
           url: BASE_PATH + `/teams/${testData.teamID}/media/`,
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
@@ -111,7 +110,12 @@ describe("media", () => {
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).toInclude("teamID");
+        expect(result.data).toInclude("location");
+        expect(result.data).toInclude("url");
+
+        expect(result.data).not.toInclude("mediaID");
       });
     }
   });
@@ -126,13 +130,13 @@ describe("media", () => {
             BASE_PATH + `/teams/${testData.teamID}/media/${testData.mediaID}`,
           method: "DELETE"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeleteMedia"](c.data);
+        c.model["apiDeleteMedia"]();
 
         const result = c.model.lastRequest();
 

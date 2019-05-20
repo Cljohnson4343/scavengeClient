@@ -167,13 +167,13 @@ describe("Medias", () => {
           url: BASE_PATH + `/teams/43/media/`,
           method: "GET"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieveMedia"](c.data);
+        c.model["apiRetrieveMedia"]();
 
         const result = c.model.lastRequest();
 
