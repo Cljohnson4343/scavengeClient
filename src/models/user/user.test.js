@@ -1,7 +1,11 @@
 import User from "./user";
 import ScavengeResource from "../scavengeResource";
 import { BASE_PATH } from "../../config";
-import { addTestModel } from "../../testUtils";
+import {
+  addTestModel,
+  getRandomEmail,
+  getRandomUsername
+} from "../../testUtils";
 
 describe("user", () => {
   const testData = {
@@ -245,17 +249,27 @@ describe("user", () => {
       });
     }
   });
-  /*
+
   describe("integration", () => {
     test("login", () => {
-      const user = new User(testData);
-      expect.assertions(1);
-      return user.apiLogin(user.create.json()).then(response => )
-
-
-
-    })
-
+      const user = new User(
+        Object.assign(testData, {
+          email: getRandomEmail(),
+          username: getRandomUsername()
+        })
+      );
+      expect.assertions(2);
+      delete user.data.userID;
+      return user
+        .apiLogin(user.data)
+        .then(response => {
+          console.log(JSON.stringify(response.headers));
+          expect(response.status).toBe(1200);
+          expect(response.headers).toInclude("scavenge_session");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
   });
-  */
 });

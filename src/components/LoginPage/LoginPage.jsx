@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import { LoginUser } from "../../api";
 import SubmitButton from "../SubmitButton";
+import { User } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -42,18 +43,24 @@ function LoginPage(props) {
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(new User());
 
   if (isLoggedIn) {
-    return <h1>You are already logged in.</h1>;
+    return <h1>You are already logged in {user.username}.</h1>;
   }
 
-  function getUserData() {
-    return {
-      first_name: firstNameInput,
-      last_name: lastNameInput,
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  function getUser() {
+    return new User({
+      firstName: firstNameInput,
+      lastName: lastNameInput,
       email: emailInput,
       username: usernameInput
-    };
+    });
   }
 
   return (
@@ -102,7 +109,16 @@ function LoginPage(props) {
           required
         />
       </div>
-      <SubmitButton handleSubmit={e => LoginUser(getUserData(e))} />
+      <SubmitButton
+        handleSubmit={e => {
+          let user = getUser();
+          user.apiLogin(user.data).then(response => {
+            setIsLoading(false);
+            setIsLoggedIn(true);
+            setUser(new User(response.data));
+          });
+        }}
+      />
     </form>
   );
 }

@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-import deepFreeze from "deep-freeze";
 import ScavengeResource from "../scavengeResource";
 import {
   Hunt,

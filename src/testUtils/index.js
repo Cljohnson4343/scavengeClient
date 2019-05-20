@@ -1,1 +1,1 @@
-export { addTestModel } from "./testUtils";
+export { addTestModel, getRandomEmail, getRandomUsername } from "./testUtils";

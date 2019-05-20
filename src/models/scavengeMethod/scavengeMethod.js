@@ -1,5 +1,9 @@
 import axios from "axios";
 import { pathInterpolator } from "../../utils";
+import http from "http";
+
+axios.defaults.httpAgent = new http.Agent({ keepAlive: true });
+//axios.defaults.withCredentials = true;
 
 export default function ScavengeMethod(config) {
   return function(data = {}) {
