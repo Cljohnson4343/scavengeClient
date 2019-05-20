@@ -5,9 +5,11 @@ import http from "http";
 axios.defaults.httpAgent = new http.Agent({ keepAlive: true });
 axios.defaults.withCredentials = true;
 
-export default function ScavengeMethod(config) {
-  return function(data = {}) {
+export default function ScavengeMethod(config, getData) {
+  return function(data) {
     const self = this;
+
+    data = data ? data : getData ? getData(self) : {};
 
     // add the resource path to the specific endpoint provided by method
     let path = self.path + config.path;

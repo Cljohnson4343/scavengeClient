@@ -37,3 +37,19 @@ export function pathInterpolator(str) {
     );
   };
 }
+
+export function getDataProperties(obj, fields) {
+  return fields.reduce((acc, key) => {
+    if (obj.hasOwnProperty(key)) {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+}
+
+export function deleteProperties(obj, fields) {
+  return fields.reduce((acc, key) => {
+    delete acc[key];
+    return acc;
+  }, Object.create(obj));
+}

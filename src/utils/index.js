@@ -13,4 +13,9 @@ export {
 } from "./validation";
 export { toDateTimeLocal } from "./date";
 export { ScavengeError } from "./error";
-export { extend, pathInterpolator } from "./utils";
+export {
+  deleteProperties,
+  extend,
+  getDataProperties,
+  pathInterpolator
+} from "./utils";

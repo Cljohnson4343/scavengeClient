@@ -1,5 +1,6 @@
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { deleteProperties, getDataProperties } from "../../utils";
 
 const User = ScavengeResource.extend({
   path: "/users",
@@ -16,20 +17,41 @@ const User = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiLogin: ScavengeMethod({
-    path: "/login/",
-    method: "POST"
-  }),
+  apiLogin: ScavengeMethod(
+    {
+      path: "/login/",
+      method: "POST"
+    },
+    self =>
+      getDataProperties(self.data, [
+        "email",
+        "username",
+        "firstName",
+        "lastName"
+      ])
+  ),
 
-  apiCreateUser: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateUser: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self =>
+      getDataProperties(self.data, [
+        "username",
+        "firstName",
+        "lastName",
+        "email"
+      ])
+  ),
 
-  apiUpdateUser: ScavengeMethod({
-    path: "/{userID}",
-    method: "PATCH"
-  }),
+  apiUpdateUser: ScavengeMethod(
+    {
+      path: "/{userID}",
+      method: "PATCH"
+    },
+    self => deleteProperties(self.data, ["userID", "lastVisit", "joinedAt"])
+  ),
 
   apiDeleteUser: ScavengeMethod({
     path: "/{userID}",

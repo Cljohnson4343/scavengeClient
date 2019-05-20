@@ -14,7 +14,9 @@ describe("user", () => {
     lastName: "johnson",
     username: "cj_43",
     email: "cj433@gmail.com",
-    imageURL: "scavenge.io"
+    imageURL: "scavenge.io",
+    joinedAt: new Date(),
+    lastVisit: new Date()
   };
 
   describe("constructor", () => {
@@ -102,20 +104,28 @@ describe("user", () => {
         expected: {
           url: BASE_PATH + "/users/login/",
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiLogin"](c.data);
+        c.model["apiLogin"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).not.toInclude("lastVisit");
+        expect(result.data).not.toInclude("joinedAt");
+        expect(result.data).not.toInclude("userID");
+
+        expect(result.data).toInclude("firstName");
+        expect(result.data).toInclude("lastName");
+        expect(result.data).toInclude("username");
+        expect(result.data.username.length).toBeLessThan(65);
+        expect(result.data).toInclude("email");
       });
     }
   });
@@ -129,13 +139,13 @@ describe("user", () => {
           url: BASE_PATH + "/users/logout/",
           method: "POST"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiLogout"](c.data);
+        c.model["apiLogout"]();
 
         const result = c.model.lastRequest();
 
@@ -154,20 +164,28 @@ describe("user", () => {
         expected: {
           url: BASE_PATH + "/users/",
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiCreateUser"](c.data);
+        c.model["apiCreateUser"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).not.toInclude("lastVisit");
+        expect(result.data).not.toInclude("joinedAt");
+        expect(result.data).not.toInclude("userID");
+
+        expect(result.data).toInclude("firstName");
+        expect(result.data).toInclude("lastName");
+        expect(result.data).toInclude("username");
+        expect(result.data.username.length).toBeLessThan(65);
+        expect(result.data).toInclude("email");
       });
     }
   });
@@ -181,13 +199,13 @@ describe("user", () => {
           url: BASE_PATH + `/users/${testData.userID}`,
           method: "DELETE"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeleteUser"](c.data);
+        c.model["apiDeleteUser"]();
 
         const result = c.model.lastRequest();
 
@@ -206,20 +224,22 @@ describe("user", () => {
         expected: {
           url: BASE_PATH + `/users/${testData.userID}`,
           method: "PATCH"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiUpdateUser"](c.data);
+        c.model["apiUpdateUser"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).not.toInclude("joinedAt");
+        expect(result.data).not.toInclude("lastVisit");
+        expect(result.data).not.toInclude("userID");
       });
     }
   });
@@ -233,13 +253,13 @@ describe("user", () => {
           url: BASE_PATH + `/users/${testData.userID}`,
           method: "GET"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieveUser"](c.data);
+        c.model["apiRetrieveUser"]();
 
         const result = c.model.lastRequest();
 
@@ -249,22 +269,21 @@ describe("user", () => {
       });
     }
   });
-
+  /*
   describe("integration", () => {
+    const user = new User(
+      Object.assign(testData, {
+        email: getRandomEmail(),
+        username: getRandomUsername()
+      })
+    );
+
     test("login", () => {
-      const user = new User(
-        Object.assign(testData, {
-          email: getRandomEmail(),
-          username: getRandomUsername()
-        })
-      );
       expect.assertions(2);
-      delete user.data.userID;
       return user
-        .apiLogin(user.data)
+        .apiLogin()
         .then(response => {
-          console.log(JSON.stringify(response.headers));
-          expect(response.status).toBe(1200);
+          expect(response.status).toBe(200);
           expect(response.headers).toInclude("scavenge_session");
         })
         .catch(err => {
@@ -272,4 +291,5 @@ describe("user", () => {
         });
     });
   });
+  */
 });
