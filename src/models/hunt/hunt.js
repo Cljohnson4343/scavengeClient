@@ -3,6 +3,7 @@ import Players from "../players";
 import Teams from "../teams";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getDataProperties, deleteProperties } from "../../utils";
 
 const Hunt = ScavengeResource.extend({
   path: "/hunts",
@@ -44,20 +45,32 @@ const Hunt = ScavengeResource.extend({
     method: "GET"
   }),
 
-  apiCreateHunt: ScavengeMethod({
-    path: "/",
-    method: "POST"
-  }),
+  apiCreateHunt: ScavengeMethod(
+    {
+      path: "/",
+      method: "POST"
+    },
+    self =>
+      getDataProperties(self.data, [
+        "huntName",
+        "maxTeams",
+        "startTime",
+        "endTime"
+      ])
+  ),
 
   apiDeleteHunt: ScavengeMethod({
     path: "/{huntID}",
     method: "DELETE"
   }),
 
-  apiUpdateHunt: ScavengeMethod({
-    path: "/{huntID}",
-    method: "PATCH"
-  })
+  apiUpdateHunt: ScavengeMethod(
+    {
+      path: "/{huntID}",
+      method: "PATCH"
+    },
+    self => deleteProperties(self.data, ["huntID", "createdAt", "creatorID"])
+  )
 });
 
 Object.defineProperty(Hunt.prototype, "starts", {

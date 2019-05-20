@@ -38,6 +38,12 @@ const hs = {
     startTime: new Date(new Date().getTime() + hour),
     endTime: new Date(new Date().getTime() + hour * 3),
     items: new Items([i[0], i[1]]),
+    creatorID: 32,
+    latitude: 43.43,
+    longitude: 23.23,
+    locationName: "locale",
+    createdAt: 21,
+    huntID: 2,
     players: new Players([ps.dan, ps.pat]),
     teams: new Teams([afc.fins, afc.pats])
   },
@@ -48,6 +54,12 @@ const hs = {
     endTime: new Date(new Date().getTime() + hour * 6),
     items: new Items([i[3], i[2]]),
     players: new Players([ps.tom, ps.wes]),
+    creatorID: 32,
+    createdAt: 21,
+    latitude: 43.43,
+    longitude: 23.23,
+    locationName: "locale",
+    huntID: 2,
     teams: new Teams([afc.fins, afc.jets])
   },
   bball: {
@@ -57,6 +69,12 @@ const hs = {
     endTime: new Date(new Date().getTime() + hour * 19),
     items: new Items([i[3], i[2]]),
     players: new Players([ps.tom, ps.wes]),
+    creatorID: 32,
+    createdAt: 21,
+    latitude: 43.43,
+    longitude: 23.23,
+    locationName: "locale",
+    huntID: 2,
     teams: new Teams([afc.pats, afc.bills])
   }
 };
@@ -414,20 +432,27 @@ describe("hunt", () => {
         expected: {
           url: BASE_PATH + "/hunts/",
           method: "POST"
-        },
-        data: { test: "data" }
+        }
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiCreateHunt"](c.data);
+        c.model["apiCreateHunt"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).toInclude("startTime");
+        expect(result.data).toInclude("endTime");
+        expect(result.data).toInclude("maxTeams");
+        expect(result.data).toInclude("huntName");
+
+        expect(result.data).not.toInclude("huntID");
+        expect(result.data).not.toInclude("createdAt");
+        expect(result.data).not.toInclude("creatorID");
       });
     }
   });
@@ -441,13 +466,13 @@ describe("hunt", () => {
           url: BASE_PATH + "/hunts/43",
           method: "DELETE"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiDeleteHunt"](c.data);
+        c.model["apiDeleteHunt"]();
 
         const result = c.model.lastRequest();
 
@@ -467,19 +492,22 @@ describe("hunt", () => {
           url: BASE_PATH + "/hunts/43",
           method: "PATCH"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiUpdateHunt"](c.data);
+        c.model["apiUpdateHunt"]();
 
         const result = c.model.lastRequest();
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-        expect(result.data).toStrictEqual(c.data);
+
+        expect(result.data).not.toInclude("huntID");
+        expect(result.data).not.toInclude("createdAt");
+        expect(result.data).not.toInclude("creatorID");
       });
     }
   });

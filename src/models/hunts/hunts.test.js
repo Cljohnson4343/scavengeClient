@@ -212,13 +212,13 @@ describe("hunts", () => {
           url: BASE_PATH + "/hunts/",
           method: "GET"
         },
-        data: { test: "data" }
+        data: {}
       }
     ];
 
     for (let c of cases) {
       test(c.name, () => {
-        c.model["apiRetrieveHunts"](c.data);
+        c.model["apiRetrieveHunts"]();
 
         const result = c.model.lastRequest();
 
