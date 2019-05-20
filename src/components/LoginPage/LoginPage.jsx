@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
-import { TextField } from "@material-ui/core";
-import { LoginUser } from "../../api";
-import SubmitButton from "../SubmitButton";
+import { Button, TextField, withStyles } from "@material-ui/core";
+import FormContainer from "../FormContainer";
 import { User } from "../../models";
 
 const styles = theme => ({
+  button: {
+    backgroundColor: theme.palette.grey[200],
+    border: `thin outset ${theme.palette.divider}`,
+    borderRadius: theme.shape.borderRadius,
+    margin: `${theme.spacing(2)}px 0`,
+    width: 250
+  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -24,9 +29,6 @@ const styles = theme => ({
   inputContainer: {
     display: "flex",
     flexDirection: "column"
-  },
-  rightIcon: {
-    marginLeft: theme.spacing(1)
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -47,7 +49,24 @@ function LoginPage(props) {
   const [user, setUser] = useState(new User());
 
   if (isLoggedIn) {
-    return <h1>You are already logged in {user.username}.</h1>;
+    return (
+      <Button
+        color="primary"
+        onClick={e => {
+          user
+            .apiLogout(user.data)
+            .then(response => {
+              setUser(new User());
+              setIsLoggedIn(false);
+            })
+            .catch(e => console.log(e));
+        }}
+        size="small"
+        variant="text"
+      >
+        Sign Out
+      </Button>
+    );
   }
 
   if (isLoading) {
@@ -64,62 +83,69 @@ function LoginPage(props) {
   }
 
   return (
-    <form className={classes.container}>
-      <div className={classes.duoContainer}>
-        <TextField
-          id="first_name"
-          label="First Name"
-          type="text"
-          className={classes.textField}
-          margin="normal"
-          onChange={e => setFirstNameInput(e.currentTarget.value)}
-          value={firstNameInput}
-          required
-        />
-        <TextField
-          id="last_name"
-          label="Last Name"
-          type="text"
-          className={classes.textField}
-          margin="normal"
-          onChange={e => setLastNameInput(e.currentTarget.value)}
-          value={lastNameInput}
-          required
-        />
-      </div>
-      <div className={classes.duoContainer}>
-        <TextField
-          id="username"
-          label="Username"
-          type="text"
-          className={classes.textField}
-          margin="normal"
-          onChange={e => setUsernameInput(e.currentTarget.value)}
-          value={usernameInput}
-          required
-        />
-        <TextField
-          id="email"
-          label="Email"
-          type="email"
-          className={classes.textField}
-          margin="normal"
-          onChange={e => setEmailInput(e.currentTarget.value)}
-          value={emailInput}
-          required
-        />
-      </div>
-      <SubmitButton
-        handleSubmit={e => {
-          let user = getUser();
-          user.apiLogin(user.data).then(response => {
-            setIsLoading(false);
-            setIsLoggedIn(true);
-            setUser(new User(response.data));
-          });
-        }}
-      />
-    </form>
+    <FormContainer label="Sign up for Scavenge">
+      <form className={classes.container}>
+        <div className={classes.duoContainer}>
+          <TextField
+            id="first_name"
+            label="First Name"
+            type="text"
+            className={classes.textField}
+            margin="normal"
+            onChange={e => setFirstNameInput(e.currentTarget.value)}
+            value={firstNameInput}
+            required
+          />
+          <TextField
+            id="last_name"
+            label="Last Name"
+            type="text"
+            className={classes.textField}
+            margin="normal"
+            onChange={e => setLastNameInput(e.currentTarget.value)}
+            value={lastNameInput}
+            required
+          />
+        </div>
+        <div className={classes.duoContainer}>
+          <TextField
+            id="username"
+            label="Username"
+            type="text"
+            className={classes.textField}
+            margin="normal"
+            onChange={e => setUsernameInput(e.currentTarget.value)}
+            value={usernameInput}
+            required
+          />
+          <TextField
+            id="email"
+            label="Email"
+            type="email"
+            className={classes.textField}
+            margin="normal"
+            onChange={e => setEmailInput(e.currentTarget.value)}
+            value={emailInput}
+            required
+          />
+        </div>
+        <Button
+          className={classes.button}
+          variant="text"
+          fullWidth={true}
+          handleSubmit={e => {
+            let user = getUser();
+            user.apiLogin(user.data).then(response => {
+              setIsLoading(false);
+              setIsLoggedIn(true);
+              setUser(new User(response.data));
+            });
+          }}
+        >
+          Sign Up
+        </Button>
+      </form>
+    </FormContainer>
   );
 }
 
