@@ -119,8 +119,8 @@ describe("user", () => {
 
         expect(result.data).not.toInclude("lastVisit");
         expect(result.data).not.toInclude("joinedAt");
-        expect(result.data).not.toInclude("userID");
 
+        expect(result.data).toInclude("userID");
         expect(result.data).toInclude("firstName");
         expect(result.data).toInclude("lastName");
         expect(result.data).toInclude("username");

@@ -24,6 +24,7 @@ const User = ScavengeResource.extend({
     },
     self =>
       getDataProperties(self.data, [
+        "userID",
         "email",
         "username",
         "firstName",

@@ -5,6 +5,7 @@ import { AppBar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { User } from "../../models";
 import NotificationIcon from "@material-ui/icons/Notifications";
+import { navigate } from "@reach/router";
 
 const styles = theme => ({
   avatar: {
@@ -66,6 +67,7 @@ function ScavengeAppBar(props) {
             .apiLogout()
             .then(response => {
               setUser(null);
+              navigate("/");
             })
             .catch(e => console.log(e));
         }}
@@ -78,8 +80,12 @@ function ScavengeAppBar(props) {
     ];
   } else {
     renderProps = [
-      <TextButton key="up">Sign Up</TextButton>,
-      <TextButton key="in">Sign In</TextButton>
+      <TextButton key="up" onClick={e => navigate("/signup")}>
+        Sign Up
+      </TextButton>,
+      <TextButton key="in" onClick={e => navigate("/signin")}>
+        Sign In
+      </TextButton>
     ];
   }
 

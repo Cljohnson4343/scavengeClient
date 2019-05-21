@@ -129,7 +129,7 @@ function SignUp(props) {
           fullWidth={true}
           onClick={e => {
             let user = getUser();
-            user.apiSignUp().then(response => {
+            user.apiCreateUser().then(response => {
               setIsLoading(false);
               clearInputs();
               setUser(new User(response.data));

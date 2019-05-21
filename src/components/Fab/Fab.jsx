@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import FAB from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 
 const styles = theme => ({
   fab: {

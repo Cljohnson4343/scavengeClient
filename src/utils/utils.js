@@ -1,5 +1,3 @@
-import { ScavengeError } from "./error";
-
 export function extend(sub) {
   const Super = this;
   const Constructor = sub.hasOwnProperty("constructor")
