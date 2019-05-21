@@ -92,10 +92,11 @@ function ScavengeAppBar(props) {
   return (
     <AppBar className={classes.root} position="static" elevation={3}>
       <IconButton
-        className={classes.homeIcon}
         aria-label="Home"
-        color="primary"
         classes={{ colorPrimary: classes.homeIconColor }}
+        className={classes.homeIcon}
+        color="primary"
+        onClick={e => navigate("/")}
       >
         Scavenge
       </IconButton>

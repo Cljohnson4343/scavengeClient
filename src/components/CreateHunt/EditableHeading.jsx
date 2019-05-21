@@ -12,6 +12,7 @@ const styles = theme => ({
     color: theme.palette.primary.main,
     fontSize: theme.typography.fontSize * 1.2
   },
+  input: {},
   label: {
     alignItem: "center"
   }

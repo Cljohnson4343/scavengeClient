@@ -122,3 +122,7 @@ export function changeItemPoints(item, points) {
     }
   };
 }
+
+export function clearState() {
+  return { type: "clear_state" };
+}

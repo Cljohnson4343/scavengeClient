@@ -9,6 +9,8 @@ import Fab from "../Fab";
 import SendIcon from "@material-ui/icons/Send";
 import reducer, { initialState } from "./reducer";
 import { CreateHuntFormError } from "./error";
+import { Hunt } from "../../models";
+import * as actions from "./actions";
 
 const styles = theme => ({
   button: {
@@ -34,6 +36,18 @@ function CreateHunt(props) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const formError = CreateHuntFormError(state);
+
+  function getHunt() {
+    return new Hunt({
+      huntName: state.huntName,
+      maxTeams: state.maxTeams,
+      startTime: state.startDate,
+      endTime: state.endDate,
+      items: state.items,
+      teams: state.teams,
+      players: state.players
+    });
+  }
 
   return (
     <div className={classes.container}>
@@ -63,7 +77,17 @@ function CreateHunt(props) {
         players={state.players}
         teams={state.teams}
       />
-      <Fab icon={<SendIcon />} inError={formError.inError} />
+      <Fab
+        onClick={e => {
+          getHunt()
+            .apiCreateHunt()
+            .then(response => {
+              dispatch(actions.clearState());
+            });
+        }}
+        icon={<SendIcon />}
+        inError={formError.inError}
+      />
     </div>
   );
 }

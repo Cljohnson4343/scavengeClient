@@ -23,6 +23,8 @@ export default combineReducers({
 
 export function teams(state = new Teams(), action) {
   switch (action.type) {
+    case "clear_state":
+      return new Teams();
     case "remove_team":
       return state.remove(action.payload.team);
     case "add_team":
@@ -46,6 +48,8 @@ export function teams(state = new Teams(), action) {
 
 export function players(state = new Players(), action) {
   switch (action.type) {
+    case "clear_state":
+      return new Players();
     case "remove_player":
       return state.remove(action.payload);
     case "add_player":
@@ -72,6 +76,8 @@ export function players(state = new Players(), action) {
 
 export function items(state = new Items(), action) {
   switch (action.type) {
+    case "clear_state":
+      return new Items();
     case "add_item":
       return state.add(action.payload);
     case "remove_item":
@@ -87,6 +93,8 @@ export function items(state = new Items(), action) {
 
 export function huntName(state = "", action) {
   switch (action.type) {
+    case "clear_state":
+      return "";
     case "update_hunt_name":
       return action.payload;
     default:
@@ -96,6 +104,8 @@ export function huntName(state = "", action) {
 
 export function maxTeams(state = 1, action) {
   switch (action.type) {
+    case "clear_state":
+      return 1;
     case "update_max_teams":
       return action.payload;
     default:
@@ -105,6 +115,8 @@ export function maxTeams(state = 1, action) {
 
 export function startDate(state = new Date(), action) {
   switch (action.type) {
+    case "clear_state":
+      return new Date();
     case "update_start":
       return action.payload;
     default:
@@ -114,6 +126,8 @@ export function startDate(state = new Date(), action) {
 
 export function endDate(state = new Date(), action) {
   switch (action.type) {
+    case "clear_state":
+      return new Date();
     case "update_end":
       return action.payload;
     default:

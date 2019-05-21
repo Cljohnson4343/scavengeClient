@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 function Fab(props) {
-  const { classes, icon, inError } = props;
+  const { classes, icon, inError, onClick } = props;
 
   return (
     <FAB
@@ -20,6 +20,7 @@ function Fab(props) {
       className={classes.fab}
       color={inError ? "inherit" : "primary"}
       disabled={inError}
+      onClick={e => onClick(e)}
     >
       {icon}
     </FAB>

@@ -16,12 +16,12 @@ const styles = {
 };
 
 function Home(props) {
-  const { classes } = props;
+  const { classes, navigate } = props;
 
   return (
     <div className={classes.page}>
       <Hunts hunts={hunts} />
-      <Fab icon={<AddIcon />} />
+      <Fab icon={<AddIcon />} onClick={e => navigate("/hunts/create")} />
     </div>
   );
 }

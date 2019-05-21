@@ -44,7 +44,7 @@ function TeamsContainer(props) {
     maxTeams,
     teams
   } = props;
-  const teamNames = teams.array.map(team => team.name);
+  const teamNames = teams.array.map(team => team.teamName);
 
   const [inputName, setInputName] = useState("");
 
@@ -62,8 +62,8 @@ function TeamsContainer(props) {
           <TeamListItem
             avatarColor={colors[index]}
             dispatch={dispatch}
-            key={team.name}
-            label={uniqueLabel(teamNames, team.name)}
+            key={team.teamName}
+            label={uniqueLabel(teamNames, team.teamName)}
             team={team}
             validateName={teams.validateTeamName.bind(teams, maxTeams + 1)}
           />
@@ -87,6 +87,7 @@ function TeamsContainer(props) {
           />
           <TextAddButton
             handleClick={() => {
+              console.log(inputName);
               dispatch(action.addTeam(inputName));
               setInputName("");
             }}
