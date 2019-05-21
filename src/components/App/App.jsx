@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import { Router } from "@reach/router";
 import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
 import LoginPage from "../LoginPage";
+import HomePage from "../HomePage";
+import HuntCreateForm from "../HuntCreateForm";
 import Location from "../Location";
 import grey from "@material-ui/core/colors/grey";
 
@@ -26,7 +29,11 @@ function App(props) {
       <Location>
         <div className={classes.pageWrapper}>
           <AppBar user={user} setUser={setUser} />
-          <LoginPage user={user} setUser={setUser} />
+          <Router>
+            <HomePage path="/" />
+            <HuntCreateForm path="/hunts/create" />
+            <LoginPage path="/login" setUser={setUser} user={user} />
+          </Router>
         </div>
       </Location>
     </MuiThemeProvider>

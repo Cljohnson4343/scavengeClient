@@ -31,9 +31,9 @@ const styles = theme => ({
 });
 
 function FormExpansion(props) {
-  const { classes, label, inError } = props;
+  const { classes, label, inError, open } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(Boolean(open));
 
   const colorObj = inError ? classes.error : isOpen ? classes.heading : null;
 
@@ -60,7 +60,8 @@ function FormExpansion(props) {
 FormExpansion.propTypes = {
   classes: PropTypes.object.isRequired,
   inError: PropTypes.bool.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  open: PropTypes.bool
 };
 
 export default withStyles(styles)(FormExpansion);

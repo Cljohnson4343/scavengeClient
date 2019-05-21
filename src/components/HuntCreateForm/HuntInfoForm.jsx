@@ -20,6 +20,9 @@ const styles = theme => ({
   font: {
     fontWeight: theme.typography.fontWeightLight
   },
+  input: {
+    backgroundColor: theme.palette.background.field
+  },
   numberField: {
     width: 150
   },
@@ -46,7 +49,11 @@ function HuntInfoForm(props) {
   } = props;
 
   return (
-    <FormExpansion inError={infoFormError.inError} label="Hunt Info">
+    <FormExpansion
+      inError={infoFormError.inError}
+      label="Hunt Info"
+      open={true}
+    >
       <form classes={classes.container}>
         <div className={classes.container}>
           <TextField
@@ -54,7 +61,11 @@ function HuntInfoForm(props) {
             label="Hunt Name"
             type="text"
             classes={{ root: classes.font }}
-            className={classNames(classes.textField, classes.root)}
+            className={classNames(
+              classes.textField,
+              classes.root,
+              classes.field
+            )}
             error={infoFormError.huntName.inError ? true : false}
             FormHelperTextProps={
               infoFormError.huntName.inError ? { error: true } : null
@@ -72,7 +83,11 @@ function HuntInfoForm(props) {
             label="Max Teams"
             type="number"
             classes={{ root: classes.font }}
-            className={classNames(classes.numberField, classes.root)}
+            className={classNames(
+              classes.numberField,
+              classes.root,
+              classes.field
+            )}
             error={infoFormError.maxTeams.inError ? true : false}
             FormHelperTextProps={
               infoFormError.maxTeams.inError ? { error: true } : null
@@ -90,7 +105,11 @@ function HuntInfoForm(props) {
             label="Start Time"
             type="datetime-local"
             classes={{ root: classes.font }}
-            className={classNames(classes.dateField, classes.root)}
+            className={classNames(
+              classes.dateField,
+              classes.root,
+              classes.field
+            )}
             error={infoFormError.startDate.inError ? true : false}
             FormHelperTextProps={
               infoFormError.startDate.inError ? { error: true } : null
@@ -108,7 +127,11 @@ function HuntInfoForm(props) {
             label="End Time"
             type="datetime-local"
             classes={{ root: classes.font }}
-            className={classNames(classes.dateField, classes.root)}
+            className={classNames(
+              classes.dateField,
+              classes.root,
+              classes.field
+            )}
             error={infoFormError.endDate.inError ? true : false}
             FormHelperTextProps={
               infoFormError.endDate.inError ? { error: true } : null
