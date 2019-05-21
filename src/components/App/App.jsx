@@ -4,7 +4,7 @@ import { Router } from "@reach/router";
 import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
-import Login from "../Login";
+import SignUp from "../SignUp";
 import Home from "../Home";
 import CreateHunt from "../CreateHunt";
 import Location from "../Location";
@@ -32,7 +32,7 @@ function App(props) {
           <Router>
             <Home path="/" />
             <CreateHunt path="/hunts/create" />
-            <Login path="/login" setUser={setUser} user={user} />
+            <SignUp path="/signup" setUser={setUser} user={user} />
           </Router>
         </div>
       </Location>

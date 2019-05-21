@@ -9,6 +9,6 @@ export { default as Hunts } from "./Hunts";
 export { default as ItemCard } from "./ItemCard";
 export { default as Items } from "./Items";
 export { default as Location } from "./Location";
-export { default as Login } from "./Login";
+export { default as SignUp } from "./SignUp";
 export { default as SortMenu } from "./SortMenu";
 export { default as UserAvatar } from "./UserAvatar";

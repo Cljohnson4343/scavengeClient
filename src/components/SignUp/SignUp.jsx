@@ -37,7 +37,7 @@ const styles = theme => {
   };
 };
 
-function Login(props) {
+function SignUp(props) {
   const { classes, setUser, user } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
@@ -129,7 +129,7 @@ function Login(props) {
           fullWidth={true}
           onClick={e => {
             let user = getUser();
-            user.apiLogin().then(response => {
+            user.apiSignUp().then(response => {
               setIsLoading(false);
               clearInputs();
               setUser(new User(response.data));
@@ -143,10 +143,10 @@ function Login(props) {
   );
 }
 
-Login.propTypes = {
+SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
   setUser: PropTypes.func,
   user: PropTypes.instanceOf(User)
 };
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(SignUp);
