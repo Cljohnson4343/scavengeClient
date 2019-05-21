@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import HuntInfoCard from "../HuntInfoCard";
-import CardContainer from "../CardContainer";
+import Cards from "../Cards";
 import HuntInfoSortMenu from "./HuntInfoSortMenu";
 import HuntInfoFilters from "./HuntInfoFilters";
 import LocationContext from "../Location";
@@ -29,7 +29,7 @@ function HuntInfoContainer(props) {
   const filterFn = compose(...arrayOfFilterFns);
 
   return (
-    <CardContainer
+    <Cards
       title="Hunts"
       sort={<HuntInfoSortMenu handleChangeSort={setSortFn} />}
       filters={<HuntInfoFilters filters={filters} setFilters={setFilters} />}
@@ -40,7 +40,7 @@ function HuntInfoContainer(props) {
         .map(item => (
           <HuntInfoCard key={item.name} huntInfo={item} />
         ))}
-    </CardContainer>
+    </Cards>
   );
 }
 

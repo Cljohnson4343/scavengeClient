@@ -15,7 +15,7 @@ const styles = {
   }
 };
 
-function HomePage(props) {
+function Home(props) {
   const { classes } = props;
 
   return (
@@ -26,8 +26,8 @@ function HomePage(props) {
   );
 }
 
-HomePage.propTypes = {
+Home.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(HomePage);
+export default withStyles(styles)(Home);

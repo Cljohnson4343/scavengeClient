@@ -1,9 +1,9 @@
 export { default as App } from "./App";
 export { default as AppBar } from "./AppBar";
-export { default as CardContainer } from "./CardContainer";
+export { default as Cards } from "./Cards";
 export { default as FilterButton } from "./FilterButton";
 export { default as FilterButtonText } from "./FilterButtonText";
-export { default as HomePage } from "./HomePage";
+export { default as Home } from "./Home";
 export { default as HuntInfoCard } from "./HuntInfoCard";
 export { default as HuntInfoContainer } from "./HuntInfoContainer";
 export { default as HuntItemCard } from "./HuntItemCard";

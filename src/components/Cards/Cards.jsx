@@ -38,7 +38,7 @@ const styles = theme => ({
   }
 });
 
-function CardContainer(props) {
+function Cards(props) {
   const { children, classes, filters, sort, title } = props;
 
   return (
@@ -61,9 +61,9 @@ function CardContainer(props) {
   );
 }
 
-CardContainer.propTypes = {
+Cards.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(CardContainer);
+export default withStyles(styles)(Cards);

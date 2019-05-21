@@ -5,7 +5,7 @@ import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
 import Login from "../Login";
-import HomePage from "../HomePage";
+import Home from "../Home";
 import CreateHunt from "../CreateHunt";
 import Location from "../Location";
 import grey from "@material-ui/core/colors/grey";
@@ -30,7 +30,7 @@ function App(props) {
         <div className={classes.pageWrapper}>
           <AppBar user={user} setUser={setUser} />
           <Router>
-            <HomePage path="/" />
+            <Home path="/" />
             <CreateHunt path="/hunts/create" />
             <Login path="/login" setUser={setUser} user={user} />
           </Router>

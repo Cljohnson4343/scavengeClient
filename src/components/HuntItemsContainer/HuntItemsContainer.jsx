@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import HuntItemCard from "../HuntItemCard";
 import HuntItemsSortMenu from "./HuntItemsSortMenu";
-import CardContainer from "../CardContainer";
+import Cards from "../Cards";
 
 function HuntItemContainer(props) {
   const { huntItems } = props;
@@ -12,14 +12,14 @@ function HuntItemContainer(props) {
   const [sortFunction, setSortFunction] = useState(() => defaultSort);
 
   return (
-    <CardContainer
+    <Cards
       title="Hunt Items"
       sort={<HuntItemsSortMenu handleChangeSort={setSortFunction} />}
     >
       {huntItems.sort(sortFunction).map(item => (
         <HuntItemCard key={item.name} huntInfo={item} />
       ))}
-    </CardContainer>
+    </Cards>
   );
 }
 
