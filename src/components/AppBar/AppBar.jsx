@@ -17,6 +17,7 @@ const styles = theme => ({
   },
   button: {
     color: theme.palette.primary.contrastText,
+    fontSize: theme.typography.fontSize * 0.85,
     margin: `${theme.spacing(1.5)}px ${theme.spacing(0.4)}px`,
     minWidth: "42px",
     padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`
@@ -45,6 +46,7 @@ function ScavengeAppBar(props) {
       <Button
         className={classes.button}
         classes={{ outlined: classes.border }}
+        onClick={props.onClick}
         variant="outlined"
       >
         {props.children}
@@ -52,13 +54,25 @@ function ScavengeAppBar(props) {
     );
   }
 
-  const isLoggedIn = true;
-  let renderProps;
+  const isLoggedIn = Boolean(user);
 
+  let renderProps;
   if (isLoggedIn) {
     renderProps = [
-      <TextButton>Sign Out</TextButton>,
-      <Button className={classes.button}>
+      <TextButton
+        key="out"
+        onClick={e => {
+          user
+            .apiLogout()
+            .then(response => {
+              setUser(null);
+            })
+            .catch(e => console.log(e));
+        }}
+      >
+        Sign Out
+      </TextButton>,
+      <Button className={classes.button} key="icon">
         <NotificationIcon fontSize="large" />
       </Button>
     ];

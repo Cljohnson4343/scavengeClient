@@ -41,32 +41,26 @@ const styles = theme => {
 };
 
 function LoginPage(props) {
-  const { classes } = props;
+  const { classes, setUser, user } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState(new User());
+
+  const clearInputs = () => {
+    setFirstNameInput("");
+    setLastNameInput("");
+    setUsernameInput("");
+    setEmailInput("");
+  };
+
+  const isLoggedIn = Boolean(user);
 
   if (isLoggedIn) {
     return (
-      <Button
-        color="primary"
-        onClick={e => {
-          user
-            .apiLogout(user.data)
-            .then(response => {
-              setUser(new User());
-              setIsLoggedIn(false);
-            })
-            .catch(e => console.log(e));
-        }}
-        size="small"
-        variant="text"
-      >
+      <Button color="primary" size="small" variant="text">
         Sign Out
       </Button>
     );
@@ -140,7 +134,7 @@ function LoginPage(props) {
             let user = getUser();
             user.apiLogin().then(response => {
               setIsLoading(false);
-              setIsLoggedIn(true);
+              clearInputs();
               setUser(new User(response.data));
             });
           }}
@@ -153,7 +147,9 @@ function LoginPage(props) {
 }
 
 LoginPage.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  setUser: PropTypes.func,
+  user: PropTypes.instanceOf(User)
 };
 
 export default withStyles(styles)(LoginPage);

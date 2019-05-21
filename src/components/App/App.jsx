@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
@@ -16,21 +16,21 @@ const styles = {
   }
 };
 
-class App extends Component {
-  render() {
-    const { classes } = this.props;
+function App(props) {
+  const [user, setUser] = useState(null);
 
-    return (
-      <MuiThemeProvider theme={MuiTheme}>
-        <Location>
-          <div className={classes.pageWrapper}>
-            <AppBar />
-            <LoginPage />
-          </div>
-        </Location>
-      </MuiThemeProvider>
-    );
-  }
+  const { classes } = props;
+
+  return (
+    <MuiThemeProvider theme={MuiTheme}>
+      <Location>
+        <div className={classes.pageWrapper}>
+          <AppBar user={user} setUser={setUser} />
+          <LoginPage user={user} setUser={setUser} />
+        </div>
+      </Location>
+    </MuiThemeProvider>
+  );
 }
 
 export default withStyles(styles)(App);
