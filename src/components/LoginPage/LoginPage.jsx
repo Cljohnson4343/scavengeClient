@@ -8,7 +8,7 @@ const styles = theme => {
   const fieldWidth = 300;
   return {
     button: {
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.palette.grey[300],
       border: `thin outset ${theme.palette.divider}`,
       borderRadius: theme.shape.borderRadius,
       margin: `${theme.spacing(2)}px 0`,
@@ -28,11 +28,8 @@ const styles = theme => {
       justifyContent: "center",
       justifyItems: "center"
     },
-    inputContainer: {
-      display: "flex",
-      flexDirection: "column"
-    },
     textField: {
+      backgroundColor: theme.palette.background.field,
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width: fieldWidth

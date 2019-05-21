@@ -5,15 +5,15 @@ import { Divider, withStyles } from "@material-ui/core";
 const styles = theme => ({
   container: {
     margin: `${theme.spacing(3)}px ${theme.spacing(1)}px`,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.form,
     borderRadius: theme.shape.borderRadius,
     border: `2px solid ${theme.palette.divider}`
   },
   header: {
+    color: theme.palette.primary.dark,
     fontSize: theme.typography.fontSize * 1.5,
     fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.primary.dark,
-    margin: theme.spacing(2)
+    padding: theme.spacing(2)
   }
 });
 

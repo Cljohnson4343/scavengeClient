@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
 import LoginPage from "../LoginPage";
 import Location from "../Location";
-import { grey } from "@material-ui/core/colors";
+import grey from "@material-ui/core/colors/grey";
 
 const styles = {
   pageWrapper: {
