@@ -7,7 +7,7 @@ const styles = theme => ({
     margin: `${theme.spacing(3)}px ${theme.spacing(1)}px`,
     backgroundColor: theme.palette.background.default,
     borderRadius: theme.shape.borderRadius,
-    border: `thin outset ${theme.palette.divider}`
+    border: `2px solid ${theme.palette.divider}`
   },
   header: {
     fontSize: theme.typography.fontSize * 1.5,

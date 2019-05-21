@@ -136,9 +136,9 @@ function LoginPage(props) {
           className={classes.button}
           variant="text"
           fullWidth={true}
-          handleSubmit={e => {
+          onClick={e => {
             let user = getUser();
-            user.apiLogin(user.data).then(response => {
+            user.apiLogin().then(response => {
               setIsLoading(false);
               setIsLoggedIn(true);
               setUser(new User(response.data));
