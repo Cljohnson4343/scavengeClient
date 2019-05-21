@@ -29,7 +29,7 @@ const styles = theme => ({
   }
 });
 
-function HuntCreateForm(props) {
+function CreateHunt(props) {
   const { classes } = props;
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -68,8 +68,8 @@ function HuntCreateForm(props) {
   );
 }
 
-HuntCreateForm.propTypes = {
+CreateHunt.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(HuntCreateForm);
+export default withStyles(styles)(CreateHunt);

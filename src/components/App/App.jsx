@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core";
 import MuiTheme from "../../theme";
 import LoginPage from "../LoginPage";
 import HomePage from "../HomePage";
-import HuntCreateForm from "../HuntCreateForm";
+import CreateHunt from "../CreateHunt";
 import Location from "../Location";
 import grey from "@material-ui/core/colors/grey";
 
@@ -31,7 +31,7 @@ function App(props) {
           <AppBar user={user} setUser={setUser} />
           <Router>
             <HomePage path="/" />
-            <HuntCreateForm path="/hunts/create" />
+            <CreateHunt path="/hunts/create" />
             <LoginPage path="/login" setUser={setUser} user={user} />
           </Router>
         </div>
