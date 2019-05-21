@@ -7,7 +7,7 @@ export { default as Home } from "./Home";
 export { default as HuntCard } from "./HuntCard";
 export { default as Hunts } from "./Hunts";
 export { default as ItemCard } from "./ItemCard";
-export { default as HuntItemsContainer } from "./HuntItemsContainer";
+export { default as Items } from "./Items";
 export { default as Location } from "./Location";
 export { default as Login } from "./Login";
 export { default as SortMenu } from "./SortMenu";

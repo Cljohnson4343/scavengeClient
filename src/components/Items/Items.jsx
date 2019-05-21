@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ItemCard from "../ItemCard";
-import HuntItemsSortMenu from "./HuntItemsSortMenu";
+import ItemsSortMenu from "./ItemsSortMenu";
 import Cards from "../Cards";
 
 function HuntItemContainer(props) {
@@ -14,7 +14,7 @@ function HuntItemContainer(props) {
   return (
     <Cards
       title="Hunt Items"
-      sort={<HuntItemsSortMenu handleChangeSort={setSortFunction} />}
+      sort={<ItemsSortMenu handleChangeSort={setSortFunction} />}
     >
       {huntItems.sort(sortFunction).map(item => (
         <ItemCard key={item.name} huntInfo={item} />

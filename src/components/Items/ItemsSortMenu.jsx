@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SortMenu from "../../SortMenu";
+import SortMenu from "../SortMenu";
 
 const compareByCompleted = function(a, b) {
   if (a.isDone && !b.isDone) return -1;
@@ -53,12 +53,12 @@ const sortFilters = {
   }
 };
 
-function HuntItemsSortMenu(props) {
+function ItemsSortMenu(props) {
   return <SortMenu sortFilters={sortFilters} {...props} />;
 }
 
-HuntItemsSortMenu.propTypes = {
+ItemsSortMenu.propTypes = {
   handleChangeSort: PropTypes.func.isRequired
 };
 
-export default HuntItemsSortMenu;
+export default ItemsSortMenu;
