@@ -5,7 +5,7 @@ export { default as FilterButton } from "./FilterButton";
 export { default as FilterButtonText } from "./FilterButtonText";
 export { default as Home } from "./Home";
 export { default as HuntCard } from "./HuntCard";
-export { default as HuntInfoContainer } from "./HuntInfoContainer";
+export { default as Hunts } from "./Hunts";
 export { default as HuntItemCard } from "./HuntItemCard";
 export { default as HuntItemsContainer } from "./HuntItemsContainer";
 export { default as Location } from "./Location";

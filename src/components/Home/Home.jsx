@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import HuntInfoContainer from "../HuntInfoContainer";
+import Hunts from "../Hunts";
 import hunts from "../../HuntInfoData";
 import Fab from "../Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -20,7 +20,7 @@ function Home(props) {
 
   return (
     <div className={classes.page}>
-      <HuntInfoContainer hunts={hunts} />
+      <Hunts hunts={hunts} />
       <Fab icon={<AddIcon />} />
     </div>
   );

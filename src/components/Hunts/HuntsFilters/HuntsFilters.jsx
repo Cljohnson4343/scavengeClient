@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import HuntInfoAddFiltersButton from "../HuntInfoAddFilterButton";
+import HuntInfoAddFiltersButton from "../HuntsAddFilterButton";
 import FilterButton from "../../FilterButton";
 import FilterButtonText from "../../FilterButtonText";
 import { addFilter, removeFilter } from "./utils";
@@ -16,7 +16,7 @@ const styles = {
   }
 };
 
-function HuntInfoFilters(props) {
+function HuntsFilters(props) {
   const { classes, filters, setFilters } = props;
 
   return (
@@ -38,10 +38,10 @@ function HuntInfoFilters(props) {
   );
 }
 
-HuntInfoFilters.propTypes = {
+HuntsFilters.propTypes = {
   classes: PropTypes.object.isRequired,
   filters: PropTypes.array.isRequired,
   setFilters: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(HuntInfoFilters);
+export default withStyles(styles)(HuntsFilters);

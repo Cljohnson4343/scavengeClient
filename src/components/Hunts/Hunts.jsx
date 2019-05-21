@@ -2,13 +2,13 @@ import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import HuntCard from "../HuntCard";
 import Cards from "../Cards";
-import HuntInfoSortMenu from "./HuntInfoSortMenu";
-import HuntInfoFilters from "./HuntInfoFilters";
+import HuntsSortMenu from "./HuntsSortMenu";
+import HuntsFilters from "./HuntsFilters";
 import LocationContext from "../Location";
-import * as utils from "./HuntInfoFilters";
+import * as utils from "./HuntsFilters";
 import { compose } from "../../utils";
 
-function HuntInfoContainer(props) {
+function Hunts(props) {
   const { hunts } = props;
 
   const defaultSortFn = () => -1;
@@ -31,8 +31,8 @@ function HuntInfoContainer(props) {
   return (
     <Cards
       title="Hunts"
-      sort={<HuntInfoSortMenu handleChangeSort={setSortFn} />}
-      filters={<HuntInfoFilters filters={filters} setFilters={setFilters} />}
+      sort={<HuntsSortMenu handleChangeSort={setSortFn} />}
+      filters={<HuntsFilters filters={filters} setFilters={setFilters} />}
     >
       {hunts
         .filter(filterFn)
@@ -44,8 +44,8 @@ function HuntInfoContainer(props) {
   );
 }
 
-HuntInfoContainer.propTypes = {
+Hunts.propTypes = {
   hunts: PropTypes.array.isRequired
 };
 
-export default HuntInfoContainer;
+export default Hunts;

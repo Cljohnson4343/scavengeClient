@@ -14,7 +14,7 @@ const styles = theme => ({
   }
 });
 
-function HuntInfoAddFilterButton(props) {
+function HuntsAddFilterButton(props) {
   const { children, classes, ...other } = props;
 
   return (
@@ -24,9 +24,9 @@ function HuntInfoAddFilterButton(props) {
   );
 }
 
-HuntInfoAddFilterButton.propTypes = {
+HuntsAddFilterButton.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired
 };
 
-export default withStyles(styles)(HuntInfoAddFilterButton);
+export default withStyles(styles)(HuntsAddFilterButton);

@@ -56,12 +56,12 @@ const sortFilters = {
   }
 };
 
-function HuntInfoSortMenu(props) {
+function HuntsSortMenu(props) {
   return <SortMenu sortFilters={sortFilters} {...props} />;
 }
 
-HuntInfoSortMenu.propTypes = {
+HuntsSortMenu.propTypes = {
   handleChangeSort: PropTypes.func.isRequired
 };
 
-export default HuntInfoSortMenu;
+export default HuntsSortMenu;

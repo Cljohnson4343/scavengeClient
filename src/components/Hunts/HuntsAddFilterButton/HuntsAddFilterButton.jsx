@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Menu, MenuItem } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import FilterButton from "../../FilterButton";
-import { filtersObj } from "../HuntInfoFilters/filters";
+import { filtersObj } from "../HuntsFilters/filters";
 
-function HuntInfoAddFilterButton(props) {
+function HuntsAddFilterButton(props) {
   const { addFilter, ...other } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -49,8 +49,8 @@ function HuntInfoAddFilterButton(props) {
   );
 }
 
-HuntInfoAddFilterButton.propTypes = {
+HuntsAddFilterButton.propTypes = {
   addFilter: PropTypes.func.isRequired
 };
 
-export default HuntInfoAddFilterButton;
+export default HuntsAddFilterButton;
