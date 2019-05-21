@@ -9,6 +9,6 @@ export { default as HuntInfoContainer } from "./HuntInfoContainer";
 export { default as HuntItemCard } from "./HuntItemCard";
 export { default as HuntItemsContainer } from "./HuntItemsContainer";
 export { default as Location } from "./Location";
-export { default as LoginPage } from "./LoginPage";
-export { default as SortMenu } from "./LoginPage";
+export { default as Login } from "./Login";
+export { default as SortMenu } from "./SortMenu";
 export { default as UserAvatar } from "./UserAvatar";

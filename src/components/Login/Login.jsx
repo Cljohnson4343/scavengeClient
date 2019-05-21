@@ -37,7 +37,7 @@ const styles = theme => {
   };
 };
 
-function LoginPage(props) {
+function Login(props) {
   const { classes, setUser, user } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
@@ -143,10 +143,10 @@ function LoginPage(props) {
   );
 }
 
-LoginPage.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
   setUser: PropTypes.func,
   user: PropTypes.instanceOf(User)
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(Login);
