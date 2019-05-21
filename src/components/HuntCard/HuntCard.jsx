@@ -52,7 +52,7 @@ const styles = theme => ({
   }
 });
 
-function HuntInfoCard(props) {
+function HuntCard(props) {
   const { classes, huntInfo } = props;
   const ResolvedLockIcon = hunt.isOpen(huntInfo) ? (
     <LockOpenIcon />
@@ -158,7 +158,7 @@ function HuntInfoCard(props) {
   );
 }
 
-HuntInfoCard.propTypes = {
+HuntCard.propTypes = {
   classes: PropTypes.object.isRequired,
   huntInfo: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -175,4 +175,4 @@ HuntInfoCard.propTypes = {
   }).isRequired
 };
 
-export default withStyles(styles)(HuntInfoCard);
+export default withStyles(styles)(HuntCard);

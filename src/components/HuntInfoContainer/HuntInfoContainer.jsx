@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import HuntInfoCard from "../HuntInfoCard";
+import HuntCard from "../HuntCard";
 import Cards from "../Cards";
 import HuntInfoSortMenu from "./HuntInfoSortMenu";
 import HuntInfoFilters from "./HuntInfoFilters";
@@ -38,7 +38,7 @@ function HuntInfoContainer(props) {
         .filter(filterFn)
         .sort(sortFn)
         .map(item => (
-          <HuntInfoCard key={item.name} huntInfo={item} />
+          <HuntCard key={item.name} huntInfo={item} />
         ))}
     </Cards>
   );
