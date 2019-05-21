@@ -125,4 +125,10 @@ Teams.prototype.changePlayerEmail = function(player, email) {
   );
 };
 
+Object.defineProperty(Teams.prototype, "requestJSON", {
+  get: function() {
+    return this.array.map(t => t.requestJSON);
+  }
+});
+
 export default Teams;

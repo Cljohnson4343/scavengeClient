@@ -43,12 +43,12 @@ function PlayersContainer(props) {
   return (
     <FormExpansion inError={false} label={`Players (${players.length})`}>
       <List dense={true} className={classes.list}>
-        {players.array.map(player => (
+        {players.array.map(p => (
           <PlayerListItem
             className={classes.font}
             dispatch={dispatch}
-            key={player.email}
-            player={player}
+            key={p.email}
+            player={p}
             teams={teams}
             validateEmail={validateEmail}
           />

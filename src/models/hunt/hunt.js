@@ -50,13 +50,18 @@ const Hunt = ScavengeResource.extend({
       path: "/",
       method: "POST"
     },
-    self =>
-      getDataProperties(self.data, [
+    self => {
+      let data = getDataProperties(self.data, [
         "huntName",
         "maxTeams",
         "startTime",
         "endTime"
-      ])
+      ]);
+      return Object.assign(data, {
+        items: self.items.requestJSON,
+        teams: self.teams.requestJSON
+      });
+    }
   ),
 
   apiDeleteHunt: ScavengeMethod({

@@ -34,7 +34,7 @@ function ItemListItem(props) {
   const { classes, dispatch, item, validateName, validatePoints } = props;
 
   return (
-    <ListItem button disableGutters>
+    <ListItem button disableGutters key={props.key}>
       <ListItemText
         className={classes.name}
         primary={

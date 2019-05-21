@@ -148,4 +148,10 @@ Object.defineProperty(t, "changePlayerEmail", {
   }
 });
 
+Object.defineProperty(t, "requestJSON", {
+  get: function() {
+    return this.data;
+  }
+});
+
 export default Team;

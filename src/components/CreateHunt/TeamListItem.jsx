@@ -23,7 +23,7 @@ function TeamListItem(props) {
   const { avatarColor, classes, dispatch, label, team, validateName } = props;
 
   return (
-    <ListItem disableGutters>
+    <ListItem disableGutters key={props.key}>
       <ListItemAvatar>
         <Avatar style={{ backgroundColor: avatarColor }}>{label}</Avatar>
       </ListItemAvatar>

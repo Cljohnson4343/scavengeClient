@@ -99,4 +99,10 @@ Object.defineProperty(Items.prototype, "getByItem", {
   }
 });
 
+Object.defineProperty(Items.prototype, "requestJSON", {
+  get: function() {
+    return this.array.map(i => i.requestJSON);
+  }
+});
+
 export default Items;

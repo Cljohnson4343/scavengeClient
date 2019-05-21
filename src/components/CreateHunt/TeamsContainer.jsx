@@ -87,7 +87,6 @@ function TeamsContainer(props) {
           />
           <TextAddButton
             handleClick={() => {
-              console.log(inputName);
               dispatch(action.addTeam(inputName));
               setInputName("");
             }}

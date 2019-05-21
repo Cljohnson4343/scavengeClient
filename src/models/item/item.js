@@ -107,4 +107,10 @@ Object.defineProperty(Item.prototype, "name", {
   }
 });
 
+Object.defineProperty(Item.prototype, "requestJSON", {
+  get: function() {
+    return this.data;
+  }
+});
+
 export default Item;

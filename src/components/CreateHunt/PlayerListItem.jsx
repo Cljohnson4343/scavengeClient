@@ -33,7 +33,7 @@ function PlayerListItem(props) {
   const { classes, dispatch, player, teams, validateEmail } = props;
 
   return (
-    <ListItem button disableGutters>
+    <ListItem button disableGutters key={props.key}>
       <ListItemText
         primary={
           <EditableHeading
@@ -52,12 +52,12 @@ function PlayerListItem(props) {
           onChange={e => {
             dispatch(action.changePlayersTeam(player, e.target.value));
           }}
-          renderValue={team => team.name}
+          renderValue={team => team.teamName}
           value={player.team}
         >
           <MenuItem value={new Team()}>Unassigned</MenuItem>
           {teams.array.map(t => (
-            <MenuItem key={t.name} value={t}>
+            <MenuItem key={t.teamName} value={t}>
               {t.name}
             </MenuItem>
           ))}
