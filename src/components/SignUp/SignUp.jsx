@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, TextField, withStyles } from "@material-ui/core";
+import { Button, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
 import ScavengeInput from "../ScavengeInput";

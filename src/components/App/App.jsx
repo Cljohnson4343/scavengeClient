@@ -12,6 +12,7 @@ import Location from "../Location";
 import grey from "@material-ui/core/colors/grey";
 import { User } from "../../models";
 import { navigate } from "@reach/router";
+import Footer from "../Footer";
 
 const styles = {
   pageWrapper: {
@@ -38,6 +39,8 @@ function App(props) {
       });
   }, []);
 
+  console.log(`${user ? user.username : null}`);
+
   return (
     <MuiThemeProvider theme={MuiTheme}>
       <Location>
@@ -49,6 +52,7 @@ function App(props) {
             <SignIn path="/signin" setUser={setUser} user={user} />
             <SignUp path="/signup" setUser={setUser} user={user} />
           </Router>
+          <Footer user={user} setUser={setUser} />
         </div>
       </Location>
     </MuiThemeProvider>

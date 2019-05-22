@@ -12,8 +12,6 @@ const User = ScavengeResource.extend({
 
     this.data = Object.assign({}, data ? data : {});
 
-    Object.assign(this, data);
-
     ScavengeResource.call(this);
   },
 
@@ -95,6 +93,12 @@ const User = ScavengeResource.extend({
     }
 
     return false;
+  }
+});
+
+Object.defineProperty(User.prototype, "username", {
+  get: function() {
+    return this.data.username;
   }
 });
 

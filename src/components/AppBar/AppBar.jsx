@@ -6,13 +6,9 @@ import { IconButton } from "@material-ui/core";
 import { User } from "../../models";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import { navigate } from "@reach/router";
+import ExploreIcon from "@material-ui/icons/Explore";
 
 const styles = theme => ({
-  avatar: {
-    width: "35px",
-    height: "35px",
-    margin: theme.spacing(1)
-  },
   border: {
     border: `1px solid ${theme.palette.primary.contrastText}`
   },
@@ -36,11 +32,14 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  username: {
+    alignSelf: "center"
   }
 });
 
 function ScavengeAppBar(props) {
-  const { classes, setUser, user } = props;
+  const { classes, user } = props;
 
   function TextButton(props) {
     return (
@@ -60,20 +59,6 @@ function ScavengeAppBar(props) {
   let renderProps;
   if (isLoggedIn) {
     renderProps = [
-      <TextButton
-        key="out"
-        onClick={e => {
-          user
-            .apiLogout()
-            .then(response => {
-              setUser(null);
-              navigate("/");
-            })
-            .catch(e => console.log(e));
-        }}
-      >
-        Sign Out
-      </TextButton>,
       <Button className={classes.button} key="icon">
         <NotificationIcon fontSize="large" />
       </Button>
@@ -98,8 +83,9 @@ function ScavengeAppBar(props) {
         color="primary"
         onClick={e => navigate("/")}
       >
-        Scavenge
+        <ExploreIcon fontSize="large" />
       </IconButton>
+      <div className={classes.username}>{user ? user.username : null}</div>
       <div className={classes.buttonWrap}>{renderProps}</div>
     </AppBar>
   );
@@ -107,7 +93,6 @@ function ScavengeAppBar(props) {
 
 ScavengeAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  setUser: PropTypes.func,
   user: PropTypes.instanceOf(User)
 };
 
