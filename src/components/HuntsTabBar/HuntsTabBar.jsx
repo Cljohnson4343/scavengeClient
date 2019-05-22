@@ -8,7 +8,7 @@ const styles = theme => ({
   },
   tabFont: {
     color: theme.palette.primary.contrastText,
-    fontSize: theme.typography.fontSize,
+    fontSize: theme.typography.fontSize * 1.2,
     fontWeight: theme.typography.fontWeightLight * 4
   },
   tabSelected: {

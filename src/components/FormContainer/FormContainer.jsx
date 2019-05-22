@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Divider, withStyles } from "@material-ui/core";
+import { Divider, Paper, withStyles } from "@material-ui/core";
 
 const styles = theme => ({
   container: {
-    margin: `${theme.spacing(3)}px ${theme.spacing(1)}px`,
-    backgroundColor: theme.palette.background.form,
-    borderRadius: theme.shape.borderRadius,
-    border: `2px solid ${theme.palette.divider}`
+    margin: `${theme.spacing(3)}px ${theme.spacing(1)}px`
   },
   header: {
     color: theme.palette.primary.dark,
@@ -21,11 +18,11 @@ function FormControl(props) {
   const { classes, label } = props;
 
   return (
-    <div className={classes.container}>
+    <Paper className={classes.container} elevation={1}>
       <div className={classes.header}>{label}</div>
       <Divider variant="fullWidth" />
       {props.children}
-    </div>
+    </Paper>
   );
 }
 

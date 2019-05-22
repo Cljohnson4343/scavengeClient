@@ -77,7 +77,7 @@ function SignUp(props) {
   }
 
   return (
-    <FormContainer label="Sign up for Scavenge">
+    <FormContainer label="Sign Up for Scavenge">
       <form className={classes.container}>
         <div className={classes.duoContainer}>
           <TextField
