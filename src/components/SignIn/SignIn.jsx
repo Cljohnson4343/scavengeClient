@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, TextField, withStyles } from "@material-ui/core";
+import { Button, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
+import ScavengeInput from "../ScavengeInput";
 
 const styles = theme => {
   const fieldWidth = 300;
@@ -11,6 +12,7 @@ const styles = theme => {
       backgroundColor: theme.palette.grey[300],
       border: `thin outset ${theme.palette.divider}`,
       borderRadius: theme.shape.borderRadius,
+      height: "48px",
       margin: `${theme.spacing(2)}px 0`,
       width: fieldWidth
     },
@@ -21,12 +23,6 @@ const styles = theme => {
       justifyItems: "center",
       alignContent: "center",
       maxWidth: 550
-    },
-    textField: {
-      backgroundColor: theme.palette.background.field,
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: fieldWidth
     }
   };
 };
@@ -39,12 +35,9 @@ function SignIn(props) {
   return (
     <FormContainer label="Sign In">
       <div className={classes.container}>
-        <TextField
+        <ScavengeInput
           id="username"
           label="Username"
-          type="text"
-          className={classes.textField}
-          margin="normal"
           onChange={e => setUsernameInput(e.currentTarget.value)}
           value={usernameInput}
           required

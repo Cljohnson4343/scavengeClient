@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { Router } from "@reach/router";
 import AppBar from "../AppBar";
@@ -10,6 +10,8 @@ import Home from "../Home";
 import CreateHunt from "../CreateHunt";
 import Location from "../Location";
 import grey from "@material-ui/core/colors/grey";
+import { User } from "../../models";
+import { navigate } from "@reach/router";
 
 const styles = {
   pageWrapper: {
@@ -21,9 +23,20 @@ const styles = {
 };
 
 function App(props) {
+  const { classes } = props;
+
   const [user, setUser] = useState(null);
 
-  const { classes } = props;
+  useEffect(() => {
+    new User()
+      .apiRetrieveCurrentUser()
+      .then(response => {
+        setUser(new User(response.data));
+      })
+      .catch(err => {
+        navigate("/signup");
+      });
+  }, []);
 
   return (
     <MuiThemeProvider theme={MuiTheme}>

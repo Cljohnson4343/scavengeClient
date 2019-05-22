@@ -59,6 +59,11 @@ const User = ScavengeResource.extend({
     method: "DELETE"
   }),
 
+  apiRetrieveCurrentUser: ScavengeMethod({
+    path: "/",
+    method: "GET"
+  }),
+
   apiRetrieveUser: ScavengeMethod({
     path: "/{userID}",
     method: "GET"

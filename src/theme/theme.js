@@ -6,6 +6,9 @@ import lime from "@material-ui/core/colors/lime";
 
 const theme = createMuiTheme({
   barHeight: "48px",
+  input: {
+    width: "300px"
+  },
   palette: {
     background: {
       errorField: red[100],

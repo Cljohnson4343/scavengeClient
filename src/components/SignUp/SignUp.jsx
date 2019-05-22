@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, TextField, withStyles } from "@material-ui/core";
+import { Button, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
+import ScavengeInput from "../ScavengeInput";
 
 const styles = theme => {
   const fieldWidth = 300;
@@ -11,6 +12,7 @@ const styles = theme => {
       backgroundColor: theme.palette.grey[300],
       border: `thin outset ${theme.palette.divider}`,
       borderRadius: theme.shape.borderRadius,
+      height: "48px",
       margin: `${theme.spacing(2)}px 0`,
       width: fieldWidth
     },
@@ -27,12 +29,6 @@ const styles = theme => {
       flexWrap: "wrap",
       justifyContent: "center",
       justifyItems: "center"
-    },
-    textField: {
-      backgroundColor: theme.palette.background.field,
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: fieldWidth
     }
   };
 };
@@ -80,44 +76,34 @@ function SignUp(props) {
     <FormContainer label="Sign Up for Scavenge">
       <form className={classes.container}>
         <div className={classes.duoContainer}>
-          <TextField
+          <ScavengeInput
+            className={classes.input}
             id="first_name"
             label="First Name"
-            type="text"
-            className={classes.textField}
-            margin="normal"
             onChange={e => setFirstNameInput(e.currentTarget.value)}
             value={firstNameInput}
             required
           />
-          <TextField
+          <ScavengeInput
             id="last_name"
             label="Last Name"
-            type="text"
-            className={classes.textField}
-            margin="normal"
             onChange={e => setLastNameInput(e.currentTarget.value)}
             value={lastNameInput}
             required
           />
         </div>
         <div className={classes.duoContainer}>
-          <TextField
+          <ScavengeInput
             id="username"
             label="Username"
-            type="text"
-            className={classes.textField}
-            margin="normal"
             onChange={e => setUsernameInput(e.currentTarget.value)}
             value={usernameInput}
             required
           />
-          <TextField
+          <ScavengeInput
             id="email"
             label="Email"
             type="email"
-            className={classes.textField}
-            margin="normal"
             onChange={e => setEmailInput(e.currentTarget.value)}
             value={emailInput}
             required
