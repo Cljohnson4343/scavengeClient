@@ -17,17 +17,25 @@ const styles = theme => ({
     alignSelf: "flex-end",
     marginRight: theme.spacing(1)
   },
-  container: {
+  formContainer: {
     backgroundColor: "inherit",
     display: "flex",
     flexDirection: "column",
     marginTop: theme.spacing(2)
   },
+  headerContainer: {
+    backgroundColor: theme.palette.primary.main,
+    display: "flex",
+    height: theme.barHeight,
+    justifyContent: "center",
+    alignContent: "center",
+    width: "100%"
+  },
   heading: {
-    color: theme.palette.primary.main,
+    alignSelf: "center",
+    color: theme.palette.primary.contrastText,
     fontSize: `${theme.typography.fontSize * 2}px`,
-    fontWeight: theme.typography.fontWeightMedium,
-    margin: `${theme.spacing(1)}px`
+    fontWeight: theme.typography.fontWeightMedium
   }
 });
 
@@ -50,44 +58,48 @@ function CreateHunt(props) {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.heading}>Create Hunt</div>
-      <HuntInfoForm
-        infoFormError={formError.huntInfoError}
-        dispatch={dispatch}
-        endDate={state.endDate}
-        huntName={state.huntName}
-        maxTeams={state.maxTeams}
-        startDate={state.startDate}
-      />
-      <ItemsContainer
-        containerError={formError.itemsError}
-        dispatch={dispatch}
-        items={state.items}
-      />
-      <TeamsContainer
-        containerError={formError.teamsError}
-        dispatch={dispatch}
-        huntName={state.huntName}
-        maxTeams={state.maxTeams}
-        teams={state.teams}
-      />
-      <PlayersContainer
-        dispatch={dispatch}
-        players={state.players}
-        teams={state.teams}
-      />
-      <Fab
-        onClick={e => {
-          getHunt()
-            .apiCreateHunt()
-            .then(response => {
-              dispatch(actions.clearState());
-            });
-        }}
-        icon={<SendIcon />}
-        inError={formError.inError}
-      />
+    <div>
+      <div className={classes.headerContainer}>
+        <span className={classes.heading}>Create Hunt</span>
+      </div>
+      <div className={classes.formContainer}>
+        <HuntInfoForm
+          infoFormError={formError.huntInfoError}
+          dispatch={dispatch}
+          endDate={state.endDate}
+          huntName={state.huntName}
+          maxTeams={state.maxTeams}
+          startDate={state.startDate}
+        />
+        <ItemsContainer
+          containerError={formError.itemsError}
+          dispatch={dispatch}
+          items={state.items}
+        />
+        <TeamsContainer
+          containerError={formError.teamsError}
+          dispatch={dispatch}
+          huntName={state.huntName}
+          maxTeams={state.maxTeams}
+          teams={state.teams}
+        />
+        <PlayersContainer
+          dispatch={dispatch}
+          players={state.players}
+          teams={state.teams}
+        />
+        <Fab
+          onClick={e => {
+            getHunt()
+              .apiCreateHunt()
+              .then(response => {
+                dispatch(actions.clearState());
+              });
+          }}
+          icon={<SendIcon />}
+          inError={formError.inError}
+        />
+      </div>
     </div>
   );
 }

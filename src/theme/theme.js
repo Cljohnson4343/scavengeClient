@@ -5,6 +5,7 @@ import red from "@material-ui/core/colors/red";
 import lime from "@material-ui/core/colors/lime";
 
 const theme = createMuiTheme({
+  barHeight: "48px",
   palette: {
     background: {
       errorField: red[100],

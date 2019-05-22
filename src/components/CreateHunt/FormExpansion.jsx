@@ -12,6 +12,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { grey } from "@material-ui/core/colors";
 
 const styles = theme => ({
+  container: {
+    margin: theme.spacing(1),
+    marginBottom: "0px"
+  },
   details: {
     padding: `0px ${theme.spacing(2)}px`
   },
@@ -23,7 +27,7 @@ const styles = theme => ({
   },
   expanded: {
     backgroundColor: grey[100],
-    marginTop: theme.spacing(1)
+    margin: theme.spacing(1)
   },
   heading: {
     color: theme.palette.primary.main
@@ -38,22 +42,23 @@ function FormExpansion(props) {
   const colorObj = inError ? classes.error : isOpen ? classes.heading : null;
 
   return (
-    <ExpansionPanel
-      classes={{ root: classes.expanded }}
-      square={true}
-      elevation={0}
-      onChange={e => setIsOpen(!isOpen)}
-    >
-      <ExpansionPanelSummary
-        expandIcon={<ExpandMoreIcon classes={{ root: colorObj }} />}
+    <div className={classes.container}>
+      <ExpansionPanel
+        square={false}
+        elevation={1}
+        onChange={e => setIsOpen(!isOpen)}
       >
-        <Typography className={colorObj}>{label}</Typography>
-      </ExpansionPanelSummary>
-      {isOpen && <Divider className={classes.divider} variant="middle" />}
-      <ExpansionPanelDetails className={classes.details}>
-        {props.children}
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon classes={{ root: colorObj }} />}
+        >
+          <Typography className={colorObj}>{label}</Typography>
+        </ExpansionPanelSummary>
+        {isOpen && <Divider className={classes.divider} variant="middle" />}
+        <ExpansionPanelDetails className={classes.details}>
+          {props.children}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
   );
 }
 

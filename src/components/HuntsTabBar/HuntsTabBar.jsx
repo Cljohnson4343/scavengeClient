@@ -19,7 +19,8 @@ const styles = theme => ({
     height: "5px"
   },
   tabs: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    height: theme.tabsHeight
   }
 });
 
