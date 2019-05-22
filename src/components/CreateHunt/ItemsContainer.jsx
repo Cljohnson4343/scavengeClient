@@ -13,7 +13,8 @@ import { Item, Items } from "../../models";
 const styles = theme => ({
   container: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginTop: theme.spacing(2)
   },
   font: {
     fontWeight: theme.typography.fontWeightLight
