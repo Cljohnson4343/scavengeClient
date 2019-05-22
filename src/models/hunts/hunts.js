@@ -2,6 +2,8 @@ import Container from "../container";
 import Hunt from "../hunt";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
+import { getItemsFromResponse } from "../items";
+import { getTeamsFromResponse } from "../teams";
 
 export const isOpen = hunt => hunt.isOpen;
 export const starts = hunt => hunt.startTime;
@@ -11,6 +13,20 @@ export const items = hunt => [...hunt.items];
 export const location = hunt => hunt.location;
 export const name = hunt => hunt.name;
 export const numTeams = hunt => hunt.numTeams;
+
+export function getHuntsFromResponse(data) {
+  let hunts = data.map(d => {
+    return new Hunt(
+      Object.assign({}, d, {
+        startTime: new Date(d.startTime),
+        endTime: new Date(d.endTime),
+        items: getItemsFromResponse(d.items),
+        teams: getTeamsFromResponse(d.teams)
+      })
+    );
+  });
+  return new Hunts(hunts);
+}
 
 const Hunts = ScavengeResource.extend({
   path: "/hunts",

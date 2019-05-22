@@ -12,11 +12,8 @@ import {
   withStyles
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import LockIcon from "@material-ui/icons/Lock";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
 import classnames from "classnames";
-import * as hunt from "../../models/hunts";
-import * as loc from "../../utils/loc";
+import { Hunt } from "../../models";
 
 const styles = theme => ({
   card: {
@@ -53,26 +50,20 @@ const styles = theme => ({
 });
 
 function HuntCard(props) {
-  const { classes, huntInfo } = props;
-  const ResolvedLockIcon = hunt.isOpen(huntInfo) ? (
-    <LockOpenIcon />
-  ) : (
-    <LockIcon />
-  );
+  const { classes, hunt } = props;
 
   const [isExpanded, setExpanded] = useState(false);
 
   return (
     <Card className={classes.card} square={true} elevation={0}>
       <CardHeader
-        avatar={<IconButton disabled>{ResolvedLockIcon}</IconButton>}
         classes={{
           action: classes.centerIcon,
           title: classes.title,
           subheader: classes.subheader
         }}
-        title={hunt.name(huntInfo)}
-        subheader={hunt.starts(huntInfo).toDateString()}
+        title={hunt.name}
+        subheader={hunt.starts.toDateString()}
         action={
           <IconButton
             className={classnames(classes.expand, {
@@ -92,7 +83,7 @@ function HuntCard(props) {
             <div className={classes.partnerFieldsContainer}>
               <TextField
                 className={classes.textField}
-                defaultValue={hunt.starts(huntInfo).toLocaleTimeString("en-US")}
+                defaultValue={hunt.starts.toLocaleTimeString("en-US")}
                 label="Start Time"
                 id="start-time-read-only"
                 InputProps={{
@@ -103,7 +94,7 @@ function HuntCard(props) {
               />
               <TextField
                 className={classes.textField}
-                defaultValue={hunt.ends(huntInfo).toLocaleTimeString("en-US")}
+                defaultValue={hunt.ends.toLocaleTimeString("en-US")}
                 label="End Time"
                 id="end-time-read-only"
                 InputProps={{
@@ -116,9 +107,7 @@ function HuntCard(props) {
             <div className={classes.partnerFieldsContainer}>
               <TextField
                 className={classes.textField}
-                defaultValue={`${hunt.numTeams(huntInfo)}/${hunt.maxTeams(
-                  huntInfo
-                )}`}
+                defaultValue={`${hunt.numTeams}/${hunt.maxTeams}`}
                 label="Teams"
                 id="team-number-read-only"
                 InputProps={{
@@ -129,7 +118,7 @@ function HuntCard(props) {
               />
               <TextField
                 className={classes.textField}
-                defaultValue={hunt.items(huntInfo).length}
+                defaultValue={hunt.items.array.length}
                 label="Items"
                 id="hunt-item-number-read-only"
                 InputProps={{
@@ -141,7 +130,7 @@ function HuntCard(props) {
             </div>
             <TextField
               className={classes.textField}
-              defaultValue={loc.name(hunt.location(huntInfo))}
+              defaultValue={hunt.locationName}
               label="Location"
               id="location-read-only"
               InputProps={{
@@ -160,19 +149,7 @@ function HuntCard(props) {
 
 HuntCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  huntInfo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    startTime: PropTypes.instanceOf(Date).isRequired,
-    endTime: PropTypes.instanceOf(Date).isRequired,
-    maxTeams: PropTypes.number.isRequired,
-    numTeams: PropTypes.number.isRequired,
-    items: PropTypes.array.isRequired,
-    location: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coords: PropTypes.object.isRequired
-    }).isRequired
-  }).isRequired
+  hunt: PropTypes.instanceOf(Hunt).isRequired
 };
 
 export default withStyles(styles)(HuntCard);

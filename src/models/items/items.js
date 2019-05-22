@@ -3,6 +3,10 @@ import Item from "../item";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
+export function getItemsFromResponse(data) {
+  return new Items(data.map(d => new Item(d)));
+}
+
 const Items = ScavengeResource.extend({
   path: "/hunts/{huntID}/items",
 

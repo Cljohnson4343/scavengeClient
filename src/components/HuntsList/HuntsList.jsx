@@ -7,8 +7,9 @@ import HuntsFilters from "./HuntsFilters";
 import LocationContext from "../Location";
 import * as utils from "./HuntsFilters";
 import { compose } from "../../utils";
+import { Hunts } from "../../models";
 
-function Hunts(props) {
+function HuntsList(props) {
   const { hunts } = props;
 
   const defaultSortFn = () => -1;
@@ -34,18 +35,18 @@ function Hunts(props) {
       sort={<HuntsSortMenu handleChangeSort={setSortFn} />}
       filters={<HuntsFilters filters={filters} setFilters={setFilters} />}
     >
-      {hunts
+      {hunts.array
         .filter(filterFn)
         .sort(sortFn)
-        .map(item => (
-          <HuntCard key={item.name} huntInfo={item} />
-        ))}
+        .map(hunt => {
+          return <HuntCard key={hunt.name} hunt={hunt} />;
+        })}
     </Cards>
   );
 }
 
-Hunts.propTypes = {
-  hunts: PropTypes.array.isRequired
+HuntsList.propTypes = {
+  hunts: PropTypes.instanceOf(Hunts).isRequired
 };
 
-export default Hunts;
+export default HuntsList;

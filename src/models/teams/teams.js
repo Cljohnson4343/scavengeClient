@@ -4,6 +4,10 @@ import Container from "../container";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
+export function getTeamsFromResponse(data) {
+  return new Teams(data.map(d => new Team(d)));
+}
+
 const Teams = ScavengeResource.extend({
   path: "/teams",
 

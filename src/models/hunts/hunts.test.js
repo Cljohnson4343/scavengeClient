@@ -207,7 +207,7 @@ describe("hunts", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Hunts()),
+        model: addTestModel(new Hunts([])),
         expected: {
           url: BASE_PATH + "/hunts/",
           method: "GET"

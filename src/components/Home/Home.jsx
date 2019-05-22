@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import Hunts from "../Hunts";
-import hunts from "../../HuntInfoData";
+import HuntsList from "../HuntsList";
 import Fab from "../Fab";
 import AddIcon from "@material-ui/icons/Add";
+import { Hunts } from "../../models";
+import { getHuntsFromResponse } from "../../models";
 
 const styles = {
   page: {
@@ -18,9 +19,18 @@ const styles = {
 function Home(props) {
   const { classes, navigate } = props;
 
+  const [hunts, setHunts] = useState(new Hunts([]));
+
+  useEffect(() => {
+    new Hunts().apiRetrieveHunts().then(response => {
+      let hunts = getHuntsFromResponse(response.data);
+      setHunts(hunts);
+    });
+  }, []);
+
   return (
     <div className={classes.page}>
-      <Hunts hunts={hunts} />
+      <HuntsList hunts={hunts} />
       <Fab icon={<AddIcon />} onClick={e => navigate("/hunts/create")} />
     </div>
   );

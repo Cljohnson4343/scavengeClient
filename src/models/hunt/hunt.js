@@ -170,4 +170,10 @@ Object.defineProperty(Hunt.prototype, "copy", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "locationName", {
+  get: function() {
+    return this.data.locationName;
+  }
+});
+
 export default Hunt;
