@@ -31,7 +31,8 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    maxHeight: "48px"
   },
   username: {
     alignSelf: "center"

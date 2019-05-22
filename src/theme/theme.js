@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
@@ -17,6 +18,7 @@ const theme = createMuiTheme({
       main: grey[200]
     },
     divider: grey[400],
+    link: blue[500],
     primary: {
       background: green[50],
       light: green[300],
@@ -33,10 +35,10 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-    fontSize: 10,
-    fontWeightLight: 100,
-    fontWeightMedium: 200,
-    fontWeightRegular: 300
+    fontSize: 12,
+    fontWeightLight: 200,
+    fontWeightMedium: 300,
+    fontWeightRegular: 400
   },
   shape: {
     borderRadius: 6

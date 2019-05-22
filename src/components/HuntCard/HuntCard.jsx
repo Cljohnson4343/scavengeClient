@@ -7,11 +7,12 @@ import {
   CardHeader,
   Collapse,
   IconButton,
+  Link,
   TextField,
   withStyles
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import classnames from "classnames";
+import classNames from "classnames";
 import { Hunt } from "../../models";
 
 const styles = theme => ({
@@ -51,23 +52,28 @@ const styles = theme => ({
 });
 
 function HuntCard(props) {
-  const { classes, hunt } = props;
+  const { classes, className, hunt } = props;
 
   const [isExpanded, setExpanded] = useState(false);
 
   return (
-    <Card className={classes.card} square={false} raised={true} elevation={1}>
+    <Card
+      className={classNames(classes.card, className)}
+      square={false}
+      raised={true}
+      elevation={1}
+    >
       <CardHeader
         classes={{
           action: classes.centerIcon,
           title: classes.title,
           subheader: classes.subheader
         }}
-        title={hunt.name}
+        title={<Link onClick={e => {}}>{hunt.name}</Link>}
         subheader={hunt.starts.toDateString()}
         action={
           <IconButton
-            className={classnames(classes.expand, {
+            className={classNames(classes.expand, {
               [classes.expandOpen]: isExpanded
             })}
             onClick={() => setExpanded(!isExpanded)}

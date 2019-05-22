@@ -8,14 +8,17 @@ import HuntsTabBar from "../HuntsTabBar";
 import { Hunts } from "../../models";
 import { getHuntsFromResponse } from "../../models";
 
-const styles = {
+const styles = theme => ({
+  list: {
+    marginTop: theme.spacing(1)
+  },
   page: {
+    boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - 51px - 56px - 32px)`,
-    boxSizing: "border-box"
+    marginBottom: theme.spacing(2)
   }
-};
+});
 
 const filterMap = {
   upcoming: function(hunt) {
@@ -46,7 +49,12 @@ function Home(props) {
   return (
     <div className={classes.page}>
       <HuntsTabBar setValue={setValue} value={value} />
-      <HuntsList hunts={hunts} filterFn={filterMap[value]} />
+      <HuntsList
+        className={classes.list}
+        hunts={hunts}
+        filterFn={filterMap[value]}
+        tab={value}
+      />
       <Fab icon={<AddIcon />} onClick={e => navigate("/hunts/create")} />
     </div>
   );

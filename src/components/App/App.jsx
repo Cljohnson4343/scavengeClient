@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { Router } from "@reach/router";
-import AppBar from "../AppBar";
 import { withStyles } from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
+import { navigate } from "@reach/router";
+
+import AppBar from "../AppBar";
+import CreateHunt from "../CreateHunt";
+import Home from "../Home";
+import Location from "../Location";
 import MuiTheme from "../../theme";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
-import Home from "../Home";
-import CreateHunt from "../CreateHunt";
-import Location from "../Location";
-import grey from "@material-ui/core/colors/grey";
 import { User } from "../../models";
-import { navigate } from "@reach/router";
 import Footer from "../Footer";
 
 const styles = {
@@ -38,8 +39,6 @@ function App(props) {
         navigate("/signup");
       });
   }, []);
-
-  console.log(`${user ? user.username : null}`);
 
   return (
     <MuiThemeProvider theme={MuiTheme}>
