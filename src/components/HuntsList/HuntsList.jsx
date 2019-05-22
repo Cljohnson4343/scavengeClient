@@ -1,52 +1,38 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core";
 import HuntCard from "../HuntCard";
-import Cards from "../Cards";
-import HuntsSortMenu from "./HuntsSortMenu";
-import HuntsFilters from "./HuntsFilters";
-import LocationContext from "../Location";
-import * as utils from "./HuntsFilters";
-import { compose } from "../../utils";
 import { Hunts } from "../../models";
 
+const styles = theme => ({
+  container: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  title: {
+    color: theme.palette.primary.dark,
+    fontSize: theme.typography.fontSize * 2
+  }
+});
+
 function HuntsList(props) {
-  const { hunts } = props;
-
-  const defaultSortFn = () => -1;
-  const [sortFn, setSortFn] = useState(() => defaultSortFn);
-  const location = useContext(LocationContext);
-
-  const [filters, setFilters] = useState([]);
-  // make sure all of the filter functions are wrapped and the ones that
-  // need to be bound with a location are bound
-  const arrayOfFilterFns = filters.map(filterObj => {
-    if (utils.needsBinding(filterObj)) {
-      return utils.filterWrapper(filterObj.filterFunction.bind(null, location));
-    }
-
-    return utils.filterWrapper(filterObj.filterFunction);
-  });
-  // compose all filter functions
-  const filterFn = compose(...arrayOfFilterFns);
+  const { classes, filterFn, hunts } = props;
 
   return (
-    <Cards
-      title="Hunts"
-      sort={<HuntsSortMenu handleChangeSort={setSortFn} />}
-      filters={<HuntsFilters filters={filters} setFilters={setFilters} />}
-    >
+    <div className={classes.container}>
       {hunts.array
-        .filter(filterFn)
-        .sort(sortFn)
+        .filter(hunt => filterFn(hunt))
         .map(hunt => {
           return <HuntCard key={hunt.name} hunt={hunt} />;
         })}
-    </Cards>
+    </div>
   );
 }
 
 HuntsList.propTypes = {
+  classes: PropTypes.object.isRequired,
+  filterFn: PropTypes.func.isRequired,
   hunts: PropTypes.instanceOf(Hunts).isRequired
 };
 
-export default HuntsList;
+export default withStyles(styles)(HuntsList);

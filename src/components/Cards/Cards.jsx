@@ -4,28 +4,25 @@ import { withStyles, Paper } from "@material-ui/core";
 
 const styles = theme => ({
   container: {
+    boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    paddingTop: theme.spacing(1) * 2,
-    margin: `0 ${theme.spacing(1)}px`,
     height: "100%",
-    boxSizing: "border-box"
+    margin: `0 ${theme.spacing(1)}px`,
+    paddingTop: theme.spacing(1) * 2
   },
   itemsContainer: {
     display: "flex",
     flexDirection: "column",
     flex: "0 1 auto",
-    overflow: "scroll",
-    borderStyle: "solid",
-    borderColor: theme.palette.divider,
-    borderWidth: "thin",
-    borderRadius: theme.shape.borderRadius
+    overflow: "scroll"
   },
   itemsHeaderContainer: {
+    backgroundColor: theme.palette.primary.background,
     display: "flex",
+    flex: "0 0 auto",
     flexDirection: "column",
     justifyContent: "space-between",
-    flex: "0 0 auto",
     paddingLeft: theme.spacing(1)
   },
   headerFirstLine: {
@@ -35,7 +32,8 @@ const styles = theme => ({
   filtersContainer: {
     display: "flex",
     marginBottom: theme.spacing(1)
-  }
+  },
+  title: {}
 });
 
 function Cards(props) {
@@ -49,7 +47,7 @@ function Cards(props) {
         square={true}
       >
         <div className={classes.headerFirstLine}>
-          <strong>{title}</strong>
+          <strong className={classes.title}>{title}</strong>
           {Boolean(sort) && sort}
         </div>
         <div className={classes.filtersContainer}>

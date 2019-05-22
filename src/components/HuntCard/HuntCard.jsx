@@ -6,7 +6,6 @@ import {
   CardContent,
   CardHeader,
   Collapse,
-  Divider,
   IconButton,
   TextField,
   withStyles
@@ -17,7 +16,8 @@ import { Hunt } from "../../models";
 
 const styles = theme => ({
   card: {
-    flex: "0 0 auto"
+    flex: "0 0 auto",
+    margin: theme.spacing(1)
   },
   centerIcon: {
     alignSelf: "stretch"
@@ -40,7 +40,8 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   title: {
-    fontSize: "0.7rem",
+    fontSize: "0.8rem",
+    fontWeight: theme.typography.fontWeightRegular * 1.5,
     lineHeight: "1.2"
   },
   subheader: {
@@ -55,7 +56,7 @@ function HuntCard(props) {
   const [isExpanded, setExpanded] = useState(false);
 
   return (
-    <Card className={classes.card} square={true} elevation={0}>
+    <Card className={classes.card} square={false} raised={true} elevation={1}>
       <CardHeader
         classes={{
           action: classes.centerIcon,
@@ -142,7 +143,6 @@ function HuntCard(props) {
           </div>
         </CardContent>
       </Collapse>
-      <Divider variant="inset" />
     </Card>
   );
 }

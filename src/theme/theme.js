@@ -1,8 +1,8 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
+import lime from "@material-ui/core/colors/lime";
 
 const theme = createMuiTheme({
   palette: {
@@ -10,14 +10,21 @@ const theme = createMuiTheme({
       errorField: red[100],
       field: green[50],
       form: grey[50],
-      main: grey[300]
+      main: grey[200]
     },
     divider: grey[400],
     primary: {
+      background: green[50],
       light: green[300],
       main: green[500],
       dark: green[700],
-      contrastText: blueGrey[50]
+      contrastText: "#fafafa"
+    },
+    secondary: {
+      light: lime[300],
+      main: lime[500],
+      dark: lime[700],
+      contrastText: "#fafafa"
     }
   },
   typography: {
