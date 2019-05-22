@@ -38,7 +38,7 @@ function SignIn(props) {
         <ScavengeInput
           id="username"
           label="Username"
-          onChange={e => setUsernameInput(e.currentTarget.value)}
+          onChange={setUsernameInput}
           value={usernameInput}
           required
         />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, withStyles } from "@material-ui/core";
+import { Button, TextField, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
 import ScavengeInput from "../ScavengeInput";
@@ -80,14 +80,14 @@ function SignUp(props) {
             className={classes.input}
             id="first_name"
             label="First Name"
-            onChange={e => setFirstNameInput(e.currentTarget.value)}
+            onChange={setFirstNameInput}
             value={firstNameInput}
             required
           />
           <ScavengeInput
             id="last_name"
             label="Last Name"
-            onChange={e => setLastNameInput(e.currentTarget.value)}
+            onChange={setFirstNameInput}
             value={lastNameInput}
             required
           />
@@ -96,7 +96,7 @@ function SignUp(props) {
           <ScavengeInput
             id="username"
             label="Username"
-            onChange={e => setUsernameInput(e.currentTarget.value)}
+            onChange={setFirstNameInput}
             value={usernameInput}
             required
           />
@@ -104,7 +104,7 @@ function SignUp(props) {
             id="email"
             label="Email"
             type="email"
-            onChange={e => setEmailInput(e.currentTarget.value)}
+            onChange={setFirstNameInput}
             value={emailInput}
             required
           />
