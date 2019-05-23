@@ -14,6 +14,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import classNames from "classnames";
 import { Hunt } from "../../models";
+import { navigate } from "@reach/router";
 
 const styles = theme => ({
   card: {
@@ -69,7 +70,9 @@ function HuntCard(props) {
           title: classes.title,
           subheader: classes.subheader
         }}
-        title={<Link onClick={e => {}}>{hunt.name}</Link>}
+        title={
+          <Link onClick={e => navigate(`/cj_43/smallville`)}>{hunt.name}</Link>
+        }
         subheader={hunt.starts.toDateString()}
         action={
           <IconButton
