@@ -4,6 +4,7 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getItemsFromResponse(data) {
+  data = data ? data : [];
   return new Items(data.map(d => new Item(d)));
 }
 

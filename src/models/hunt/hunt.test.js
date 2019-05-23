@@ -37,45 +37,45 @@ const hs = {
     maxTeams: 4,
     startTime: new Date(new Date().getTime() + hour),
     endTime: new Date(new Date().getTime() + hour * 3),
-    items: new Items([i[0], i[1]]),
+    items: [i[0], i[1]],
     creatorID: 32,
     latitude: 43.43,
     longitude: 23.23,
     locationName: "locale",
     createdAt: 21,
     huntID: 2,
-    players: new Players([ps.dan, ps.pat]),
-    teams: new Teams([afc.fins, afc.pats])
+    players: [ps.dan, ps.pat],
+    teams: [afc.fins, afc.pats]
   },
   xmas: {
     huntName: "xmas hunt",
     maxTeams: 3,
     startTime: new Date(new Date().getTime() + 2 * hour),
     endTime: new Date(new Date().getTime() + hour * 6),
-    items: new Items([i[3], i[2]]),
-    players: new Players([ps.tom, ps.wes]),
+    items: [i[3], i[2]],
+    players: [ps.tom, ps.wes],
     creatorID: 32,
     createdAt: 21,
     latitude: 43.43,
     longitude: 23.23,
     locationName: "locale",
     huntID: 2,
-    teams: new Teams([afc.fins, afc.jets])
+    teams: [afc.fins, afc.jets]
   },
   bball: {
     huntName: "bball hunt",
     maxTeams: 8,
     startTime: new Date(new Date().getTime() + 11 * hour),
     endTime: new Date(new Date().getTime() + hour * 19),
-    items: new Items([i[3], i[2]]),
-    players: new Players([ps.tom, ps.wes]),
+    items: [i[3], i[2]],
+    players: [ps.tom, ps.wes],
     creatorID: 32,
     createdAt: 21,
     latitude: 43.43,
     longitude: 23.23,
     locationName: "locale",
     huntID: 2,
-    teams: new Teams([afc.pats, afc.bills])
+    teams: [afc.pats, afc.bills]
   }
 };
 
@@ -89,10 +89,6 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas)
       }
     ];
 
@@ -112,17 +108,12 @@ describe("hunt", () => {
       {
         name: "default case",
         args: null,
-        expected: ""
+        expected: undefined
       },
       {
         name: "valid value",
         args: hs.football,
         expected: hs.football.huntName
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas),
-        expected: hs.xmas.huntName
       }
     ];
 
@@ -132,7 +123,6 @@ describe("hunt", () => {
 
         const result = hunt.name;
 
-        expect(typeof result === "string").toBeTruthy();
         expect(result).toStrictEqual(c.expected);
       });
     }
@@ -142,17 +132,13 @@ describe("hunt", () => {
     const cases = [
       {
         name: "default case",
-        args: null
+        args: null,
+        expected: undefined
       },
       {
         name: "valid value",
         args: hs.football,
         expected: hs.football.startTime
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas),
-        expected: hs.xmas.startTime
       }
     ];
 
@@ -162,10 +148,7 @@ describe("hunt", () => {
 
         const result = hunt.starts;
 
-        expect(result instanceof Date).toBeTruthy();
-        if (c.expected) {
-          expect(result.getTime()).toStrictEqual(c.expected.getTime());
-        }
+        expect(result).toStrictEqual(c.expected);
       });
     }
   });
@@ -174,17 +157,13 @@ describe("hunt", () => {
     const cases = [
       {
         name: "default case",
-        args: null
+        args: null,
+        expected: undefined
       },
       {
         name: "valid value",
         args: hs.football,
         expected: hs.football.endTime
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas),
-        expected: hs.xmas.endTime
       }
     ];
 
@@ -194,10 +173,7 @@ describe("hunt", () => {
 
         const result = hunt.ends;
 
-        expect(result instanceof Date).toBeTruthy();
-        if (c.expected) {
-          expect(result.getTime()).toStrictEqual(c.expected.getTime());
-        }
+        expect(result).toStrictEqual(c.expected);
       });
     }
   });
@@ -206,17 +182,13 @@ describe("hunt", () => {
     const cases = [
       {
         name: "default case",
-        args: null
+        args: null,
+        expected: undefined
       },
       {
         name: "valid value",
         args: hs.football,
         expected: hs.football.maxTeams
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas),
-        expected: hs.xmas.maxTeams
       }
     ];
 
@@ -226,10 +198,7 @@ describe("hunt", () => {
 
         const result = hunt.maxTeams;
 
-        expect(typeof result === "number").toBeTruthy();
-        if (c.expected) {
-          expect(result).toStrictEqual(c.expected);
-        }
+        expect(result).toStrictEqual(c.expected);
       });
     }
   });
@@ -244,12 +213,7 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football,
-        expected: hs.football.teams.array.length
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas),
-        expected: hs.xmas.teams.array.length
+        expected: hs.football.teams.length
       }
     ];
 
@@ -259,10 +223,7 @@ describe("hunt", () => {
 
         const result = hunt.numTeams;
 
-        expect(typeof result === "number").toBeTruthy();
-        if (c.expected) {
-          expect(result).toStrictEqual(c.expected);
-        }
+        expect(result).toStrictEqual(c.expected);
       });
     }
   });
@@ -276,10 +237,6 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas)
       }
     ];
 
@@ -303,10 +260,6 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas)
       }
     ];
 
@@ -330,10 +283,6 @@ describe("hunt", () => {
       {
         name: "valid value",
         args: hs.football
-      },
-      {
-        name: "hunt value",
-        args: new Hunt(hs.xmas)
       }
     ];
 
@@ -367,21 +316,17 @@ describe("hunt", () => {
       },
       {
         name: "starts in an hour",
-        args: new Hunt(
-          Object.assign({}, hs.xmas, {
-            startTime: new Date(new Date().getTime() + hour)
-          })
-        ),
+        args: Object.assign({}, hs.xmas, {
+          startTime: new Date(new Date().getTime() + hour)
+        }),
         expected: false
       },
       {
         name: "hunt value that has already ended",
-        args: new Hunt(
-          Object.assign({}, hs.xmas, {
-            startTime: new Date(new Date().getTime() - hour),
-            endTime: new Date(new Date().getTime() - 2 * hour)
-          })
-        ),
+        args: Object.assign({}, hs.xmas, {
+          startTime: new Date(new Date().getTime() - hour),
+          endTime: new Date(new Date().getTime() - 2 * hour)
+        }),
         expected: false
       }
     ];
@@ -402,7 +347,7 @@ describe("hunt", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Hunt({}, 43)),
+        model: addTestModel(new Hunt({ huntID: 43 })),
         expected: {
           url: BASE_PATH + "/hunts/43",
           method: "GET"
@@ -428,7 +373,7 @@ describe("hunt", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Hunt({}, 43)),
+        model: addTestModel(new Hunt(hs.football)),
         expected: {
           url: BASE_PATH + "/hunts/",
           method: "POST"
@@ -461,7 +406,7 @@ describe("hunt", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Hunt({}, 43)),
+        model: addTestModel(new Hunt({ huntID: 43 })),
         expected: {
           url: BASE_PATH + "/hunts/43",
           method: "DELETE"
@@ -487,7 +432,7 @@ describe("hunt", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Hunt({}, 43)),
+        model: addTestModel(new Hunt({ huntID: 43 })),
         expected: {
           url: BASE_PATH + "/hunts/43",
           method: "PATCH"

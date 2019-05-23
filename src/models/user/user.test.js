@@ -1,11 +1,7 @@
 import User from "./user";
 import ScavengeResource from "../scavengeResource";
 import { BASE_PATH } from "../../config";
-import {
-  addTestModel,
-  getRandomEmail,
-  getRandomUsername
-} from "../../testUtils";
+import { addTestModel } from "../../testUtils";
 
 describe("user", () => {
   const testData = {

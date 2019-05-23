@@ -96,6 +96,12 @@ const User = ScavengeResource.extend({
   }
 });
 
+Object.defineProperty(User.prototype, "userID", {
+  get: function() {
+    return this.data.userID;
+  }
+});
+
 Object.defineProperty(User.prototype, "username", {
   get: function() {
     return this.data.username;

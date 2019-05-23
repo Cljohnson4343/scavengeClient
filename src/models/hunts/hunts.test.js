@@ -1,15 +1,6 @@
 /* eslint-disable no-loop-func */
 import ScavengeResource from "../scavengeResource";
-import {
-  Hunt,
-  Hunts,
-  Item,
-  Items,
-  Team,
-  Teams,
-  Player,
-  Players
-} from "../../models";
+import { Hunt, Hunts, Item, Team, Player } from "../../models";
 import { BASE_PATH } from "../../config";
 import { addTestModel } from "../../testUtils";
 
@@ -46,27 +37,27 @@ const hs = {
     maxTeams: 4,
     startTime: new Date(new Date().getTime() + hour),
     endTime: new Date(new Date().getTime() + hour * 3),
-    items: new Items([i.santa, i.helmet]),
-    players: new Players([ps.dan, ps.pat]),
-    teams: new Teams([afc.fins, afc.pats])
+    items: [i.santa, i.helmet],
+    players: [ps.dan, ps.pat],
+    teams: [afc.fins, afc.pats]
   }),
   xmas: new Hunt({
     huntName: "xmas hunt",
     maxTeams: 3,
     startTime: new Date(new Date().getTime() + 2 * hour),
     endTime: new Date(new Date().getTime() + hour * 6),
-    items: new Items([i.tree, i.star]),
-    players: new Players([ps.tom, ps.wes]),
-    teams: new Teams([afc.fins, afc.jets])
+    items: [i.tree, i.star],
+    players: [ps.tom, ps.wes],
+    teams: [afc.fins, afc.jets]
   }),
   bball: new Hunt({
     huntName: "bball hunt",
     maxTeams: 8,
     startTime: new Date(new Date().getTime() + 11 * hour),
     endTime: new Date(new Date().getTime() + hour * 19),
-    items: new Items([i.grinch, i.cleat]),
-    players: new Players([ps.tom, ps.wes]),
-    teams: new Teams([afc.pats, afc.bills])
+    items: [i.grinch, i.cleat],
+    players: [ps.tom, ps.wes],
+    teams: [afc.pats, afc.bills]
   })
 };
 

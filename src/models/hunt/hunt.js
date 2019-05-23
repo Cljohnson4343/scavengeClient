@@ -1,6 +1,6 @@
-import Items from "../items";
-import Players from "../players";
-import Teams from "../teams";
+import { getItemsFromResponse } from "../items";
+import { getPlayersFromResponse } from "../players";
+import { getTeamsFromResponse } from "../teams";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties, deleteProperties } from "../../utils";
@@ -8,34 +8,18 @@ import { getDataProperties, deleteProperties } from "../../utils";
 const Hunt = ScavengeResource.extend({
   path: "/hunts",
 
-  constructor: function(hunt = {}, huntID) {
+  constructor: function(hunt) {
     if (!(this instanceof Hunt)) {
       return new Hunt(...[].slice.call(arguments));
     }
 
-    if (!Boolean(hunt)) {
-      hunt = {};
-    }
+    hunt = Boolean(hunt) ? hunt : {};
 
-    let data = hunt instanceof Hunt ? hunt.data : hunt ? hunt : {};
+    this.data = Object.assign({}, hunt);
 
-    this.data = {
-      huntID: huntID,
-      huntName: data.huntName ? data.huntName : "",
-      maxTeams: data.maxTeams ? data.maxTeams : 2,
-      startTime: data.startTime ? data.startTime : new Date(),
-      endTime: data.endTime ? data.endTime : new Date()
-    };
-
-    if (hunt instanceof Hunt) {
-      this._items = new Items(hunt.items.array);
-      this._players = new Players(hunt.players.array);
-      this._teams = new Teams(hunt.teams.array);
-    } else {
-      this._items = hunt.items ? hunt.items : new Items();
-      this._players = hunt.players ? hunt.players : new Players();
-      this._teams = hunt.teams ? hunt.teams : new Teams();
-    }
+    this.data.items = getItemsFromResponse(hunt.items);
+    this.data.teams = getTeamsFromResponse(hunt.teams);
+    this.data.players = getPlayersFromResponse(hunt.players);
 
     ScavengeResource.call(this);
   },
@@ -98,19 +82,19 @@ Object.defineProperty(Hunt.prototype, "numTeams", {
 
 Object.defineProperty(Hunt.prototype, "items", {
   get: function() {
-    return this._items;
+    return this.data.items;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "teams", {
   get: function() {
-    return this._teams;
+    return this.data.teams;
   }
 });
 
 Object.defineProperty(Hunt.prototype, "players", {
   get: function() {
-    return this._players;
+    return this.data.players;
   }
 });
 
@@ -166,7 +150,7 @@ Object.defineProperty(Hunt.prototype, "equals", {
 
 Object.defineProperty(Hunt.prototype, "copy", {
   value: function() {
-    return new Hunt(this, this.huntID);
+    return Object.assign(new Hunt(), this);
   }
 });
 

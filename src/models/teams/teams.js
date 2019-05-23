@@ -5,6 +5,7 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getTeamsFromResponse(data) {
+  data = data ? data : [];
   return new Teams(data.map(d => new Team(d)));
 }
 
