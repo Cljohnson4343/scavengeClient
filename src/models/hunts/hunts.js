@@ -10,9 +10,7 @@ export function getHuntsFromResponse(data) {
     return new Hunt(
       Object.assign({}, d, {
         startTime: new Date(d.startTime),
-        endTime: new Date(d.endTime),
-        items: getItemsFromResponse(d.items),
-        teams: getTeamsFromResponse(d.teams)
+        endTime: new Date(d.endTime)
       })
     );
   });

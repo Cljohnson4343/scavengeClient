@@ -42,6 +42,7 @@ function Home(props) {
   useEffect(() => {
     new Hunts().apiRetrieveHunts().then(response => {
       let hunts = getHuntsFromResponse(response.data);
+      console.dir(response.data);
       setHunts(hunts);
     });
   }, []);
