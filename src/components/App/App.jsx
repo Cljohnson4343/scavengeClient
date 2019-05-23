@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { Router } from "@reach/router";
 import { withStyles } from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
 import { navigate } from "@reach/router";
 
 import AppBar from "../AppBar";
@@ -15,6 +14,7 @@ import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import { User } from "../../models";
 import Footer from "../Footer";
+import Notifications from "../Notifications";
 
 const styles = theme => ({
   pageWrapper: {
@@ -49,6 +49,7 @@ const ThemedApp = withStyles(styles)(function(props) {
           <Home path="/" />
           <CreateHunt path="/hunts/create" />
           <Hunt path="/:username/:huntName" />
+          <Notifications path="/:username/notifications" />
           <SignIn path="/signin" setUser={setUser} user={user} />
           <SignUp path="/signup" setUser={setUser} user={user} />
         </Router>
@@ -59,8 +60,6 @@ const ThemedApp = withStyles(styles)(function(props) {
 });
 
 export default function App(props) {
-  const { classes } = props;
-
   return (
     <MuiThemeProvider theme={MuiTheme}>
       <ThemedApp />

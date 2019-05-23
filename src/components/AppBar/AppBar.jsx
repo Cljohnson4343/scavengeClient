@@ -60,7 +60,11 @@ function ScavengeAppBar(props) {
   let renderProps;
   if (isLoggedIn) {
     renderProps = [
-      <Button className={classes.button} key="icon">
+      <Button
+        className={classes.button}
+        key="icon"
+        onClick={e => navigate(`/${user.username}/notifications`)}
+      >
         <NotificationIcon fontSize="large" />
       </Button>
     ];

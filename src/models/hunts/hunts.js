@@ -2,8 +2,6 @@ import Container from "../container";
 import Hunt from "../hunt";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
-import { getItemsFromResponse } from "../items";
-import { getTeamsFromResponse } from "../teams";
 
 export function getHuntsFromResponse(data) {
   let hunts = data.map(d => {
