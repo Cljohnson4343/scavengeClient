@@ -5,7 +5,7 @@ import HuntsList from "../HuntsList";
 import Fab from "../Fab";
 import AddIcon from "@material-ui/icons/Add";
 import HuntsTabBar from "../HuntsTabBar";
-import { Hunts } from "../../models";
+import { Hunts, User } from "../../models";
 import { getHuntsFromResponse } from "../../models";
 
 const styles = theme => ({
@@ -34,16 +34,20 @@ const filterMap = {
 };
 
 function Home(props) {
-  const { classes, navigate } = props;
+  const { classes, navigate, user } = props;
 
   const [hunts, setHunts] = useState(new Hunts([]));
   const [value, setValue] = useState("upcoming");
 
   useEffect(() => {
-    new Hunts().apiRetrieveHunts().then(response => {
-      let hunts = getHuntsFromResponse(response.data);
-      setHunts(hunts);
-    });
+    if (user) {
+      new Hunts()
+        .apiRetrieveHunts({ params: { userID: user.userID } })
+        .then(response => {
+          let hunts = getHuntsFromResponse(response.data);
+          setHunts(hunts);
+        });
+    }
   }, []);
 
   return (
@@ -61,7 +65,8 @@ function Home(props) {
 }
 
 Home.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.instanceOf(User)
 };
 
 export default withStyles(styles)(Home);

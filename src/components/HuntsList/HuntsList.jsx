@@ -11,23 +11,25 @@ import HuntCard from "../HuntCard";
 import { Hunts } from "../../models";
 import classNames from "classnames";
 import { navigate } from "@reach/router";
+import CrosshairIcon from "@material-ui/icons/GpsFixed";
+import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
   card: {
     flex: "0 0 auto",
     margin: theme.spacing(1)
   },
-  container: {
+  constainer: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  listContainer: {
     display: "flex",
     flexDirection: "column"
   },
   linkFont: {
     color: theme.palette.link,
     fontWeight: theme.typography.fontWeightRegular
-  },
-  title: {
-    color: theme.palette.primary.dark,
-    fontSize: theme.typography.fontSize * 2
   }
 });
 
@@ -62,7 +64,12 @@ function HuntsList(props) {
   }
 
   return (
-    <div className={classNames(classes.container, className)}>{cards}</div>
+    <div className={classes.container}>
+      <SectionHeader Icon={CrosshairIcon}>Hunts</SectionHeader>
+      <div className={classNames(classes.listContainer, className)}>
+        {cards}
+      </div>
+    </div>
   );
 }
 

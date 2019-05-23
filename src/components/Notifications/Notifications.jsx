@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Divider, Typography, withStyles } from "@material-ui/core";
-import NotificationBar from "../NotificationBar";
+import SectionHeader from "../SectionHeader";
+import MailIcon from "@material-ui/icons/Mail";
 
 const styles = theme => ({
   body: {
@@ -19,8 +20,7 @@ function Notifications(props) {
 
   return (
     <div className={classes.container}>
-      <NotificationBar />
-      <Divider variant="middle" />
+      <SectionHeader Icon={MailIcon}>Invitations</SectionHeader>
       <Typography className={classes.body} color="textSecondary" variant="h5">
         No invitations.
       </Typography>

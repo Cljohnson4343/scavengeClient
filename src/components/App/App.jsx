@@ -46,7 +46,7 @@ const ThemedApp = withStyles(styles)(function(props) {
       <div className={classes.pageWrapper}>
         <AppBar user={user} setUser={setUser} />
         <Router>
-          <Home path="/" />
+          <Home path="/" user={user} />
           <CreateHunt path="/hunts/create" />
           <Hunt path="/:username/:huntName" />
           <Notifications path="/:username/notifications" />
