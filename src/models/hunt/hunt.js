@@ -1,6 +1,6 @@
-import { getItemsFromResponse } from "../items";
-import { getPlayersFromResponse } from "../players";
-import { getTeamsFromResponse } from "../teams";
+import Items, { getItemsFromResponse } from "../items";
+import Players, { getPlayersFromResponse } from "../players";
+import Teams, { getTeamsFromResponse } from "../teams";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties, deleteProperties } from "../../utils";
@@ -17,9 +17,21 @@ const Hunt = ScavengeResource.extend({
 
     this.data = Object.assign({}, hunt);
 
-    this.data.items = getItemsFromResponse(hunt.items);
-    this.data.teams = getTeamsFromResponse(hunt.teams);
-    this.data.players = getPlayersFromResponse(hunt.players);
+    if (!(hunt.items instanceof Items)) {
+      this.data.items = getItemsFromResponse(hunt.items);
+    } else {
+      this.data.items = hunt.items.copy();
+    }
+    if (!(hunt.teams instanceof Teams)) {
+      this.data.teams = getTeamsFromResponse(hunt.teams);
+    } else {
+      this.data.teams = hunt.teams.copy();
+    }
+    if (!(hunt.players instanceof Players)) {
+      this.data.players = getPlayersFromResponse(hunt.players);
+    } else {
+      this.data.players = hunt.players.copy();
+    }
 
     ScavengeResource.call(this);
   },
