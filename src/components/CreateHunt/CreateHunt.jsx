@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
+import { Paper, withStyles } from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
 import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
@@ -11,6 +11,8 @@ import reducer, { initialState } from "./reducer";
 import { CreateHuntFormError } from "./error";
 import { Hunt } from "../../models";
 import * as actions from "./actions";
+import SectionHeader from "../SectionHeader";
+import CrosshairIcon from "@material-ui/icons/GpsFixed";
 
 const styles = theme => ({
   button: {
@@ -18,18 +20,10 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   formContainer: {
-    backgroundColor: "inherit",
+    backgroundColor: theme.palette.background.form,
     display: "flex",
     flexDirection: "column",
-    marginTop: theme.spacing(2)
-  },
-  headerContainer: {
-    backgroundColor: theme.palette.primary.main,
-    display: "flex",
-    height: theme.barHeight,
-    justifyContent: "center",
-    alignContent: "center",
-    width: "100%"
+    margin: theme.spacing(1)
   },
   heading: {
     alignSelf: "center",
@@ -59,10 +53,8 @@ function CreateHunt(props) {
 
   return (
     <div>
-      <div className={classes.headerContainer}>
-        <span className={classes.heading}>Create Hunt</span>
-      </div>
-      <div className={classes.formContainer}>
+      <SectionHeader Icon={CrosshairIcon}>Create Hunt</SectionHeader>
+      <Paper className={classes.formContainer} square={false}>
         <HuntInfoForm
           infoFormError={formError.huntInfoError}
           dispatch={dispatch}
@@ -70,11 +62,13 @@ function CreateHunt(props) {
           huntName={state.huntName}
           maxTeams={state.maxTeams}
           startDate={state.startDate}
+          withDivider={true}
         />
         <ItemsContainer
           containerError={formError.itemsError}
           dispatch={dispatch}
           items={state.items}
+          withDivider={true}
         />
         <TeamsContainer
           containerError={formError.teamsError}
@@ -82,6 +76,7 @@ function CreateHunt(props) {
           huntName={state.huntName}
           maxTeams={state.maxTeams}
           teams={state.teams}
+          withDivider={true}
         />
         <PlayersContainer
           dispatch={dispatch}
@@ -99,7 +94,7 @@ function CreateHunt(props) {
           icon={<SendIcon />}
           inError={formError.inError}
         />
-      </div>
+      </Paper>
     </div>
   );
 }

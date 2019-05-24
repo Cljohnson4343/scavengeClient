@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -9,11 +8,10 @@ import {
   withStyles
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { grey } from "@material-ui/core/colors";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = theme => ({
   container: {
-    margin: theme.spacing(1),
     marginBottom: "0px"
   },
   details: {
@@ -25,12 +23,11 @@ const styles = theme => ({
   error: {
     color: theme.palette.error.main
   },
-  expanded: {
-    backgroundColor: grey[100],
-    margin: theme.spacing(1)
-  },
   heading: {
     color: theme.palette.primary.main
+  },
+  icon: {
+    marginLeft: theme.spacing(1)
   }
 });
 
@@ -40,20 +37,34 @@ function FormExpansion(props) {
   const [isOpen, setIsOpen] = useState(Boolean(open));
 
   const colorObj = inError ? classes.error : isOpen ? classes.heading : null;
+  const editIconColor = inError ? classes.error : classes.heading;
 
   return (
     <div className={classes.container}>
       <ExpansionPanel
         square={false}
-        elevation={1}
+        elevation={0}
+        expanded={open}
         onChange={e => setIsOpen(!isOpen)}
       >
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon classes={{ root: colorObj }} />}
         >
-          <Typography className={colorObj}>{label}</Typography>
+          <Typography className={colorObj}>
+            {
+              <span>
+                {label}
+                {!isOpen && (
+                  <EditIcon
+                    className={classes.icon}
+                    classes={{ root: editIconColor }}
+                    fontSize="small"
+                  />
+                )}
+              </span>
+            }
+          </Typography>
         </ExpansionPanelSummary>
-        {isOpen && <Divider className={classes.divider} variant="middle" />}
         <ExpansionPanelDetails className={classes.details}>
           {props.children}
         </ExpansionPanelDetails>
