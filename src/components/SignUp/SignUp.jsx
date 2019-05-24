@@ -87,7 +87,7 @@ function SignUp(props) {
           <ScavengeInput
             id="last_name"
             label="Last Name"
-            onChange={setFirstNameInput}
+            onChange={setLastNameInput}
             value={lastNameInput}
             required
           />
@@ -96,7 +96,7 @@ function SignUp(props) {
           <ScavengeInput
             id="username"
             label="Username"
-            onChange={setFirstNameInput}
+            onChange={setUsernameInput}
             value={usernameInput}
             required
           />
@@ -104,7 +104,7 @@ function SignUp(props) {
             id="email"
             label="Email"
             type="email"
-            onChange={setFirstNameInput}
+            onChange={setEmailInput}
             value={emailInput}
             required
           />
