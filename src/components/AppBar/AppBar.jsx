@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { AppBar, Button, IconButton, withStyles } from "@material-ui/core";
 import { User } from "../../models";
-import NotificationIcon from "@material-ui/icons/Notifications";
+import NotificationsButton from "../NotificationButton";
 import { navigate } from "@reach/router";
 import ExploreIcon from "@material-ui/icons/Explore";
+import { notificationsContext } from "../NotificationsContext";
 
 const styles = theme => ({
   border: {
@@ -59,13 +60,14 @@ function ScavengeAppBar(props) {
   let renderProps;
   if (isLoggedIn) {
     renderProps = [
-      <IconButton
-        className={classes.button}
-        key="icon"
-        onClick={e => navigate(`/${user.username}/notifications`)}
-      >
-        <NotificationIcon fontSize="large" />
-      </IconButton>
+      <notificationsContext.Consumer>
+        {value => (
+          <NotificationsButton
+            notifications={value.notifications}
+            username={user.username}
+          />
+        )}
+      </notificationsContext.Consumer>
     ];
   } else {
     renderProps = [

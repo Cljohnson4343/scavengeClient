@@ -28,7 +28,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       light: lime[300],
-      main: lime[500],
+      main: lime.A200,
       dark: lime[700],
       contrastText: "#fafafa"
     }
