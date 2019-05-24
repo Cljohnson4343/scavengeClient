@@ -10,19 +10,21 @@ export default function ScavengeMethod(config, getData) {
     const self = this;
 
     let data = getData ? getData(self) : {};
-    data = params ? Object.assign({}, data, params) : data;
 
     // add the resource path to the specific endpoint provided by method
     let path = self.path + config.path;
 
     let spec = Object.assign({}, config, {
       data: data,
+      params: params,
       url: self.basePath + pathInterpolator(path)(self)
     });
 
     if (self.hasOwnProperty("recordRequest")) {
       return self.recordRequest(spec);
     }
+
+    console.dir(spec);
 
     return axios(spec);
   };
