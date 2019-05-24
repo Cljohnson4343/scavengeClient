@@ -17,6 +17,7 @@ import SectionHeader from "../SectionHeader";
 const styles = theme => ({
   card: {
     flex: "0 0 auto",
+    height: "68px",
     margin: theme.spacing(1)
   },
   constainer: {

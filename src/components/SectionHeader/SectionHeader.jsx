@@ -18,10 +18,10 @@ const styles = theme => ({
 });
 
 function SectionHeader(props) {
-  const { classes, Icon } = props;
+  const { classes, className, Icon } = props;
 
   return (
-    <div>
+    <div className={className}>
       <div className={classes.container}>
         <Icon className={classes.icon} color="primary" fontSize="small" />
         <Typography className={classes.header} color="primary">
@@ -35,7 +35,7 @@ function SectionHeader(props) {
 
 SectionHeader.propTypes = {
   classes: PropTypes.object.isRequired,
-  Icon: PropTypes.node
+  Icon: PropTypes.func
 };
 
 export default withStyles(styles)(SectionHeader);
