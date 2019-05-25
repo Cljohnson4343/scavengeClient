@@ -64,6 +64,18 @@ Object.defineProperty(Notification.prototype, "equals", {
   }
 });
 
+Object.defineProperty(Notification.prototype, "inviterUsername", {
+  get: function() {
+    return this.data.inviterUsername;
+  }
+});
+
+Object.defineProperty(Notification.prototype, "huntName", {
+  get: function() {
+    return this.data.huntName;
+  }
+});
+
 Object.defineProperty(Notification.prototype, "copy", {
   value: function() {
     return Object.assign(new Notification(), this.data);

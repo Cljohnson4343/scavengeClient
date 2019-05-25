@@ -13,6 +13,7 @@ import {
   Notification as NotificationModel,
   Notifications as NotificationsModel
 } from "../../models";
+import InfoIcon from "@material-ui/icons/Info";
 
 const styles = theme => ({
   actionContainer: {
@@ -22,8 +23,20 @@ const styles = theme => ({
   button: {
     fontWeight: theme.typography.fontWeightRegular
   },
+  container: {
+    display: "flex",
+    justifyItems: "center",
+    alignItems: "center"
+  },
+  icon: {
+    margin: `0 ${theme.spacing(0.5)}px`
+  },
   join: {
     color: theme.palette.primary.main
+  },
+  msg: {
+    justifySelf: "center",
+    alignSelf: "center"
   },
   notification: {
     margin: theme.spacing(1)
@@ -35,12 +48,16 @@ function Notification(props) {
 
   return (
     <Card className={classes.notification}>
-      <CardContent>
-        <Typography>You have been invited to join hunt #.</Typography>
+      <CardContent className={classes.container}>
+        <Typography className={classes.msg}>
+          {notification.inviterUsername} has invited you to join hunt{" "}
+          {notification.huntName}
+          <InfoIcon fontSize="small" color="primary" />.
+        </Typography>
       </CardContent>
       <CardActions className={classes.actionContainer}>
         <Button className={classNames(classes.button, classes.join)}>
-          JOIN
+          ACCEPT
         </Button>
         <Button
           className={classNames(classes.button, classes.devline)}
