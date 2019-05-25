@@ -3,7 +3,7 @@ import ScavengeMethod from "../scavengeMethod";
 
 const Notification = ScavengeResource.extend({
   path: "/users/{userID}/notifications",
-  constructor: function(data) {
+  constructor: function(data, userID) {
     if (!(this instanceof Notification)) {
       return new Notification(...[].slice.call(arguments));
     }
@@ -22,6 +22,12 @@ const Notification = ScavengeResource.extend({
 Object.defineProperty(Notification.prototype, "notificationID", {
   get: function() {
     return this.data.notificationID;
+  }
+});
+
+Object.defineProperty(Notification.prototype, "userID", {
+  get: function() {
+    return this.data.userID;
   }
 });
 

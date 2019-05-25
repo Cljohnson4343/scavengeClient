@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Badge, IconButton, withStyles } from "@material-ui/core";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import { navigate } from "@reach/router";
 import { Notifications } from "../../models";
+import { useInterval } from "../../utils";
 
 const styles = theme => ({
   badge: {
@@ -25,11 +26,18 @@ const styles = theme => ({
 function NotificationButton(props) {
   const { classes, notifications, username, userID, setNotifications } = props;
 
-  useEffect(() => {
-    new Notifications({}, userID).apiRetrieveNotifications().then(response => {
-      setNotifications(new Notifications(response.data, userID));
-    });
-  }, [userID]);
+  console.log(useInterval);
+  useInterval(
+    () => {
+      new Notifications({}, userID)
+        .apiRetrieveNotifications()
+        .then(response => {
+          setNotifications(new Notifications(response.data, userID));
+        });
+    },
+    60000,
+    [userID]
+  );
 
   return (
     <IconButton
@@ -49,7 +57,11 @@ function NotificationButton(props) {
 }
 
 NotificationButton.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  notifications: PropTypes.instanceOf(Notifications).isRequired,
+  setNotifications: PropTypes.func.isRequired,
+  userID: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(NotificationButton);

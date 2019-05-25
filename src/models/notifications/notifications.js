@@ -40,13 +40,19 @@ Object.defineProperty(Notifications.prototype, "length", {
 
 Object.defineProperty(Notifications.prototype, "add", {
   value: function(item) {
-    return new Notifications(this.requestJSON);
+    return new Notifications(
+      this._container.add(item).map(i => i.requestJSON),
+      this.userID
+    );
   }
 });
 
 Object.defineProperty(Notifications.prototype, "remove", {
   value: function(item) {
-    return new Notifications(this.requestJSON);
+    return new Notifications(
+      this._container.remove(item).map(i => i.requestJSON),
+      this.userID
+    );
   }
 });
 

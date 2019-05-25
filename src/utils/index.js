@@ -19,3 +19,4 @@ export {
   getDataProperties,
   pathInterpolator
 } from "./utils";
+export { default as useInterval } from "./effects";

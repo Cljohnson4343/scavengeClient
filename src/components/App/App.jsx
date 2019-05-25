@@ -15,6 +15,7 @@ import SignUp from "../SignUp";
 import { User } from "../../models";
 import Footer from "../Footer";
 import Notifications from "../Notifications";
+import { Notifications as NotificationsModel } from "../../models";
 
 const styles = theme => ({
   pageWrapper: {
@@ -29,7 +30,7 @@ const ThemedApp = withStyles(styles)(function(props) {
   const { classes } = props;
 
   const [user, setUser] = useState(null);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState(new NotificationsModel());
 
   useEffect(() => {
     new User()
@@ -55,7 +56,12 @@ const ThemedApp = withStyles(styles)(function(props) {
           <Home path="/" user={user} />
           <CreateHunt path="/hunts/create" />
           <Hunt path="/:username/:huntName" />
-          <Notifications path="/:username/notifications" />
+          <Notifications
+            path="/:username/notifications"
+            notifications={notifications}
+            setNotifications={setNotifications}
+            userID={user ? user.userID : 0}
+          />
           <SignIn path="/signin" setUser={setUser} user={user} />
           <SignUp path="/signup" setUser={setUser} user={user} />
         </Router>

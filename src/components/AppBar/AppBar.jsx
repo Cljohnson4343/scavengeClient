@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { AppBar, Button, IconButton, withStyles } from "@material-ui/core";
-import { User } from "../../models";
+import { Notifications, User } from "../../models";
 import NotificationsButton from "../NotificationButton";
 import { navigate } from "@reach/router";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -97,6 +97,8 @@ function ScavengeAppBar(props) {
 
 ScavengeAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  notifications: PropTypes.instanceOf(Notifications).isRequired,
+  setNotifications: PropTypes.func.isRequired,
   user: PropTypes.instanceOf(User)
 };
 
