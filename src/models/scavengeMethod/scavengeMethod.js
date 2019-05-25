@@ -24,8 +24,6 @@ export default function ScavengeMethod(config, getData) {
       return self.recordRequest(spec);
     }
 
-    console.dir(spec);
-
     return axios(spec);
   };
 }

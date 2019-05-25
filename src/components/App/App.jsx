@@ -9,7 +9,6 @@ import CreateHunt from "../CreateHunt";
 import Home from "../Home";
 import Hunt from "../Hunt";
 import Location from "../Location";
-import NotificationsContext from "../NotificationsContext";
 import MuiTheme from "../../theme";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
@@ -30,6 +29,7 @@ const ThemedApp = withStyles(styles)(function(props) {
   const { classes } = props;
 
   const [user, setUser] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     new User()
@@ -44,20 +44,23 @@ const ThemedApp = withStyles(styles)(function(props) {
 
   return (
     <Location>
-      <NotificationsContext>
-        <div className={classes.pageWrapper}>
-          <AppBar user={user} setUser={setUser} />
-          <Router>
-            <Home path="/" user={user} />
-            <CreateHunt path="/hunts/create" />
-            <Hunt path="/:username/:huntName" />
-            <Notifications path="/:username/notifications" />
-            <SignIn path="/signin" setUser={setUser} user={user} />
-            <SignUp path="/signup" setUser={setUser} user={user} />
-          </Router>
-          <Footer user={user} setUser={setUser} />
-        </div>
-      </NotificationsContext>
+      <div className={classes.pageWrapper}>
+        <AppBar
+          user={user}
+          setUser={setUser}
+          notifications={notifications}
+          setNotifications={setNotifications}
+        />
+        <Router>
+          <Home path="/" user={user} />
+          <CreateHunt path="/hunts/create" />
+          <Hunt path="/:username/:huntName" />
+          <Notifications path="/:username/notifications" />
+          <SignIn path="/signin" setUser={setUser} user={user} />
+          <SignUp path="/signup" setUser={setUser} user={user} />
+        </Router>
+        <Footer user={user} setUser={setUser} />
+      </div>
     </Location>
   );
 });

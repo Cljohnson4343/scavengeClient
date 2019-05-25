@@ -5,7 +5,6 @@ import { User } from "../../models";
 import NotificationsButton from "../NotificationButton";
 import { navigate } from "@reach/router";
 import ExploreIcon from "@material-ui/icons/Explore";
-import { notificationsContext } from "../NotificationsContext";
 
 const styles = theme => ({
   border: {
@@ -40,7 +39,7 @@ const styles = theme => ({
 });
 
 function ScavengeAppBar(props) {
-  const { classes, user } = props;
+  const { classes, notifications, setNotifications, user } = props;
 
   function TextButton(props) {
     return (
@@ -60,14 +59,13 @@ function ScavengeAppBar(props) {
   let renderProps;
   if (isLoggedIn) {
     renderProps = [
-      <notificationsContext.Consumer>
-        {value => (
-          <NotificationsButton
-            notifications={value.notifications}
-            username={user.username}
-          />
-        )}
-      </notificationsContext.Consumer>
+      <NotificationsButton
+        key="notification-button"
+        notifications={notifications}
+        setNotifications={setNotifications}
+        username={user.username}
+        userID={user.userID}
+      />
     ];
   } else {
     renderProps = [

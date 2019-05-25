@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Badge, IconButton, withStyles } from "@material-ui/core";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import { navigate } from "@reach/router";
+import { Notifications } from "../../models";
 
 const styles = theme => ({
   badge: {
@@ -22,12 +23,18 @@ const styles = theme => ({
 });
 
 function NotificationButton(props) {
-  const { classes, notifications, username } = props;
+  const { classes, notifications, username, userID, setNotifications } = props;
+
+  useEffect(() => {
+    new Notifications({}, userID).apiRetrieveNotifications().then(response => {
+      setNotifications(new Notifications(response.data, userID));
+    });
+  }, [userID]);
 
   return (
     <IconButton
       className={classes.button}
-      key="icon"
+      key="icon-button"
       onClick={e => navigate(`/${username}/notifications`)}
     >
       <Badge
