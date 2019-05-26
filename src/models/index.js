@@ -10,6 +10,7 @@ export { default as Notification } from "./notification";
 export { default as Notifications } from "./notifications";
 export { default as Player } from "./player";
 export { default as Players } from "./players";
+export { default as ScavengeLink } from "./scavengeLink";
 export { default as ScavengeMethod } from "./scavengeMethod";
 export { default as ScavengeResource } from "./scavengeResource";
 export { default as Team } from "./team";

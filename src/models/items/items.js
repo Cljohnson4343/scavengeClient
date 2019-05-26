@@ -110,4 +110,10 @@ Object.defineProperty(Items.prototype, "requestJSON", {
   }
 });
 
+Object.defineProperty(Items.prototype, "copy", {
+  value: function() {
+    return new Items(this.array, this.huntID);
+  }
+});
+
 export default Items;

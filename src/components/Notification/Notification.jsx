@@ -83,18 +83,22 @@ function Notification(props) {
           </Typography>
         </CardContent>
         <CardActions className={classes.actionContainer}>
-          <Button className={classNames(classes.button, classes.join)}>
+          <Button
+            className={classNames(classes.button, classes.join)}
+            onClick={e => {
+              notification.apiAccept().then(response => {
+                setNotifications(notifications.remove(notification));
+              });
+            }}
+          >
             ACCEPT
           </Button>
           <Button
             className={classNames(classes.button, classes.devline)}
             onClick={e => {
-              notification
-                .apiDeleteNotification()
-                .then(response => {
-                  setNotifications(notifications.remove(notification));
-                })
-                .catch(err => {});
+              notification.apiDelete().then(response => {
+                setNotifications(notifications.remove(notification));
+              });
             }}
           >
             DECLINE

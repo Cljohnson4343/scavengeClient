@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntTabBar from "../HuntTabBar";
 import { Hunts } from "../../models";
+import { Table } from "@devexpress/dx-react-grid-material-ui";
 
 const styles = theme => ({});
 

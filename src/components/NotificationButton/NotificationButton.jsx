@@ -26,7 +26,6 @@ const styles = theme => ({
 function NotificationButton(props) {
   const { classes, notifications, username, userID, setNotifications } = props;
 
-  console.log(useInterval);
   useInterval(
     () => {
       new Notifications({}, userID)

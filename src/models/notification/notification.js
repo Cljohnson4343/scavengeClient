@@ -1,5 +1,5 @@
 import ScavengeResource from "../scavengeResource";
-import ScavengeMethod from "../scavengeMethod";
+import ScavengeLink from "../scavengeLink";
 
 const Notification = ScavengeResource.extend({
   path: "/users/{userID}/notifications",
@@ -13,10 +13,15 @@ const Notification = ScavengeResource.extend({
     ScavengeResource.call(this);
   },
 
-  apiDeleteNotification: ScavengeMethod({
-    path: "/{notificationID}",
-    method: "DELETE"
-  })
+  apiDelete: ScavengeLink("delete"),
+  apiDecline: ScavengeLink("decline"),
+  apiAccept: ScavengeLink("accept")
+});
+
+Object.defineProperty(Notification.prototype, "links", {
+  get: function() {
+    return this.data.links;
+  }
 });
 
 Object.defineProperty(Notification.prototype, "notificationID", {
