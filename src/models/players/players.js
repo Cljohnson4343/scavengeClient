@@ -53,6 +53,12 @@ Object.defineProperty(Players.prototype, "length", {
   }
 });
 
+Object.defineProperty(Players.prototype, "requestJSON", {
+  get: function() {
+    return this.array.map(p => p.requestJSON);
+  }
+});
+
 Object.defineProperty(Players.prototype, "add", {
   value: function(player) {
     return new Players(this._container.add(player), this.teamID);

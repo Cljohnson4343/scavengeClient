@@ -94,4 +94,10 @@ Object.defineProperty(Player.prototype, "copy", {
   }
 });
 
+Object.defineProperty(Player.prototype, "requestJSON", {
+  get: function() {
+    return this.data;
+  }
+});
+
 export default Player;

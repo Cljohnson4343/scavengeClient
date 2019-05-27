@@ -55,6 +55,7 @@ const Hunt = ScavengeResource.extend({
       ]);
       return Object.assign(data, {
         items: self.items.requestJSON,
+        players: self.players.requestJSON,
         teams: self.teams.requestJSON
       });
     }
