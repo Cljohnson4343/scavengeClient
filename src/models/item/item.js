@@ -2,6 +2,10 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties, deleteProperties } from "../../utils";
 
+export function getItemFromResponse(data = {}) {
+  return new Item(data.itemName, data.points, data.huntID, data.itemID);
+}
+
 const Item = ScavengeResource.extend({
   path: "/hunts/{huntID}/items",
   constructor: function(name = "", pts = 1, huntID, itemID) {

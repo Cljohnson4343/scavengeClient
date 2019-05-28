@@ -1,12 +1,12 @@
 import { ScavengeError } from "../../utils";
-import { Player, Team } from "../../models";
+import { Player, Team, getTeamFromResponse } from "../../models";
 import Container from "../container";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getTeamsFromResponse(data) {
   data = data ? data : [];
-  return new Teams(data.map(d => new Team(d)));
+  return new Teams(data.map(d => getTeamFromResponse(d)));
 }
 
 const Teams = ScavengeResource.extend({

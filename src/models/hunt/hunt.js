@@ -5,6 +5,8 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties, deleteProperties } from "../../utils";
 
+export function getHuntFromResponse(data) {}
+
 const Hunt = ScavengeResource.extend({
   path: "/hunts",
 
@@ -170,6 +172,12 @@ Object.defineProperty(Hunt.prototype, "copy", {
 Object.defineProperty(Hunt.prototype, "locationName", {
   get: function() {
     return this.data.locationName;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "creatorUsername", {
+  get: function() {
+    return this.data.creatorUsername;
   }
 });
 

@@ -1,11 +1,11 @@
 import Container from "../container";
-import Item from "../item";
+import Item, { getItemFromResponse } from "../item";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getItemsFromResponse(data) {
   data = data ? data : [];
-  return new Items(data.map(d => new Item(d)));
+  return new Items(data.map(d => getItemFromResponse(d)));
 }
 
 const Items = ScavengeResource.extend({

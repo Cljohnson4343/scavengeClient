@@ -3,6 +3,10 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties } from "../../utils";
 
+// TODO Player model needs to be reworked. Def remove team field. Should be composed of a user model
+export function getPlayerFromResponse(data) {
+  return null;
+}
 const Player = ScavengeResource.extend({
   path: "/teams/{teamID}/players",
   constructor: function(email, team, teamID, playerID) {

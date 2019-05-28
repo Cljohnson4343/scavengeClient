@@ -7,7 +7,8 @@
     {
       "name": "Chrome",
       "type": "chrome",
-      "request": "launch",
+      "request": "attach",
+      "port": 9222,
       "url": "http://localhost:3000",
       "webRoot": "${workspaceRoot}/src"
     },

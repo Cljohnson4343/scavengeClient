@@ -3,6 +3,10 @@ import ScavengeMethod from "../scavengeMethod";
 import ScavengeResource from "../scavengeResource";
 import { getDataProperties, deleteProperties } from "../../utils";
 
+export function getTeamFromResponse(data) {
+  return new Team(data.teamName, [], data.huntID, data.teamID);
+}
+
 const Team = ScavengeResource.extend({
   path: "/teams",
 
