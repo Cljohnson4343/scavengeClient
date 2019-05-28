@@ -71,7 +71,11 @@ function HuntCard(props) {
           subheader: classes.subheader
         }}
         title={
-          <Link onClick={e => navigate(`/cj_43/smallville`)}>{hunt.name}</Link>
+          <Link
+            onClick={e => navigate(`/${hunt.creatorUsername}/${hunt.name}`)}
+          >
+            {hunt.name}
+          </Link>
         }
         subheader={hunt.starts.toDateString()}
         action={
