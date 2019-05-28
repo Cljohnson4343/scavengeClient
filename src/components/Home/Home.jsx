@@ -35,6 +35,7 @@ const filterMap = {
 
 function Home(props) {
   const { classes, navigate, user } = props;
+  const userID = user ? user.userID : 0;
 
   const [hunts, setHunts] = useState(new Hunts([]));
   const [value, setValue] = useState("upcoming");
@@ -48,7 +49,7 @@ function Home(props) {
           setHunts(hunts);
         });
     }
-  }, []);
+  }, [userID]);
 
   return (
     <div className={classes.page}>

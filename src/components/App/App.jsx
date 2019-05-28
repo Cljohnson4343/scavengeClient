@@ -29,7 +29,7 @@ const styles = theme => ({
 const ThemedApp = withStyles(styles)(function(props) {
   const { classes } = props;
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [notifications, setNotifications] = useState(new NotificationsModel());
 
   useEffect(() => {

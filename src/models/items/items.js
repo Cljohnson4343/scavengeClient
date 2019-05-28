@@ -104,6 +104,12 @@ Object.defineProperty(Items.prototype, "getByItem", {
   }
 });
 
+Object.defineProperty(Items.prototype, "getByItemID", {
+  value: function(itemID) {
+    return this._container.get(i => i.itemID === itemID);
+  }
+});
+
 Object.defineProperty(Items.prototype, "requestJSON", {
   get: function() {
     return this.array.map(i => i.requestJSON);

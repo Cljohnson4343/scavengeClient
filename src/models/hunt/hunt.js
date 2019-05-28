@@ -101,6 +101,15 @@ Object.defineProperty(Hunt.prototype, "items", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "setItems", {
+  value: function(items) {
+    let huntJSON = this.requestJSON;
+    huntJSON.items = items;
+
+    return new Hunt(huntJSON);
+  }
+});
+
 Object.defineProperty(Hunt.prototype, "teams", {
   get: function() {
     return this.data.teams;
@@ -178,6 +187,17 @@ Object.defineProperty(Hunt.prototype, "locationName", {
 Object.defineProperty(Hunt.prototype, "creatorUsername", {
   get: function() {
     return this.data.creatorUsername;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "requestJSON", {
+  get: function() {
+    let data = this.data;
+    data.items = this.items.requestJSON;
+    data.teams = this.teams.requestJSON;
+    data.players = this.players.requestJSON;
+
+    return data;
   }
 });
 

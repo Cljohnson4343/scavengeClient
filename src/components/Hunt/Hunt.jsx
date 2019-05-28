@@ -16,7 +16,14 @@ function Hunt(props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const table = {
-    items: <ItemTable items={hunt.items} />,
+    items: (
+      <ItemTable
+        items={hunt.items}
+        setItems={items => {
+          setHunt(hunt.setItems(items));
+        }}
+      />
+    ),
     teams: <PlayerTable />
   };
   useEffect(() => {

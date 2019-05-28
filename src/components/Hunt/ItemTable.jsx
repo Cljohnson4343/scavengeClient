@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Paper, withStyles } from "@material-ui/core";
+import { Button, IconButton, Paper, withStyles } from "@material-ui/core";
 import {
   SortingState,
   IntegratedSorting,
@@ -23,6 +23,14 @@ import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 
 const styles = theme => ({
+  commandCell: {
+    padding: `0 ${theme.spacing(1)}px`
+  },
+  headerCommandCell: {
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    padding: `0 ${theme.spacing(1)}px`
+  },
   label: {
     color: theme.palette.primary.main
   },
@@ -32,13 +40,25 @@ const styles = theme => ({
 });
 
 function ItemTable(props) {
-  const { classes, items } = props;
+  const { classes, items, setItems } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
 
+  function getRowId(row) {
+    return row.itemID;
+  }
+
   function commitChanges({ added, changed, deleted }) {
+    if (deleted) {
+      deleted.map(id => {
+        const item = items.getByItemID(id);
+        item.apiDeleteItem().then(response => {
+          setItems(items.remove(item));
+        });
+      });
+    }
     console.log("added");
     console.dir(added);
     console.log("changed");
@@ -61,6 +81,7 @@ function ItemTable(props) {
       size="small"
       variant="outlined"
       onClick={onSort}
+      title="Sort"
     >
       {children}
       {direction && (
@@ -69,43 +90,50 @@ function ItemTable(props) {
     </Button>
   );
 
-  const GenButton = ({ children, onExecute }) => (
-    <Button
+  const GenButton = ({ children, onExecute, ...restProps }) => (
+    <IconButton
       className={classes.label}
       size="small"
-      variant="outlined"
       onClick={onExecute}
+      {...restProps}
     >
       {children}
-    </Button>
+    </IconButton>
   );
 
   const AddButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute}>
+    <GenButton onExecute={onExecute} title="Add row">
       <AddIcon classes={{ root: classes.label }} />
     </GenButton>
   );
 
   const CancelButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute}>
+    <GenButton onExecute={onExecute} title="Cancel changes">
       <CancelIcon classes={{ root: classes.label }} />
     </GenButton>
   );
 
   const CommitButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute}>
+    <GenButton onExecute={onExecute} title="Save changes">
       <SaveIcon classes={{ root: classes.label }} />
     </GenButton>
   );
 
   const DeleteButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute}>
+    <GenButton
+      onExecute={() => {
+        if (window.confirm("Are you sure you want to delete this row?")) {
+          onExecute();
+        }
+      }}
+      title="Delete row"
+    >
       <DeleteIcon classes={{ root: classes.label }} />
     </GenButton>
   );
 
   const EditButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute}>
+    <GenButton onExecute={onExecute} title="Edit row">
       <EditIcon classes={{ root: classes.label }} />
     </GenButton>
   );
@@ -121,6 +149,12 @@ function ItemTable(props) {
     const CommandComponent = cmds[id];
     return <CommandComponent onExecute={onExecute} />;
   };
+  function cmdCellComponent({ children }) {
+    return <td className={classes.commandCell}>{children}</td>;
+  }
+  function cmdHeaderComponent({ children }) {
+    return <td className={classes.headerCommandCell}>{children}</td>;
+  }
 
   const [sorting, setSorting] = useState([
     {
@@ -167,7 +201,7 @@ function ItemTable(props) {
 
   return (
     <Paper className={classes.paper}>
-      <Grid columns={cols} rows={items.array}>
+      <Grid columns={cols} getRowId={getRowId} rows={items.array}>
         <EditingState
           editingRowIds={editingRowIds}
           onEditingRowIdsChange={editingRowIds =>
@@ -189,10 +223,13 @@ function ItemTable(props) {
         <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
         <TableEditRow />
         <TableEditColumn
+          cellComponent={cmdCellComponent}
           commandComponent={Command}
+          headerCellComponent={cmdHeaderComponent}
           showAddCommand
           showEditCommand
           showDeleteCommand
+          width={80}
         />
       </Grid>
     </Paper>
@@ -201,7 +238,8 @@ function ItemTable(props) {
 
 ItemTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  items: PropTypes.instanceOf(Items).isRequired
+  items: PropTypes.instanceOf(Items).isRequired,
+  setItems: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ItemTable);
