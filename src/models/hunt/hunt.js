@@ -15,7 +15,7 @@ const Hunt = ScavengeResource.extend({
       return new Hunt(...[].slice.call(arguments));
     }
 
-    hunt = Boolean(hunt) ? hunt : {};
+    hunt = Boolean(hunt) ? hunt : { huntID: 0 };
 
     this.data = Object.assign({}, hunt);
 

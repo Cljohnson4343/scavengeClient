@@ -13,7 +13,7 @@ import {
   TableHeaderRow,
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
-import { Items } from "../../models";
+import { Items, Item, getItemFromResponse } from "../../models";
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 function ItemTable(props) {
-  const { classes, items, setItems } = props;
+  const { classes, huntID, items, setItems } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
@@ -52,19 +52,24 @@ function ItemTable(props) {
 
   function commitChanges({ added, changed, deleted }) {
     if (deleted) {
-      deleted.map(id => {
+      deleted.forEach(id => {
         const item = items.getByItemID(id);
         item.apiDeleteItem().then(response => {
           setItems(items.remove(item));
         });
       });
     }
-    console.log("added");
-    console.dir(added);
+
+    if (added) {
+      added.forEach(input => {
+        const item = new Item(input.name, parseInt(input.points), huntID);
+        item.apiCreateItem().then(response => {
+          setItems(items.add(getItemFromResponse(response.data)));
+        });
+      });
+    }
     console.log("changed");
     console.dir(changed);
-    console.log("deleted");
-    console.dir(deleted);
   }
 
   function SortingIcon({ direction }) {
@@ -172,7 +177,7 @@ function ItemTable(props) {
       }
     },
     {
-      name: "pts",
+      name: "points",
       title: "Pts",
       getCellValue: row => row.points
     }
@@ -180,16 +185,16 @@ function ItemTable(props) {
 
   const colExtensions = [
     { columnName: "name", align: "left", wordWrapEnabled: true },
-    { columnName: "pts", align: "right", width: 80 }
+    { columnName: "points", align: "right", width: 80 }
   ];
 
   const sortingExtensions = [
     { columnName: "name", sortingEnabled: true },
-    { columnName: "pts", sortingEnabled: true }
+    { columnName: "points", sortingEnabled: true }
   ];
   const integratedSortingExtensions = [
     {
-      columnName: "pts",
+      columnName: "points",
       compare: (a, b) => {
         if (a === b) {
           return 0;
@@ -204,13 +209,21 @@ function ItemTable(props) {
       <Grid columns={cols} getRowId={getRowId} rows={items.array}>
         <EditingState
           editingRowIds={editingRowIds}
-          onEditingRowIdsChange={editingRowIds =>
-            setEditingRowIds(editingRowIds)
-          }
+          onEditingRowIdsChange={editingRowIds => {
+            console.log("onEditingRowIdsChange");
+            console.dir(editingRowIds);
+            setEditingRowIds(editingRowIds);
+          }}
           rowChanges={rowChanges}
-          onRowChanges={rowChanges => setRowChanges(rowChanges)}
+          onRowChanges={rowChanges => {
+            console.log("onRowChanges");
+            console.dir(rowChanges);
+            setRowChanges(rowChanges);
+          }}
           addedRows={addedRows}
-          onAddedRowsChange={addedRows => setAddedRows(addedRows)}
+          onAddedRowsChange={addedRows => {
+            setAddedRows(addedRows);
+          }}
           onCommitChanges={commitChanges}
         />
         <SortingState
@@ -226,7 +239,7 @@ function ItemTable(props) {
           cellComponent={cmdCellComponent}
           commandComponent={Command}
           headerCellComponent={cmdHeaderComponent}
-          showAddCommand
+          showAddCommand={addedRows.length < 1}
           showEditCommand
           showDeleteCommand
           width={80}
@@ -238,6 +251,7 @@ function ItemTable(props) {
 
 ItemTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  huntID: PropTypes.number.isRequired,
   items: PropTypes.instanceOf(Items).isRequired,
   setItems: PropTypes.func.isRequired
 };

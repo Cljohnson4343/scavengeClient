@@ -18,6 +18,7 @@ function Hunt(props) {
   const table = {
     items: (
       <ItemTable
+        huntID={hunt.huntID}
         items={hunt.items}
         setItems={items => {
           setHunt(hunt.setItems(items));
