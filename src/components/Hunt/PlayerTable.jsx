@@ -12,8 +12,6 @@ import {
 const styles = theme => ({});
 
 function PlayerTable(props) {
-  const { classes } = props;
-
   const cols = [
     { name: "email", title: "Email" },
     { name: "team", title: "Team" },
