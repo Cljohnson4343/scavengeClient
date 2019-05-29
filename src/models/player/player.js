@@ -1,26 +1,20 @@
-import Team from "../team";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties } from "../../utils";
 
 // TODO Player model needs to be reworked. Def remove team field. Should be composed of a user model
 export function getPlayerFromResponse(data) {
-  return null;
+  return new Player(data);
 }
+
 const Player = ScavengeResource.extend({
   path: "/teams/{teamID}/players",
-  constructor: function(email, team, teamID, playerID) {
+  constructor: function(data) {
     if (!(this instanceof Player)) {
       return new Player(...[].slice.call(arguments));
     }
 
-    this.data = {
-      email: email || "",
-      teamID: teamID,
-      userID: playerID
-    };
-
-    this._team = team && team instanceof Team ? team.copy() : new Team();
+    this.data = { ...data };
 
     ScavengeResource.call(this);
   },
@@ -63,26 +57,20 @@ Object.defineProperty(Player.prototype, "email", {
   }
 });
 
-Object.defineProperty(Player.prototype, "team", {
-  get: function() {
-    return this._team;
+Object.defineProperty(Player.prototype, "changeEmail", {
+  value: function(email) {
+    if (email && typeof email === "string") {
+      return new Player({ ...this.data, ...{ email: email } });
+    }
+
+    return this.copy();
   }
 });
 
 Object.defineProperty(Player.prototype, "changeTeam", {
-  value: function(newTeam) {
-    if (newTeam && newTeam instanceof Team) {
-      return new Player(this.email, newTeam, this.teamID, this.playerID);
-    }
-
-    return new Player(this.email, new Team(), this.teamID, this.playerID);
-  }
-});
-
-Object.defineProperty(Player.prototype, "changeEmail", {
-  value: function(email) {
-    if (email && typeof email === "string") {
-      return new Player(email, this._team, this.teamID, this.playerID);
+  value: function(teamID) {
+    if (typeof teamID === "number") {
+      return new Player({ ...this.data, ...{ teamID: teamID } });
     }
 
     return this.copy();
@@ -94,13 +82,13 @@ Object.defineProperty(Player.prototype, "equals", {
     if (!(obj instanceof Player)) {
       return false;
     }
-    return this.email === obj.email;
+    return this.userID ? this.userID === obj.userID : this.email === obj.email;
   }
 });
 
 Object.defineProperty(Player.prototype, "copy", {
   value: function() {
-    return new Player(this.email, this._team, this.teamID, this.playerID);
+    return new Player(this.data);
   }
 });
 

@@ -34,13 +34,6 @@ export function teams(state = new Teams(), action) {
         action.payload.oldName,
         action.payload.newName
       );
-    case "change_players_team":
-      return state.change(action.payload.player, action.payload.team);
-    case "change_player_email":
-      return state.changePlayerEmail(
-        action.payload.player,
-        action.payload.email
-      );
     default:
       return state;
   }
@@ -54,21 +47,18 @@ export function players(state = new Players(), action) {
       return state.remove(action.payload);
     case "add_player":
       return state.add(action.payload);
-    case "change_team_name":
-      return state.changeTeamName(
-        action.payload.oldName,
-        action.payload.newName
-      );
-
     case "change_player_email":
       return state.changePlayerEmail(
         action.payload.player,
         action.payload.email
       );
     case "change_players_team":
-      return state.change(action.payload.player, action.payload.team);
+      return state.changePlayersTeam(
+        action.payload.player,
+        action.payload.team.teamID
+      );
     case "remove_team":
-      return state.removeTeam(action.payload.team);
+      return state.removeTeam(action.payload.team.teamID);
     default:
       return state;
   }

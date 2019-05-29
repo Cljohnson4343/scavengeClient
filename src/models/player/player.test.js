@@ -26,7 +26,7 @@ describe("Player", () => {
     ${emails.gmail} | ${emails.gmail}
     ${""}           | ${""}
   `("constructs a Player with the email $email", ({ email, expected }) => {
-    let player = new Player(email);
+    let player = new Player({ email: email });
     deepFreeze(player);
 
     expect(player).toBeInstanceOf(Player);
@@ -35,27 +35,29 @@ describe("Player", () => {
   });
 
   test.each`
-    email           | team             | expected
-    ${emails.gmail} | ${afcEast.fins}  | ${afcEast.fins}
-    ${emails.aol}   | ${afcEast.bills} | ${afcEast.bills}
-  `("constructs a Player with the right team", ({ email, team, expected }) => {
-    let player = new Player(email, team);
-    deepFreeze(player);
+    email           | teamID | expected
+    ${emails.gmail} | ${3}   | ${3}
+    ${emails.aol}   | ${2}   | ${2}
+  `(
+    "constructs a Player with the right team",
+    ({ email, teamID, expected }) => {
+      let player = new Player({ email: email, teamID: teamID });
+      deepFreeze(player);
 
-    expect(player).toBeInstanceOf(Player);
-    expect(player.team).toBeInstanceOf(Team);
-    expect(player.team.equals(expected));
-  });
+      expect(player).toBeInstanceOf(Player);
+      expect(player.teamID).toStrictEqual(expected);
+    }
+  );
 
   test.each`
-    email           | originalTeam    | newTeam
-    ${emails.gmail} | ${afcEast.fins} | ${afcEast.bills}
-    ${emails.aol}   | ${null}         | ${afcEast.fins}
-    ${emails.aol}   | ${afcEast.fins} | ${null}
+    email           | originalTeam | newTeam
+    ${emails.gmail} | ${3}         | ${2}
+    ${emails.aol}   | ${0}         | ${4}
+    ${emails.aol}   | ${3}         | ${0}
   `(
     "changeTeam returns a new Player with team added w/out modifying original Player",
     ({ email, originalTeam, newTeam }) => {
-      let plr = new Player(email, originalTeam);
+      let plr = new Player({ email: email, teamID: originalTeam });
       deepFreeze(plr);
       if (newTeam) {
         deepFreeze(newTeam);
@@ -64,28 +66,20 @@ describe("Player", () => {
       let newPlr = plr.changeTeam(newTeam);
 
       expect(newPlr).toBeInstanceOf(Player);
-      if (newTeam) {
-        expect(newPlr.team).toBeInstanceOf(Team);
-        expect(newPlr.team.equals(newTeam)).toBeTruthy();
-      }
-      if (originalTeam) {
-        expect(plr.team).toBeInstanceOf(Team);
-        expect(plr.team.equals(originalTeam)).toBeTruthy();
-      }
+      expect(newPlr.teamID).toStrictEqual(newTeam);
     }
   );
 
   test.each`
-    team            | originalEmail   | newEmail
-    ${afcEast.fins} | ${emails.gmail} | ${emails.aol}
-    ${afcEast.fins} | ${null}         | ${emails.gmail}
-    ${afcEast.fins} | ${emails.gmail} | ${null}
+    originalEmail   | newEmail
+    ${emails.gmail} | ${emails.aol}
+    ${null}         | ${emails.gmail}
+    ${emails.gmail} | ${null}
   `(
     "changeEmail returns a new Player with email added w/out modifying original Player",
-    ({ team, originalEmail, newEmail }) => {
-      let plr = new Player(originalEmail, team);
+    ({ originalEmail, newEmail }) => {
+      let plr = new Player({ email: originalEmail });
       deepFreeze(plr);
-      deepFreeze(team);
 
       let newPlr = plr.changeEmail(newEmail);
 
@@ -100,7 +94,7 @@ describe("Player", () => {
   );
 
   test("copy returns a new Player that equals original Player", () => {
-    const plr = new Player(emails.yahoo, afcEast.fins);
+    const plr = new Player({ email: emails.yahoo });
     deepFreeze(plr);
 
     const newPlr = plr.copy();
@@ -112,7 +106,9 @@ describe("Player", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Player("email", new Team(), 43, 23)),
+        model: addTestModel(
+          new Player({ email: "email", teamID: 43, userID: 23 })
+        ),
         expected: {
           url: BASE_PATH + "/teams/43/players/",
           method: "POST"
@@ -138,7 +134,9 @@ describe("Player", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Player("email", new Team(), 43, 23)),
+        model: addTestModel(
+          new Player({ email: "email", teamID: 43, userID: 23 })
+        ),
         expected: {
           url: BASE_PATH + "/teams/43/players/23",
           method: "DELETE"

@@ -12,13 +12,13 @@ import * as actions from "./actions";
 import { Item, Items, Player, Team, Teams, Players } from "../../models";
 
 const plrs = {
-  dan: new Player("danMarino@gmail.com"),
-  pat: new Player("patSurtain@gmailcom"),
-  tom: new Player("tomBrady@gmail.com"),
-  wes: new Player("wesWelker@gmailcom"),
-  jim: new Player("jimKelly@gmail.com"),
-  bruce: new Player("bruceSmith@gmailcom"),
-  vinny: new Player("vinnyT@gmailcom")
+  dan: new Player({ email: "danMarino@gmail.com" }),
+  pat: new Player({ email: "patSurtain@gmailcom" }),
+  tom: new Player({ email: "tomBrady@gmail.com" }),
+  wes: new Player({ email: "wesWelker@gmailcom" }),
+  jim: new Player({ email: "jimKelly@gmail.com" }),
+  bruce: new Player({ email: "bruceSmith@gmailcom" }),
+  vinny: new Player({ email: "vinnyT@gmailcom" })
 };
 
 describe("teams", () => {
@@ -33,7 +33,7 @@ describe("teams", () => {
       expect(result.length).toBeGreaterThan(0);
     });
     test("should add team when state isn't empty", () => {
-      const testState = new Teams([new Team("Bills")]);
+      const testState = new Teams([new Team({ teamName: "Bills" })]);
       const action = actions.addTeam("Fins");
 
       const result = teams(testState, action);
@@ -45,7 +45,7 @@ describe("teams", () => {
 
   describe("action removeTeam", () => {
     test("should remove a team", () => {
-      const bills = new Team("Bills");
+      const bills = new Team({ teamName: "Bills" });
       const testState = new Teams([bills]);
       const action = actions.removeTeam(bills);
 
@@ -55,43 +55,14 @@ describe("teams", () => {
       expect(result.length).toBe(0);
     });
     test("should remove the correct team", () => {
-      const pats = new Team("pats");
-      const testState = new Teams([new Team("fins"), pats]);
+      const pats = new Team({ teamName: "pats" });
+      const testState = new Teams([new Team({ teamName: "fins" }), pats]);
       const action = actions.removeTeam(pats);
 
       const result = teams(testState, action);
 
       expect(result).toBeInstanceOf(Teams);
       expect(result.length).toBeGreaterThan(0);
-    });
-  });
-
-  describe("action changePlayersTeam", () => {
-    test("should remove a player from team's player list", () => {
-      let bills = new Team("bills");
-      const testPlayer = new Player("cj@gmail.com", bills);
-      bills = bills.addPlayer(testPlayer);
-
-      const testState = new Teams([bills]);
-      const action = actions.changePlayersTeam(testPlayer, new Team("fins"));
-
-      const result = teams(testState, action);
-
-      expect(result).toBeInstanceOf(Teams);
-      expect(result.length).toBe(1);
-    });
-    test("should add a player to team's player list", () => {
-      const fins = new Team("fins");
-      const testPlayer = new Player("cj@gmail.com", fins);
-
-      const testState = new Teams([fins]);
-      const action = actions.changePlayersTeam(testPlayer, fins);
-
-      const result = teams(testState, action);
-
-      expect(result).toBeInstanceOf(Teams);
-      expect(result.length).toBe(1);
-      expect(result.getByTeam(fins).hasPlayer(testPlayer)).toBeTruthy();
     });
   });
 });
@@ -109,7 +80,7 @@ describe("players", () => {
       expect(result.getByEmail("cj@gmail.com")).toBeInstanceOf(Player);
     });
     test("should add player when state isn't empty", () => {
-      const testState = new Players([new Player("cj@yahoo.com")]);
+      const testState = new Players([new Player({ email: "cj@yahoo.com" })]);
       const action = actions.addPlayer("cj@gmail.com");
 
       const result = players(testState, action);
@@ -122,7 +93,7 @@ describe("players", () => {
 
   describe("action removePlayer", () => {
     test("should remove a player", () => {
-      const testState = new Players([new Player("cj@gmail.com")]);
+      const testState = new Players([new Player({ email: "cj@gmail.com" })]);
       const action = actions.removePlayer("cj@gmail.com");
 
       const result = players(testState, action);
@@ -132,8 +103,8 @@ describe("players", () => {
     });
     test("should remove the correct team", () => {
       const testState = new Players([
-        new Player("cj@gmail.com"),
-        new Player("cj@yahoo.com")
+        new Player({ email: "cj@gmail.com" }),
+        new Player({ email: "cj@yahoo.com" })
       ]);
       const action = actions.removePlayer("cj@gmail.com");
 
@@ -147,8 +118,8 @@ describe("players", () => {
 
   describe("action changePlayersTeam", () => {
     test("should update a player's team", () => {
-      const fins = new Team("fins");
-      const gmail = new Player("cj@gmail.com");
+      const fins = new Team({ teamName: "fins", teamID: 1 });
+      const gmail = new Player({ email: "cj@gmail.com" });
 
       const testState = new Players([gmail]);
       const action = actions.changePlayersTeam(gmail, fins);
@@ -157,7 +128,7 @@ describe("players", () => {
 
       expect(result).toBeInstanceOf(Players);
       expect(result.length).toBe(1);
-      expect(result.getByPlayer(gmail).team.equals(fins)).toBeTruthy();
+      expect(result.getByPlayer(gmail).teamID).toStrictEqual(fins.teamID);
     });
   });
 

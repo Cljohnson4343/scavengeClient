@@ -1,26 +1,18 @@
 /* eslint-disable no-loop-func */
 import Players from "./players";
-import Team from "../team";
 import Player from "../player";
 import ScavengeResource from "../scavengeResource";
 import { BASE_PATH } from "../../config";
 import { addTestModel } from "../../testUtils";
 
-const afc = {
-  fins: new Team("fins"),
-  bills: new Team("bills"),
-  pats: new Team("pats"),
-  jets: new Team("jets")
-};
-
 const plrs = {
-  dan: new Player("danMarino@gmail.com", afc.fins),
-  pat: new Player("patSurtain@gmailcom", afc.fins),
-  tom: new Player("tomBrady@gmail.com", afc.pats),
-  wes: new Player("wesWelker@gmailcom", afc.pats),
-  jim: new Player("jimKelly@gmail.com", afc.bills),
-  bruce: new Player("bruceSmith@gmailcom", afc.bills),
-  vinny: new Player("vinnyT@gmailcom", afc.jets)
+  dan: new Player({ email: "danMarino@gmail.com" }),
+  pat: new Player({ email: "patSurtain@gmailcom" }),
+  tom: new Player({ email: "tomBrady@gmail.com" }),
+  wes: new Player({ email: "wesWelker@gmailcom" }),
+  jim: new Player({ email: "jimKelly@gmail.com" }),
+  bruce: new Player({ email: "bruceSmith@gmailcom" }),
+  vinny: new Player({ email: "vinnyT@gmailcom" })
 };
 
 describe("players", () => {
@@ -132,64 +124,6 @@ describe("players", () => {
     }
   });
 
-  describe("change", () => {
-    const cases = [
-      {
-        name: "valid player",
-        args: [plrs.dan.changeTeam(afc.pats), plrs.bruce],
-        oldTeam: afc.pats,
-        player: plrs.dan.changeTeam(afc.pats),
-        newTeam: afc.fins
-      },
-      {
-        name: "valid player no new team",
-        args: [plrs.dan.changeTeam(afc.fins), plrs.wes],
-        oldTeam: afc.fins,
-        player: plrs.dan,
-        newTeam: null
-      }
-    ];
-    for (let c of cases) {
-      test(c.name, () => {
-        let players = new Players(c.args);
-
-        const result = players.change(c.player, c.newTeam);
-        expect(result).toBeInstanceOf(Players);
-
-        c.player = result.getByPlayer(c.player);
-        expect(c.player instanceof Player).toBeTruthy();
-
-        if (c.newTeam instanceof Team) {
-          expect(c.player.team.equals(c.oldTeam)).toBeFalsy();
-          expect(c.player.team.equals(c.newTeam)).toBeTruthy();
-        }
-      });
-    }
-  });
-
-  describe("changeTeamName", () => {
-    const cases = [
-      {
-        name: "valid old name and new name",
-        args: [plrs.dan.changeTeam(afc.pats), plrs.jim.changeTeam(afc.pats)],
-        oldName: afc.pats.name,
-        newName: afc.jets.name
-      }
-    ];
-    for (let c of cases) {
-      test(c.name, () => {
-        let players = new Players(c.args);
-
-        const result = players.changeTeamName(c.oldName, c.newName);
-        expect(result).toBeInstanceOf(Players);
-
-        expect(
-          result.getByPlayer(c.args[0]).team.name === c.newName
-        ).toBeTruthy();
-      });
-    }
-  });
-
   describe("copy", () => {
     const cases = [
       {
@@ -207,24 +141,24 @@ describe("players", () => {
     }
   });
 
-  describe("getByTeam", () => {
+  describe("getByTeamID", () => {
     const cases = [
       {
         name: "member team",
-        args: [plrs.dan.changeTeam(afc.fins), plrs.bruce],
-        input: afc.fins,
+        args: [plrs.dan.changeTeam(3), plrs.bruce],
+        input: 3,
         expected: true
       },
       {
         name: "non-member team",
-        args: [plrs.dan.changeTeam(afc.fins)],
-        input: afc.bills,
+        args: [plrs.dan.changeTeam(4)],
+        input: 1,
         expected: false
       },
       {
         name: "invalid args",
-        args: [plrs.dan.changeTeam(afc.fins)],
-        input: afc.fins.name,
+        args: [plrs.dan.changeTeam(4)],
+        input: "4",
         expected: false
       }
     ];
@@ -232,7 +166,7 @@ describe("players", () => {
       test(c.name, () => {
         const players = new Players(c.args);
 
-        const result = players.getByTeam(c.input);
+        const result = players.getByTeamID(c.input);
         expect(result).toBeInstanceOf(Players);
 
         if (c.expected) {
@@ -277,12 +211,12 @@ describe("players", () => {
       });
     }
   });
-
+  /*
   describe("apiRetrievePlayers", () => {
     const cases = [
       {
         name: "create a valid config for an api method call",
-        model: addTestModel(new Players([afc.fins, afc.jets], 43)),
+        model: addTestModel(new Players([], 43)),
         expected: {
           url: BASE_PATH + `/teams/43/players/`,
           method: "GET"
@@ -303,4 +237,5 @@ describe("players", () => {
       });
     }
   });
+  */
 });

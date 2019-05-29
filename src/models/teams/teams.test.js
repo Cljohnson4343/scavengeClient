@@ -8,20 +8,10 @@ import { addTestModel } from "../../testUtils";
 import { BASE_PATH } from "../../config";
 
 const afc = {
-  fins: new Team("fins"),
-  bills: new Team("bills"),
-  pats: new Team("pats"),
-  jets: new Team("jets")
-};
-
-const plrs = {
-  dan: new Player("danMarino@gmail.com", afc.fins),
-  pat: new Player("patSurtain@gmailcom", afc.fins),
-  tom: new Player("tomBrady@gmail.com", afc.pats),
-  wes: new Player("wesWelker@gmailcom", afc.pats),
-  jim: new Player("jimKelly@gmail.com", afc.bills),
-  bruce: new Player("bruceSmith@gmailcom", afc.bills),
-  vinny: new Player("vinnyT@gmailcom", afc.jets)
+  fins: new Team({ teamName: "fins", teamID: 1 }),
+  bills: new Team({ teamName: "bills", teamID: 2 }),
+  pats: new Team({ teamName: "pats", teamID: 3 }),
+  jets: new Team({ teamName: "jets", teamID: 4 })
 };
 
 describe("teams", () => {
@@ -198,41 +188,6 @@ describe("teams", () => {
         expect(result).toBeInstanceOf(Teams);
         expect(result.length).toBe(c.expected);
         expect(Boolean(result.getByTeam(c.input))).toBeFalsy();
-      });
-    }
-  });
-
-  describe("change", () => {
-    const cases = [
-      {
-        name: "valid player",
-        args: [afc.pats.addPlayer(plrs.tom), afc.fins],
-        oldTeam: afc.pats,
-        player: plrs.tom,
-        newTeam: afc.fins
-      },
-      {
-        name: "valid player",
-        args: [afc.pats, afc.fins.addPlayer(plrs.tom)],
-        oldTeam: afc.fins,
-        player: plrs.tom,
-        newTeam: null
-      }
-    ];
-    for (let c of cases) {
-      test(c.name, () => {
-        let teams = new Teams(c.args);
-
-        const result = teams.change(c.player, c.newTeam);
-        expect(result).toBeInstanceOf(Teams);
-
-        const oldTeam = result.getByTeam(c.oldTeam);
-        expect(oldTeam.hasPlayer(c.player)).toBeFalsy();
-
-        if (c.newTeam instanceof Team) {
-          const newTeam = result.getByTeam(c.newTeam);
-          expect(newTeam.hasPlayer(c.player)).toBeTruthy();
-        }
       });
     }
   });

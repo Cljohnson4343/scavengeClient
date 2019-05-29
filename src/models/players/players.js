@@ -5,6 +5,8 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getPlayersFromResponse(data) {
+  console.log("getPlayersFromResponse");
+  console.dir(data);
   data = data ? data : [];
   return new Players(data.map(d => getPlayerFromResponse(d)));
 }
@@ -12,14 +14,10 @@ export function getPlayersFromResponse(data) {
 const Players = ScavengeResource.extend({
   path: "/teams/{teamID}/players",
 
-  constructor: function(players = [], teamID) {
+  constructor: function(players = []) {
     if (!(this instanceof Players)) {
       return new Players(...[].slice.call(arguments));
     }
-
-    this.data = {
-      teamID: teamID
-    };
 
     this._container = new Container(
       Player.prototype,
@@ -27,12 +25,13 @@ const Players = ScavengeResource.extend({
     );
 
     ScavengeResource.call(this);
-  },
-
+  }
+  /*
   apiRetrievePlayers: ScavengeMethod({
     path: "/",
     method: "GET"
   })
+  */
 });
 
 Object.defineProperty(Players.prototype, "username", {
@@ -44,12 +43,6 @@ Object.defineProperty(Players.prototype, "username", {
 Object.defineProperty(Players.prototype, "setPlayers", {
   value: function(players) {
     return new Players(players.copy(), this.teamID);
-  }
-});
-
-Object.defineProperty(Players.prototype, "teamID", {
-  get: function() {
-    return this.data.teamID;
   }
 });
 
@@ -89,32 +82,8 @@ Object.defineProperty(Players.prototype, "copy", {
   }
 });
 
-Players.prototype.changeTeamName = function(oldName, newName) {
-  return new Players(
-    this.array.map(p => {
-      if (p.team.name === oldName) {
-        return new Player(p.email, p.team.changeName(newName));
-      }
-      return p.copy();
-    }),
-    this.teamID
-  );
-};
-
-Players.prototype.change = function(player, team) {
-  return new Players(
-    this.array.map(p => {
-      if (p.equals(player)) {
-        return p.changeTeam(team);
-      }
-      return p.copy();
-    }),
-    this.teamID
-  );
-};
-
-Players.prototype.getByTeam = function(team) {
-  return new Players(this.array.filter(p => p.team.equals(team)), this.teamID);
+Players.prototype.getByTeamID = function(teamID) {
+  return new Players(this.array.filter(p => p.teamID === teamID));
 };
 
 Players.prototype.getByEmail = function(email) {
@@ -129,15 +98,25 @@ Players.prototype.getByPlayer = function(player) {
   return this._container.get(x => x.equals(player));
 };
 
-Players.prototype.removeTeam = function(team) {
+Players.prototype.removeTeam = function(teamID) {
   return new Players(
     this.array.map(p => {
-      if (p.team.equals(team)) {
-        return p.changeTeam(new Team());
+      if (p.teamID === teamID) {
+        return p.changeTeam(0);
       }
       return p.copy();
-    }),
-    this.teamID
+    })
+  );
+};
+
+Players.prototype.changePlayersTeam = function(player, teamID) {
+  return new Players(
+    this.array.map(p => {
+      if (p.equals(player)) {
+        return p.changeTeam(teamID);
+      }
+      return p.copy();
+    })
   );
 };
 
@@ -148,8 +127,7 @@ Players.prototype.changePlayerEmail = function(player, email) {
         return p.changeEmail(email);
       }
       return p.copy();
-    }),
-    this.teamID
+    })
   );
 };
 

@@ -6,15 +6,9 @@ axios.defaults.httpAgent = new http.Agent({ keepAlive: true });
 axios.defaults.timeout = 3000;
 
 export async function LoginUser(userData) {
-  console.log("submitting login request...");
   try {
     const result = await axios.post("/users/login/", userData);
-
-    console.log("login results: \n");
-    console.log(result);
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export async function GetUser(userID) {
@@ -24,7 +18,6 @@ export async function GetUser(userID) {
 
     return result;
   } catch (err) {
-    console.log(err);
     return err;
   }
 }

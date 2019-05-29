@@ -3,7 +3,7 @@ import { Player, Team } from "../../models";
 export function addTeam(teamName) {
   return {
     type: "add_team",
-    payload: new Team(teamName)
+    payload: new Team({ teamName: teamName })
   };
 }
 
@@ -50,14 +50,14 @@ export function changePlayerEmail(player, email) {
 export function addPlayer(email) {
   return {
     type: "add_player",
-    payload: new Player(email)
+    payload: new Player({ email: email })
   };
 }
 
 export function removePlayer(email) {
   return {
     type: "remove_player",
-    payload: new Player(email)
+    payload: new Player({ email: email })
   };
 }
 

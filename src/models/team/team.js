@@ -1,27 +1,21 @@
-import Player from "../player";
 import ScavengeMethod from "../scavengeMethod";
 import ScavengeResource from "../scavengeResource";
 import { getDataProperties, deleteProperties } from "../../utils";
 
 export function getTeamFromResponse(data) {
-  return new Team(data.teamName, [], data.huntID, data.teamID);
+  return new Team(data);
 }
 
 const Team = ScavengeResource.extend({
   path: "/teams",
 
-  constructor: function(teamName = "", players = [], huntID, teamID) {
+  constructor: function(data) {
     if (!(this instanceof Team)) {
       return new Team(...[].slice.call(arguments));
     }
 
-    this.data = {
-      teamName: teamName,
-      huntID: huntID,
-      teamID: teamID
-    };
+    this.data = { ...data };
 
-    this._players = players && players instanceof Array ? players.slice(0) : [];
     ScavengeResource.call(this);
   },
 
@@ -80,49 +74,16 @@ Object.defineProperty(t, "teamID", {
 Object.defineProperty(t, "changeName", {
   value: function(name) {
     if (typeof name === "string") {
-      return new Team(name, this._players, this.huntID, this.teamID);
+      return new Team({ ...this.data, ...{ teamName: name } });
     }
 
-    return new Team(null, this._players, this.huntID, this.teamID);
-  }
-});
-
-Object.defineProperty(t, "players", {
-  get: function() {
-    return this._players;
+    return new Team(this.data);
   }
 });
 
 Object.defineProperty(t, "copy", {
   value: function() {
-    return new Team(this.teamName, this._players, this.huntID, this.teamID);
-  }
-});
-
-Object.defineProperty(t, "addPlayer", {
-  value: function(plr) {
-    if (plr instanceof Player) {
-      let players = [...this._players, plr];
-      return new Team(this.teamName, players, this.huntID, this.teamID);
-    }
-    return this.copy();
-  }
-});
-
-Object.defineProperty(t, "removePlayer", {
-  value: function(plr) {
-    let players = this._players.filter(player => !player.equals(plr));
-    return new Team(this.teamName, players, this.huntID, this.teamID);
-  }
-});
-
-Object.defineProperty(t, "hasPlayer", {
-  value: function(plr) {
-    let ps = this._players.filter(player => player.equals(plr));
-    if (ps && ps.length > 0) {
-      return true;
-    }
-    return false;
+    return new Team(this.data);
   }
 });
 
@@ -132,23 +93,9 @@ Object.defineProperty(t, "equals", {
       return false;
     }
 
-    return this.teamName === obj.teamName;
-  }
-});
-
-Object.defineProperty(t, "changePlayerEmail", {
-  value: function(player, email) {
-    return new Team(
-      this.teamName,
-      this._players.map(p => {
-        if (p.equals(player)) {
-          return p.changeEmail(email);
-        }
-        return p.copy();
-      }),
-      this.huntID,
-      this.teamID
-    );
+    return this.teamID
+      ? this.teamID === obj.teamID
+      : this.teamName === obj.teamName;
   }
 });
 

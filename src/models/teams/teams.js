@@ -95,21 +95,6 @@ Teams.prototype.changeTeamName = function(oldName, newName) {
   );
 };
 
-Teams.prototype.change = function(player, team) {
-  if (!(player instanceof Player)) {
-    return this.copy();
-  }
-
-  return new Teams(
-    this.array.map(t => {
-      if (t.equals(team)) {
-        return t.addPlayer(player);
-      }
-      return t.removePlayer(player);
-    })
-  );
-};
-
 Teams.prototype.getByName = function(name) {
   return this._container.get(x => x.teamName === name);
 };
@@ -124,14 +109,6 @@ Teams.prototype.getByTeam = function(team) {
 
 Teams.prototype.getByID = function(teamID) {
   return this._container.get(x => x.teamID === teamID);
-};
-
-Teams.prototype.changePlayerEmail = function(player, email) {
-  return new Teams(
-    this.array.map(t => {
-      return t.changePlayerEmail(player, email);
-    })
-  );
 };
 
 Object.defineProperty(Teams.prototype, "requestJSON", {
