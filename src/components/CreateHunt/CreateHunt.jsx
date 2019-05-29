@@ -7,9 +7,9 @@ import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
 import SendIcon from "@material-ui/icons/Send";
-import reducer, { initialState } from "./reducer";
+import reducer, { getInitialState } from "./reducer";
 import { CreateHuntFormError } from "./error";
-import { Hunt } from "../../models";
+import { Hunt, User } from "../../models";
 import * as actions from "./actions";
 import SectionHeader from "../SectionHeader";
 import CrosshairIcon from "@material-ui/icons/GpsFixed";
@@ -34,9 +34,9 @@ const styles = theme => ({
 });
 
 function CreateHunt(props) {
-  const { classes } = props;
+  const { classes, user } = props;
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, getInitialState(user));
   const formError = CreateHuntFormError(state);
 
   function getHunt() {
@@ -100,7 +100,8 @@ function CreateHunt(props) {
 }
 
 CreateHunt.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.instanceOf(User)
 };
 
 export default withStyles(styles)(CreateHunt);

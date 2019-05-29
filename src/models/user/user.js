@@ -108,4 +108,10 @@ Object.defineProperty(User.prototype, "username", {
   }
 });
 
+Object.defineProperty(User.prototype, "requestJSON", {
+  get: function() {
+    return this.data;
+  }
+});
+
 export default User;

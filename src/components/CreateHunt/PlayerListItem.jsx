@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import EditableHeading from "./EditableHeading";
 import DeleteItemButton from "./DeleteItemButton";
-import * as action from "./actions";
+import * as actions from "./actions";
 import { Player, Team, Teams } from "../../models";
 
 const styles = theme => ({
@@ -32,13 +32,17 @@ const styles = theme => ({
 function PlayerListItem(props) {
   const { classes, dispatch, player, teams, validateEmail } = props;
 
+  const getTeamName = teamID => {
+    let team = teams.getByID(teamID);
+    return team ? team.teamName : "unassigned";
+  };
   return (
     <ListItem button disableGutters key={props.key}>
       <ListItemText
         primary={
           <EditableHeading
             dispatch={dispatch}
-            createAction={action.changePlayerEmail.bind(null, player)}
+            createAction={actions.changePlayerEmail.bind(null, player)}
             name={player.email}
             validate={validateEmail}
           />
@@ -50,22 +54,23 @@ function PlayerListItem(props) {
           className={classes.font}
           input={<Input name="team" id="team-helper" />}
           onChange={e => {
-            dispatch(action.changePlayersTeam(player, e.target.value));
+            let action = actions.changePlayersTeam(player, e.target.value);
+            dispatch(action);
           }}
           renderValue={team => team.teamName}
-          value={player.team}
+          value={getTeamName(player.teamID)}
         >
           <MenuItem value={new Team()}>Unassigned</MenuItem>
           {teams.array.map(t => (
             <MenuItem key={t.teamName} value={t}>
-              {t.name}
+              {t.teamName}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
-          handleDelete={e => dispatch(action.removePlayer(player.email))}
+          handleDelete={e => dispatch(actions.removePlayer(player.email))}
         />
       </ListItemSecondaryAction>
     </ListItem>

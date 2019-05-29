@@ -1,15 +1,15 @@
 import { combineReducers } from "../../utils";
-import { Items, Players, Teams } from "../../models";
+import { Items, Player, Players, Teams } from "../../models";
 
-export const initialState = {
+export const getInitialState = user => ({
   teams: new Teams(),
-  players: new Players(),
+  players: new Players(user ? [new Player(user.requestJSON)] : null),
   items: new Items(),
   huntName: "",
   maxTeams: 1,
   startDate: new Date(),
   endDate: new Date()
-};
+});
 
 export default combineReducers({
   teams,
