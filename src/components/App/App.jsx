@@ -31,24 +31,17 @@ const ThemedApp = withStyles(styles)(function(props) {
 
   const [user, setUser] = useState();
   const [notifications, setNotifications] = useState(new NotificationsModel());
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     new User()
       .apiRetrieveCurrentUser()
       .then(response => {
         setUser(new User(response.data));
-        setIsLoading(false);
       })
       .catch(err => {
         navigate("/signup");
       });
   }, []);
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <Location>
