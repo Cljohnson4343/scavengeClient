@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntTabBar from "../HuntTabBar";
 import { Hunt as HuntModel, Hunts } from "../../models";
-import PlayerTable from "./PlayerTable";
+import PlayerTable from "../PlayerTable";
 import ItemTable from "../ItemTable";
 
 const styles = theme => ({});
@@ -25,7 +25,16 @@ function Hunt(props) {
         }}
       />
     ),
-    teams: <PlayerTable />
+    teams: (
+      <PlayerTable
+        huntID={hunt.huntID}
+        players={hunt.players}
+        setPlayers={players => {
+          setHunt(hunt.setPlayers(players));
+        }}
+        teams={hunt.teams}
+      />
+    )
   };
   useEffect(() => {
     setIsLoading(true);

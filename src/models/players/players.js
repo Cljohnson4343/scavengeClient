@@ -35,6 +35,18 @@ const Players = ScavengeResource.extend({
   })
 });
 
+Object.defineProperty(Players.prototype, "username", {
+  get: function() {
+    return this.data.username;
+  }
+});
+
+Object.defineProperty(Players.prototype, "setPlayers", {
+  value: function(players) {
+    return new Players(players.copy(), this.teamID);
+  }
+});
+
 Object.defineProperty(Players.prototype, "teamID", {
   get: function() {
     return this.data.teamID;

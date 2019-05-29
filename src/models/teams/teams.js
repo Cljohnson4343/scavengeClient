@@ -122,6 +122,10 @@ Teams.prototype.getByTeam = function(team) {
   return this._container.get(x => x.equals(team));
 };
 
+Teams.prototype.getByID = function(teamID) {
+  return this._container.get(x => x.teamID === teamID);
+};
+
 Teams.prototype.changePlayerEmail = function(player, email) {
   return new Teams(
     this.array.map(t => {

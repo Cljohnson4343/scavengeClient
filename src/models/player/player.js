@@ -45,6 +45,12 @@ Object.defineProperty(Player.prototype, "teamID", {
   }
 });
 
+Object.defineProperty(Player.prototype, "username", {
+  get: function() {
+    return this.data.username;
+  }
+});
+
 Object.defineProperty(Player.prototype, "userID", {
   get: function() {
     return this.data.userID;
