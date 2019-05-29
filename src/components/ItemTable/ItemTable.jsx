@@ -28,7 +28,7 @@ import {
 
 const styles = theme => ({
   commandCell: {
-    padding: `0 ${theme.spacing(1)}px`
+    paddingLeft: theme.spacing(1)
   },
   headerCommandCell: {
     textAlign: "center",

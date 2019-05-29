@@ -5,8 +5,12 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
+import classNames from "classnames";
 
 export const styles = theme => ({
+  button: {
+    padding: `${theme.spacing(0.25)}px ${theme.spacing(0.6)}px`
+  },
   label: {
     color: theme.palette.primary.main
   }
@@ -15,7 +19,7 @@ export const styles = theme => ({
 export const GenButton = withStyles(styles)(
   ({ children, classes, onExecute, ...restProps }) => (
     <IconButton
-      className={classes.label}
+      className={classNames(classes.label, classes.button)}
       size="small"
       onClick={onExecute}
       {...restProps}
