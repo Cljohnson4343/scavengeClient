@@ -42,12 +42,10 @@ function Home(props) {
 
   useEffect(() => {
     if (user) {
-      new Hunts()
-        .apiRetrieveHunts({ params: { userID: user.userID } })
-        .then(response => {
-          let hunts = getHuntsFromResponse(response.data);
-          setHunts(hunts);
-        });
+      new Hunts().apiRetrieveHunts({ userID: user.userID }).then(response => {
+        let hunts = getHuntsFromResponse(response.data);
+        setHunts(hunts);
+      });
     }
   }, [userID]);
 

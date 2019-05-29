@@ -5,8 +5,6 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getPlayersFromResponse(data) {
-  console.log("getPlayersFromResponse");
-  console.dir(data);
   data = data ? data : [];
   return new Players(data.map(d => getPlayerFromResponse(d)));
 }
@@ -96,6 +94,10 @@ Players.prototype.getByPlayer = function(player) {
   }
 
   return this._container.get(x => x.equals(player));
+};
+
+Players.prototype.getByID = function(userID) {
+  return this._container.get(x => x.userID === userID);
 };
 
 Players.prototype.removeTeam = function(teamID) {

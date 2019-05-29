@@ -15,9 +15,6 @@ const Hunt = ScavengeResource.extend({
       return new Hunt(...[].slice.call(arguments));
     }
 
-    console.log("Hunt constructor");
-    console.dir(hunt);
-
     hunt = Boolean(hunt) ? hunt : { huntID: 0 };
 
     this.data = Object.assign({}, hunt);
@@ -39,9 +36,6 @@ const Hunt = ScavengeResource.extend({
     }
 
     ScavengeResource.call(this);
-
-    console.log("End of Hunt constructor");
-    console.dir(this);
   },
 
   apiRetrieveHunt: ScavengeMethod({

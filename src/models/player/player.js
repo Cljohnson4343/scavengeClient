@@ -8,7 +8,7 @@ export function getPlayerFromResponse(data) {
 }
 
 const Player = ScavengeResource.extend({
-  path: "/teams/{teamID}/players",
+  path: "/hunts/{huntID}/players",
   constructor: function(data) {
     if (!(this instanceof Player)) {
       return new Player(...[].slice.call(arguments));
@@ -31,6 +31,12 @@ const Player = ScavengeResource.extend({
     path: "/{userID}",
     method: "DELETE"
   })
+});
+
+Object.defineProperty(Player.prototype, "huntID", {
+  get: function() {
+    return this.data.huntID;
+  }
 });
 
 Object.defineProperty(Player.prototype, "teamID", {

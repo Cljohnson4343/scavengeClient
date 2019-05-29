@@ -52,7 +52,7 @@ function ItemTable(props) {
   const [sorting, setSorting] = useState([]);
   const [editing, setEditing] = useState({});
 
-  const getRowId = row => row.itemID;
+  const getRowId = row => (row ? row.itemID : 0);
   const isEditing = (row, column) => {
     if (editing.row === row && editing.column === column) {
       return true;

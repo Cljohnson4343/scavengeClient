@@ -11,8 +11,8 @@ const styles = theme => ({});
 function Hunt(props) {
   const { huntName, username } = props;
 
-  const [value, setValue] = useState("items");
-  const [hunt, setHunt] = useState(new HuntModel());
+  const [value, setValue] = useState("teams");
+  const [hunt, setHunt] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const table = {
@@ -51,7 +51,7 @@ function Hunt(props) {
   }, [huntName, username]);
 
   let renderProps;
-  if (isLoading) {
+  if (isLoading || !(hunt instanceof HuntModel)) {
     renderProps = <h1>Loading...</h1>;
   } else {
     renderProps = <span>{table[value]}</span>;

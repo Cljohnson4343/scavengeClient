@@ -17,6 +17,7 @@ import {
 import { Player, Players, Teams, getPlayerFromResponse } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import GroupIcon from "@material-ui/icons/Group";
 import {
   AddButton,
   EditButton,
@@ -24,6 +25,7 @@ import {
   DeleteButton,
   CancelButton
 } from "../ItemTable/CommandButtons";
+import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
   commandCell: {
@@ -46,12 +48,11 @@ function PlayerTable(props) {
   const { classes, huntID, players, setPlayers, teams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
-  const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [editing, setEditing] = useState({});
 
-  const getRowId = row => row.userID;
+  const getRowId = row => (row ? row.userID : 0);
   const isEditing = (row, column) => {
     if (editing.row === row && editing.column === column) {
       return true;
@@ -59,13 +60,14 @@ function PlayerTable(props) {
     return false;
   };
 
-  function commitChanges({ added, changed, deleted }) {
+  function commitChanges({ changed, deleted }) {
     if (deleted) {
-      deleted.forEach(id => {});
-    }
-
-    if (added) {
-      added.forEach(input => {});
+      deleted.forEach(id => {
+        let player = players.getByID(id);
+        player.apiDeletePlayer().then(response => {
+          setPlayers(players.remove(player));
+        });
+      });
     }
 
     if (changed) {
@@ -97,7 +99,6 @@ function PlayerTable(props) {
   );
 
   const cmds = {
-    add: AddButton,
     edit: EditButton,
     delete: DeleteButton,
     commit: CommitButton,
@@ -125,13 +126,16 @@ function PlayerTable(props) {
     {
       name: "team",
       title: "Team",
-      getCellValue: row => teams.getByID(row.teamID).teamName
+      getCellValue: row => {
+        let team = teams.getByID(row.teamID);
+        return team ? team.teamName : "Unassigned";
+      }
     }
   ];
 
   const colExtensions = [
     { columnName: "username", align: "left", wordWrapEnabled: true },
-    { columnName: "team", align: "center", width: 80 }
+    { columnName: "team", align: "center", width: 120 }
   ];
 
   const sortingExtensions = [
@@ -167,45 +171,43 @@ function PlayerTable(props) {
   }
 
   return (
-    <Paper className={classes.paper}>
-      <Grid columns={cols} getRowId={getRowId} rows={players.array}>
-        <EditingState
-          columnExtensions={editingExtensions}
-          editingRowIds={editingRowIds}
-          onEditingRowIdsChange={editingRowIds => {
-            setEditingRowIds(editingRowIds);
-          }}
-          rowChanges={rowChanges}
-          onRowChangesChange={rowChanges => {
-            setRowChanges(rowChanges);
-          }}
-          addedRows={addedRows}
-          onAddedRowsChange={addedRows => {
-            setAddedRows(addedRows);
-          }}
-          onCommitChanges={commitChanges}
-        />
-        <SortingState
-          columnExtensions={sortingExtensions}
-          onSortingChange={sortingArr => setSorting(sortingArr)}
-          sorting={sorting}
-        />
-        <IntegratedSorting />
-        <UsernameTypeProvider for={["username"]} />
-        <Table columnExtensions={colExtensions} />
-        <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
-        <TableEditRow />
-        <TableEditColumn
-          cellComponent={cmdCellComponent}
-          commandComponent={Command}
-          headerCellComponent={cmdHeaderComponent}
-          showAddCommand={addedRows.length < 1}
-          showEditCommand
-          showDeleteCommand
-          width={80}
-        />
-      </Grid>
-    </Paper>
+    <div>
+      <SectionHeader Icon={GroupIcon}>Joined Players</SectionHeader>
+      <Paper className={classes.paper}>
+        <Grid columns={cols} getRowId={getRowId} rows={players.array}>
+          <EditingState
+            columnExtensions={editingExtensions}
+            editingRowIds={editingRowIds}
+            onEditingRowIdsChange={editingRowIds => {
+              setEditingRowIds(editingRowIds);
+            }}
+            rowChanges={rowChanges}
+            onRowChangesChange={rowChanges => {
+              setRowChanges(rowChanges);
+            }}
+            onCommitChanges={commitChanges}
+          />
+          <SortingState
+            columnExtensions={sortingExtensions}
+            onSortingChange={sortingArr => setSorting(sortingArr)}
+            sorting={sorting}
+          />
+          <IntegratedSorting />
+          <UsernameTypeProvider for={["username"]} />
+          <Table columnExtensions={colExtensions} />
+          <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
+          <TableEditRow />
+          <TableEditColumn
+            cellComponent={cmdCellComponent}
+            commandComponent={Command}
+            headerCellComponent={cmdHeaderComponent}
+            showEditCommand
+            showDeleteCommand
+            width={80}
+          />
+        </Grid>
+      </Paper>
+    </div>
   );
 }
 
