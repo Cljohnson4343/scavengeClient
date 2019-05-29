@@ -24,7 +24,7 @@ const Player = ScavengeResource.extend({
       path: "/",
       method: "POST"
     },
-    self => getDataProperties(self.data, ["userID"])
+    self => getDataProperties(self.data, ["userID", "teamID", "huntID"])
   ),
 
   apiDeletePlayer: ScavengeMethod({

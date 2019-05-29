@@ -122,6 +122,15 @@ Object.defineProperty(Hunt.prototype, "players", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "setPlayers", {
+  value: function(players) {
+    let huntJSON = this.requestJSON;
+    huntJSON.players = players;
+
+    return new Hunt(huntJSON);
+  }
+});
+
 Object.defineProperty(Hunt.prototype, "inProgess", {
   get: function() {
     return this.starts <= new Date() && this.ends > new Date();

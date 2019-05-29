@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Paper, TextField, withStyles } from "@material-ui/core";
+import {
+  Button,
+  Input,
+  MenuItem,
+  Paper,
+  Select,
+  TableCell,
+  TextField,
+  withStyles
+} from "@material-ui/core";
 import {
   SortingState,
   IntegratedSorting,
@@ -14,12 +23,11 @@ import {
   TableHeaderRow,
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
-import { Player, Players, Teams, getPlayerFromResponse } from "../../models";
+import { Players, Teams } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import GroupIcon from "@material-ui/icons/Group";
 import {
-  AddButton,
   EditButton,
   CommitButton,
   DeleteButton,
@@ -71,7 +79,18 @@ function PlayerTable(props) {
     }
 
     if (changed) {
-      Object.keys(changed).forEach(id => {});
+      Object.keys(changed).forEach(id => {
+        let teamID = getTeamID(changed[id].team);
+        let player = players.getByID(parseInt(id));
+        if (player.teamID === teamID) {
+          return;
+        }
+
+        player = player.changeTeam(teamID);
+        player.apiCreatePlayer().then(response => {
+          setPlayers(players.changePlayersTeam(player, teamID));
+        });
+      });
     }
   }
 
@@ -126,16 +145,13 @@ function PlayerTable(props) {
     {
       name: "team",
       title: "Team",
-      getCellValue: row => {
-        let team = teams.getByID(row.teamID);
-        return team ? team.teamName : "Unassigned";
-      }
+      getCellValue: row => getTeam(row)
     }
   ];
 
   const colExtensions = [
     { columnName: "username", align: "left", wordWrapEnabled: true },
-    { columnName: "team", align: "center", width: 120 }
+    { columnName: "team", align: "left", width: 120 }
   ];
 
   const sortingExtensions = [
@@ -145,23 +161,18 @@ function PlayerTable(props) {
   const editingExtensions = [
     {
       columnName: "username",
-      editingEnabled: true
+      editingEnabled: false
     }
   ];
 
-  function UsernameEditor({ row, value, onValueChange }) {
-    const input = value ? value : row.username;
+  function UsernameEditor({ row }) {
     return (
       <TextField
-        autoFocus={isEditing(getRowId(row), "username")}
+        disabled={true}
         id="username-editor"
         margin="normal"
-        onChange={e => {
-          setEditing({ row: getRowId(row), column: "username" });
-          onValueChange(e.currentTarget.value);
-        }}
         type="text"
-        value={input}
+        value={row.username}
         variant="standard"
       />
     );
@@ -169,6 +180,63 @@ function PlayerTable(props) {
   function UsernameTypeProvider(props) {
     return <DataTypeProvider editorComponent={UsernameEditor} {...props} />;
   }
+
+  const getTeamID = name => {
+    let team = teams.getByName(name);
+    return team ? team.teamID : 0;
+  };
+  const getTeam = row => {
+    const newTeamName = rowChanges[getRowId(row)]
+      ? rowChanges[getRowId(row)].team
+      : null;
+    if (newTeamName) {
+      return newTeamName;
+    }
+    const team = teams.getByID(row.teamID);
+    return team ? team.teamName : "unassigned";
+  };
+  const availableValues = {
+    team: ["unassigned", ...teams.array.map(t => t.teamName)]
+  };
+  const LookupEditCellBase = ({
+    availableColumnValues,
+    onValueChange,
+    classes,
+    row
+  }) => {
+    return (
+      <TableCell className={classes.lookupEditCell}>
+        <Select
+          value={getTeam(row)}
+          onChange={event => {
+            onValueChange(event.target.value);
+          }}
+          input={<Input classes={{ root: classes.inputRoot }} />}
+        >
+          {availableColumnValues.map(item => (
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </TableCell>
+    );
+  };
+  const LookupEditCell = withStyles(styles)(LookupEditCellBase);
+
+  const EditCell = props => {
+    const { column } = props;
+    const availableColumnValues = availableValues[column.name];
+    if (availableColumnValues) {
+      return (
+        <LookupEditCell
+          {...props}
+          availableColumnValues={availableColumnValues}
+        />
+      );
+    }
+    return <TableEditRow.Cell {...props} />;
+  };
 
   return (
     <div>
@@ -196,7 +264,7 @@ function PlayerTable(props) {
           <UsernameTypeProvider for={["username"]} />
           <Table columnExtensions={colExtensions} />
           <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
-          <TableEditRow />
+          <TableEditRow cellComponent={EditCell} />
           <TableEditColumn
             cellComponent={cmdCellComponent}
             commandComponent={Command}
