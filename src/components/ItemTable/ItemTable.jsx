@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Button,
-  IconButton,
-  Paper,
-  TextField,
-  withStyles
-} from "@material-ui/core";
+import { Button, Paper, TextField, withStyles } from "@material-ui/core";
 import {
   SortingState,
   IntegratedSorting,
@@ -21,14 +15,16 @@ import {
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
 import { Items, Item, getItemFromResponse } from "../../models";
-import AddIcon from "@material-ui/icons/Add";
-import CancelIcon from "@material-ui/icons/Cancel";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import SaveIcon from "@material-ui/icons/Save";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import { validateItemName, validateItemPoints } from "../../utils";
+import {
+  AddButton,
+  EditButton,
+  CommitButton,
+  DeleteButton,
+  CancelButton
+} from "./CommandButtons";
 
 const styles = theme => ({
   commandCell: {
@@ -53,11 +49,16 @@ function ItemTable(props) {
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
-  const [editingRowChanges, setEditingRowChanges] = useState({});
+  const [sorting, setSorting] = useState([]);
+  const [editing, setEditing] = useState({});
 
-  function getRowId(row) {
-    return row.itemID;
-  }
+  const getRowId = row => row.itemID;
+  const isEditing = (row, column) => {
+    if (editing.row === row && editing.column === column) {
+      return true;
+    }
+    return false;
+  };
 
   function commitChanges({ added, changed, deleted }) {
     if (deleted) {
@@ -77,8 +78,24 @@ function ItemTable(props) {
         });
       });
     }
-    console.log("changed");
-    console.dir(changed);
+
+    if (changed) {
+      Object.keys(changed).forEach(id => {
+        let item = items.getByItemID(parseInt(id));
+        if (changed[id]) {
+          if (changed[id].name) {
+            item = item.changeName(changed[id].name);
+          }
+          if (changed[id].points) {
+            item = item.changePoints(changed[id].points);
+          }
+
+          item.apiUpdateItem().then(response => {
+            setItems(items.replace(parseInt(id), item));
+          });
+        }
+      });
+    }
   }
 
   function SortingIcon({ direction }) {
@@ -104,51 +121,6 @@ function ItemTable(props) {
     </Button>
   );
 
-  const GenButton = ({ children, onExecute, ...restProps }) => (
-    <IconButton
-      className={classes.label}
-      size="small"
-      onClick={onExecute}
-      {...restProps}
-    >
-      {children}
-    </IconButton>
-  );
-
-  const AddButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute} title="Add row">
-      <AddIcon classes={{ root: classes.label }} />
-    </GenButton>
-  );
-
-  const CancelButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute} title="Cancel changes">
-      <CancelIcon classes={{ root: classes.label }} />
-    </GenButton>
-  );
-
-  const CommitButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute} title="Save changes">
-      <SaveIcon classes={{ root: classes.label }} />
-    </GenButton>
-  );
-  const DeleteButton = ({ onExecute }) => (
-    <GenButton
-      onExecute={() => {
-        if (window.confirm("Are you sure you want to delete this row?")) {
-          onExecute();
-        }
-      }}
-      title="Delete row"
-    >
-      <DeleteIcon classes={{ root: classes.label }} />
-    </GenButton>
-  );
-  const EditButton = ({ onExecute }) => (
-    <GenButton onExecute={onExecute} title="Edit row">
-      <EditIcon classes={{ root: classes.label }} />
-    </GenButton>
-  );
   const cmds = {
     add: AddButton,
     edit: EditButton,
@@ -166,13 +138,6 @@ function ItemTable(props) {
   function cmdHeaderComponent({ children }) {
     return <td className={classes.headerCommandCell}>{children}</td>;
   }
-
-  const [sorting, setSorting] = useState([
-    {
-      columnName: "name",
-      direction: "asc"
-    }
-  ]);
 
   const cols = [
     {
@@ -209,27 +174,26 @@ function ItemTable(props) {
       }
     }
   ];
+  const editingExtensions = [
+    {
+      columnName: "name",
+      editingEnabled: true
+    }
+  ];
 
-  function NameEditor({ row, onValueChange }) {
-    const input = editingRowChanges.hasOwnProperty(getRowId(row))
-      ? editingRowChanges[getRowId(row)].name
-      : row.name;
+  function NameEditor({ row, value, onValueChange }) {
+    const input = value ? value : row.name;
     const err = validateItemName(input);
     return (
       <TextField
-        autoFocus={true}
+        autoFocus={isEditing(getRowId(row), "name")}
         error={err.inError ? true : null}
         FormHelperTextProps={err.inError ? { error: true } : null}
         helperText={err.msg}
         id="name-editor"
         margin="normal"
         onChange={e => {
-          const rowID = getRowId(row);
-          setEditingRowChanges(
-            Object.assign({}, editingRowChanges, {
-              [rowID]: row.changeName(e.currentTarget.value)
-            })
-          );
+          setEditing({ row: getRowId(row), column: "name" });
           onValueChange(e.currentTarget.value);
         }}
         type="text"
@@ -242,28 +206,21 @@ function ItemTable(props) {
     return <DataTypeProvider editorComponent={NameEditor} {...props} />;
   }
 
-  function PointsEditor({ row, onValueChange, ...restArgs }) {
-    const input = editingRowChanges.hasOwnProperty(getRowId(row))
-      ? editingRowChanges[getRowId(row)].points
-      : row.points;
+  function PointsEditor({ row, value, onValueChange }) {
+    const input = typeof value === "number" ? value : row.points;
     const err = validateItemPoints(input);
     return (
       <TextField
-        autoFocus={true}
+        autoFocus={isEditing(getRowId(row), "points")}
         error={err.inError ? true : null}
         FormHelperTextProps={err.inError ? { error: true } : null}
         helperText={err.msg}
         id="points-editor"
         margin="normal"
         onChange={e => {
-          const rowID = getRowId(row);
+          setEditing({ row: getRowId(row), column: "points" });
           let value = parseInt(e.currentTarget.value);
           value = isNaN(value) ? 0 : value;
-          setEditingRowChanges(
-            Object.assign({}, editingRowChanges, {
-              [rowID]: row.changePoints(value)
-            })
-          );
           onValueChange(value);
         }}
         type="number"
@@ -280,12 +237,13 @@ function ItemTable(props) {
     <Paper className={classes.paper}>
       <Grid columns={cols} getRowId={getRowId} rows={items.array}>
         <EditingState
+          columnExtensions={editingExtensions}
           editingRowIds={editingRowIds}
           onEditingRowIdsChange={editingRowIds => {
             setEditingRowIds(editingRowIds);
           }}
           rowChanges={rowChanges}
-          onRowChanges={rowChanges => {
+          onRowChangesChange={rowChanges => {
             setRowChanges(rowChanges);
           }}
           addedRows={addedRows}

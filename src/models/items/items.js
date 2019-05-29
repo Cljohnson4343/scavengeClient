@@ -78,6 +78,19 @@ Object.defineProperty(Items.prototype, "changeItemName", {
   }
 });
 
+Object.defineProperty(Items.prototype, "replace", {
+  value: function(itemID, item) {
+    let items = this.array.map(i => {
+      if (i.itemID === itemID) {
+        return item.copy();
+      }
+      return i;
+    });
+
+    return new Items(items, this.huntID);
+  }
+});
+
 Object.defineProperty(Items.prototype, "changeItemPoints", {
   value: function(item, points) {
     return new Items(

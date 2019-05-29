@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core";
 import HuntTabBar from "../HuntTabBar";
 import { Hunt as HuntModel, Hunts } from "../../models";
 import PlayerTable from "./PlayerTable";
-import ItemTable from "./ItemTable";
+import ItemTable from "../ItemTable";
 
 const styles = theme => ({});
 

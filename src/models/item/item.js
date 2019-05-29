@@ -36,10 +36,13 @@ const Item = ScavengeResource.extend({
     self => getDataProperties(self.data, ["huntID", "itemName", "points"])
   ),
 
-  apiUpdateItem: ScavengeMethod({
-    path: "/{itemID}",
-    method: "PATCH"
-  })
+  apiUpdateItem: ScavengeMethod(
+    {
+      path: "/{itemID}",
+      method: "PATCH"
+    },
+    self => getDataProperties(self.data, ["itemName", "points", "itemID"])
+  )
 });
 
 Object.defineProperty(Item.prototype, "changeName", {
