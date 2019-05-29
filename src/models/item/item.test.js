@@ -141,20 +141,6 @@ describe("Item", () => {
         newPoints: 23.23,
         points: 43,
         expected: 23
-      },
-      {
-        label: "with zero value",
-        name: "item name",
-        newPoints: 0,
-        points: 43,
-        expected: 1
-      },
-      {
-        label: "with negative value real value",
-        name: "item name",
-        newPoints: -1,
-        points: 43,
-        expected: 1
       }
     ];
 

@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, IconButton, Paper, withStyles } from "@material-ui/core";
+import {
+  Button,
+  IconButton,
+  Paper,
+  TextField,
+  withStyles
+} from "@material-ui/core";
 import {
   SortingState,
   IntegratedSorting,
-  EditingState
+  EditingState,
+  DataTypeProvider
 } from "@devexpress/dx-react-grid";
 import {
   Grid,
@@ -21,6 +28,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import { validateItemName, validateItemPoints } from "../../utils";
 
 const styles = theme => ({
   commandCell: {
@@ -45,6 +53,7 @@ function ItemTable(props) {
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
+  const [editingRowChanges, setEditingRowChanges] = useState({});
 
   function getRowId(row) {
     return row.itemID;
@@ -123,7 +132,6 @@ function ItemTable(props) {
       <SaveIcon classes={{ root: classes.label }} />
     </GenButton>
   );
-
   const DeleteButton = ({ onExecute }) => (
     <GenButton
       onExecute={() => {
@@ -136,13 +144,11 @@ function ItemTable(props) {
       <DeleteIcon classes={{ root: classes.label }} />
     </GenButton>
   );
-
   const EditButton = ({ onExecute }) => (
     <GenButton onExecute={onExecute} title="Edit row">
       <EditIcon classes={{ root: classes.label }} />
     </GenButton>
   );
-
   const cmds = {
     add: AddButton,
     edit: EditButton,
@@ -185,7 +191,7 @@ function ItemTable(props) {
 
   const colExtensions = [
     { columnName: "name", align: "left", wordWrapEnabled: true },
-    { columnName: "points", align: "right", width: 80 }
+    { columnName: "points", align: "center", width: 70 }
   ];
 
   const sortingExtensions = [
@@ -204,20 +210,82 @@ function ItemTable(props) {
     }
   ];
 
+  function NameEditor({ row, onValueChange }) {
+    const input = editingRowChanges.hasOwnProperty(getRowId(row))
+      ? editingRowChanges[getRowId(row)].name
+      : row.name;
+    const err = validateItemName(input);
+    return (
+      <TextField
+        autoFocus={true}
+        error={err.inError ? true : null}
+        FormHelperTextProps={err.inError ? { error: true } : null}
+        helperText={err.msg}
+        id="name-editor"
+        margin="normal"
+        onChange={e => {
+          const rowID = getRowId(row);
+          setEditingRowChanges(
+            Object.assign({}, editingRowChanges, {
+              [rowID]: row.changeName(e.currentTarget.value)
+            })
+          );
+          onValueChange(e.currentTarget.value);
+        }}
+        type="text"
+        value={input}
+        variant="standard"
+      />
+    );
+  }
+  function NameTypeProvider(props) {
+    return <DataTypeProvider editorComponent={NameEditor} {...props} />;
+  }
+
+  function PointsEditor({ row, onValueChange, ...restArgs }) {
+    const input = editingRowChanges.hasOwnProperty(getRowId(row))
+      ? editingRowChanges[getRowId(row)].points
+      : row.points;
+    const err = validateItemPoints(input);
+    return (
+      <TextField
+        autoFocus={true}
+        error={err.inError ? true : null}
+        FormHelperTextProps={err.inError ? { error: true } : null}
+        helperText={err.msg}
+        id="points-editor"
+        margin="normal"
+        onChange={e => {
+          const rowID = getRowId(row);
+          let value = parseInt(e.currentTarget.value);
+          value = isNaN(value) ? 0 : value;
+          setEditingRowChanges(
+            Object.assign({}, editingRowChanges, {
+              [rowID]: row.changePoints(value)
+            })
+          );
+          onValueChange(value);
+        }}
+        type="number"
+        value={input}
+        variant="standard"
+      />
+    );
+  }
+  function PointsTypeProvider(props) {
+    return <DataTypeProvider editorComponent={PointsEditor} {...props} />;
+  }
+
   return (
     <Paper className={classes.paper}>
       <Grid columns={cols} getRowId={getRowId} rows={items.array}>
         <EditingState
           editingRowIds={editingRowIds}
           onEditingRowIdsChange={editingRowIds => {
-            console.log("onEditingRowIdsChange");
-            console.dir(editingRowIds);
             setEditingRowIds(editingRowIds);
           }}
           rowChanges={rowChanges}
           onRowChanges={rowChanges => {
-            console.log("onRowChanges");
-            console.dir(rowChanges);
             setRowChanges(rowChanges);
           }}
           addedRows={addedRows}
@@ -232,6 +300,8 @@ function ItemTable(props) {
           sorting={sorting}
         />
         <IntegratedSorting columnExtensions={integratedSortingExtensions} />
+        <NameTypeProvider for={["name"]} />
+        <PointsTypeProvider for={["points"]} />
         <Table columnExtensions={colExtensions} />
         <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
         <TableEditRow />
