@@ -34,10 +34,14 @@ import {
   CancelButton
 } from "../ItemTable/CommandButtons";
 import SectionHeader from "../SectionHeader";
+import InviteTable from "./InviteTable";
 
 const styles = theme => ({
   commandCell: {
     paddingLeft: theme.spacing(1)
+  },
+  error: {
+    color: theme.palette.error.main
   },
   headerCommandCell: {
     textAlign: "center",
@@ -58,15 +62,8 @@ function PlayerTable(props) {
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
   const [sorting, setSorting] = useState([]);
-  const [editing, setEditing] = useState({});
 
   const getRowId = row => (row ? row.userID : 0);
-  const isEditing = (row, column) => {
-    if (editing.row === row && editing.column === column) {
-      return true;
-    }
-    return false;
-  };
 
   function commitChanges({ changed, deleted }) {
     if (deleted) {
@@ -125,7 +122,12 @@ function PlayerTable(props) {
   };
   const Command = ({ id, onExecute }) => {
     const CommandComponent = cmds[id];
-    return <CommandComponent onExecute={onExecute} />;
+    return (
+      <CommandComponent
+        classes={id === "cancel" ? { label: classes.error } : null}
+        onExecute={onExecute}
+      />
+    );
   };
   function cmdCellComponent({ children }) {
     return <td className={classes.commandCell}>{children}</td>;
@@ -275,6 +277,7 @@ function PlayerTable(props) {
           />
         </Grid>
       </Paper>
+      <InviteTable teams={teams} invites={[]} />
     </div>
   );
 }

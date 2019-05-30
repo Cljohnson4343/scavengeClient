@@ -30,6 +30,9 @@ const styles = theme => ({
   commandCell: {
     paddingLeft: theme.spacing(1)
   },
+  error: {
+    color: theme.palette.error.main
+  },
   headerCommandCell: {
     textAlign: "center",
     whiteSpace: "nowrap",
@@ -130,7 +133,12 @@ function ItemTable(props) {
   };
   const Command = ({ id, onExecute }) => {
     const CommandComponent = cmds[id];
-    return <CommandComponent onExecute={onExecute} />;
+    return (
+      <CommandComponent
+        classes={id === "cancel" ? { label: classes.error } : null}
+        onExecute={onExecute}
+      />
+    );
   };
   function cmdCellComponent({ children }) {
     return <td className={classes.commandCell}>{children}</td>;

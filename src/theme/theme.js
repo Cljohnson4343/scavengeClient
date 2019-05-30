@@ -18,6 +18,9 @@ const theme = createMuiTheme({
       main: grey[200]
     },
     divider: grey[400],
+    error: {
+      main: red[400]
+    },
     link: blue[500],
     primary: {
       background: green[50],
