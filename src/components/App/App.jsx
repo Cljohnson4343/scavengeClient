@@ -62,8 +62,8 @@ const ThemedApp = withStyles(styles)(function(props) {
             setNotifications={setNotifications}
             userID={user ? user.userID : 0}
           />
-          <SignIn path="/signin" setUser={setUser} user={user} />
-          <SignUp path="/signup" setUser={setUser} user={user} />
+          <SignIn path="/signin" setUser={setUser} isLoggedIn={Boolean(user)} />
+          <SignUp path="/signup" setUser={setUser} isLoggedIn={Boolean(user)} />
         </Router>
         <Footer user={user} setUser={setUser} />
       </div>

@@ -4,6 +4,7 @@ import { Button, withStyles } from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
 import ScavengeInput from "../ScavengeInput";
+import { navigate } from "@reach/router";
 
 const styles = theme => {
   const fieldWidth = 300;
@@ -34,33 +35,15 @@ const styles = theme => {
 };
 
 function SignUp(props) {
-  const { classes, setUser, user } = props;
+  const { classes, setUser, isLoggedIn } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const clearInputs = () => {
-    setFirstNameInput("");
-    setLastNameInput("");
-    setUsernameInput("");
-    setEmailInput("");
-  };
-
-  const isLoggedIn = Boolean(user);
 
   if (isLoggedIn) {
-    return (
-      <Button color="primary" size="small" variant="text">
-        Sign Out
-      </Button>
-    );
-  }
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
+    navigate("/");
   }
 
   function getUser() {
@@ -116,9 +99,8 @@ function SignUp(props) {
           onClick={e => {
             let user = getUser();
             user.apiCreateUser().then(response => {
-              setIsLoading(false);
-              clearInputs();
               setUser(new User(response.data));
+              navigate("/");
             });
           }}
         >
@@ -131,8 +113,8 @@ function SignUp(props) {
 
 SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
-  setUser: PropTypes.func,
-  user: PropTypes.instanceOf(User)
+  isLoggedIn: PropTypes.bool.isRequired,
+  setUser: PropTypes.func
 };
 
 export default withStyles(styles)(SignUp);

@@ -28,9 +28,13 @@ const styles = theme => {
 };
 
 function SignIn(props) {
-  const { classes, navigate, setUser } = props;
+  const { classes, navigate, setUser, isLoggedIn } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
+
+  if (isLoggedIn) {
+    navigate("/");
+  }
 
   return (
     <FormContainer label="Sign In">
@@ -62,8 +66,8 @@ function SignIn(props) {
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
-  user: PropTypes.instanceOf(User)
+  isLoggedIn: PropTypes.bool.isRequired,
+  setUser: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SignIn);
