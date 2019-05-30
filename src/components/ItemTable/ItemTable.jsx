@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Paper, TextField, withStyles } from "@material-ui/core";
+import {
+  Button,
+  Paper,
+  TextField,
+  Typography,
+  withStyles
+} from "@material-ui/core";
 import {
   SortingState,
   IntegratedSorting,
@@ -40,6 +46,12 @@ const styles = theme => ({
   },
   label: {
     color: theme.palette.primary.main
+  },
+  noDataCell: {
+    textAlign: "center"
+  },
+  noDataMsg: {
+    margin: `${theme.spacing(4)}px 0`
   },
   paper: {
     marginTop: theme.spacing(2)
@@ -244,6 +256,13 @@ function ItemTable(props) {
   function PointsTypeProvider(props) {
     return <DataTypeProvider editorComponent={PointsEditor} {...props} />;
   }
+  const NoDataCell = ({ getMessage }) => {
+    return (
+      <td className={classes.noDataCell} colspan={cols.length + 1}>
+        <Typography className={classes.noDataMsg}>No invites</Typography>
+      </td>
+    );
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -272,7 +291,10 @@ function ItemTable(props) {
         <IntegratedSorting columnExtensions={integratedSortingExtensions} />
         <NameTypeProvider for={["name"]} />
         <PointsTypeProvider for={["points"]} />
-        <Table columnExtensions={colExtensions} />
+        <Table
+          columnExtensions={colExtensions}
+          noDataCellComponent={NoDataCell}
+        />
         <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
         <TableEditRow />
         <TableEditColumn
