@@ -302,7 +302,12 @@ function PlayerTable(props) {
           />
         </Grid>
       </Paper>
-      <InviteTable teams={teams} invites={invites} setInvites={setInvites} />
+      <InviteTable
+        teams={teams}
+        huntID={huntID}
+        invites={invites}
+        setInvites={setInvites}
+      />
     </div>
   );
 }

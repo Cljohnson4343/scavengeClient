@@ -24,7 +24,7 @@ import {
   TableHeaderRow,
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
-import { Teams } from "../../models";
+import { Teams, Invite } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
@@ -40,11 +40,14 @@ import { validateEmail } from "../../utils";
 import { Invites } from "../../models";
 
 const styles = theme => ({
-  error: {
-    color: theme.palette.error.main
-  },
   commandCell: {
     paddingLeft: theme.spacing(1)
+  },
+  disabled: {
+    color: theme.palette.disabled.main
+  },
+  error: {
+    color: theme.palette.error.main
   },
   headerCommandCell: {
     textAlign: "center",
@@ -66,24 +69,35 @@ const styles = theme => ({
 });
 
 function InviteTable(props) {
-  const { classes, invites, setInvites, teams } = props;
+  const { classes, huntID, invites, setInvites, teams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [editing, setEditing] = useState({});
-  const [errors, setErrors] = useState({});
+  const [rowsInInvalidState, setRowsInInvalidState] = useState(new Set([]));
 
   const isEditing = (rowID, column) => {
     return editing.rowID === rowID && editing.column === column ? true : false;
   };
-  const isInError = rowID => errors.hasOwnProperty(rowID);
+  const isInInvalidState = row => rowsInInvalidState.has(getRowId(row));
+
   const getRowId = row => (row ? row.inviteID : 0);
 
   function commitChanges({ added, changed, deleted }) {
     if (added) {
-      added.forEach(id => {});
+      added.forEach(rowData => {
+        let invite = new Invite({
+          email: rowData.email,
+          huntID: huntID,
+          teamID: rowData.team ? getTeamID(rowData.team) : null
+        });
+
+        invite.apiCreate().then(response => {
+          setInvites(invites.add(new Invite(response.data)));
+        });
+      });
     }
     if (deleted) {
       deleted.forEach(id => {});
@@ -124,21 +138,39 @@ function InviteTable(props) {
     commit: CommitButton,
     cancel: CancelButton
   };
-  const Command = ({ id, onExecute }) => {
+  const Command = ({ id, onExecute, disabled, ...restProps }) => {
     const CommandComponent = cmds[id];
-    let disabled = false;
-    if (id === "commit") {
-      disabled = true;
-    }
+
     return (
       <CommandComponent
-        classes={id === "cancel" ? { label: classes.error } : null}
+        classes={
+          id === "cancel"
+            ? { label: classes.error }
+            : disabled
+            ? { label: classes.disabled }
+            : null
+        }
         disabled={disabled}
         onExecute={onExecute}
       />
     );
   };
+  const isCommitCommand = child => {
+    return !child
+      ? false
+      : !child.props
+      ? false
+      : Boolean(child.props.id === "commit");
+  };
   function cmdCellComponent({ children, row }) {
+    if (isInInvalidState(row)) {
+      children = React.Children.map(children, child => {
+        if (isCommitCommand(child)) {
+          return React.cloneElement(child, { disabled: true });
+        }
+        return child;
+      });
+    }
     return <td className={classes.commandCell}>{children}</td>;
   }
   function cmdHeaderComponent({ children }) {
@@ -190,6 +222,16 @@ function InviteTable(props) {
         onChange={e => {
           if (!isEditing(getRowId(row), "email")) {
             setEditing({ rowID: getRowId(row), column: "email" });
+          }
+          const input = e.currentTarget.value;
+          const err = validateEmail(input);
+          if (err.inError && !isInInvalidState(row)) {
+            setRowsInInvalidState(rowsInInvalidState.add(getRowId(row)));
+          }
+
+          if (!err.inError && isInInvalidState(row)) {
+            rowsInInvalidState.delete(getRowId(row));
+            setRowsInInvalidState(rowsInInvalidState);
           }
           onValueChange(e.currentTarget.value);
         }}
@@ -318,6 +360,7 @@ function InviteTable(props) {
 
 InviteTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  huntID: PropTypes.number.isRequired,
   invites: PropTypes.instanceOf(Invites).isRequired,
   setInvites: PropTypes.func.isRequired,
   teams: PropTypes.instanceOf(Teams).isRequired
