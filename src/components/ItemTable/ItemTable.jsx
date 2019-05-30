@@ -259,7 +259,7 @@ function ItemTable(props) {
   const NoDataCell = ({ getMessage }) => {
     return (
       <td className={classes.noDataCell} colspan={cols.length + 1}>
-        <Typography className={classes.noDataMsg}>No invites</Typography>
+        <Typography className={classes.noDataMsg}>No items</Typography>
       </td>
     );
   };
