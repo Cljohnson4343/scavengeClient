@@ -53,8 +53,8 @@ function ItemTable(props) {
   const [editing, setEditing] = useState({});
 
   const getRowId = row => (row ? row.itemID : 0);
-  const isEditing = (row, column) => {
-    if (editing.row === row && editing.column === column) {
+  const isEditing = (rowID, column) => {
+    if (editing.rowID === rowID && editing.column === column) {
       return true;
     }
     return false;
@@ -193,7 +193,9 @@ function ItemTable(props) {
         id="name-editor"
         margin="normal"
         onChange={e => {
-          setEditing({ row: getRowId(row), column: "name" });
+          if (!isEditing(getRowId(row), "name")) {
+            setEditing({ rowID: getRowId(row), column: "name" });
+          }
           onValueChange(e.currentTarget.value);
         }}
         type="text"
@@ -218,7 +220,9 @@ function ItemTable(props) {
         id="points-editor"
         margin="normal"
         onChange={e => {
-          setEditing({ row: getRowId(row), column: "points" });
+          if (!isEditing(getRowId(row), "points")) {
+            setEditing({ rowID: getRowId(row), column: "points" });
+          }
           let value = parseInt(e.currentTarget.value);
           value = isNaN(value) ? 0 : value;
           onValueChange(value);
