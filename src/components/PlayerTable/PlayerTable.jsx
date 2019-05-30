@@ -8,6 +8,7 @@ import {
   Select,
   TableCell,
   TextField,
+  Typography,
   withStyles
 } from "@material-ui/core";
 import {
@@ -50,6 +51,12 @@ const styles = theme => ({
   },
   label: {
     color: theme.palette.primary.main
+  },
+  noDataCell: {
+    textAlign: "center"
+  },
+  noDataMsg: {
+    margin: `${theme.spacing(4)}px 0`
   },
   paper: {
     marginTop: theme.spacing(2)
@@ -239,6 +246,13 @@ function PlayerTable(props) {
     }
     return <TableEditRow.Cell {...props} />;
   };
+  const NoDataCell = ({ getMessage }) => {
+    return (
+      <td className={classes.noDataCell} colspan={cols.length + 1}>
+        <Typography className={classes.noDataMsg}>No invites</Typography>
+      </td>
+    );
+  };
 
   return (
     <div>
@@ -264,7 +278,10 @@ function PlayerTable(props) {
           />
           <IntegratedSorting />
           <UsernameTypeProvider for={["username"]} />
-          <Table columnExtensions={colExtensions} />
+          <Table
+            columnExtensions={colExtensions}
+            noDataCellComponent={NoDataCell}
+          />
           <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
           <TableEditRow cellComponent={EditCell} />
           <TableEditColumn
