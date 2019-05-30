@@ -10,7 +10,6 @@ import SendIcon from "@material-ui/icons/Send";
 import reducer, { getInitialState } from "./reducer";
 import { CreateHuntFormError } from "./error";
 import { Hunt, User } from "../../models";
-import * as actions from "./actions";
 import SectionHeader from "../SectionHeader";
 import CrosshairIcon from "@material-ui/icons/GpsFixed";
 
@@ -34,7 +33,7 @@ const styles = theme => ({
 });
 
 function CreateHunt(props) {
-  const { classes, user } = props;
+  const { classes, navigate, user } = props;
 
   const [state, dispatch] = useReducer(reducer, getInitialState(user));
   const formError = CreateHuntFormError(state);
@@ -88,7 +87,7 @@ function CreateHunt(props) {
             getHunt()
               .apiCreateHunt()
               .then(response => {
-                dispatch(actions.clearState());
+                navigate(`../../${user.username}/${response.data.huntName}`);
               });
           }}
           icon={<SendIcon />}
