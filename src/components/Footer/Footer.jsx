@@ -50,7 +50,7 @@ function Footer(props) {
               .apiLogout()
               .then(response => {
                 setUser(null);
-                navigate("/");
+                navigate("/signin");
               })
               .catch(e => console.log(e));
           }}
