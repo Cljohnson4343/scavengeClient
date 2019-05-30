@@ -64,7 +64,15 @@ const styles = theme => ({
 });
 
 function PlayerTable(props) {
-  const { classes, huntID, players, setPlayers, teams } = props;
+  const {
+    classes,
+    huntID,
+    invites,
+    setInvites,
+    players,
+    setPlayers,
+    teams
+  } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
@@ -248,7 +256,7 @@ function PlayerTable(props) {
   };
   const NoDataCell = ({ getMessage }) => {
     return (
-      <td className={classes.noDataCell} colspan={cols.length + 1}>
+      <td className={classes.noDataCell} colSpan={cols.length + 1}>
         <Typography className={classes.noDataMsg}>No players</Typography>
       </td>
     );
@@ -294,7 +302,7 @@ function PlayerTable(props) {
           />
         </Grid>
       </Paper>
-      <InviteTable teams={teams} invites={[]} />
+      <InviteTable teams={teams} invites={invites} setInvites={setInvites} />
     </div>
   );
 }

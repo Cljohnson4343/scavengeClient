@@ -21,6 +21,7 @@ export { default as User } from "./user";
 export { getHuntsFromResponse } from "./hunts";
 export { getTeamFromResponse } from "./team";
 export { getTeamsFromResponse } from "./teams";
+export { getInvitesFromResponse } from "./invites";
 export { getItemFromResponse } from "./item";
 export { getItemsFromResponse } from "./items";
 export { getPlayerFromResponse } from "./player";

@@ -29,6 +29,12 @@ Object.defineProperty(Invite.prototype, "changeEmail", {
   }
 });
 
+Object.defineProperty(Invite.prototype, "email", {
+  get: function() {
+    return this.data.email;
+  }
+});
+
 Object.defineProperty(Invite.prototype, "equals", {
   value: function(invite) {
     if (!(invite instanceof Invite)) {

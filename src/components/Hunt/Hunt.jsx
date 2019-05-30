@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import HuntTabBar from "../HuntTabBar";
-import { Hunt as HuntModel, Hunts } from "../../models";
+import {
+  getInvitesFromResponse,
+  Hunt as HuntModel,
+  Hunts,
+  Invites
+} from "../../models";
 import PlayerTable from "../PlayerTable";
 import ItemTable from "../ItemTable";
 
@@ -32,6 +37,10 @@ function Hunt(props) {
         setPlayers={players => {
           setHunt(hunt.setPlayers(players));
         }}
+        invites={hunt.invites}
+        setInvites={invites => {
+          setHunt(hunt.setInvites(invites));
+        }}
         teams={hunt.teams}
       />
     )
@@ -42,8 +51,15 @@ function Hunt(props) {
       .apiRetrieveHunts({ name: huntName, creator: username })
       .then(response => {
         let newHunt = new HuntModel(response.data);
-        setHunt(newHunt);
-        setIsLoading(false);
+        new Invites([], newHunt.huntID).apiRetrieve().then(response => {
+          setHunt(
+            newHunt.setInvites(
+              getInvitesFromResponse(response.data),
+              newHunt.huntID
+            )
+          );
+          setIsLoading(false);
+        });
       })
       .catch(err => {
         console.log(err);

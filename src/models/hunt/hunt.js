@@ -1,3 +1,4 @@
+import Invites from "../invites";
 import Items, { getItemsFromResponse } from "../items";
 import Players, { getPlayersFromResponse } from "../players";
 import Teams, { getTeamsFromResponse } from "../teams";
@@ -23,6 +24,14 @@ const Hunt = ScavengeResource.extend({
       this.data.items = getItemsFromResponse(hunt.items);
     } else {
       this.data.items = hunt.items.copy();
+    }
+    if (!(hunt.invites instanceof Invites)) {
+      this.data.invites = new Invites(
+        hunt.invites ? hunt.invites : [],
+        hunt.huntID
+      );
+    } else {
+      this.data.invites = hunt.invites.copy();
     }
     if (!(hunt.teams instanceof Teams)) {
       this.data.teams = getTeamsFromResponse(hunt.teams);
@@ -98,6 +107,21 @@ Object.defineProperty(Hunt.prototype, "numTeams", {
 Object.defineProperty(Hunt.prototype, "items", {
   get: function() {
     return this.data.items;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "invites", {
+  get: function() {
+    return this.data.invites;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "setInvites", {
+  value: function(invites) {
+    let huntJSON = this.requestJSON;
+    huntJSON.invites = invites;
+
+    return new Hunt(huntJSON);
   }
 });
 

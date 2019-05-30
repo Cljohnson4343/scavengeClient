@@ -3,10 +3,14 @@ import Container from "../container";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
+export function getInvitesFromResponse(data = [], huntID) {
+  return new Invites(data.map(d => new Invite(d)), huntID);
+}
+
 const Invites = ScavengeResource.extend({
   path: "/hunts/{huntID}/invitations",
 
-  constructor: function(invites = []) {
+  constructor: function(invites = [], huntID) {
     if (!(this instanceof Invites)) {
       return new Invites(...[].slice.call(arguments));
     }
@@ -16,7 +20,7 @@ const Invites = ScavengeResource.extend({
       invites instanceof Array ? invites : []
     );
 
-    this.huntID = invites.length > 0 ? invites[0].huntID : 0;
+    this.huntID = huntID ? huntID : 0;
 
     ScavengeResource.call(this);
   },
@@ -47,19 +51,19 @@ Object.defineProperty(Invites.prototype, "requestJSON", {
 
 Object.defineProperty(Invites.prototype, "add", {
   value: function(invite) {
-    return new Invites(this._container.add(invite));
+    return new Invites(this._container.add(invite), this.huntID);
   }
 });
 
 Object.defineProperty(Invites.prototype, "remove", {
   value: function(invite) {
-    return new Invites(this._container.remove(invite));
+    return new Invites(this._container.remove(invite), this.huntID);
   }
 });
 
 Object.defineProperty(Invites.prototype, "copy", {
   value: function() {
-    return new Invites(this.array);
+    return new Invites(this.array, this.huntID);
   }
 });
 

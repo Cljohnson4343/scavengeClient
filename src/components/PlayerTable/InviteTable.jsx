@@ -37,6 +37,7 @@ import {
 } from "../ItemTable/CommandButtons";
 import SectionHeader from "../SectionHeader";
 import { validateEmail } from "../../utils";
+import { Invites } from "../../models";
 
 const styles = theme => ({
   error: {
@@ -65,7 +66,7 @@ const styles = theme => ({
 });
 
 function InviteTable(props) {
-  const { classes, invites, teams } = props;
+  const { classes, invites, setInvites, teams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
@@ -260,7 +261,7 @@ function InviteTable(props) {
   };
   const NoDataCell = ({ getMessage }) => {
     return (
-      <td className={classes.noDataCell} colspan={cols.length + 1}>
+      <td className={classes.noDataCell} colSpan={cols.length + 1}>
         <Typography className={classes.noDataMsg}>No invites</Typography>
       </td>
     );
@@ -270,7 +271,7 @@ function InviteTable(props) {
     <div>
       <SectionHeader Icon={ContactMailIcon}>Invites</SectionHeader>
       <Paper className={classes.paper}>
-        <Grid columns={cols} getRowId={getRowId} rows={invites}>
+        <Grid columns={cols} getRowId={getRowId} rows={invites.array}>
           <EditingState
             columnExtensions={editingExtensions}
             addedRows={addedRows}
@@ -317,7 +318,8 @@ function InviteTable(props) {
 
 InviteTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  invites: PropTypes.instanceOf(Array).isRequired,
+  invites: PropTypes.instanceOf(Invites).isRequired,
+  setInvites: PropTypes.func.isRequired,
   teams: PropTypes.instanceOf(Teams).isRequired
 };
 
