@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
-  Input,
-  MenuItem,
   Paper,
-  Select,
-  TableCell,
   TextField,
   Typography,
   withStyles
@@ -24,16 +20,18 @@ import {
   TableHeaderRow,
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
-import { Players, Teams } from "../../models";
+import { Team, Teams } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import PersonIcon from "@material-ui/icons/Person";
+import GroupIcon from "@material-ui/icons/Group";
+import { validateTeamName } from "../../utils";
 import {
+  GroupAddButton,
   EditButton,
   CommitButton,
   DeleteButton,
   CancelButton
-} from "../CommandButtons/CommandButtons";
+} from "../CommandButtons";
 import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
@@ -62,36 +60,48 @@ const styles = theme => ({
   }
 });
 
-function PlayerTable(props) {
-  const { classes, players, setPlayers, teams } = props;
+function ItemTable(props) {
+  const { classes, huntID, teams, setTeams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
+  const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
   const [sorting, setSorting] = useState([]);
+  const [editing, setEditing] = useState({});
 
-  const getRowId = row => (row ? row.userID : 0);
+  const getRowId = row => (row ? row.teamID : 0);
+  const isEditing = rowID => {
+    if (editing.rowID === rowID) {
+      return true;
+    }
+    return false;
+  };
 
-  function commitChanges({ changed, deleted }) {
+  function commitChanges({ added, changed, deleted }) {
     if (deleted) {
       deleted.forEach(id => {
-        let player = players.getByID(id);
-        player.apiDeletePlayer().then(response => {
-          setPlayers(players.remove(player));
+        const team = teams.getByItemID(id);
+        team.apiDeleteTeam().then(response => {
+          setTeams(teams.remove(team));
+        });
+      });
+    }
+
+    if (added) {
+      added.forEach(input => {
+        const item = new Team({ teamName: input.name, huntID: huntID });
+        item.apiCreateTeam().then(response => {
+          setTeams(teams.add(new Team(response.data)));
         });
       });
     }
 
     if (changed) {
       Object.keys(changed).forEach(id => {
-        let teamID = getTeamID(changed[id].team);
-        let player = players.getByID(parseInt(id));
-        if (player.teamID === teamID) {
-          return;
-        }
-
-        player = player.changeTeam(teamID);
-        player.apiCreatePlayer().then(response => {
-          setPlayers(players.changePlayersTeam(player, teamID));
+        let team = teams.getByItemID(parseInt(id));
+        team = new Team({ ...team.requestJSON, ...changed[id] });
+        team.apiUpdateTeam().then(response => {
+          setTeams(teams.replace(parseInt(id), team));
         });
       });
     }
@@ -121,6 +131,7 @@ function PlayerTable(props) {
   );
 
   const cmds = {
+    add: GroupAddButton,
     edit: EditButton,
     delete: DeleteButton,
     commit: CommitButton,
@@ -144,120 +155,66 @@ function PlayerTable(props) {
 
   const cols = [
     {
-      name: "username",
-      title: "Username",
+      name: "name",
+      title: "Name",
       getCellValue: row => {
-        return row.username;
+        return row.teamName;
       }
-    },
-    {
-      name: "team",
-      title: "Team",
-      getCellValue: row => getTeam(row)
     }
   ];
 
   const colExtensions = [
-    { columnName: "username", align: "left", wordWrapEnabled: true },
-    { columnName: "team", align: "left", width: 120 }
+    { columnName: "name", align: "left", wordWrapEnabled: true }
   ];
 
-  const sortingExtensions = [
-    { columnName: "username", sortingEnabled: true },
-    { columnName: "team", sortingEnabled: true }
-  ];
+  const sortingExtensions = [{ columnName: "name", sortingEnabled: true }];
   const editingExtensions = [
     {
-      columnName: "username",
-      editingEnabled: false
+      columnName: "name",
+      editingEnabled: true
     }
   ];
 
-  function UsernameEditor({ row }) {
+  function NameEditor({ row, value, onValueChange }) {
+    const input = value ? value : row.teamName;
+    const err = validateTeamName(input);
     return (
       <TextField
-        disabled={true}
-        id="username-editor"
+        autoFocus={isEditing(getRowId(row), "name")}
+        error={err.inError ? true : null}
+        FormHelperTextProps={err.inError ? { error: true } : null}
+        helperText={err.msg}
+        id="name-editor"
         margin="normal"
+        onChange={e => {
+          if (!isEditing(getRowId(row), "name")) {
+            setEditing({ rowID: getRowId(row), column: "name" });
+          }
+          onValueChange(e.currentTarget.value);
+        }}
         type="text"
-        value={row.username}
+        value={input}
         variant="standard"
       />
     );
   }
-  function UsernameTypeProvider(props) {
-    return <DataTypeProvider editorComponent={UsernameEditor} {...props} />;
+  function NameTypeProvider(props) {
+    return <DataTypeProvider editorComponent={NameEditor} {...props} />;
   }
 
-  const getTeamID = name => {
-    let team = teams.getByName(name);
-    return team ? team.teamID : 0;
-  };
-  const getTeam = row => {
-    const newTeamName = rowChanges[getRowId(row)]
-      ? rowChanges[getRowId(row)].team
-      : null;
-    if (newTeamName) {
-      return newTeamName;
-    }
-    const team = teams.getByID(row.teamID);
-    return team ? team.teamName : "unassigned";
-  };
-  const availableValues = {
-    team: ["unassigned", ...teams.array.map(t => t.teamName)]
-  };
-  const LookupEditCellBase = ({
-    availableColumnValues,
-    onValueChange,
-    classes,
-    row
-  }) => {
-    return (
-      <TableCell className={classes.lookupEditCell}>
-        <Select
-          value={getTeam(row)}
-          onChange={event => {
-            onValueChange(event.target.value);
-          }}
-          input={<Input classes={{ root: classes.inputRoot }} />}
-        >
-          {availableColumnValues.map(item => (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </TableCell>
-    );
-  };
-  const LookupEditCell = withStyles(styles)(LookupEditCellBase);
-
-  const EditCell = props => {
-    const { column } = props;
-    const availableColumnValues = availableValues[column.name];
-    if (availableColumnValues) {
-      return (
-        <LookupEditCell
-          {...props}
-          availableColumnValues={availableColumnValues}
-        />
-      );
-    }
-    return <TableEditRow.Cell {...props} />;
-  };
   const NoDataCell = ({ getMessage }) => {
     return (
       <td className={classes.noDataCell} colSpan={cols.length + 1}>
-        <Typography className={classes.noDataMsg}>No players</Typography>
+        <Typography className={classes.noDataMsg}>No teams</Typography>
       </td>
     );
   };
 
   return (
     <div>
-      <SectionHeader Icon={PersonIcon}>Joined Players</SectionHeader>
+      <SectionHeader Icon={GroupIcon}>Teams</SectionHeader>
       <Paper className={classes.paper}>
-        <Grid columns={cols} getRowId={getRowId} rows={players.array}>
+        <Grid columns={cols} getRowId={getRowId} rows={teams.array}>
           <EditingState
             columnExtensions={editingExtensions}
             editingRowIds={editingRowIds}
@@ -268,6 +225,10 @@ function PlayerTable(props) {
             onRowChangesChange={rowChanges => {
               setRowChanges(rowChanges);
             }}
+            addedRows={addedRows}
+            onAddedRowsChange={addedRows => {
+              setAddedRows(addedRows);
+            }}
             onCommitChanges={commitChanges}
           />
           <SortingState
@@ -276,17 +237,18 @@ function PlayerTable(props) {
             sorting={sorting}
           />
           <IntegratedSorting />
-          <UsernameTypeProvider for={["username"]} />
+          <NameTypeProvider for={["name"]} />
           <Table
             columnExtensions={colExtensions}
             noDataCellComponent={NoDataCell}
           />
           <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
-          <TableEditRow cellComponent={EditCell} />
+          <TableEditRow />
           <TableEditColumn
             cellComponent={cmdCellComponent}
             commandComponent={Command}
             headerCellComponent={cmdHeaderComponent}
+            showAddCommand={addedRows.length < 1}
             showEditCommand
             showDeleteCommand
             width={80}
@@ -297,11 +259,11 @@ function PlayerTable(props) {
   );
 }
 
-PlayerTable.propTypes = {
+ItemTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  players: PropTypes.instanceOf(Players).isRequired,
-  setPlayers: PropTypes.func.isRequired,
-  teams: PropTypes.instanceOf(Teams).isRequired
+  huntID: PropTypes.number.isRequired,
+  teams: PropTypes.instanceOf(Teams).isRequired,
+  setTeams: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(PlayerTable);
+export default withStyles(styles)(ItemTable);

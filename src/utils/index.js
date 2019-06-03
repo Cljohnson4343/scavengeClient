@@ -6,6 +6,7 @@ export {
   validateEmail,
   validateEndDate,
   validateHuntName,
+  validateTeamName,
   validateItemName,
   validateItemPoints,
   validateMaxTeams,

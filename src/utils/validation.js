@@ -26,6 +26,14 @@ export function validateHuntName(name) {
   return new ScavengeError();
 }
 
+export function validateTeamName(name) {
+  if (!name || typeof name !== "string") {
+    return new ScavengeError("Must be a non-nil string");
+  }
+
+  return new ScavengeError();
+}
+
 const MinTeams = 1;
 const MaxTeams = 19;
 

@@ -1,5 +1,5 @@
 import { ScavengeError } from "../../utils";
-import { Player, Team, getTeamFromResponse } from "../../models";
+import { Team, getTeamFromResponse } from "../../models";
 import Container from "../container";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
@@ -109,6 +109,17 @@ Teams.prototype.getByTeam = function(team) {
 
 Teams.prototype.getByID = function(teamID) {
   return this._container.get(x => x.teamID === teamID);
+};
+
+Teams.prototype.replace = function(teamID, newTeam) {
+  return new Teams(
+    this.array.map(team => {
+      if (team.teamID === teamID) {
+        return newTeam;
+      }
+      return team;
+    })
+  );
 };
 
 Object.defineProperty(Teams.prototype, "requestJSON", {

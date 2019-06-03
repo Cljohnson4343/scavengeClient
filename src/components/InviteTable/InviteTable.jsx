@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
-  Input,
-  MenuItem,
   Paper,
-  Select,
-  TableCell,
   TextField,
   Typography,
   withStyles
@@ -24,17 +20,17 @@ import {
   TableHeaderRow,
   TableEditColumn
 } from "@devexpress/dx-react-grid-material-ui";
-import { Teams, Invite } from "../../models";
+import { Invite } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
 import {
-  GroupAddButton,
+  AddButton,
   EditButton,
   CommitButton,
   DeleteButton,
   CancelButton
-} from "../ItemTable/CommandButtons";
+} from "../CommandButtons";
 import SectionHeader from "../SectionHeader";
 import { validateEmail } from "../../utils";
 import { Invites } from "../../models";
@@ -69,7 +65,7 @@ const styles = theme => ({
 });
 
 function InviteTable(props) {
-  const { classes, huntID, invites, setInvites, teams } = props;
+  const { classes, huntID, invites, setInvites } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
@@ -132,7 +128,7 @@ function InviteTable(props) {
   );
 
   const cmds = {
-    add: GroupAddButton,
+    add: AddButton,
     edit: EditButton,
     delete: DeleteButton,
     commit: CommitButton,
@@ -296,8 +292,7 @@ InviteTable.propTypes = {
   classes: PropTypes.object.isRequired,
   huntID: PropTypes.number.isRequired,
   invites: PropTypes.instanceOf(Invites).isRequired,
-  setInvites: PropTypes.func.isRequired,
-  teams: PropTypes.instanceOf(Teams).isRequired
+  setInvites: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(InviteTable);

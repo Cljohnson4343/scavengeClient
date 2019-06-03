@@ -30,7 +30,7 @@ import {
   CommitButton,
   DeleteButton,
   CancelButton
-} from "./CommandButtons";
+} from "../CommandButtons/CommandButtons";
 
 const styles = theme => ({
   commandCell: {

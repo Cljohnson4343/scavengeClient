@@ -9,6 +9,8 @@ import {
   Invites
 } from "../../models";
 import PlayerTable from "../PlayerTable";
+import TeamTable from "../TeamTable";
+import InviteTable from "../InviteTable";
 import ItemTable from "../ItemTable";
 
 const styles = theme => ({});
@@ -31,18 +33,30 @@ function Hunt(props) {
       />
     ),
     teams: (
-      <PlayerTable
-        huntID={hunt.huntID}
-        players={hunt.players}
-        setPlayers={players => {
-          setHunt(hunt.setPlayers(players));
-        }}
-        invites={hunt.invites}
-        setInvites={invites => {
-          setHunt(hunt.setInvites(invites));
-        }}
-        teams={hunt.teams}
-      />
+      <div>
+        <TeamTable
+          huntID={hunt.huntID}
+          teams={hunt.teams}
+          setTeams={teams => {
+            setHunt(hunt.setTeams(teams));
+          }}
+        />
+        <PlayerTable
+          huntID={hunt.huntID}
+          players={hunt.players}
+          setPlayers={players => {
+            setHunt(hunt.setPlayers(players));
+          }}
+          teams={hunt.teams}
+        />
+        <InviteTable
+          huntID={hunt.huntID}
+          invites={hunt.invites}
+          setInvites={invites => {
+            setHunt(hunt.setInvites(invites));
+          }}
+        />
+      </div>
     )
   };
   useEffect(() => {
