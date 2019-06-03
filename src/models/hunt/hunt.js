@@ -125,6 +125,15 @@ Object.defineProperty(Hunt.prototype, "setInvites", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "setTeams", {
+  value: function(teams) {
+    let huntJSON = this.requestJSON;
+    huntJSON.teams = teams;
+
+    return new Hunt(huntJSON);
+  }
+});
+
 Object.defineProperty(Hunt.prototype, "setItems", {
   value: function(items) {
     let huntJSON = this.requestJSON;

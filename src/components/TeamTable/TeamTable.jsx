@@ -89,7 +89,7 @@ function ItemTable(props) {
 
     if (added) {
       added.forEach(input => {
-        const item = new Team({ teamName: input.name, huntID: huntID });
+        const item = new Team({ teamName: input.teamName, huntID: huntID });
         item.apiCreateTeam().then(response => {
           setTeams(teams.add(new Team(response.data)));
         });
@@ -155,7 +155,7 @@ function ItemTable(props) {
 
   const cols = [
     {
-      name: "name",
+      name: "teamName",
       title: "Name",
       getCellValue: row => {
         return row.teamName;
@@ -164,13 +164,13 @@ function ItemTable(props) {
   ];
 
   const colExtensions = [
-    { columnName: "name", align: "left", wordWrapEnabled: true }
+    { columnName: "teamName", align: "left", wordWrapEnabled: true }
   ];
 
-  const sortingExtensions = [{ columnName: "name", sortingEnabled: true }];
+  const sortingExtensions = [{ columnName: "teamName", sortingEnabled: true }];
   const editingExtensions = [
     {
-      columnName: "name",
+      columnName: "teamName",
       editingEnabled: true
     }
   ];
@@ -180,15 +180,15 @@ function ItemTable(props) {
     const err = validateTeamName(input);
     return (
       <TextField
-        autoFocus={isEditing(getRowId(row), "name")}
+        autoFocus={isEditing(getRowId(row), "teamName")}
         error={err.inError ? true : null}
         FormHelperTextProps={err.inError ? { error: true } : null}
         helperText={err.msg}
         id="name-editor"
         margin="normal"
         onChange={e => {
-          if (!isEditing(getRowId(row), "name")) {
-            setEditing({ rowID: getRowId(row), column: "name" });
+          if (!isEditing(getRowId(row), "teamName")) {
+            setEditing({ rowID: getRowId(row), column: "teamName" });
           }
           onValueChange(e.currentTarget.value);
         }}
@@ -237,7 +237,7 @@ function ItemTable(props) {
             sorting={sorting}
           />
           <IntegratedSorting />
-          <NameTypeProvider for={["name"]} />
+          <NameTypeProvider for={["teamName"]} />
           <Table
             columnExtensions={colExtensions}
             noDataCellComponent={NoDataCell}
