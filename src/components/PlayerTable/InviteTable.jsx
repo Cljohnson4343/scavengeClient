@@ -85,7 +85,7 @@ function InviteTable(props) {
 
   const getRowId = row => (row ? row.inviteID : 0);
 
-  function commitChanges({ added, changed, deleted }) {
+  function commitChanges({ added, deleted }) {
     if (added) {
       added.forEach(rowData => {
         let invite = new Invite({
@@ -106,10 +106,6 @@ function InviteTable(props) {
           setInvites(invites.remove(invite));
         });
       });
-    }
-
-    if (changed) {
-      Object.keys(changed).forEach(id => {});
     }
   }
 
@@ -241,7 +237,7 @@ function InviteTable(props) {
           onValueChange(e.currentTarget.value);
         }}
         type="text"
-        value={row.email}
+        value={input}
         variant="standard"
       />
     );
@@ -353,9 +349,8 @@ function InviteTable(props) {
             commandComponent={Command}
             headerCellComponent={cmdHeaderComponent}
             showAddCommand={!addedRows.length}
-            showEditCommand
             showDeleteCommand
-            width={80}
+            width={50}
           />
         </Grid>
       </Paper>
