@@ -90,8 +90,7 @@ function InviteTable(props) {
       added.forEach(rowData => {
         let invite = new Invite({
           email: rowData.email,
-          huntID: huntID,
-          teamID: rowData.team ? getTeamID(rowData.team) : null
+          huntID: huntID
         });
 
         invite.apiCreate().then(response => {
@@ -185,23 +184,14 @@ function InviteTable(props) {
       getCellValue: row => {
         return row.email;
       }
-    },
-    {
-      name: "team",
-      title: "Team",
-      getCellValue: row => getTeam(row)
     }
   ];
 
   const colExtensions = [
-    { columnName: "email", align: "left", wordWrapEnabled: true },
-    { columnName: "team", align: "left", width: 120 }
+    { columnName: "email", align: "left", wordWrapEnabled: true }
   ];
 
-  const sortingExtensions = [
-    { columnName: "email", sortingEnabled: true },
-    { columnName: "team", sortingEnabled: true }
-  ];
+  const sortingExtensions = [{ columnName: "email", sortingEnabled: true }];
   const editingExtensions = [
     {
       columnName: "email",
@@ -246,62 +236,6 @@ function InviteTable(props) {
     return <DataTypeProvider editorComponent={UsernameEditor} {...props} />;
   }
 
-  const getTeamID = name => {
-    let team = teams.getByName(name);
-    return team ? team.teamID : 0;
-  };
-  const getTeam = row => {
-    const newTeamName = rowChanges[getRowId(row)]
-      ? rowChanges[getRowId(row)].team
-      : null;
-    if (newTeamName) {
-      return newTeamName;
-    }
-    const team = teams.getByID(row.teamID);
-    return team ? team.teamName : "unassigned";
-  };
-  const availableValues = {
-    team: ["unassigned", ...teams.array.map(t => t.teamName)]
-  };
-  const LookupEditCellBase = ({
-    availableColumnValues,
-    onValueChange,
-    classes,
-    row
-  }) => {
-    return (
-      <TableCell className={classes.lookupEditCell}>
-        <Select
-          value={getTeam(row)}
-          onChange={event => {
-            onValueChange(event.target.value);
-          }}
-          input={<Input classes={{ root: classes.inputRoot }} />}
-        >
-          {availableColumnValues.map(item => (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </TableCell>
-    );
-  };
-  const LookupEditCell = withStyles(styles)(LookupEditCellBase);
-
-  const EditCell = props => {
-    const { column } = props;
-    const availableColumnValues = availableValues[column.name];
-    if (availableColumnValues) {
-      return (
-        <LookupEditCell
-          {...props}
-          availableColumnValues={availableColumnValues}
-        />
-      );
-    }
-    return <TableEditRow.Cell {...props} />;
-  };
   const NoDataCell = ({ getMessage }) => {
     return (
       <td className={classes.noDataCell} colSpan={cols.length + 1}>
@@ -343,14 +277,14 @@ function InviteTable(props) {
             noDataCellComponent={NoDataCell}
           />
           <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
-          <TableEditRow cellComponent={EditCell} />
+          <TableEditRow />
           <TableEditColumn
             cellComponent={cmdCellComponent}
             commandComponent={Command}
             headerCellComponent={cmdHeaderComponent}
             showAddCommand={!addedRows.length}
             showDeleteCommand
-            width={50}
+            width={70}
           />
         </Grid>
       </Paper>
