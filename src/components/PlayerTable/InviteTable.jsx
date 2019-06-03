@@ -100,7 +100,12 @@ function InviteTable(props) {
       });
     }
     if (deleted) {
-      deleted.forEach(id => {});
+      deleted.forEach(id => {
+        let invite = invites.getByID(id);
+        invite.apiDelete().then(response => {
+          setInvites(invites.remove(invite));
+        });
+      });
     }
 
     if (changed) {

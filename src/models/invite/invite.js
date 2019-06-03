@@ -20,7 +20,12 @@ const Invite = ScavengeResource.extend({
       method: "POST"
     },
     self => getDataProperties(self.data, ["email"])
-  )
+  ),
+
+  apiDelete: ScavengeMethod({
+    path: "/{inviteID}",
+    method: "DELETE"
+  })
 });
 
 Object.defineProperty(Invite.prototype, "changeEmail", {
