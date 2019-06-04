@@ -176,11 +176,9 @@ Object.defineProperty(Hunt.prototype, "setPlayers", {
   }
 });
 
-Object.defineProperty(Hunt.prototype, "inProgess", {
+Object.defineProperty(Hunt.prototype, "inProgress", {
   get: function() {
-    return (
-      this.starts.getTime() <= Date.now() && this.ends.getTime() > Date.now()
-    );
+    return this.startsIn <= 0 && this.endsIn > 0;
   }
 });
 
