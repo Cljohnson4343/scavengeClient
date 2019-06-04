@@ -12,6 +12,9 @@ export const styles = theme => ({
   button: {
     padding: `${theme.spacing(0.25)}px ${theme.spacing(0.6)}px`
   },
+  disabled: {
+    color: theme.palette.disabled.main
+  },
   label: {
     color: theme.palette.primary.main
   }
@@ -21,8 +24,8 @@ export const GenButton = withStyles(styles)(
   ({ children, classes, onExecute, ...restProps }) => (
     <IconButton
       className={classNames(classes.label, classes.button)}
-      size="small"
       onClick={onExecute}
+      size="small"
       {...restProps}
     >
       {children}
@@ -55,9 +58,16 @@ export const CancelButton = withStyles(styles)(
 );
 
 export const CommitButton = withStyles(styles)(
-  ({ classes, onExecute, ...restProps }) => (
-    <GenButton onExecute={onExecute} title="Save changes" {...restProps}>
-      <SaveIcon classes={{ root: classes.label }} />
+  ({ classes, disabled, onExecute, ...restProps }) => (
+    <GenButton
+      disabled={disabled}
+      onExecute={onExecute}
+      title="Save changes"
+      {...restProps}
+    >
+      <SaveIcon
+        classes={{ root: disabled ? classes.disabled : classes.label }}
+      />
     </GenButton>
   )
 );
