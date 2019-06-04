@@ -36,6 +36,7 @@ function Hunt(props) {
       <div>
         <TeamTable
           huntID={hunt.huntID}
+          deleteTeam={team => setHunt(hunt.deleteTeam(team))}
           teams={hunt.teams}
           setTeams={teams => {
             setHunt(hunt.setTeams(teams));

@@ -125,6 +125,15 @@ Object.defineProperty(Hunt.prototype, "setInvites", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "setItems", {
+  value: function(items) {
+    let huntJSON = this.requestJSON;
+    huntJSON.items = items;
+
+    return new Hunt(huntJSON);
+  }
+});
+
 Object.defineProperty(Hunt.prototype, "setTeams", {
   value: function(teams) {
     let huntJSON = this.requestJSON;
@@ -134,10 +143,13 @@ Object.defineProperty(Hunt.prototype, "setTeams", {
   }
 });
 
-Object.defineProperty(Hunt.prototype, "setItems", {
-  value: function(items) {
+Object.defineProperty(Hunt.prototype, "deleteTeam", {
+  value: function(team) {
+    let teams = this.teams.remove(team);
+    let players = this.players.removeTeam(team);
     let huntJSON = this.requestJSON;
-    huntJSON.items = items;
+    huntJSON.teams = teams;
+    huntJSON.players = players;
 
     return new Hunt(huntJSON);
   }

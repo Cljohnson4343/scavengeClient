@@ -61,13 +61,14 @@ const styles = theme => ({
 });
 
 function ItemTable(props) {
-  const { classes, huntID, teams, setTeams } = props;
+  const { classes, deleteTeam, huntID, teams, setTeams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [editing, setEditing] = useState({});
+  const [rowsInInvalidState, setRowsInInvalidState] = useState(new Set([]));
 
   const getRowId = row => (row ? row.teamID : 0);
   const isEditing = rowID => {
@@ -76,13 +77,14 @@ function ItemTable(props) {
     }
     return false;
   };
+  const isInInvalidState = row => rowsInInvalidState.has(getRowId(row));
 
   function commitChanges({ added, changed, deleted }) {
     if (deleted) {
       deleted.forEach(id => {
-        const team = teams.getByItemID(id);
+        const team = teams.getByID(id);
         team.apiDeleteTeam().then(response => {
-          setTeams(teams.remove(team));
+          deleteTeam(team);
         });
       });
     }
@@ -137,16 +139,39 @@ function ItemTable(props) {
     commit: CommitButton,
     cancel: CancelButton
   };
-  const Command = ({ id, onExecute }) => {
+  const Command = ({ id, onExecute, disabled, ...restProps }) => {
     const CommandComponent = cmds[id];
+
     return (
       <CommandComponent
-        classes={id === "cancel" ? { label: classes.error } : null}
+        classes={
+          id === "cancel"
+            ? { label: classes.error }
+            : disabled
+            ? { label: classes.disabled }
+            : null
+        }
+        disabled={disabled}
         onExecute={onExecute}
       />
     );
   };
-  function cmdCellComponent({ children }) {
+  const isCommitCommand = child => {
+    return !child
+      ? false
+      : !child.props
+      ? false
+      : Boolean(child.props.id === "commit");
+  };
+  function cmdCellComponent({ children, row }) {
+    if (isInInvalidState(row)) {
+      children = React.Children.map(children, child => {
+        if (isCommitCommand(child)) {
+          return React.cloneElement(child, { disabled: true });
+        }
+        return child;
+      });
+    }
     return <td className={classes.commandCell}>{children}</td>;
   }
   function cmdHeaderComponent({ children }) {
@@ -176,24 +201,38 @@ function ItemTable(props) {
   ];
 
   function NameEditor({ row, value, onValueChange }) {
-    const input = value ? value : row.teamName;
+    const editing = isEditing(getRowId(row), "teamName");
+    let input = value;
+    if (!editing) {
+      input = row.teamName;
+    }
     const err = validateTeamName(input);
     return (
       <TextField
-        autoFocus={isEditing(getRowId(row), "teamName")}
+        autoFocus={editing}
         error={err.inError ? true : null}
         FormHelperTextProps={err.inError ? { error: true } : null}
         helperText={err.msg}
-        id="name-editor"
+        id="teamName-editor"
         margin="normal"
         onChange={e => {
           if (!isEditing(getRowId(row), "teamName")) {
             setEditing({ rowID: getRowId(row), column: "teamName" });
           }
+          const input = e.currentTarget.value;
+          const err = validateTeamName(input);
+          if (err.inError && !isInInvalidState(row)) {
+            setRowsInInvalidState(rowsInInvalidState.add(getRowId(row)));
+          }
+          if (!err.inError && isInInvalidState(row)) {
+            rowsInInvalidState.delete(getRowId(row));
+            setRowsInInvalidState(rowsInInvalidState);
+          }
+
           onValueChange(e.currentTarget.value);
         }}
         type="text"
-        value={input}
+        value={input || ""}
         variant="standard"
       />
     );
@@ -261,6 +300,7 @@ function ItemTable(props) {
 
 ItemTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  deleteTeam: PropTypes.func.isRequired,
   huntID: PropTypes.number.isRequired,
   teams: PropTypes.instanceOf(Teams).isRequired,
   setTeams: PropTypes.func.isRequired

@@ -1,8 +1,6 @@
 import { Player, getPlayerFromResponse } from "../../models";
 import Container from "../container";
-import Team from "../team";
 import ScavengeResource from "../scavengeResource";
-import ScavengeMethod from "../scavengeMethod";
 
 export function getPlayersFromResponse(data) {
   data = data ? data : [];
