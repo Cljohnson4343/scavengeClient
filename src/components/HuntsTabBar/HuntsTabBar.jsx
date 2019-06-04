@@ -25,7 +25,7 @@ const styles = theme => ({
 });
 
 function HuntsTabBar(props) {
-  const { classes, setValue, value } = props;
+  const { classes, numFinished, numUpcoming, setValue, value } = props;
 
   return (
     <Tabs
@@ -42,13 +42,13 @@ function HuntsTabBar(props) {
       <Tab
         classes={{ selected: classes.tabSelected }}
         className={classes.tabFont}
-        label="Upcoming"
+        label={`Upcoming (${numUpcoming})`}
         value="upcoming"
       />
       <Tab
         classes={{ selected: classes.tabSelected }}
         className={classes.tabFont}
-        label="Finished"
+        label={`Finished (${numFinished})`}
         value="finished"
       />
     </Tabs>
@@ -57,7 +57,10 @@ function HuntsTabBar(props) {
 
 HuntsTabBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  setValue: PropTypes.func.isRequired
+  numFinished: PropTypes.number.isRequired,
+  numUpcoming: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(HuntsTabBar);

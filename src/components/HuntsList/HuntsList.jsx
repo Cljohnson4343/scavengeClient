@@ -35,13 +35,12 @@ const styles = theme => ({
 });
 
 function HuntsList(props) {
-  const { classes, className, filterFn, hunts, tab } = props;
+  const { classes, className, hunts, tab } = props;
 
-  const filteredHunts = hunts.array.filter(hunt => filterFn(hunt));
   let cards = [];
 
-  if (filteredHunts.length > 0) {
-    cards = filteredHunts.map(hunt => {
+  if (hunts.length > 0) {
+    cards = hunts.array.map(hunt => {
       return <HuntCard key={hunt.name} hunt={hunt} />;
     });
   } else {
@@ -76,7 +75,6 @@ function HuntsList(props) {
 
 HuntsList.propTypes = {
   classes: PropTypes.object.isRequired,
-  filterFn: PropTypes.func.isRequired,
   hunts: PropTypes.instanceOf(Hunts).isRequired,
   tab: PropTypes.string
 };

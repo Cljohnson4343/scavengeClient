@@ -20,25 +20,31 @@ const styles = theme => ({
   }
 });
 
-const filterMap = {
-  upcoming: function(hunt) {
-    if (hunt.endsIn >= 0) {
-      return true;
-    }
-  },
-  finished: function(hunt) {
-    if (hunt.endsIn < 0) {
-      return true;
-    }
-  }
-};
-
 function Home(props) {
   const { classes, navigate, user } = props;
   const userID = user ? user.userID : 0;
 
   const [hunts, setHunts] = useState(new Hunts([]));
   const [value, setValue] = useState("upcoming");
+
+  const filteredHunts = {
+    upcoming: new Hunts(
+      hunts.array.filter(hunt => {
+        if (hunt.endsIn >= 0) {
+          return true;
+        }
+        return false;
+      })
+    ),
+    finished: new Hunts(
+      hunts.array.filter(hunt => {
+        if (hunt.endsIn < 0) {
+          return true;
+        }
+        return false;
+      })
+    )
+  };
 
   useEffect(() => {
     if (user) {
@@ -51,11 +57,15 @@ function Home(props) {
 
   return (
     <div className={classes.page}>
-      <HuntsTabBar setValue={setValue} value={value} />
+      <HuntsTabBar
+        numFinished={filteredHunts["finished"].length}
+        numUpcoming={filteredHunts["upcoming"].length}
+        setValue={setValue}
+        value={value}
+      />
       <HuntsList
         className={classes.list}
-        hunts={hunts}
-        filterFn={filterMap[value]}
+        hunts={filteredHunts[value]}
         tab={value}
       />
       <Fab icon={<AddIcon />} onClick={e => navigate("/hunts/create")} />
