@@ -21,8 +21,8 @@ const styles = theme => ({
   pageWrapper: {
     backgroundColor: theme.palette.background.main,
     boxSizing: "border-box",
-    height: "100vh",
-    width: "100vw"
+    width: "100vw",
+    minHeight: "100vh"
   }
 });
 
