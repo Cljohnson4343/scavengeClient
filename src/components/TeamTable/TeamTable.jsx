@@ -60,7 +60,7 @@ const styles = theme => ({
   }
 });
 
-function ItemTable(props) {
+function TeamTable(props) {
   const { classes, deleteTeam, huntID, teams, setTeams } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
@@ -100,8 +100,10 @@ function ItemTable(props) {
 
     if (changed) {
       Object.keys(changed).forEach(id => {
-        let team = teams.getByItemID(parseInt(id));
+        let team = teams.getByID(parseInt(id));
         team = new Team({ ...team.requestJSON, ...changed[id] });
+        console.log("new team");
+        console.dir(team);
         team.apiUpdateTeam().then(response => {
           setTeams(teams.replace(parseInt(id), team));
         });
@@ -298,7 +300,7 @@ function ItemTable(props) {
   );
 }
 
-ItemTable.propTypes = {
+TeamTable.propTypes = {
   classes: PropTypes.object.isRequired,
   deleteTeam: PropTypes.func.isRequired,
   huntID: PropTypes.number.isRequired,
@@ -306,4 +308,4 @@ ItemTable.propTypes = {
   setTeams: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(ItemTable);
+export default withStyles(styles)(TeamTable);

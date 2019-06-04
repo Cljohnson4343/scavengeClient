@@ -47,7 +47,7 @@ const Team = ScavengeResource.extend({
       path: "/{teamID}",
       method: "PATCH"
     },
-    self => deleteProperties(self.data, ["teamID"])
+    self => getDataProperties(self.data, ["teamID", "teamName"])
   )
 });
 
