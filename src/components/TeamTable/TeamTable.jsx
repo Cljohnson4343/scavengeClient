@@ -61,7 +61,14 @@ const styles = theme => ({
 });
 
 function TeamTable(props) {
-  const { classes, deleteTeam, huntID, teams, setTeams } = props;
+  const {
+    classes,
+    currentUserTeam,
+    deleteTeam,
+    huntID,
+    teams,
+    setTeams
+  } = props;
 
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
@@ -166,6 +173,10 @@ function TeamTable(props) {
       : Boolean(child.props.id === "commit");
   };
   function cmdCellComponent({ children, row }) {
+    // only allow editing new teams and a user's current team
+    if (row.teamID && row.teamID !== currentUserTeam) {
+      return <td />;
+    }
     if (isInInvalidState(row)) {
       children = React.Children.map(children, child => {
         if (isCommitCommand(child)) {
@@ -302,6 +313,7 @@ function TeamTable(props) {
 
 TeamTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  currentUserTeam: PropTypes.number.isRequired,
   deleteTeam: PropTypes.func.isRequired,
   huntID: PropTypes.number.isRequired,
   teams: PropTypes.instanceOf(Teams).isRequired,

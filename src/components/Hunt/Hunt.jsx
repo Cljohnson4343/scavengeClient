@@ -21,6 +21,10 @@ function Hunt(props) {
   const [value, setValue] = useState("teams");
   const [hunt, setHunt] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const currentUser = hunt.players
+    ? hunt.players.array.find(p => p.username === username)
+    : null;
+  const currentUserTeam = currentUser ? currentUser.teamID : 0;
 
   const table = {
     items: (
@@ -35,8 +39,9 @@ function Hunt(props) {
     teams: (
       <div>
         <TeamTable
-          huntID={hunt.huntID}
+          currentUserTeam={currentUserTeam}
           deleteTeam={team => setHunt(hunt.deleteTeam(team))}
+          huntID={hunt.huntID}
           teams={hunt.teams}
           setTeams={teams => {
             setHunt(hunt.setTeams(teams));
