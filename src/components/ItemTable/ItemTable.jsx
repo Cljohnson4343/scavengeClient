@@ -66,6 +66,7 @@ function ItemTable(props) {
   const [rowChanges, setRowChanges] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [editing, setEditing] = useState({});
+  const [columnsInInvalidState, setColumnsInInvalidState] = useState([]);
 
   const getRowId = row => (row ? row.itemID : 0);
   const isEditing = (rowID, column) => {
@@ -73,6 +74,34 @@ function ItemTable(props) {
       return true;
     }
     return false;
+  };
+  const rowIsInInvalidState = row => {
+    let col = columnsInInvalidState.find(c => c.rowID === getRowId(row));
+    return Boolean(col);
+  };
+  const colIsInInvalidState = colSpec => {
+    return Boolean(
+      columnsInInvalidState.find(
+        c => c.rowID === colSpec.rowID && c.col === colSpec.col
+      )
+    );
+  };
+  const addInvalidColumn = colSpec => {
+    if (
+      columnsInInvalidState.find(
+        c => c.rowID === colSpec.rowID && c.col === colSpec.col
+      )
+    ) {
+      return;
+    }
+    setColumnsInInvalidState([...columnsInInvalidState, colSpec]);
+  };
+  const removeInvalidColumn = colSpec => {
+    setColumnsInInvalidState(
+      columnsInInvalidState.filter(c => {
+        return !(c.rowID === colSpec.rowID && c.col === colSpec.col);
+      })
+    );
   };
 
   function commitChanges({ added, changed, deleted }) {
@@ -143,16 +172,39 @@ function ItemTable(props) {
     commit: CommitButton,
     cancel: CancelButton
   };
-  const Command = ({ id, onExecute }) => {
+  const Command = ({ id, onExecute, disabled, ...restProps }) => {
     const CommandComponent = cmds[id];
+
     return (
       <CommandComponent
-        classes={id === "cancel" ? { label: classes.error } : null}
+        classes={
+          id === "cancel"
+            ? { label: classes.error }
+            : disabled
+            ? { label: classes.disabled }
+            : null
+        }
+        disabled={disabled}
         onExecute={onExecute}
       />
     );
   };
-  function cmdCellComponent({ children }) {
+  const isCommitCommand = child => {
+    return !child
+      ? false
+      : !child.props
+      ? false
+      : Boolean(child.props.id === "commit");
+  };
+  function cmdCellComponent({ children, row }) {
+    if (rowIsInInvalidState(row)) {
+      children = React.Children.map(children, child => {
+        if (isCommitCommand(child)) {
+          return React.cloneElement(child, { disabled: true });
+        }
+        return child;
+      });
+    }
     return <td className={classes.commandCell}>{children}</td>;
   }
   function cmdHeaderComponent({ children }) {
@@ -202,7 +254,11 @@ function ItemTable(props) {
   ];
 
   function NameEditor({ row, value, onValueChange }) {
-    const input = value ? value : row.name;
+    const editing = isEditing(getRowId(row), "name");
+    let input = value;
+    if (!editing) {
+      input = row.name;
+    }
     const err = validateItemName(input);
     return (
       <TextField
@@ -213,10 +269,22 @@ function ItemTable(props) {
         id="name-editor"
         margin="normal"
         onChange={e => {
-          if (!isEditing(getRowId(row), "name")) {
-            setEditing({ rowID: getRowId(row), column: "name" });
+          let rowID = getRowId(row);
+          if (!isEditing(rowID, "name")) {
+            setEditing({ rowID: rowID, column: "name" });
           }
-          onValueChange(e.currentTarget.value);
+
+          const input = e.currentTarget.value;
+          const err = validateItemName(input);
+          let colSpec = { rowID: getRowId(row), col: "name" };
+          if (err.inError) {
+            addInvalidColumn(colSpec);
+          }
+          if (!err.inError && colIsInInvalidState(colSpec)) {
+            removeInvalidColumn(colSpec);
+          }
+
+          onValueChange(input);
         }}
         type="text"
         value={input}
@@ -240,11 +308,22 @@ function ItemTable(props) {
         id="points-editor"
         margin="normal"
         onChange={e => {
-          if (!isEditing(getRowId(row), "points")) {
-            setEditing({ rowID: getRowId(row), column: "points" });
+          let rowID = getRowId(row);
+          if (!isEditing(rowID, "points")) {
+            setEditing({ rowID: rowID, column: "points" });
           }
           let value = parseInt(e.currentTarget.value);
           value = isNaN(value) ? 0 : value;
+
+          let err = validateItemPoints(value);
+          const colSpec = { rowID: getRowId(row), col: "points" };
+          if (err.inError) {
+            addInvalidColumn(colSpec);
+          }
+          if (!err.inError && colIsInInvalidState(colSpec)) {
+            removeInvalidColumn(colSpec);
+          }
+
           onValueChange(value);
         }}
         type="number"
