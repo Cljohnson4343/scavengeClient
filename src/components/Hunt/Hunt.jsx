@@ -1,84 +1,44 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import HuntTabBar from "../HuntTabBar";
 import {
   getInvitesFromResponse,
   Hunt as HuntModel,
   Hunts,
   Invites
 } from "../../models";
-import PlayerTable from "../PlayerTable";
-import TeamTable from "../TeamTable";
-import InviteTable from "../InviteTable";
-import ItemTable from "../ItemTable";
+import PreStartHunt from "./PreStartHunt";
 
 const styles = theme => ({});
 
 function Hunt(props) {
   const { huntName, username } = props;
 
-  const [value, setValue] = useState("teams");
   const [hunt, setHunt] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const currentUser = hunt.players
-    ? hunt.players.array.find(p => p.username === username)
-    : null;
-  const currentUserTeam = currentUser ? currentUser.teamID : 0;
-
-  const table = {
-    items: (
-      <ItemTable
-        huntID={hunt.huntID}
-        items={hunt.items}
-        setItems={items => {
-          setHunt(hunt.setItems(items));
-        }}
-      />
-    ),
-    teams: (
-      <div>
-        <TeamTable
-          currentUserTeam={currentUserTeam}
-          deleteTeam={team => setHunt(hunt.deleteTeam(team))}
-          huntID={hunt.huntID}
-          teams={hunt.teams}
-          setTeams={teams => {
-            setHunt(hunt.setTeams(teams));
-          }}
-        />
-        <PlayerTable
-          huntID={hunt.huntID}
-          players={hunt.players}
-          setPlayers={players => {
-            setHunt(hunt.setPlayers(players));
-          }}
-          teams={hunt.teams}
-        />
-        <InviteTable
-          huntID={hunt.huntID}
-          invites={hunt.invites}
-          setInvites={invites => {
-            setHunt(hunt.setInvites(invites));
-          }}
-        />
-      </div>
-    )
+  const [status, setStatus] = useState("loading");
+  const isLoading = () => status === "loading";
+  const getStatus = hunt => {
+    if (hunt.startsIn > 0) {
+      return "pre-hunt";
+    }
+    if (hunt.inProgress) {
+      return "in-hunt";
+    }
+    return "after-hunt";
   };
+
   useEffect(() => {
-    setIsLoading(true);
     new Hunts()
       .apiRetrieveHunts({ name: huntName, creator: username })
       .then(response => {
         let newHunt = new HuntModel(response.data);
         new Invites([], newHunt.huntID).apiRetrieve().then(response => {
-          setHunt(
-            newHunt.setInvites(
-              getInvitesFromResponse(response.data),
-              newHunt.huntID
-            )
+          newHunt = newHunt.setInvites(
+            getInvitesFromResponse(response.data),
+            newHunt.huntID
           );
-          setIsLoading(false);
+          setHunt(newHunt);
+          setStatus(getStatus(newHunt));
         });
       })
       .catch(err => {
@@ -86,19 +46,18 @@ function Hunt(props) {
       });
   }, [huntName, username]);
 
-  let renderProps;
-  if (isLoading || !(hunt instanceof HuntModel)) {
-    renderProps = <h1>Loading...</h1>;
-  } else {
-    renderProps = <span>{table[value]}</span>;
+  if (isLoading()) {
+    return <h1>Loading...</h1>;
   }
 
-  return (
-    <div>
-      <HuntTabBar value={value} setValue={setValue} />
-      {renderProps}
-    </div>
-  );
+  const page = {
+    "after-hunt": <h1>After Game</h1>,
+    "in-hunt": <h1>In game</h1>,
+    "pre-hunt": (
+      <PreStartHunt hunt={hunt} setHunt={setHunt} username={username} />
+    )
+  };
+  return <div>{page[status]}</div>;
 }
 
 Hunt.propTypes = {

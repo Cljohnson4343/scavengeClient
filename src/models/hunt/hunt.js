@@ -88,13 +88,13 @@ const Hunt = ScavengeResource.extend({
 
 Object.defineProperty(Hunt.prototype, "starts", {
   get: function() {
-    return this.data.startTime;
+    return new Date(this.data.startTime);
   }
 });
 
 Object.defineProperty(Hunt.prototype, "ends", {
   get: function() {
-    return this.data.endTime;
+    return new Date(this.data.endTime);
   }
 });
 
@@ -178,19 +178,21 @@ Object.defineProperty(Hunt.prototype, "setPlayers", {
 
 Object.defineProperty(Hunt.prototype, "inProgess", {
   get: function() {
-    return this.starts <= new Date() && this.ends > new Date();
+    return (
+      this.starts.getTime() <= Date.now() && this.ends.getTime() > Date.now()
+    );
   }
 });
 
 Object.defineProperty(Hunt.prototype, "startsIn", {
   get: function() {
-    return new Date() - this.starts;
+    return this.starts.getTime() - Date.now();
   }
 });
 
 Object.defineProperty(Hunt.prototype, "endsIn", {
   get: function() {
-    return this.ends - new Date();
+    return this.ends.getTime() - Date.now();
   }
 });
 

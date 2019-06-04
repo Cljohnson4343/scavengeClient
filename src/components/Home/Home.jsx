@@ -22,7 +22,7 @@ const styles = theme => ({
 
 const filterMap = {
   upcoming: function(hunt) {
-    if (hunt.startsIn < 0) {
+    if (hunt.endsIn >= 0) {
       return true;
     }
   },
