@@ -8,6 +8,7 @@ const styles = theme => ({
     alignItems: "center"
   },
   header: {
+    flexGrow: 1,
     margin: `0 ${theme.spacing(1)}px`
   },
   icon: {

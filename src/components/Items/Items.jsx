@@ -1,22 +1,35 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core";
 import ItemCard from "../ItemCard";
 import ItemsSortMenu from "./ItemsSortMenu";
 import Cards from "../Cards";
+import { Items as ItemsModel } from "../../models";
 
+const styles = theme => ({
+  sortFont: {
+    color: theme.palette.primary.main,
+    fontSize: "0.9em",
+    fontWeight: theme.typography.fontWeightRegular
+  }
+});
 function HuntItemContainer(props) {
-  const { huntItems } = props;
+  const { classes, items } = props;
 
-  // use dummy initial sort function to preserve initial order
   const defaultSort = (a, b) => -1;
   const [sortFunction, setSortFunction] = useState(() => defaultSort);
 
   return (
     <Cards
       title="Hunt Items"
-      sort={<ItemsSortMenu handleChangeSort={setSortFunction} />}
+      sort={
+        <ItemsSortMenu
+          classes={{ sortMenuFont: classes.sortFont }}
+          handleChangeSort={setSortFunction}
+        />
+      }
     >
-      {huntItems.sort(sortFunction).map(item => (
+      {items.array.sort(sortFunction).map(item => (
         <ItemCard key={item.name} huntInfo={item} />
       ))}
     </Cards>
@@ -24,7 +37,8 @@ function HuntItemContainer(props) {
 }
 
 HuntItemContainer.propTypes = {
-  huntItems: PropTypes.array.isRequired
+  classes: PropTypes.object.isRequired,
+  items: PropTypes.instanceOf(ItemsModel).isRequired
 };
 
-export default HuntItemContainer;
+export default withStyles(styles)(HuntItemContainer);

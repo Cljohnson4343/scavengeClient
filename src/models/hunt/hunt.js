@@ -26,7 +26,10 @@ const Hunt = ScavengeResource.extend({
       this.data.items = hunt.items.copy();
     }
     if (!(hunt.invites instanceof Invites)) {
-      this.data.invites = getInvitesFromResponse(hunt.invites);
+      this.data.invites = getInvitesFromResponse(
+        hunt.invites ? hunt.invites : [],
+        this.data.huntID
+      );
     } else {
       this.data.invites = hunt.invites.copy();
     }

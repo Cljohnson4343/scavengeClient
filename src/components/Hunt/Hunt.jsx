@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import { Hunt as HuntModel, Hunts } from "../../models";
 import PreStartHunt from "./PreStartHunt";
+import InProgressHunt from "./InProgressHunt";
 import Loading from "../Loading";
 
 const styles = theme => ({
@@ -47,7 +48,7 @@ function Hunt(props) {
 
   const page = {
     "after-hunt": <h1>After Game</h1>,
-    "in-hunt": <h1>In game</h1>,
+    "in-hunt": <InProgressHunt items={hunt.items} />,
     "pre-hunt": (
       <PreStartHunt hunt={hunt} setHunt={setHunt} username={username} />
     )
