@@ -181,7 +181,7 @@ Object.defineProperty(Hunt.prototype, "setPlayers", {
 
 Object.defineProperty(Hunt.prototype, "inProgress", {
   get: function() {
-    return this.startsIn <= 0 && this.endsIn > 0;
+    return Boolean(this.startsIn <= 0 && this.endsIn > 0);
   }
 });
 

@@ -35,8 +35,8 @@ const hs = {
   football: {
     huntName: "football hunt",
     maxTeams: 4,
-    startTime: new Date(new Date().getTime() + hour),
-    endTime: new Date(new Date().getTime() + hour * 3),
+    startTime: new Date(new Date().getTime() + hour).toISOString(),
+    endTime: new Date(new Date().getTime() + hour * 3).toISOString(),
     items: [i[0], i[1]],
     creatorID: 32,
     latitude: 43.43,
@@ -131,14 +131,9 @@ describe("hunt", () => {
   describe("starts", () => {
     const cases = [
       {
-        name: "default case",
-        args: null,
-        expected: undefined
-      },
-      {
         name: "valid value",
         args: hs.football,
-        expected: hs.football.startTime
+        expected: new Date(hs.football.startTime).getTime()
       }
     ];
 
@@ -146,7 +141,7 @@ describe("hunt", () => {
       test(c.name, () => {
         const hunt = new Hunt(c.args);
 
-        const result = hunt.starts;
+        const result = hunt.starts.getTime();
 
         expect(result).toStrictEqual(c.expected);
       });
@@ -156,14 +151,9 @@ describe("hunt", () => {
   describe("ends", () => {
     const cases = [
       {
-        name: "default case",
-        args: null,
-        expected: undefined
-      },
-      {
         name: "valid value",
         args: hs.football,
-        expected: hs.football.endTime
+        expected: new Date(hs.football.endTime).getTime()
       }
     ];
 
@@ -171,7 +161,7 @@ describe("hunt", () => {
       test(c.name, () => {
         const hunt = new Hunt(c.args);
 
-        const result = hunt.ends;
+        const result = hunt.ends.getTime();
 
         expect(result).toStrictEqual(c.expected);
       });
@@ -302,30 +292,31 @@ describe("hunt", () => {
       {
         name: "started an hour ago",
         args: Object.assign({}, hs.football, {
-          startTime: new Date(new Date().getTime() - hour)
+          startTime: new Date(new Date().getTime() - hour).toISOString(),
+          endTime: new Date(new Date().getTime() + hour).toISOString()
         }),
         expected: true
       },
       {
         name: "ended an hour ago",
         args: Object.assign({}, hs.football, {
-          startTime: new Date(new Date().getTime() - 2 * hour),
-          endTime: new Date(new Date().getTime() - 1 * hour)
+          startTime: new Date(new Date().getTime() - 2 * hour).toISOString(),
+          endTime: new Date(new Date().getTime() - 1 * hour).toISOString()
         }),
         expected: false
       },
       {
         name: "starts in an hour",
         args: Object.assign({}, hs.xmas, {
-          startTime: new Date(new Date().getTime() + hour)
+          startTime: new Date(new Date().getTime() + hour).toISOString()
         }),
         expected: false
       },
       {
         name: "hunt value that has already ended",
         args: Object.assign({}, hs.xmas, {
-          startTime: new Date(new Date().getTime() - hour),
-          endTime: new Date(new Date().getTime() - 2 * hour)
+          startTime: new Date(new Date().getTime() - 3 * hour).toISOString(),
+          endTime: new Date(new Date().getTime() - 2 * hour).toISOString()
         }),
         expected: false
       }
@@ -335,7 +326,7 @@ describe("hunt", () => {
       test(c.name, () => {
         const hunt = new Hunt(c.args);
 
-        const result = hunt.inProgess;
+        const result = hunt.inProgress;
 
         expect(typeof result === "boolean").toBeTruthy();
         expect(result).toStrictEqual(c.expected);

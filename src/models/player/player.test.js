@@ -107,10 +107,10 @@ describe("Player", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(
-          new Player({ email: "email", teamID: 43, userID: 23 })
+          new Player({ email: "email", huntID: 43, userID: 23 })
         ),
         expected: {
-          url: BASE_PATH + "/teams/43/players/",
+          url: BASE_PATH + "/hunts/43/players/",
           method: "POST"
         }
       }
@@ -135,10 +135,10 @@ describe("Player", () => {
       {
         name: "create a valid config for an api method call",
         model: addTestModel(
-          new Player({ email: "email", teamID: 43, userID: 23 })
+          new Player({ email: "email", huntID: 43, userID: 23 })
         ),
         expected: {
-          url: BASE_PATH + "/teams/43/players/23",
+          url: BASE_PATH + "/hunts/43/players/23",
           method: "DELETE"
         },
         data: {}

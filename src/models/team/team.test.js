@@ -81,8 +81,6 @@ describe("Team", () => {
 
         expect(result.url).toStrictEqual(c.expected.url);
         expect(result.method).toStrictEqual(c.expected.method);
-
-        expect(result.data).not.toInclude("teamID");
       });
     }
   });
