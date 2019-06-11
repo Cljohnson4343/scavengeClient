@@ -6,6 +6,7 @@ import PlayerTable from "../PlayerTable";
 import TeamTable from "../TeamTable";
 import InviteTable from "../InviteTable";
 import ItemTable from "../ItemTable";
+import GeneralInfo from "./GeneralInfo";
 
 function PreStartHunt(props) {
   const { hunt, setHunt, username } = props;
@@ -17,6 +18,7 @@ function PreStartHunt(props) {
   const currentUserTeam = currentUser ? currentUser.teamID : 0;
 
   const table = {
+    general: <GeneralInfo hunt={hunt} setHunt={setHunt} />,
     items: (
       <ItemTable
         huntID={hunt.huntID}
@@ -32,6 +34,7 @@ function PreStartHunt(props) {
           currentUserTeam={currentUserTeam}
           deleteTeam={team => setHunt(hunt.deleteTeam(team))}
           huntID={hunt.huntID}
+          maxTeams={hunt.maxTeams}
           teams={hunt.teams}
           setTeams={teams => {
             setHunt(hunt.setTeams(teams));

@@ -34,16 +34,25 @@ export function validateTeamName(name) {
   return new ScavengeError();
 }
 
+export function validateTeam(name, maxTeams, numTeams) {
+  let err = validateMaxTeams(maxTeams, numTeams);
+  if (err.inError) {
+    return err;
+  }
+
+  return validateTeamName(name);
+}
+
 const MinTeams = 1;
 const MaxTeams = 19;
 
-export function validateMaxTeams(numTeams) {
+export function validateMaxTeams(maxTeams, numTeams) {
   if (numTeams < MinTeams) {
-    return new ScavengeError(`Must be at least ${MinTeams}`);
+    return new ScavengeError(`Must have at least ${MinTeams} teams`);
   }
 
-  if (numTeams > MaxTeams) {
-    return new ScavengeError(`Must be less than ${MaxTeams}`);
+  if (numTeams > maxTeams) {
+    return new ScavengeError(`Hunt already has maximum number of teams`);
   }
   return new ScavengeError();
 }

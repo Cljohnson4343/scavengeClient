@@ -42,6 +42,12 @@ function HuntTabBar(props) {
       <Tab
         classes={{ selected: classes.tabSelected }}
         className={classes.tabFont}
+        label="General"
+        value="general"
+      />
+      <Tab
+        classes={{ selected: classes.tabSelected }}
+        className={classes.tabFont}
         label="Items"
         value="items"
       />

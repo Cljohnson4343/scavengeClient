@@ -13,7 +13,7 @@ export function HuntInfoError(state) {
 
   this._state = {
     huntName: validateHuntName(state.huntName),
-    maxTeams: validateMaxTeams(state.maxTeams),
+    maxTeams: validateMaxTeams(state.maxTeams, state.teams.length),
     startDate: validateStartDate(state.startDate),
     endDate: validateEndDate(state.startDate, state.endDate)
   };

@@ -8,11 +8,17 @@ import {
   Invites
 } from "../../models";
 import PreStartHunt from "./PreStartHunt";
+import Loading from "../Loading";
 
-const styles = theme => ({});
+const styles = theme => ({
+  loading: {
+    height: "400px",
+    width: "100%"
+  }
+});
 
 function Hunt(props) {
-  const { huntName, username } = props;
+  const { classes, huntName, username } = props;
 
   const [hunt, setHunt] = useState({});
   const [status, setStatus] = useState("loading");
@@ -47,7 +53,7 @@ function Hunt(props) {
   }, [huntName, username]);
 
   if (isLoading()) {
-    return <h1>Loading...</h1>;
+    return <Loading classes={{ container: classes.loading }} />;
   }
 
   const page = {

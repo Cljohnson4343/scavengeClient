@@ -24,7 +24,7 @@ import { Team, Teams } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import GroupIcon from "@material-ui/icons/Group";
-import { validateTeamName } from "../../utils";
+import { validateTeam } from "../../utils";
 import {
   GroupAddButton,
   EditButton,
@@ -66,6 +66,7 @@ function TeamTable(props) {
     currentUserTeam,
     deleteTeam,
     huntID,
+    maxTeams,
     teams,
     setTeams
   } = props;
@@ -109,8 +110,6 @@ function TeamTable(props) {
       Object.keys(changed).forEach(id => {
         let team = teams.getByID(parseInt(id));
         team = new Team({ ...team.requestJSON, ...changed[id] });
-        console.log("new team");
-        console.dir(team);
         team.apiUpdateTeam().then(response => {
           setTeams(teams.replace(parseInt(id), team));
         });
@@ -219,7 +218,14 @@ function TeamTable(props) {
     if (!editing) {
       input = row.teamName;
     }
-    const err = validateTeamName(input);
+    const err = validateTeam(input, maxTeams, teams.length);
+    if (err.inError && !isInInvalidState(row)) {
+      setRowsInInvalidState(rowsInInvalidState.add(getRowId(row)));
+    }
+    if (!err.inError && isInInvalidState(row)) {
+      rowsInInvalidState.delete(getRowId(row));
+      setRowsInInvalidState(rowsInInvalidState);
+    }
     return (
       <TextField
         autoFocus={editing}
@@ -233,7 +239,7 @@ function TeamTable(props) {
             setEditing({ rowID: getRowId(row), column: "teamName" });
           }
           const input = e.currentTarget.value;
-          const err = validateTeamName(input);
+          const err = validateTeam(input, maxTeams, teams.length);
           if (err.inError && !isInInvalidState(row)) {
             setRowsInInvalidState(rowsInInvalidState.add(getRowId(row)));
           }
@@ -316,6 +322,7 @@ TeamTable.propTypes = {
   currentUserTeam: PropTypes.number.isRequired,
   deleteTeam: PropTypes.func.isRequired,
   huntID: PropTypes.number.isRequired,
+  maxTeams: PropTypes.number.isRequired,
   teams: PropTypes.instanceOf(Teams).isRequired,
   setTeams: PropTypes.func.isRequired
 };

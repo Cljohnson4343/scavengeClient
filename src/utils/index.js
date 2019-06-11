@@ -10,6 +10,7 @@ export {
   validateItemName,
   validateItemPoints,
   validateMaxTeams,
+  validateTeam,
   validateStartDate
 } from "./validation";
 export { toDateTimeLocal } from "./date";
