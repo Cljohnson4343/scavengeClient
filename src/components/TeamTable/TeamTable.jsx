@@ -218,7 +218,8 @@ function TeamTable(props) {
     if (!editing) {
       input = row.teamName;
     }
-    const err = validateTeam(input, maxTeams, teams.length);
+    const numTeams = addedRows.length + teams.length;
+    const err = validateTeam(input, maxTeams, numTeams);
     if (err.inError && !isInInvalidState(row)) {
       setRowsInInvalidState(rowsInInvalidState.add(getRowId(row)));
     }
