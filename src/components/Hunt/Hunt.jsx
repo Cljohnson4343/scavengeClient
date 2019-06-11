@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import {
-  getInvitesFromResponse,
-  Hunt as HuntModel,
-  Hunts,
-  Invites
-} from "../../models";
+import { Hunt as HuntModel, Hunts } from "../../models";
 import PreStartHunt from "./PreStartHunt";
 import Loading from "../Loading";
 

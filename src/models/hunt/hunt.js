@@ -4,7 +4,7 @@ import Players, { getPlayersFromResponse } from "../players";
 import Teams, { getTeamsFromResponse } from "../teams";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
-import { getDataProperties, deleteProperties } from "../../utils";
+import { getDataProperties } from "../../utils";
 
 export function getHuntFromResponse(data) {}
 
