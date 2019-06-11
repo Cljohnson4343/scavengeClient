@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Paper, TextField, withStyles } from "@material-ui/core";
 import classNames from "classnames";
@@ -10,13 +10,16 @@ import {
   validateEndDate
 } from "../../utils";
 import { Hunt } from "../../models";
+import SubmitButton from "../SubmitButton";
 
 const styles = theme => {
   const fieldWidth = 220;
   return {
     container: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      paddingLeft: theme.spacing(1),
+      paddingTop: theme.spacing(1)
     },
     dateField: {
       fontWeight: theme.typography.fontWeightLight,
@@ -28,7 +31,7 @@ const styles = theme => {
     },
     input: {
       marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
+      marginRight: theme.spacing(2),
       marginTop: theme.spacing(1),
       paddingBottom: theme.spacing(1)
     },
@@ -38,23 +41,46 @@ const styles = theme => {
     root: {
       margin: `${theme.spacing(2)}px 0`
     },
+    submitBtn: {
+      alignSelf: "flex-end",
+      margin: `${theme.spacing(1)}px ${theme.spacing(2)}px`
+    },
     textField: {
       width: fieldWidth
     }
   };
 };
 
+const beenEdited = (hunt, nameInput, maxTeamsInput, startsInput, endsInput) => {
+  if (hunt.name !== nameInput) return true;
+  if (hunt.maxTeams !== maxTeamsInput) return true;
+  if (hunt.starts.getTime() !== startsInput.getTime()) return true;
+  if (hunt.ends.getTime() !== endsInput.getTime()) return true;
+  return false;
+};
+const hasErr = (...args) =>
+  Boolean(args.find(scavengeError => scavengeError.inError === true));
+
 function GeneralInfo(props) {
   const { classes, hunt, setHunt } = props;
 
-  const huntNameErr = validateHuntName(hunt.name);
-  const maxTeamsErr = validateMaxTeams(hunt.maxTeams, hunt.numTeams);
-  const startsErr = validateStartDate(hunt.starts);
-  const endsErr = validateEndDate(hunt.starts, hunt.ends);
+  const [nameInput, setNameInput] = useState(hunt.name);
+  const [maxTeamsInput, setMaxTeamsInput] = useState(hunt.maxTeams);
+  const [endsInput, setEndsInput] = useState(hunt.ends);
+  const [startsInput, setStartsInput] = useState(hunt.starts);
+
+  const huntNameErr = validateHuntName(nameInput);
+  const maxTeamsErr = validateMaxTeams(maxTeamsInput, hunt.numTeams);
+  const startsErr = validateStartDate(startsInput);
+  const endsErr = validateEndDate(startsInput, endsInput);
+
+  const isEnabled =
+    beenEdited(hunt, nameInput, maxTeamsInput, startsInput, endsInput) &&
+    !hasErr(huntNameErr, maxTeamsErr, startsErr, endsErr);
 
   return (
     <Paper className={classes.root}>
-      <form classes={classes.container}>
+      <form className={classes.container}>
         <div className={classes.container}>
           <TextField
             id="hunt_name"
@@ -70,7 +96,10 @@ function GeneralInfo(props) {
             FormHelperTextProps={huntNameErr.inError ? { error: true } : null}
             helperText={huntNameErr.msg}
             margin="normal"
-            value={hunt.name}
+            onChange={e => {
+              setNameInput(e.currentTarget.value);
+            }}
+            value={nameInput}
             required={true}
           />
           <TextField
@@ -87,7 +116,10 @@ function GeneralInfo(props) {
             FormHelperTextProps={maxTeamsErr.inError ? { error: true } : null}
             helperText={maxTeamsErr.msg}
             margin="normal"
-            value={hunt.maxTeams}
+            onChange={e => {
+              setMaxTeamsInput(Number(e.currentTarget.value));
+            }}
+            value={maxTeamsInput}
             required={true}
           />
           <TextField
@@ -104,7 +136,10 @@ function GeneralInfo(props) {
             FormHelperTextProps={startsErr.inError ? { error: true } : null}
             helperText={startsErr.msg}
             margin="normal"
-            value={toDateTimeLocal(hunt.starts)}
+            onChange={e => {
+              setStartsInput(new Date(e.currentTarget.value));
+            }}
+            value={toDateTimeLocal(startsInput)}
             required={true}
           />
           <TextField
@@ -121,10 +156,31 @@ function GeneralInfo(props) {
             FormHelperTextProps={endsErr.inError ? { error: true } : null}
             helperText={endsErr.msg}
             margin="normal"
-            value={toDateTimeLocal(hunt.ends)}
+            onChange={e => {
+              setEndsInput(new Date(e.currentTarget.value));
+            }}
+            value={toDateTimeLocal(endsInput)}
             required={true}
           />
         </div>
+        <SubmitButton
+          className={classes.submitBtn}
+          disabled={!isEnabled}
+          handleSubmit={() => {
+            let newHunt = new Hunt({
+              ...hunt.data,
+              ...{
+                huntName: nameInput,
+                maxTeams: maxTeamsInput,
+                startTime: startsInput.toISOString(),
+                endTime: endsInput.toISOString()
+              }
+            });
+            newHunt.apiUpdateHunt().then(response => {
+              setHunt(newHunt);
+            });
+          }}
+        />
       </form>
     </Paper>
   );

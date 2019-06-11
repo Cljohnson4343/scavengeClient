@@ -44,7 +44,6 @@ export function validateTeam(name, maxTeams, numTeams) {
 }
 
 const MinTeams = 1;
-const MaxTeams = 19;
 
 export function validateMaxTeams(maxTeams, numTeams) {
   if (numTeams < MinTeams) {
@@ -52,7 +51,7 @@ export function validateMaxTeams(maxTeams, numTeams) {
   }
 
   if (numTeams > maxTeams) {
-    return new ScavengeError(`Hunt already has maximum number of teams`);
+    return new ScavengeError(`Hunt has more teams than 'Max Teams' setting`);
   }
   return new ScavengeError();
 }

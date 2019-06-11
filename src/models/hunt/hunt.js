@@ -1,4 +1,4 @@
-import Invites from "../invites";
+import Invites, { getInvitesFromResponse } from "../invites";
 import Items, { getItemsFromResponse } from "../items";
 import Players, { getPlayersFromResponse } from "../players";
 import Teams, { getTeamsFromResponse } from "../teams";
@@ -26,10 +26,7 @@ const Hunt = ScavengeResource.extend({
       this.data.items = hunt.items.copy();
     }
     if (!(hunt.invites instanceof Invites)) {
-      this.data.invites = new Invites(
-        hunt.invites ? hunt.invites : [],
-        hunt.huntID
-      );
+      this.data.invites = getInvitesFromResponse(hunt.invites);
     } else {
       this.data.invites = hunt.invites.copy();
     }
@@ -82,7 +79,13 @@ const Hunt = ScavengeResource.extend({
       path: "/{huntID}",
       method: "PATCH"
     },
-    self => deleteProperties(self.data, ["huntID", "createdAt", "creatorID"])
+    self =>
+      getDataProperties(self.data, [
+        "huntName",
+        "maxTeams",
+        "startTime",
+        "endTime"
+      ])
   )
 });
 
@@ -251,6 +254,7 @@ Object.defineProperty(Hunt.prototype, "requestJSON", {
     data.items = this.items.requestJSON;
     data.teams = this.teams.requestJSON;
     data.players = this.players.requestJSON;
+    data.invites = this.invites.requestJSON;
 
     return data;
   }

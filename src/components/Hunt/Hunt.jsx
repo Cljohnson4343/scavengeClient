@@ -38,14 +38,8 @@ function Hunt(props) {
       .apiRetrieveHunts({ name: huntName, creator: username })
       .then(response => {
         let newHunt = new HuntModel(response.data);
-        new Invites([], newHunt.huntID).apiRetrieve().then(response => {
-          newHunt = newHunt.setInvites(
-            getInvitesFromResponse(response.data),
-            newHunt.huntID
-          );
-          setHunt(newHunt);
-          setStatus(getStatus(newHunt));
-        });
+        setHunt(newHunt);
+        setStatus(getStatus(newHunt));
       })
       .catch(err => {
         console.log(err);

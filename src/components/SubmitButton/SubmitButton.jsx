@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 function SubmitButton(props) {
-  const { classes, handleSubmit } = props;
+  const { classes, handleSubmit, ...restProps } = props;
 
   return (
     <Button
@@ -21,6 +21,7 @@ function SubmitButton(props) {
       className={classes.button}
       size="small"
       onClick={e => handleSubmit(e)}
+      {...restProps}
     >
       <SendIcon className={classes.rightIcon} />
     </Button>

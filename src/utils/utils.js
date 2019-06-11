@@ -46,8 +46,11 @@ export function getDataProperties(obj, fields) {
 }
 
 export function deleteProperties(obj, fields) {
-  return fields.reduce((acc, key) => {
-    delete acc[key];
-    return acc;
-  }, Object.create(obj));
+  return fields.reduce(
+    (acc, key) => {
+      delete acc[key];
+      return acc;
+    },
+    { ...obj }
+  );
 }

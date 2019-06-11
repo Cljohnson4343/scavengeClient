@@ -4,7 +4,12 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
 export function getInvitesFromResponse(data = [], huntID) {
-  return new Invites(data.map(d => new Invite(d)), huntID);
+  return new Invites(
+    data.map(d => {
+      return new Invite(d);
+    }),
+    huntID
+  );
 }
 
 const Invites = ScavengeResource.extend({
@@ -45,7 +50,9 @@ Object.defineProperty(Invites.prototype, "length", {
 
 Object.defineProperty(Invites.prototype, "requestJSON", {
   get: function() {
-    return this.array.map(p => p.requestJSON);
+    return this.array.map(p => {
+      return p.requestJSON;
+    });
   }
 });
 
