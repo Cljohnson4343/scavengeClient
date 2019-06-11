@@ -11,7 +11,7 @@ import GeneralInfo from "./GeneralInfo";
 function PreStartHunt(props) {
   const { hunt, setHunt, username } = props;
 
-  const [value, setValue] = useState("general");
+  const [value, setValue] = useState("items");
   const currentUser = hunt.players
     ? hunt.players.array.find(p => p.username === username)
     : null;

@@ -13,11 +13,12 @@ import { Hunt } from "../../models";
 import SubmitButton from "../SubmitButton";
 
 const styles = theme => {
-  const fieldWidth = 220;
+  const fieldWidth = 250;
   return {
     container: {
       display: "flex",
       flexDirection: "column",
+      alignItems: "center",
       paddingLeft: theme.spacing(1),
       paddingTop: theme.spacing(1)
     },
