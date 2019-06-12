@@ -4,13 +4,20 @@ import { withStyles } from "@material-ui/core";
 import ItemsContainer from "../Items";
 import { Hunt, Team } from "../../models";
 import TimerIcon from "@material-ui/icons/Timer";
+import PointsIcon from "@material-ui/icons/ExposurePlus2";
 import Countdown from "../Countdown";
+import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
   container: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
+  },
+  spacedContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   msg: {
     color: theme.palette.primary.main,
@@ -22,6 +29,8 @@ function InProgressHunt(props) {
   const { classes, hunt, team } = props;
   const items = hunt.items;
 
+  const points = 43;
+
   if (!Boolean(team)) {
     return (
       <span className={classes.container}>
@@ -32,6 +41,12 @@ function InProgressHunt(props) {
   return (
     <div>
       <Countdown icon={TimerIcon} time={hunt.ends} title="Time Left" />
+      <SectionHeader Icon={PointsIcon}>
+        <span className={classes.spacedContainer}>
+          <span>Points</span>
+          <span>{`${points} pts`}</span>
+        </span>
+      </SectionHeader>
       <ItemsContainer items={items} team={team} />
     </div>
   );
