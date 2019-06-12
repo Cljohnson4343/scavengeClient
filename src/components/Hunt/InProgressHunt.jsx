@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import ItemsContainer from "../Items";
-import { Items, Team } from "../../models";
+import { Hunt, Team } from "../../models";
+import TimerIcon from "@material-ui/icons/Timer";
+import Countdown from "../Countdown";
 
 const styles = theme => ({
   container: {
@@ -17,7 +19,8 @@ const styles = theme => ({
 });
 
 function InProgressHunt(props) {
-  const { classes, items, team } = props;
+  const { classes, hunt, team } = props;
+  const items = hunt.items;
 
   if (!Boolean(team)) {
     return (
@@ -26,12 +29,17 @@ function InProgressHunt(props) {
       </span>
     );
   }
-  return <ItemsContainer items={items} team={team} />;
+  return (
+    <div>
+      <Countdown icon={TimerIcon} time={hunt.ends} title="Time Left" />
+      <ItemsContainer items={items} team={team} />
+    </div>
+  );
 }
 
 InProgressHunt.propTypes = {
   classes: PropTypes.object.isRequired,
-  items: PropTypes.instanceOf(Items).isRequired,
+  hunt: PropTypes.instanceOf(Hunt).isRequired,
   team: PropTypes.instanceOf(Team)
 };
 

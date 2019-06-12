@@ -50,7 +50,7 @@ function Hunt(props) {
     "after-hunt": <h1>After Game</h1>,
     "in-hunt": (
       <InProgressHunt
-        items={hunt.items}
+        hunt={hunt}
         team={user ? hunt.getTeam(user.userID) : null}
       />
     ),
