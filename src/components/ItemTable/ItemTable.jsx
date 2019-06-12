@@ -23,6 +23,7 @@ import {
 import { Items, Item, getItemFromResponse } from "../../models";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import ListIcon from "@material-ui/icons/List";
 import { validateItemName, validateItemPoints } from "../../utils";
 import {
   AddButton,
@@ -31,6 +32,7 @@ import {
   DeleteButton,
   CancelButton
 } from "../CommandButtons/CommandButtons";
+import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
   commandCell: {
@@ -344,49 +346,53 @@ function ItemTable(props) {
   };
 
   return (
-    <Paper className={classes.paper}>
-      <Grid columns={cols} getRowId={getRowId} rows={items.array}>
-        <EditingState
-          columnExtensions={editingExtensions}
-          editingRowIds={editingRowIds}
-          onEditingRowIdsChange={editingRowIds => {
-            setEditingRowIds(editingRowIds);
-          }}
-          rowChanges={rowChanges}
-          onRowChangesChange={rowChanges => {
-            setRowChanges(rowChanges);
-          }}
-          addedRows={addedRows}
-          onAddedRowsChange={addedRows => {
-            setAddedRows(addedRows);
-          }}
-          onCommitChanges={commitChanges}
-        />
-        <SortingState
-          columnExtensions={sortingExtensions}
-          onSortingChange={sortingArr => setSorting(sortingArr)}
-          sorting={sorting}
-        />
-        <IntegratedSorting columnExtensions={integratedSortingExtensions} />
-        <NameTypeProvider for={["name"]} />
-        <PointsTypeProvider for={["points"]} />
-        <Table
-          columnExtensions={colExtensions}
-          noDataCellComponent={NoDataCell}
-        />
-        <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
-        <TableEditRow />
-        <TableEditColumn
-          cellComponent={cmdCellComponent}
-          commandComponent={Command}
-          headerCellComponent={cmdHeaderComponent}
-          showAddCommand={addedRows.length < 1}
-          showEditCommand
-          showDeleteCommand
-          width={80}
-        />
-      </Grid>
-    </Paper>
+    <div>
+      <SectionHeader Icon={ListIcon}>Hunt Items</SectionHeader>
+
+      <Paper className={classes.paper}>
+        <Grid columns={cols} getRowId={getRowId} rows={items.array}>
+          <EditingState
+            columnExtensions={editingExtensions}
+            editingRowIds={editingRowIds}
+            onEditingRowIdsChange={editingRowIds => {
+              setEditingRowIds(editingRowIds);
+            }}
+            rowChanges={rowChanges}
+            onRowChangesChange={rowChanges => {
+              setRowChanges(rowChanges);
+            }}
+            addedRows={addedRows}
+            onAddedRowsChange={addedRows => {
+              setAddedRows(addedRows);
+            }}
+            onCommitChanges={commitChanges}
+          />
+          <SortingState
+            columnExtensions={sortingExtensions}
+            onSortingChange={sortingArr => setSorting(sortingArr)}
+            sorting={sorting}
+          />
+          <IntegratedSorting columnExtensions={integratedSortingExtensions} />
+          <NameTypeProvider for={["name"]} />
+          <PointsTypeProvider for={["points"]} />
+          <Table
+            columnExtensions={colExtensions}
+            noDataCellComponent={NoDataCell}
+          />
+          <TableHeaderRow showSortingControls sortLabelComponent={SortLabel} />
+          <TableEditRow />
+          <TableEditColumn
+            cellComponent={cmdCellComponent}
+            commandComponent={Command}
+            headerCellComponent={cmdHeaderComponent}
+            showAddCommand={addedRows.length < 1}
+            showEditCommand
+            showDeleteCommand
+            width={80}
+          />
+        </Grid>
+      </Paper>
+    </div>
   );
 }
 

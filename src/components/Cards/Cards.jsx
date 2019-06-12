@@ -26,10 +26,10 @@ function Cards(props) {
   return (
     <div>
       <SectionHeader Icon={ListIcon}>
-        <div className={classes.container}>
+        <span className={classes.container}>
           <span className={classes.headerItem}>{title}</span>
           <span className={classes.headerItem}>{Boolean(sort) && sort}</span>
-        </div>
+        </span>
       </SectionHeader>
       <div className={classes.itemsContainer}>{children}</div>
     </div>

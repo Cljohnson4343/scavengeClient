@@ -5,16 +5,26 @@ import { Card } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const styles = {
+const styles = theme => ({
+  deleteIcon: {
+    color: theme.palette.error.main
+  },
+  points: {
+    alignSelf: "center",
+    marginRight: theme.spacing(1)
+  },
   root: {
     flex: "0 0 auto"
   },
+  subheader: {},
   title: {
-    fontSize: "0.7rem",
+    fontSize: "0.9rem",
     lineHeight: "1.2"
   },
-  subheader: {}
-};
+  videoIcon: {
+    color: theme.palette.primary.main
+  }
+});
 
 function ItemCard(props) {
   const {
@@ -22,7 +32,11 @@ function ItemCard(props) {
     huntInfo: { isDone }
   } = props;
 
-  const ActionIcon = isDone ? <DeleteIcon /> : <VideocamIcon />;
+  const ActionIcon = true ? (
+    <DeleteIcon className={classes.deleteIcon} />
+  ) : (
+    <VideocamIcon className={classes.videoIcon} />
+  );
 
   const handleDeleteMedia = function(e) {};
 
@@ -38,15 +52,16 @@ function ItemCard(props) {
   const handleAction = isDone ? handleDeleteMedia : handleCaptureMedia;
 
   return (
-    <Card>
+    <Card square={true}>
       <CardHeader
         avatar={<IconButton onClick={handleAction}>{ActionIcon}</IconButton>}
         classes={{
+          action: classes.points,
           title: classes.title,
           subheader: classes.subheader
         }}
         title={props.huntInfo.name}
-        subheader={`${props.huntInfo.points} pts`}
+        action={`${props.huntInfo.points} pts`}
       />
     </Card>
   );

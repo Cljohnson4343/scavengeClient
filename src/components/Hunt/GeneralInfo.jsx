@@ -11,6 +11,8 @@ import {
 } from "../../utils";
 import { Hunt } from "../../models";
 import SubmitButton from "../SubmitButton";
+import SectionHeader from "../SectionHeader";
+import InfoIcon from "@material-ui/icons/Info";
 
 const styles = theme => {
   const fieldWidth = 250;
@@ -80,110 +82,113 @@ function GeneralInfo(props) {
     !hasErr(huntNameErr, maxTeamsErr, startsErr, endsErr);
 
   return (
-    <Paper className={classes.root}>
-      <form className={classes.container}>
-        <div className={classes.container}>
-          <TextField
-            id="hunt_name"
-            label="Hunt Name"
-            type="text"
-            classes={{ root: classes.font }}
-            className={classNames(
-              classes.textField,
-              classes.input,
-              classes.field
-            )}
-            error={huntNameErr.inError ? true : false}
-            FormHelperTextProps={huntNameErr.inError ? { error: true } : null}
-            helperText={huntNameErr.msg}
-            margin="normal"
-            onChange={e => {
-              setNameInput(e.currentTarget.value);
+    <div>
+      <SectionHeader Icon={InfoIcon}>Hunt Info</SectionHeader>
+      <Paper className={classes.root}>
+        <form className={classes.container}>
+          <div className={classes.container}>
+            <TextField
+              id="hunt_name"
+              label="Hunt Name"
+              type="text"
+              classes={{ root: classes.font }}
+              className={classNames(
+                classes.textField,
+                classes.input,
+                classes.field
+              )}
+              error={huntNameErr.inError ? true : false}
+              FormHelperTextProps={huntNameErr.inError ? { error: true } : null}
+              helperText={huntNameErr.msg}
+              margin="normal"
+              onChange={e => {
+                setNameInput(e.currentTarget.value);
+              }}
+              value={nameInput}
+              required={true}
+            />
+            <TextField
+              id="max_teams"
+              label="Max Teams"
+              type="number"
+              classes={{ root: classes.font }}
+              className={classNames(
+                classes.numberField,
+                classes.input,
+                classes.field
+              )}
+              error={maxTeamsErr.inError ? true : false}
+              FormHelperTextProps={maxTeamsErr.inError ? { error: true } : null}
+              helperText={maxTeamsErr.msg}
+              margin="normal"
+              onChange={e => {
+                setMaxTeamsInput(Number(e.currentTarget.value));
+              }}
+              value={maxTeamsInput}
+              required={true}
+            />
+            <TextField
+              id="start_time"
+              label="Start Time"
+              type="datetime-local"
+              classes={{ root: classes.font }}
+              className={classNames(
+                classes.dateField,
+                classes.input,
+                classes.field
+              )}
+              error={startsErr.inError ? true : false}
+              FormHelperTextProps={startsErr.inError ? { error: true } : null}
+              helperText={startsErr.msg}
+              margin="normal"
+              onChange={e => {
+                setStartsInput(new Date(e.currentTarget.value));
+              }}
+              value={toDateTimeLocal(startsInput)}
+              required={true}
+            />
+            <TextField
+              id="end_time"
+              label="End Time"
+              type="datetime-local"
+              classes={{ root: classes.font }}
+              className={classNames(
+                classes.dateField,
+                classes.input,
+                classes.field
+              )}
+              error={endsErr.inError ? true : false}
+              FormHelperTextProps={endsErr.inError ? { error: true } : null}
+              helperText={endsErr.msg}
+              margin="normal"
+              onChange={e => {
+                setEndsInput(new Date(e.currentTarget.value));
+              }}
+              value={toDateTimeLocal(endsInput)}
+              required={true}
+            />
+          </div>
+          <SubmitButton
+            className={classes.submitBtn}
+            disabled={!isEnabled}
+            handleSubmit={() => {
+              let newHunt = new Hunt({
+                ...hunt.data,
+                ...{
+                  huntName: nameInput,
+                  maxTeams: maxTeamsInput,
+                  startTime: startsInput.toISOString(),
+                  endTime: endsInput.toISOString()
+                }
+              });
+              newHunt.apiUpdateHunt().then(response => {
+                setHunt(newHunt);
+              });
             }}
-            value={nameInput}
-            required={true}
           />
-          <TextField
-            id="max_teams"
-            label="Max Teams"
-            type="number"
-            classes={{ root: classes.font }}
-            className={classNames(
-              classes.numberField,
-              classes.input,
-              classes.field
-            )}
-            error={maxTeamsErr.inError ? true : false}
-            FormHelperTextProps={maxTeamsErr.inError ? { error: true } : null}
-            helperText={maxTeamsErr.msg}
-            margin="normal"
-            onChange={e => {
-              setMaxTeamsInput(Number(e.currentTarget.value));
-            }}
-            value={maxTeamsInput}
-            required={true}
-          />
-          <TextField
-            id="start_time"
-            label="Start Time"
-            type="datetime-local"
-            classes={{ root: classes.font }}
-            className={classNames(
-              classes.dateField,
-              classes.input,
-              classes.field
-            )}
-            error={startsErr.inError ? true : false}
-            FormHelperTextProps={startsErr.inError ? { error: true } : null}
-            helperText={startsErr.msg}
-            margin="normal"
-            onChange={e => {
-              setStartsInput(new Date(e.currentTarget.value));
-            }}
-            value={toDateTimeLocal(startsInput)}
-            required={true}
-          />
-          <TextField
-            id="end_time"
-            label="End Time"
-            type="datetime-local"
-            classes={{ root: classes.font }}
-            className={classNames(
-              classes.dateField,
-              classes.input,
-              classes.field
-            )}
-            error={endsErr.inError ? true : false}
-            FormHelperTextProps={endsErr.inError ? { error: true } : null}
-            helperText={endsErr.msg}
-            margin="normal"
-            onChange={e => {
-              setEndsInput(new Date(e.currentTarget.value));
-            }}
-            value={toDateTimeLocal(endsInput)}
-            required={true}
-          />
-        </div>
-        <SubmitButton
-          className={classes.submitBtn}
-          disabled={!isEnabled}
-          handleSubmit={() => {
-            let newHunt = new Hunt({
-              ...hunt.data,
-              ...{
-                huntName: nameInput,
-                maxTeams: maxTeamsInput,
-                startTime: startsInput.toISOString(),
-                endTime: endsInput.toISOString()
-              }
-            });
-            newHunt.apiUpdateHunt().then(response => {
-              setHunt(newHunt);
-            });
-          }}
-        />
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </div>
   );
 }
 

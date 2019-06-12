@@ -25,7 +25,7 @@ function SectionHeader(props) {
     <div className={className}>
       <div className={classes.container}>
         <Icon className={classes.icon} color="primary" fontSize="small" />
-        <Typography className={classes.header} color="primary">
+        <Typography className={classes.header} color="primary" variant="h6">
           {props.children}
         </Typography>
       </div>
