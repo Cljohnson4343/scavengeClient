@@ -33,13 +33,19 @@ const styles = theme => ({
     justifyContent: "space-between",
     maxHeight: "48px"
   },
-  username: {
+  title: {
     alignSelf: "center"
   }
 });
 
 function ScavengeAppBar(props) {
-  const { classes, notifications, setNotifications, user } = props;
+  const { classes, match, notifications, setNotifications, user } = props;
+
+  const title = match
+    ? `${match.creator}/${match.huntName}`
+    : user
+    ? user.username
+    : null;
 
   function TextButton(props) {
     return (
@@ -89,7 +95,7 @@ function ScavengeAppBar(props) {
       >
         <ExploreIcon fontSize="large" />
       </IconButton>
-      <div className={classes.username}>{user ? user.username : null}</div>
+      <div className={classes.title}>{title}</div>
       <div className={classes.buttonWrap}>{renderProps}</div>
     </AppBar>
   );

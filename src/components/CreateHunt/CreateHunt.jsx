@@ -87,7 +87,9 @@ function CreateHunt(props) {
             getHunt()
               .apiCreateHunt()
               .then(response => {
-                navigate(`../../${user.username}/${response.data.huntName}`);
+                navigate(
+                  `../../hunts/${user.username}/${response.data.huntName}`
+                );
               });
           }}
           icon={<SendIcon />}

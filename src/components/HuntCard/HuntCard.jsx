@@ -72,7 +72,9 @@ function HuntCard(props) {
         }}
         title={
           <Link
-            onClick={e => navigate(`/${hunt.creatorUsername}/${hunt.name}`)}
+            onClick={e =>
+              navigate(`/hunts/${hunt.creatorUsername}/${hunt.name}`)
+            }
           >
             {hunt.name}
           </Link>

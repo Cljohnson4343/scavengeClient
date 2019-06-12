@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Router } from "@reach/router";
+import { Match, Router } from "@reach/router";
 import { withStyles } from "@material-ui/core";
 import { navigate } from "@reach/router";
 
@@ -46,16 +46,21 @@ const ThemedApp = withStyles(styles)(function(props) {
   return (
     <Location>
       <div className={classes.pageWrapper}>
-        <AppBar
-          user={user}
-          setUser={setUser}
-          notifications={notifications}
-          setNotifications={setNotifications}
-        />
+        <Match path="/hunts/:creator/:huntName">
+          {props => (
+            <AppBar
+              user={user}
+              setUser={setUser}
+              notifications={notifications}
+              setNotifications={setNotifications}
+              {...props}
+            />
+          )}
+        </Match>
         <Router>
           <Home path="/" user={user} />
           <CreateHunt path="/hunts/create" user={user} />
-          <Hunt path="/:creator/:huntName" user={user} />
+          <Hunt path="/hunts/:creator/:huntName" user={user} />
           <Notifications
             path="/:username/notifications"
             notifications={notifications}
