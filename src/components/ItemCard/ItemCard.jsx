@@ -4,6 +4,7 @@ import { withStyles, CardHeader, IconButton } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Item } from "../../models";
 
 const styles = theme => ({
   deleteIcon: {
@@ -27,18 +28,24 @@ const styles = theme => ({
 });
 
 function ItemCard(props) {
-  const {
-    classes,
-    huntInfo: { isDone }
-  } = props;
+  const { classes, item } = props;
 
-  const ActionIcon = true ? (
+  const isDone = true;
+  const ActionIcon = isDone ? (
     <DeleteIcon className={classes.deleteIcon} />
   ) : (
     <VideocamIcon className={classes.videoIcon} />
   );
 
-  const handleDeleteMedia = function(e) {};
+  const handleDeleteMedia = function(e) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete the media for this Item?" +
+          " If so, this item will no longer be 'found'."
+      )
+    ) {
+    }
+  };
 
   const handleCaptureMedia = function(e) {
     const constraints = { video: true };
@@ -60,19 +67,15 @@ function ItemCard(props) {
           title: classes.title,
           subheader: classes.subheader
         }}
-        title={props.huntInfo.name}
-        action={`${props.huntInfo.points} pts`}
+        title={item.name}
+        action={`${item.points} pts`}
       />
     </Card>
   );
 }
 
 ItemCard.propTypes = {
-  huntInfo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    isDone: PropTypes.bool.isRequired,
-    points: PropTypes.number.isRequired
-  }).isRequired
+  item: PropTypes.instanceOf(Item).isRequired
 };
 
 export default withStyles(styles)(ItemCard);

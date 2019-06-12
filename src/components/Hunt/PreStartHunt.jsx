@@ -70,7 +70,7 @@ function PreStartHunt(props) {
 PreStartHunt.propTypes = {
   hunt: PropTypes.instanceOf(HuntModel).isRequired,
   setHunt: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired
+  username: PropTypes.string
 };
 
 export default PreStartHunt;

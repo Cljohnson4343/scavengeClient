@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles, Paper } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import SectionHeader from "../SectionHeader";
 import ListIcon from "@material-ui/icons/List";
 

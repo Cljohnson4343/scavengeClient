@@ -55,7 +55,7 @@ const ThemedApp = withStyles(styles)(function(props) {
         <Router>
           <Home path="/" user={user} />
           <CreateHunt path="/hunts/create" user={user} />
-          <Hunt path="/:username/:huntName" />
+          <Hunt path="/:creator/:huntName" user={user} />
           <Notifications
             path="/:username/notifications"
             notifications={notifications}

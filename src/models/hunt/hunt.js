@@ -167,6 +167,13 @@ Object.defineProperty(Hunt.prototype, "teams", {
   }
 });
 
+Object.defineProperty(Hunt.prototype, "getTeam", {
+  value: function(userID) {
+    const player = this.players.getByID(userID);
+    return player ? this.teams.getByID(player.teamID) : null;
+  }
+});
+
 Object.defineProperty(Hunt.prototype, "players", {
   get: function() {
     return this.data.players;

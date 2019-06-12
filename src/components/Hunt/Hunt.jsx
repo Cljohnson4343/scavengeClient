@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { Hunt as HuntModel, Hunts } from "../../models";
+import { Hunt as HuntModel, Hunts, User } from "../../models";
 import PreStartHunt from "./PreStartHunt";
 import InProgressHunt from "./InProgressHunt";
 import Loading from "../Loading";
@@ -14,7 +14,7 @@ const styles = theme => ({
 });
 
 function Hunt(props) {
-  const { classes, huntName, username } = props;
+  const { classes, creator, huntName, user } = props;
 
   const [hunt, setHunt] = useState({});
   const [status, setStatus] = useState("loading");
@@ -31,7 +31,7 @@ function Hunt(props) {
 
   useEffect(() => {
     new Hunts()
-      .apiRetrieveHunts({ name: huntName, creator: username })
+      .apiRetrieveHunts({ name: huntName, creator: creator })
       .then(response => {
         let newHunt = new HuntModel(response.data);
         setHunt(newHunt);
@@ -40,7 +40,7 @@ function Hunt(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [huntName, username]);
+  }, [huntName, creator]);
 
   if (isLoading()) {
     return <Loading classes={{ container: classes.loading }} />;
@@ -48,9 +48,18 @@ function Hunt(props) {
 
   const page = {
     "after-hunt": <h1>After Game</h1>,
-    "in-hunt": <InProgressHunt items={hunt.items} />,
+    "in-hunt": (
+      <InProgressHunt
+        items={hunt.items}
+        team={user ? hunt.getTeam(user.userID) : null}
+      />
+    ),
     "pre-hunt": (
-      <PreStartHunt hunt={hunt} setHunt={setHunt} username={username} />
+      <PreStartHunt
+        hunt={hunt}
+        setHunt={setHunt}
+        username={user ? user.username : null}
+      />
     )
   };
   return <div>{page[status]}</div>;
@@ -58,8 +67,9 @@ function Hunt(props) {
 
 Hunt.propTypes = {
   classes: PropTypes.object.isRequired,
+  creator: PropTypes.string.isRequired,
   huntName: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired
+  user: PropTypes.instanceOf(User)
 };
 
 export default withStyles(styles)(Hunt);
