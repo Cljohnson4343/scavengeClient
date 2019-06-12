@@ -6,16 +6,23 @@ import classNames from "classnames";
 import * as action from "./actions";
 import { toDateTimeLocal } from "../../utils";
 import { HuntInfoError } from "./error";
+import PlaceAutoComplete from "../PlaceAutoComplete";
 
 const styles = theme => ({
   container: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    width: "100%"
   },
   dateField: {
     fontWeight: theme.typography.fontWeightLight,
-    marginTop: theme.spacing(1),
-    width: 200
+    marginTop: theme.spacing(1)
+  },
+  field: {
+    marginLeft: theme.spacing(1),
+    marginTop: `0px`,
+    paddingBottom: theme.spacing(1),
+    marginRight: theme.spacing(2)
   },
   font: {
     fontWeight: theme.typography.fontWeightLight
@@ -23,17 +30,11 @@ const styles = theme => ({
   input: {
     backgroundColor: theme.palette.background.field
   },
-  numberField: {
-    width: 150
+  last: {
+    marginBottom: theme.spacing(2)
   },
-  root: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    marginTop: `0px`,
-    paddingBottom: theme.spacing(1)
-  },
-  textField: {
-    width: 220
+  places: {
+    width: "100%"
   }
 });
 
@@ -50,18 +51,14 @@ function HuntInfoForm(props) {
 
   return (
     <FormExpansion inError={infoFormError.inError} label="Hunt Info">
-      <form classes={classes.container}>
+      <form className={classes.container}>
         <div className={classes.container}>
           <TextField
             id="hunt_name"
             label="Hunt Name"
             type="text"
             classes={{ root: classes.font }}
-            className={classNames(
-              classes.textField,
-              classes.root,
-              classes.field
-            )}
+            className={classes.field}
             error={infoFormError.huntName.inError ? true : false}
             FormHelperTextProps={
               infoFormError.huntName.inError ? { error: true } : null
@@ -79,11 +76,7 @@ function HuntInfoForm(props) {
             label="Max Teams"
             type="number"
             classes={{ root: classes.font }}
-            className={classNames(
-              classes.numberField,
-              classes.root,
-              classes.field
-            )}
+            className={classes.field}
             error={infoFormError.maxTeams.inError ? true : false}
             FormHelperTextProps={
               infoFormError.maxTeams.inError ? { error: true } : null
@@ -101,11 +94,7 @@ function HuntInfoForm(props) {
             label="Start Time"
             type="datetime-local"
             classes={{ root: classes.font }}
-            className={classNames(
-              classes.dateField,
-              classes.root,
-              classes.field
-            )}
+            className={classNames(classes.dateField, classes.field)}
             error={infoFormError.startDate.inError ? true : false}
             FormHelperTextProps={
               infoFormError.startDate.inError ? { error: true } : null
@@ -123,11 +112,7 @@ function HuntInfoForm(props) {
             label="End Time"
             type="datetime-local"
             classes={{ root: classes.font }}
-            className={classNames(
-              classes.dateField,
-              classes.root,
-              classes.field
-            )}
+            className={classNames(classes.dateField, classes.field)}
             error={infoFormError.endDate.inError ? true : false}
             FormHelperTextProps={
               infoFormError.endDate.inError ? { error: true } : null
@@ -139,6 +124,10 @@ function HuntInfoForm(props) {
             }
             value={toDateTimeLocal(endDate)}
             required={true}
+          />
+          <PlaceAutoComplete
+            className={classNames(classes.places, classes.last)}
+            label="Start Location"
           />
         </div>
       </form>
