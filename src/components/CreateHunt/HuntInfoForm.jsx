@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TextField, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "./actions";
 import { toDateTimeLocal } from "../../utils";
 import { HuntInfoError } from "./error";
 import PlaceAutoComplete from "../PlaceAutoComplete";
+import InputField from "../InputField";
 
 const styles = theme => ({
   container: {
@@ -53,72 +54,43 @@ function HuntInfoForm(props) {
     <FormExpansion inError={infoFormError.inError} label="Hunt Info">
       <form className={classes.container}>
         <div className={classes.container}>
-          <TextField
+          <InputField
             id="hunt_name"
             label="Hunt Name"
-            type="text"
-            classes={{ root: classes.font }}
-            className={classes.field}
-            error={infoFormError.huntName.inError ? true : false}
-            FormHelperTextProps={
-              infoFormError.huntName.inError ? { error: true } : null
-            }
-            helperText={infoFormError.huntName.msg}
-            margin="normal"
+            error={infoFormError.huntName}
             onChange={e =>
               dispatch(action.updateHuntName(e.currentTarget.value))
             }
             value={huntName}
             required={true}
           />
-          <TextField
+          <InputField
             id="max_teams"
             label="Max Teams"
             type="number"
-            classes={{ root: classes.font }}
-            className={classes.field}
-            error={infoFormError.maxTeams.inError ? true : false}
-            FormHelperTextProps={
-              infoFormError.maxTeams.inError ? { error: true } : null
-            }
-            helperText={infoFormError.maxTeams.msg}
-            margin="normal"
+            error={infoFormError.maxTeams}
             onChange={e =>
               dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
             }
             value={maxTeams}
             required={true}
           />
-          <TextField
+          <InputField
             id="start_time"
             label="Start Time"
             type="datetime-local"
-            classes={{ root: classes.font }}
-            className={classNames(classes.dateField, classes.field)}
-            error={infoFormError.startDate.inError ? true : false}
-            FormHelperTextProps={
-              infoFormError.startDate.inError ? { error: true } : null
-            }
-            helperText={infoFormError.startDate.msg}
-            margin="normal"
+            error={infoFormError.startDate}
             onChange={e => {
               dispatch(action.updateStart(new Date(e.currentTarget.value)));
             }}
             value={toDateTimeLocal(startDate)}
             required={true}
           />
-          <TextField
+          <InputField
             id="end_time"
             label="End Time"
             type="datetime-local"
-            classes={{ root: classes.font }}
-            className={classNames(classes.dateField, classes.field)}
-            error={infoFormError.endDate.inError ? true : false}
-            FormHelperTextProps={
-              infoFormError.endDate.inError ? { error: true } : null
-            }
-            helperText={infoFormError.endDate.msg}
-            margin="normal"
+            error={infoFormError.endDate}
             onChange={e =>
               dispatch(action.updateEnd(new Date(e.currentTarget.value)))
             }
