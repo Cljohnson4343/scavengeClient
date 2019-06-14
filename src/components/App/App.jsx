@@ -17,6 +17,8 @@ import Footer from "../Footer";
 import Notifications from "../Notifications";
 import { Notifications as NotificationsModel } from "../../models";
 
+require("dotenv").config();
+
 const styles = theme => ({
   pageWrapper: {
     backgroundColor: theme.palette.background.main,
