@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core";
 import ItemCard from "../ItemCard";
 import ItemsSortMenu from "./ItemsSortMenu";
 import Cards from "../Cards";
-import { Items as ItemsModel, Team } from "../../models";
+import { Items as ItemsModel } from "../../models";
 
 const styles = theme => ({
   sortFont: {
@@ -14,7 +14,7 @@ const styles = theme => ({
   }
 });
 function HuntItemContainer(props) {
-  const { classes, items, team } = props;
+  const { classes, items } = props;
 
   const defaultSort = (a, b) => -1;
   const [sortFunction, setSortFunction] = useState(() => defaultSort);
@@ -38,8 +38,7 @@ function HuntItemContainer(props) {
 
 HuntItemContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  items: PropTypes.instanceOf(ItemsModel).isRequired,
-  team: PropTypes.instanceOf(Team).isRequired
+  items: PropTypes.instanceOf(ItemsModel).isRequired
 };
 
 export default withStyles(styles)(HuntItemContainer);

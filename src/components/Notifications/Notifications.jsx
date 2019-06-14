@@ -21,7 +21,7 @@ const styles = theme => ({
 });
 
 function Notifications(props) {
-  const { classes, notifications, setNotifications, userID } = props;
+  const { classes, notifications, setNotifications } = props;
 
   let renderProps;
   if (notifications.array.length > 0) {
@@ -53,8 +53,7 @@ function Notifications(props) {
 Notifications.propTypes = {
   classes: PropTypes.object.isRequired,
   notifications: PropTypes.instanceOf(NotificationsModel).isRequired,
-  setNotifications: PropTypes.func.isRequired,
-  userID: PropTypes.number.isRequired
+  setNotifications: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Notifications);

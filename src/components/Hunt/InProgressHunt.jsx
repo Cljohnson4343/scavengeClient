@@ -47,7 +47,7 @@ function InProgressHunt(props) {
           <span>{`${points} pts`}</span>
         </span>
       </SectionHeader>
-      <ItemsContainer items={items} team={team} />
+      <ItemsContainer items={items} />
     </div>
   );
 }

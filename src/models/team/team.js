@@ -1,6 +1,6 @@
 import ScavengeMethod from "../scavengeMethod";
 import ScavengeResource from "../scavengeResource";
-import { getDataProperties, deleteProperties } from "../../utils";
+import { getDataProperties } from "../../utils";
 
 export function getTeamFromResponse(data) {
   return new Team(data);

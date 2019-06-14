@@ -13,7 +13,6 @@ import { Hunt } from "../../models";
 import SubmitButton from "../SubmitButton";
 import SectionHeader from "../SectionHeader";
 import InfoIcon from "@material-ui/icons/Info";
-import PlaceAutoComplete from "../PlaceAutoComplete";
 
 const styles = theme => {
   const fieldWidth = 250;
