@@ -8,8 +8,8 @@ export const getInitialState = user => ({
   huntName: "",
   locationName: "",
   maxTeams: 1,
-  startDate: new Date(),
-  endDate: new Date()
+  startDate: new Date(Date.now() + 3600000),
+  endDate: new Date(Date.now() + 7200000)
 });
 
 export default combineReducers({

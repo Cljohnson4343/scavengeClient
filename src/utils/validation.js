@@ -46,7 +46,7 @@ export function validateTeam(name, maxTeams, numTeams) {
 const MinTeams = 1;
 
 export function validateMaxTeams(maxTeams, numTeams) {
-  if (numTeams < MinTeams) {
+  if (maxTeams < MinTeams) {
     return new ScavengeError(`Must have at least ${MinTeams} teams`);
   }
 
