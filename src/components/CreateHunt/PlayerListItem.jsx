@@ -2,19 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import {
-  FormControl,
-  Input,
-  InputLabel,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
-  MenuItem,
-  Select
+  ListItemSecondaryAction
 } from "@material-ui/core";
 import EditableHeading from "./EditableHeading";
 import DeleteItemButton from "./DeleteItemButton";
 import * as actions from "../../actions";
-import { Player, Team, Teams } from "../../models";
+import { Player } from "../../models";
 
 const styles = theme => ({
   font: {
@@ -30,12 +25,8 @@ const styles = theme => ({
 });
 
 function PlayerListItem(props) {
-  const { classes, dispatch, player, teams, validateEmail } = props;
+  const { classes, dispatch, player, validateEmail } = props;
 
-  const getTeamName = teamID => {
-    let team = teams.getByID(teamID);
-    return team ? team.teamName : "unassigned";
-  };
   return (
     <ListItem button disableGutters key={props.key}>
       <ListItemText
@@ -48,26 +39,6 @@ function PlayerListItem(props) {
           />
         }
       />
-      <FormControl className={classes.select}>
-        <InputLabel htmlFor="team-helper">Team</InputLabel>
-        <Select
-          className={classes.font}
-          input={<Input name="team" id="team-helper" />}
-          onChange={e => {
-            let action = actions.changePlayersTeam(player, e.target.value);
-            dispatch(action);
-          }}
-          renderValue={team => team.teamName}
-          value={getTeamName(player.teamID)}
-        >
-          <MenuItem value={new Team()}>Unassigned</MenuItem>
-          {teams.array.map(t => (
-            <MenuItem key={t.teamName} value={t}>
-              {t.teamName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
       <ListItemSecondaryAction className={classes.secondary}>
         <DeleteItemButton
           handleDelete={e => dispatch(actions.removePlayer(player.email))}
@@ -81,7 +52,6 @@ PlayerListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   player: PropTypes.instanceOf(Player).isRequired,
-  teams: PropTypes.instanceOf(Teams).isRequired,
   validateEmail: PropTypes.func.isRequired
 };
 

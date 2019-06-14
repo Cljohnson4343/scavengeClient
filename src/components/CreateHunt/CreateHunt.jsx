@@ -83,11 +83,7 @@ function CreateHunt(props) {
           teams={state.teams}
           withDivider={true}
         />
-        <PlayersContainer
-          dispatch={dispatch}
-          players={state.players}
-          teams={state.teams}
-        />
+        <PlayersContainer dispatch={dispatch} players={state.players} />
         <Fab
           onClick={e => {
             getHunt()

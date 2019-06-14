@@ -7,7 +7,7 @@ import PlayerListItem from "./PlayerListItem";
 import TextAddButton from "./TextAddButton";
 import * as action from "../../actions";
 import { validateEmail } from "../../utils";
-import { Players, Teams } from "../../models";
+import { Players } from "../../models";
 
 const styles = theme => ({
   container: {
@@ -35,7 +35,7 @@ const styles = theme => ({
 });
 
 function PlayersContainer(props) {
-  const { classes, dispatch, players, teams } = props;
+  const { classes, dispatch, players } = props;
 
   const [inputEmail, setInputEmail] = useState("");
   const emailError = validateEmail(inputEmail);
@@ -49,7 +49,6 @@ function PlayersContainer(props) {
             dispatch={dispatch}
             key={p.email}
             player={p}
-            teams={teams}
             validateEmail={validateEmail}
           />
         ))}
@@ -88,8 +87,7 @@ function PlayersContainer(props) {
 PlayersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   players: PropTypes.instanceOf(Players).isRequired,
-  dispatch: PropTypes.func.isRequired,
-  teams: PropTypes.instanceOf(Teams).isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(PlayersContainer);
