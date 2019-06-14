@@ -1,6 +1,12 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { Paper, withStyles } from "@material-ui/core";
+import {
+  Dialog,
+  DialogContent,
+  Paper,
+  Typography,
+  withStyles
+} from "@material-ui/core";
 import HuntInfoForm from "./HuntInfoForm";
 import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
@@ -37,6 +43,7 @@ function CreateHunt(props) {
 
   const [state, dispatch] = useReducer(reducer, getInitialState(user));
   const formError = CreateHuntFormError(state);
+  const [serverMessage, setServerMessage] = useState(null);
 
   function getHunt() {
     return new Hunt({
@@ -92,12 +99,26 @@ function CreateHunt(props) {
                 navigate(
                   `../../hunts/${user.username}/${response.data.huntName}`
                 );
+              })
+              .catch(({ response }) => {
+                setServerMessage(
+                  response.data[0].detail.split(":")[1].trimStart()
+                );
               });
           }}
           icon={<SendIcon />}
           inError={formError.inError}
         />
       </Paper>
+      <Dialog
+        aria-labelledby="server-message"
+        open={Boolean(serverMessage)}
+        onClose={() => setServerMessage(null)}
+      >
+        <DialogContent>
+          <Typography>{serverMessage}</Typography>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
