@@ -101,9 +101,16 @@ function CreateHunt(props) {
                 );
               })
               .catch(({ response }) => {
-                setServerMessage(
-                  response.data[0].detail.split(":")[1].trimStart()
-                );
+                let msg;
+                switch (response.status) {
+                  case 400:
+                    msg = response.data[0].detail.split(":")[1].trimStart();
+                    break;
+                  default:
+                    msg = "There was an error creating your hunt.";
+                    break;
+                }
+                setServerMessage(msg);
               });
           }}
           icon={<SendIcon />}
