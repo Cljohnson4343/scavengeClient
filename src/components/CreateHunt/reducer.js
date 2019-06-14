@@ -6,6 +6,7 @@ export const getInitialState = user => ({
   players: new Players(user ? [new Player(user.requestJSON)] : null),
   items: new Items(),
   huntName: "",
+  locationName: "",
   maxTeams: 1,
   startDate: new Date(),
   endDate: new Date()
@@ -16,6 +17,9 @@ export default combineReducers({
   players,
   items,
   huntName,
+  locationName,
+  latitude,
+  longitude,
   maxTeams,
   startDate,
   endDate
@@ -87,6 +91,33 @@ export function huntName(state = "", action) {
       return "";
     case "update_hunt_name":
       return action.payload;
+    default:
+      return state;
+  }
+}
+
+export function locationName(state = "", action) {
+  switch (action.type) {
+    case "set_start_location":
+      return action.payload.locationName;
+    default:
+      return state;
+  }
+}
+
+export function latitude(state, action) {
+  switch (action.type) {
+    case "set_start_location":
+      return action.payload.latitude;
+    default:
+      return state;
+  }
+}
+
+export function longitude(state, action) {
+  switch (action.type) {
+    case "set_start_location":
+      return action.payload.longitude;
     default:
       return state;
   }

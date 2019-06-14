@@ -44,6 +44,9 @@ function CreateHunt(props) {
       maxTeams: state.maxTeams,
       startTime: state.startDate,
       endTime: state.endDate,
+      locationName: state.locationName,
+      latitude: state.latitude,
+      longitude: state.longitude,
       items: state.items,
       teams: state.teams,
       players: state.players
@@ -59,6 +62,9 @@ function CreateHunt(props) {
           dispatch={dispatch}
           endDate={state.endDate}
           huntName={state.huntName}
+          locationName={state.locationName}
+          latitude={state.latitude}
+          longitude={state.longitude}
           maxTeams={state.maxTeams}
           startDate={state.startDate}
           withDivider={true}

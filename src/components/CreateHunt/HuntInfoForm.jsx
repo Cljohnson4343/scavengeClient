@@ -32,7 +32,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.field
   },
   last: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(3)
   },
   places: {
     width: "100%"
@@ -46,6 +46,9 @@ function HuntInfoForm(props) {
     endDate,
     huntName,
     infoFormError,
+    locationName,
+    latitude,
+    longitude,
     maxTeams,
     startDate
   } = props;
@@ -100,6 +103,12 @@ function HuntInfoForm(props) {
           <PlaceAutoComplete
             className={classNames(classes.places, classes.last)}
             label="Start Location"
+            locationName={locationName}
+            latitude={latitude}
+            longitude={longitude}
+            onChange={(name, lat, lng) => {
+              dispatch(action.setStartLocation(name, lat, lng));
+            }}
           />
         </div>
       </form>
@@ -113,6 +122,9 @@ HuntInfoForm.propTypes = {
   endDate: PropTypes.instanceOf(Date),
   huntName: PropTypes.string,
   infoFormError: PropTypes.instanceOf(HuntInfoError).isRequired,
+  locationName: PropTypes.string,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
   maxTeams: PropTypes.number,
   startDate: PropTypes.instanceOf(Date)
 };

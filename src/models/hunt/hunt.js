@@ -59,10 +59,13 @@ const Hunt = ScavengeResource.extend({
     },
     self => {
       let data = getDataProperties(self.data, [
+        "endTime",
         "huntName",
+        "locationName",
+        "latitude",
+        "longitude",
         "maxTeams",
-        "startTime",
-        "endTime"
+        "startTime"
       ]);
       return Object.assign(data, {
         items: self.items.requestJSON,
@@ -249,6 +252,18 @@ Object.defineProperty(Hunt.prototype, "copy", {
 Object.defineProperty(Hunt.prototype, "locationName", {
   get: function() {
     return this.data.locationName;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "latitude", {
+  get: function() {
+    return this.data.latitude;
+  }
+});
+
+Object.defineProperty(Hunt.prototype, "longitude", {
+  get: function() {
+    return this.data.longitude;
   }
 });
 

@@ -16,6 +16,17 @@ export function removeTeam(team) {
   };
 }
 
+export function setStartLocation(locationName, lat, lng) {
+  return {
+    type: "set_start_location",
+    payload: {
+      locationName: locationName,
+      latitude: lat,
+      longitude: lng
+    }
+  };
+}
+
 export function changeTeamName(oldName, newName) {
   return {
     type: "change_team_name",
