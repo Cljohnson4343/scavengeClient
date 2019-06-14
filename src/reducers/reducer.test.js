@@ -8,8 +8,8 @@ import {
   startDate,
   teams
 } from "./reducer";
-import * as actions from "./actions";
-import { Item, Items, Player, Team, Teams, Players } from "../../models";
+import * as actions from "../actions";
+import { Item, Items, Player, Team, Teams, Players } from "../models";
 
 const plrs = {
   dan: new Player({ email: "danMarino@gmail.com" }),

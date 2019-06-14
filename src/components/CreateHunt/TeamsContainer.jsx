@@ -6,7 +6,7 @@ import FormExpansion from "./FormExpansion";
 import TeamListItem from "./TeamListItem";
 import TextAddButton from "./TextAddButton";
 import { avatarColors, uniqueLabel } from "../../utils";
-import * as action from "./actions";
+import * as action from "../../actions";
 import { TeamsError } from "./error";
 import { Teams } from "../../models";
 

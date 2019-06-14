@@ -1,7 +1,7 @@
 import deepFreeze from "deep-freeze";
-import { Player, Team } from "../../models";
+import { Player, Team } from "../models";
 import * as a from "./actions.js";
-import { Item } from "../../models";
+import { Item } from "../models";
 
 describe("action addTeam", () => {
   test("should return an add team action", () => {

@@ -6,7 +6,7 @@ import FormExpansion from "./FormExpansion";
 import ItemListItem from "./ItemListItem";
 import TextAddButton from "./TextAddButton";
 import { validateItemName, validateItemPoints } from "../../utils";
-import * as action from "./actions";
+import * as action from "../../actions";
 import { ItemsError } from "./error";
 import { Item, Items } from "../../models";
 

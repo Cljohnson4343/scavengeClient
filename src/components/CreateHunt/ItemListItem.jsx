@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import EditableHeading from "./EditableHeading";
 import DeleteItemButton from "./DeleteItemButton";
-import * as action from "./actions";
+import * as action from "../../actions";
 import { Item } from "../../models";
 
 const styles = theme => ({

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
-import * as action from "./actions";
+import * as action from "../../actions";
 import { toDateTimeLocal } from "../../utils";
 import { HuntInfoError } from "./error";
 import PlaceAutoComplete from "../PlaceAutoComplete";

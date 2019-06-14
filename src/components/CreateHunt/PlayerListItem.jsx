@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import EditableHeading from "./EditableHeading";
 import DeleteItemButton from "./DeleteItemButton";
-import * as actions from "./actions";
+import * as actions from "../../actions";
 import { Player, Team, Teams } from "../../models";
 
 const styles = theme => ({

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import FormExpansion from "./FormExpansion";
 import PlayerListItem from "./PlayerListItem";
 import TextAddButton from "./TextAddButton";
-import * as action from "./actions";
+import * as action from "../../actions";
 import { validateEmail } from "../../utils";
 import { Players, Teams } from "../../models";
 

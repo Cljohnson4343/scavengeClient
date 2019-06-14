@@ -9,7 +9,7 @@ import {
   ListItemSecondaryAction
 } from "@material-ui/core";
 import DeleteItemButton from "./DeleteItemButton";
-import * as action from "./actions";
+import * as action from "../../actions";
 import EditableHeading from "./EditableHeading";
 import { Team } from "../../models";
 

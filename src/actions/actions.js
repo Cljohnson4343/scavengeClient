@@ -1,4 +1,4 @@
-import { Player, Team } from "../../models";
+import { Player, Team } from "../models";
 
 export function addTeam(teamName) {
   return {

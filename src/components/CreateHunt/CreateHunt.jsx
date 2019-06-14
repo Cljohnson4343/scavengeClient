@@ -7,7 +7,7 @@ import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
 import Fab from "../Fab";
 import SendIcon from "@material-ui/icons/Send";
-import reducer, { getInitialState } from "./reducer";
+import reducer, { getInitialState } from "../../reducers";
 import { CreateHuntFormError } from "./error";
 import { Hunt, User } from "../../models";
 import SectionHeader from "../SectionHeader";
