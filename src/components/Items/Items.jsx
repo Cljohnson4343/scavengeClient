@@ -28,6 +28,7 @@ function HuntItemContainer(props) {
           handleChangeSort={setSortFunction}
         />
       }
+      withDivider={false}
     >
       {items.array.sort(sortFunction).map(item => (
         <ItemCard key={item.name} item={item} />

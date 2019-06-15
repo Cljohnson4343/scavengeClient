@@ -19,7 +19,7 @@ const styles = theme => ({
 });
 
 function SectionHeader(props) {
-  const { classes, className, Icon } = props;
+  const { classes, className, withDivider = true, Icon } = props;
 
   return (
     <div className={className}>
@@ -29,7 +29,7 @@ function SectionHeader(props) {
           {props.children}
         </Typography>
       </div>
-      <Divider variant="middle" />
+      {withDivider && <Divider variant="middle" />}
     </div>
   );
 }

@@ -21,11 +21,11 @@ const styles = theme => ({
 });
 
 function Cards(props) {
-  const { children, classes, sort, title } = props;
+  const { children, classes, sort, title, withDivider } = props;
 
   return (
     <div>
-      <SectionHeader Icon={ListIcon}>
+      <SectionHeader Icon={ListIcon} withDivider={withDivider}>
         <span className={classes.container}>
           <span className={classes.headerItem}>{title}</span>
           <span className={classes.headerItem}>{Boolean(sort) && sort}</span>
