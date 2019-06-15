@@ -7,7 +7,7 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
-import HuntInfoForm from "./HuntInfoForm";
+import HuntInfo from "./HuntInfo";
 import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
@@ -64,7 +64,7 @@ function CreateHunt(props) {
     <div>
       <SectionHeader Icon={CrosshairIcon}>Create Hunt</SectionHeader>
       <Paper className={classes.formContainer} square={false}>
-        <HuntInfoForm
+        <HuntInfo
           infoFormError={formError.huntInfoError}
           dispatch={dispatch}
           endDate={state.endDate}

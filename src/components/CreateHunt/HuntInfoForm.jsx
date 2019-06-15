@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import FormExpansion from "./FormExpansion";
 import classNames from "classnames";
 import * as action from "../../actions";
 import { toDateTimeLocal } from "../../utils";
@@ -54,65 +53,59 @@ function HuntInfoForm(props) {
   } = props;
 
   return (
-    <FormExpansion inError={infoFormError.inError} label="Hunt Info">
-      <form className={classes.container}>
-        <div className={classes.container}>
-          <InputField
-            id="hunt_name"
-            label="Hunt Name"
-            error={infoFormError.huntName}
-            onChange={e =>
-              dispatch(action.updateHuntName(e.currentTarget.value))
-            }
-            value={huntName}
-            required={true}
-          />
-          <InputField
-            id="max_teams"
-            label="Max Teams"
-            type="number"
-            error={infoFormError.maxTeams}
-            onChange={e =>
-              dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
-            }
-            value={maxTeams}
-            required={true}
-          />
-          <InputField
-            id="start_time"
-            label="Start Time"
-            type="datetime-local"
-            error={infoFormError.startDate}
-            onChange={e => {
-              dispatch(action.updateStart(new Date(e.currentTarget.value)));
-            }}
-            value={toDateTimeLocal(startDate)}
-            required={true}
-          />
-          <InputField
-            id="end_time"
-            label="End Time"
-            type="datetime-local"
-            error={infoFormError.endDate}
-            onChange={e =>
-              dispatch(action.updateEnd(new Date(e.currentTarget.value)))
-            }
-            value={toDateTimeLocal(endDate)}
-            required={true}
-          />
-          <PlaceAutoComplete
-            className={classNames(classes.places, classes.last)}
-            label="Start Location"
-            locationName={locationName}
-            latitude={latitude}
-            longitude={longitude}
-            onChange={(name, lat, lng) => {
-              dispatch(action.setStartLocation(name, lat, lng));
-            }}
-          />
-        </div>
-      </form>
-    </FormExpansion>
+    <form className={classes.container}>
+      <InputField
+        id="hunt_name"
+        label="Hunt Name"
+        error={infoFormError.huntName}
+        onChange={e => dispatch(action.updateHuntName(e.currentTarget.value))}
+        value={huntName}
+        required={true}
+      />
+      <InputField
+        id="max_teams"
+        label="Max Teams"
+        type="number"
+        error={infoFormError.maxTeams}
+        onChange={e =>
+          dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
+        }
+        value={maxTeams}
+        required={true}
+      />
+      <InputField
+        id="start_time"
+        label="Start Time"
+        type="datetime-local"
+        error={infoFormError.startDate}
+        onChange={e => {
+          dispatch(action.updateStart(new Date(e.currentTarget.value)));
+        }}
+        value={toDateTimeLocal(startDate)}
+        required={true}
+      />
+      <InputField
+        id="end_time"
+        label="End Time"
+        type="datetime-local"
+        error={infoFormError.endDate}
+        onChange={e =>
+          dispatch(action.updateEnd(new Date(e.currentTarget.value)))
+        }
+        value={toDateTimeLocal(endDate)}
+        required={true}
+      />
+      <PlaceAutoComplete
+        className={classNames(classes.places, classes.last)}
+        label="Start Location"
+        locationName={locationName}
+        latitude={latitude}
+        longitude={longitude}
+        onChange={(name, lat, lng) => {
+          dispatch(action.setStartLocation(name, lat, lng));
+        }}
+      />
+    </form>
   );
 }
 
