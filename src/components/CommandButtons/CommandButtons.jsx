@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton, withStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutlined";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
@@ -83,7 +83,7 @@ export const DeleteButton = withStyles(styles)(
       title="Delete row"
       {...restProps}
     >
-      <DeleteIcon classes={{ root: classes.label }} />
+      <DeleteOutlineIcon classes={{ root: classes.label }} />
     </GenButton>
   )
 );
