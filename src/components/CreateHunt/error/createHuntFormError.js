@@ -10,7 +10,7 @@ export function CreateHuntFormError(state) {
   }
 
   this._state = {
-    huntInfo: HuntInfoError(state),
+    huntInfo: HuntInfoError(state, state.teams),
     items: ItemsError(state),
     players: PlayersError(state),
     teams: TeamsError(state)

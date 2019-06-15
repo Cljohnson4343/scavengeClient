@@ -6,14 +6,14 @@ import {
 } from "../../../utils";
 import { inError, msg } from "./error";
 
-export function HuntInfoError(state) {
+export function HuntInfoError(state, teams) {
   if (!(this instanceof HuntInfoError)) {
-    return new HuntInfoError(state);
+    return new HuntInfoError(state, teams);
   }
 
   this._state = {
     huntName: validateHuntName(state.huntName),
-    maxTeams: validateMaxTeams(state.maxTeams, state.teams.length),
+    maxTeams: validateMaxTeams(state.maxTeams, teams.length),
     startDate: validateStartDate(state.startDate),
     endDate: validateEndDate(state.startDate, state.endDate)
   };
