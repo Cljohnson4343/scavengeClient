@@ -7,12 +7,16 @@ import Cards from "../Cards";
 import { Items as ItemsModel } from "../../models";
 
 const styles = theme => ({
+  itemsContainer: {
+    marginTop: theme.spacing(0)
+  },
   sortFont: {
     color: theme.palette.primary.main,
     fontSize: "0.9em",
     fontWeight: theme.typography.fontWeightRegular
   }
 });
+
 function HuntItemContainer(props) {
   const { classes, items } = props;
 
@@ -21,6 +25,7 @@ function HuntItemContainer(props) {
 
   return (
     <Cards
+      classes={{ itemsContainer: classes.itemsContainer }}
       title="Hunt Items"
       sort={
         <ItemsSortMenu
