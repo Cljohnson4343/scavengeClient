@@ -62,7 +62,7 @@ function Countdown(props) {
 
 Countdown.propTypes = {
   classes: PropTypes.object.isRequired,
-  icon: PropTypes.func,
+  icon: PropTypes.object,
   time: PropTypes.instanceOf(Date).isRequired,
   title: PropTypes.string.isRequired
 };
