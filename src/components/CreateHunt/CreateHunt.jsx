@@ -93,14 +93,15 @@ function CreateHunt(props) {
         <PlayersContainer dispatch={dispatch} players={state.players} />
         <Fab
           onClick={e => {
-            getHunt()
+            let hunt = getHunt();
+            hunt
               .apiCreateHunt()
               .then(response => {
                 navigate(
                   `../../hunts/${user.username}/${response.data.huntName}`
                 );
               })
-              .catch(({ response }) => {
+              .catch(({ response = {} }) => {
                 let msg;
                 switch (response.status) {
                   case 400:
