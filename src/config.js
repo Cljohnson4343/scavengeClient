@@ -1,1 +1,1 @@
-export const BASE_PATH = "http://localhost:4343/api/v0";
+export const BASE_PATH = process.env.REACT_APP_SCAVENGE_SERVER_URL;
