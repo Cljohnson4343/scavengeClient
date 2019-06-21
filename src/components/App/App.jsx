@@ -33,6 +33,8 @@ const ThemedApp = withStyles(styles)(function(props) {
   const [user, setUser] = useState();
   const [notifications, setNotifications] = useState(new NotificationsModel());
 
+  console.log("react_app_environment: " + process.env.REACT_APP_ENVIRONMENT);
+
   useEffect(() => {
     new User()
       .apiRetrieveCurrentUser()
