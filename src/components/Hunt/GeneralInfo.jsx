@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   submitBtn: {
     alignSelf: "flex-end",
-    margin: `${theme.spacing(1)}px ${theme.spacing(2)}px`
+    margin: `${theme.spacing(3)}px ${theme.spacing(2)}px`
   }
 });
 

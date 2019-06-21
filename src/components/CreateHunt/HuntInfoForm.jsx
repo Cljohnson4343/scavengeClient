@@ -30,9 +30,6 @@ const styles = theme => ({
   input: {
     backgroundColor: theme.palette.background.field
   },
-  last: {
-    marginBottom: theme.spacing(3)
-  },
   places: {
     width: "100%"
   }
@@ -41,6 +38,7 @@ const styles = theme => ({
 function HuntInfoForm(props) {
   const {
     classes,
+    className,
     dispatch,
     endDate,
     huntName,
@@ -53,7 +51,7 @@ function HuntInfoForm(props) {
   } = props;
 
   return (
-    <form className={classes.container}>
+    <form className={classNames(classes.container, className)}>
       <InputField
         id="hunt_name"
         label="Hunt Name"

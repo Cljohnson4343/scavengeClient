@@ -35,6 +35,9 @@ const styles = theme => ({
     color: theme.palette.primary.contrastText,
     fontSize: `${theme.typography.fontSize * 2}px`,
     fontWeight: theme.typography.fontWeightMedium
+  },
+  huntInfo: {
+    marginBottom: theme.spacing(3)
   }
 });
 
@@ -65,6 +68,7 @@ function CreateHunt(props) {
       <SectionHeader Icon={CrosshairIcon}>Create Hunt</SectionHeader>
       <Paper className={classes.formContainer} square={false}>
         <HuntInfo
+          className={classes.huntInfo}
           infoFormError={formError.huntInfoError}
           dispatch={dispatch}
           endDate={state.endDate}
