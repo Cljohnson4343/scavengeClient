@@ -1,7 +1,8 @@
 import http from "http";
 import axios from "axios";
+import { BASE_PATH } from "../../config";
 
-axios.defaults.baseURL = "http://localhost:4343/api/v0";
+axios.defaults.baseURL = BASE_PATH;
 axios.defaults.httpAgent = new http.Agent({ keepAlive: true });
 axios.defaults.timeout = 3000;
 
