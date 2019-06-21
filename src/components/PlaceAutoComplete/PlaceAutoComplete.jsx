@@ -1,31 +1,19 @@
 import React, { useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
 import Map from "../Map";
 import { GoogleApiWrapper, Marker } from "google-maps-react";
 import classNames from "classnames";
+import InputField from "../InputField";
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: theme.spacing(2),
-    width: "100%"
-  },
   root: {
     display: "flex",
     flexDirection: "column",
-    marginLeft: theme.spacing(1),
-    width: "100%"
+    marginLeft: theme.spacing(1)
   },
   input: {
     flex: 1
-  },
-  iconButton: {
-    padding: theme.spacing(1)
   },
   mapContainer: {
     position: "relative",
@@ -55,6 +43,7 @@ const PlaceAutoComplete = GoogleApiWrapper({
   let infowindow;
   if (inputRef.current) {
     autocomplete = new google.maps.places.Autocomplete(inputRef.current);
+    autocomplete.setFields(["geometry", "formatted_address"]);
     infowindow = new google.maps.InfoWindow();
 
     autocomplete.addListener("place_changed", function() {
@@ -81,23 +70,18 @@ const PlaceAutoComplete = GoogleApiWrapper({
       square={true}
       elevation={0}
     >
-      <div className={classes.container}>
-        <TextField
-          label={label}
-          id={label}
-          inputRef={e => (inputRef.current = e)}
-          type="text"
-          className={classes.input}
-          onChange={e => onChange(e.currentTarget.value, latitude, longitude)}
-          placeholder="Address"
-          value={locationName}
-          inputProps={{ "aria-label": "Address" }}
-          {...inputProps}
-        />
-        <IconButton className={classes.iconButton} aria-label="Search">
-          <SearchIcon />
-        </IconButton>
-      </div>
+      <InputField
+        label={label}
+        id={label}
+        inputRef={e => (inputRef.current = e)}
+        type="text"
+        className={classes.input}
+        onChange={e => onChange(e.currentTarget.value, latitude, longitude)}
+        placeholder="Address"
+        value={locationName}
+        inputProps={{ "aria-label": "Address" }}
+        {...inputProps}
+      />
       {latitude && (
         <div className={classes.mapContainer}>
           <Map

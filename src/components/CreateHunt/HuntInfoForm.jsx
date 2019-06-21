@@ -14,24 +14,11 @@ const styles = theme => ({
     flexDirection: "column",
     width: "100%"
   },
-  dateField: {
-    fontWeight: theme.typography.fontWeightLight,
-    marginTop: theme.spacing(1)
-  },
   field: {
     marginLeft: theme.spacing(1),
     marginTop: `0px`,
     paddingBottom: theme.spacing(1),
     marginRight: theme.spacing(2)
-  },
-  font: {
-    fontWeight: theme.typography.fontWeightLight
-  },
-  input: {
-    backgroundColor: theme.palette.background.field
-  },
-  places: {
-    width: "100%"
   }
 });
 
@@ -94,7 +81,7 @@ function HuntInfoForm(props) {
         required={true}
       />
       <PlaceAutoComplete
-        className={classNames(classes.places, classes.last)}
+        className={classes.field}
         label="Start Location"
         locationName={locationName}
         latitude={latitude}
