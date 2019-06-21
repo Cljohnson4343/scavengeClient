@@ -24,5 +24,6 @@ export { getTeamsFromResponse } from "./teams";
 export { getInvitesFromResponse } from "./invites";
 export { getItemFromResponse } from "./item";
 export { getItemsFromResponse } from "./items";
+export { getLocationFromResponse } from "./location";
 export { getPlayerFromResponse } from "./player";
 export { getPlayersFromResponse } from "./players";

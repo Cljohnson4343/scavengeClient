@@ -2,6 +2,8 @@ import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 import { getDataProperties } from "../../utils";
 
+export const getLocationFromResponse = res => new Location(res.data);
+
 const Location = ScavengeResource.extend({
   path: "/teams/{teamID}/locations",
 
@@ -51,14 +53,18 @@ const Location = ScavengeResource.extend({
     if (
       loc.teamID === this.teamID &&
       loc.locationID === this.locationID &&
-      loc.latitude === this.longitude &&
+      loc.latitude === this.latitude &&
       loc.longitude === this.longitude &&
-      loc.timestamp === this.timestamp
+      loc.timestamp.getTime() === this.timestamp.getTime()
     ) {
       return true;
     }
 
     return false;
+  },
+
+  addTeamID: function(teamID) {
+    return new Location({ ...this.data, ...{ teamID: teamID } });
   }
 });
 
@@ -88,7 +94,7 @@ Object.defineProperty(Location.prototype, "longitude", {
 
 Object.defineProperty(Location.prototype, "timestamp", {
   get: function() {
-    return this.data.timestamp;
+    return new Date(this.data.timestamp);
   }
 });
 

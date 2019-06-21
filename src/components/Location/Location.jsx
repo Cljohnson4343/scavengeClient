@@ -1,39 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { Location as LocationModel } from "../../models";
 
-const testPosition = {
-    coords: {
-        latitude: 34.7108,
-        longitude: -86.7425,
-    },
-};
-
-export const LocationContext = React.createContext(testPosition);
+export const LocationContext = React.createContext(null);
 
 function Location(props) {
+  const { interval } = props;
+  const gpsIsAvailable = "geolocation" in navigator;
 
-    const gpsIsAvailable = "geolocation" in navigator;
+  const [location, setLocation] = useState(null);
 
-    const [ location, setLocation ] = useState(testPosition);
+  const gpsOptions = {
+    enableHighAccuracy: false
+  };
 
-    const gpsOptions = {
-        enableHighAccuracy: false,
-        timeout: Infinity,
-        maximumAge: Infinity,
-    };
+  useEffect(() => {
+    if (gpsIsAvailable) {
+      const id = navigator.geolocation.watchPosition(
+        pos => {
+          let loc = new LocationModel({
+            timestamp: pos.timestamp,
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          });
+          setLocation(loc);
+        },
+        posErr => {
+          alert(posErr.message);
+        },
+        gpsOptions
+      );
 
-    useEffect(() => {
-        const id = navigator.geolocation.watchPosition(pos => { 
-            setLocation(pos);
-        },(posErr) => {alert(posErr.message)}, gpsOptions);
-        
-        return () => navigator.geolocation.clearWatch(id);
-    }, []);
+      return () => navigator.geolocation.clearWatch(id);
+    }
+  }, []);
 
-    return (
-        <LocationContext.Provider value={location}>
-            {props.children}
-        </LocationContext.Provider>
-    );
-};
+  return (
+    <LocationContext.Provider value={location}>
+      {props.children}
+    </LocationContext.Provider>
+  );
+}
 
 export default Location;

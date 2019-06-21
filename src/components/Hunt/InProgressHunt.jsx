@@ -7,6 +7,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 import PointsIcon from "@material-ui/icons/ExposurePlus2";
 import Countdown from "../Countdown";
 import SectionHeader from "../SectionHeader";
+import { LocationContext } from "../Location";
 
 const styles = theme => ({
   container: {
@@ -29,6 +30,8 @@ function InProgressHunt(props) {
   const { classes, hunt, team } = props;
   const items = hunt.items;
 
+  console.log("inprogresshunt");
+  console.dir(team);
   const points = 43;
 
   if (!Boolean(team)) {
@@ -47,7 +50,17 @@ function InProgressHunt(props) {
           <span>{`${points} pts`}</span>
         </span>
       </SectionHeader>
-      <ItemsContainer items={items} />
+      <LocationContext.Consumer>
+        {value => {
+          return (
+            <ItemsContainer
+              items={items}
+              location={value}
+              teamID={team.teamID}
+            />
+          );
+        }}
+      </LocationContext.Consumer>
     </div>
   );
 }
