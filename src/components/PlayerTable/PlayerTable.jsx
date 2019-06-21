@@ -37,6 +37,11 @@ import {
 import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
+  cmdContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
   commandCell: {
     paddingLeft: theme.spacing(1)
   },
@@ -136,7 +141,11 @@ function PlayerTable(props) {
     );
   };
   function cmdCellComponent({ children }) {
-    return <td className={classes.commandCell}>{children}</td>;
+    return (
+      <td className={classes.commandCell}>
+        <div className={classes.cmdContainer}>{children}</div>
+      </td>
+    );
   }
   function cmdHeaderComponent({ children }) {
     return <td className={classes.headerCommandCell}>{children}</td>;

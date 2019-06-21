@@ -37,7 +37,7 @@ import { Invites } from "../../models";
 
 const styles = theme => ({
   commandCell: {
-    paddingLeft: theme.spacing(1)
+    textAlign: "center"
   },
   disabled: {
     color: theme.palette.disabled.main

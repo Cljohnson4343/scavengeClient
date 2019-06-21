@@ -26,6 +26,7 @@ function Home(props) {
   if (!Boolean(user)) {
     navigate("/signup");
   }
+
   const userID = user ? user.userID : 0;
 
   const [hunts, setHunts] = useState(new Hunts([]));

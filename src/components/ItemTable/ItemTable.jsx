@@ -35,6 +35,11 @@ import {
 import SectionHeader from "../SectionHeader";
 
 const styles = theme => ({
+  cmdContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
   commandCell: {
     paddingLeft: theme.spacing(1)
   },
@@ -179,6 +184,7 @@ function ItemTable(props) {
 
     return (
       <CommandComponent
+        className={classes.cmdComponent}
         classes={
           id === "cancel"
             ? { label: classes.error }
@@ -207,7 +213,11 @@ function ItemTable(props) {
         return child;
       });
     }
-    return <td className={classes.commandCell}>{children}</td>;
+    return (
+      <td className={classes.commandCell}>
+        <div className={classes.cmdContainer}>{children}</div>
+      </td>
+    );
   }
   function cmdHeaderComponent({ children }) {
     return <td className={classes.headerCommandCell}>{children}</td>;
@@ -388,7 +398,7 @@ function ItemTable(props) {
             showAddCommand={addedRows.length < 1}
             showEditCommand
             showDeleteCommand
-            width={80}
+            width={90}
           />
         </Grid>
       </Paper>
