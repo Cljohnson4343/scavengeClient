@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, withStyles } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  Typography,
+  withStyles
+} from "@material-ui/core";
 import FormContainer from "../FormContainer";
 import { User } from "../../models";
 import ScavengeInput from "../ScavengeInput";
@@ -31,36 +37,57 @@ function SignIn(props) {
   const { classes, navigate, setUser, isLoggedIn } = props;
 
   const [usernameInput, setUsernameInput] = useState("");
+  const [serverMsg, setServerMsg] = useState(null);
 
   if (isLoggedIn) {
     navigate("/");
   }
 
   return (
-    <FormContainer label="Sign In">
-      <div className={classes.container}>
-        <ScavengeInput
-          id="username"
-          label="Username"
-          onChange={setUsernameInput}
-          value={usernameInput}
-          required
-        />
-        <Button
-          className={classes.button}
-          onClick={e => {
-            new User({ username: usernameInput }).apiLogin().then(response => {
-              setUsernameInput("");
-              setUser(new User(response.data));
-              navigate("/");
-            });
-          }}
-          variant="text"
-        >
-          Sign In
-        </Button>
-      </div>
-    </FormContainer>
+    <div>
+      <FormContainer label="Sign In">
+        <div className={classes.container}>
+          <ScavengeInput
+            id="username"
+            label="Username"
+            onChange={setUsernameInput}
+            value={usernameInput}
+            required
+          />
+          <Button
+            className={classes.button}
+            onClick={e => {
+              new User({ username: usernameInput })
+                .apiLogin()
+                .then(response => {
+                  setUsernameInput("");
+                  setUser(new User(response.data));
+                  navigate("/");
+                })
+                .catch(err => {
+                  setServerMsg(
+                    err.response
+                      ? err.response.data[0].detail.split(":")[1]
+                      : "error signing in: refresh the page and try again..."
+                  );
+                });
+            }}
+            variant="text"
+          >
+            Sign In
+          </Button>
+        </div>
+      </FormContainer>
+      <Dialog
+        aria-labelledby="server-message"
+        open={Boolean(serverMsg)}
+        onClose={() => setServerMsg(null)}
+      >
+        <DialogContent>
+          <Typography>{serverMsg}</Typography>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 
