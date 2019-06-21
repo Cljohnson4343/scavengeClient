@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Match, Router } from "@reach/router";
+import { Match, navigate, Router } from "@reach/router";
 import { withStyles } from "@material-ui/core";
-import { navigate } from "@reach/router";
 
 import AppBar from "../AppBar";
 import CreateHunt from "../CreateHunt";
