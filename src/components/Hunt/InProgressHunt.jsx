@@ -30,8 +30,6 @@ function InProgressHunt(props) {
   const { classes, hunt, team } = props;
   const items = hunt.items;
 
-  console.log("inprogresshunt");
-  console.dir(team);
   const points = 43;
 
   if (!Boolean(team)) {

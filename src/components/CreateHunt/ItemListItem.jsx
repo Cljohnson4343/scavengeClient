@@ -46,7 +46,7 @@ function ItemListItem(props) {
           />
         }
       />
-      <Typography className={classes.font}>Points: </Typography>
+      <Typography className={classes.font}>pts:</Typography>
       <ListItemText
         className={classes.points}
         primary={

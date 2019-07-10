@@ -16,8 +16,6 @@ import HuntInfoForm from "./HuntInfoForm";
 import ItemsContainer from "./ItemsContainer";
 import TeamsContainer from "./TeamsContainer";
 import PlayersContainer from "./PlayersContainer";
-import Fab from "../Fab";
-import SendIcon from "@material-ui/icons/Send";
 import reducer, { getInitialState } from "../../reducers";
 import { CreateHuntFormError } from "./error";
 import { Hunt, User } from "../../models";
