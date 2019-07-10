@@ -7,7 +7,7 @@ export const getInitialState = user => ({
   items: new Items(),
   huntName: "",
   locationName: "",
-  maxTeams: 1,
+  maxTeams: 10,
   startDate: new Date(Date.now() + 3600000),
   endDate: new Date(Date.now() + 7200000)
 });

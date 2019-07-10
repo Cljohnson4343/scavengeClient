@@ -33,7 +33,6 @@ function HuntInfoForm(props) {
     locationName,
     latitude,
     longitude,
-    maxTeams,
     startDate
   } = props;
 
@@ -45,17 +44,6 @@ function HuntInfoForm(props) {
         error={infoFormError.huntName}
         onChange={e => dispatch(action.updateHuntName(e.currentTarget.value))}
         value={huntName}
-        required={true}
-      />
-      <InputField
-        id="max_teams"
-        label="Max Teams"
-        type="number"
-        error={infoFormError.maxTeams}
-        onChange={e =>
-          dispatch(action.updateMaxTeams(Number(e.currentTarget.value)))
-        }
-        value={maxTeams}
         required={true}
       />
       <InputField
@@ -103,7 +91,6 @@ HuntInfoForm.propTypes = {
   locationName: PropTypes.string,
   latitude: PropTypes.number,
   longitude: PropTypes.number,
-  maxTeams: PropTypes.number,
   startDate: PropTypes.instanceOf(Date)
 };
 

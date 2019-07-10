@@ -73,7 +73,6 @@ function CreateHunt(props) {
             locationName={state.locationName}
             latitude={state.latitude}
             longitude={state.longitude}
-            maxTeams={state.maxTeams}
             startDate={state.startDate}
             withDivider={true}
           />
@@ -166,11 +165,7 @@ function CreateHunt(props) {
               <StepLabel>{label}</StepLabel>
               <StepContent>
                 {getActiveContent(index)}
-                <Button
-                  onClick={handleBack}
-                  disabled={activeStep === 0}
-                  variant="conatined"
-                >
+                <Button onClick={handleBack} disabled={activeStep === 0}>
                   Back
                 </Button>
                 <Button
