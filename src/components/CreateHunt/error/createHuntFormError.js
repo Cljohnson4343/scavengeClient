@@ -37,6 +37,12 @@ Object.defineProperty(c, "teamsError", {
   }
 });
 
+Object.defineProperty(c, "playersError", {
+  get: function() {
+    return this._state.players;
+  }
+});
+
 Object.defineProperty(c, "itemsError", {
   get: function() {
     return this._state.items;

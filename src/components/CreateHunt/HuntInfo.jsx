@@ -7,11 +7,7 @@ import HuntInfoForm from "./HuntInfoForm";
 function HuntInfo(props) {
   const { infoFormError, ...restProps } = props;
 
-  return (
-    <FormExpansion inError={infoFormError.inError} label="Hunt Info">
-      <HuntInfoForm {...restProps} infoFormError={infoFormError} />
-    </FormExpansion>
-  );
+  return <HuntInfoForm {...restProps} infoFormError={infoFormError} />;
 }
 
 HuntInfo.propTypes = {
