@@ -21,7 +21,7 @@ const Location = ScavengeResource.extend({
       locationID: locationID,
       latitude: latitude,
       longitude: longitude,
-      timestamp: timestamp
+      timestamp: new Date(timestamp)
     };
 
     ScavengeResource.call(this);
@@ -94,7 +94,7 @@ Object.defineProperty(Location.prototype, "longitude", {
 
 Object.defineProperty(Location.prototype, "timestamp", {
   get: function() {
-    return new Date(this.data.timestamp);
+    return this.data.timestamp;
   }
 });
 

@@ -27,14 +27,11 @@ function HuntItemContainer(props) {
     () => {
       if (lastLoc && !lastLoc.equals(location) && location) {
         const teamLoc = location.addTeamID(teamID);
-        teamLoc.apiCreateLocation().then(res => {
-          console.log("huntitemcontainer");
-          console.dir(res);
-        });
+        teamLoc.apiCreateLocation().then(res => {});
         setLastLoc(location);
       }
     },
-    10000,
+    1000,
     []
   );
 

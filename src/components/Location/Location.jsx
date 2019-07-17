@@ -4,7 +4,6 @@ import { Location as LocationModel } from "../../models";
 export const LocationContext = React.createContext(null);
 
 function Location(props) {
-  const { interval } = props;
   const gpsIsAvailable = "geolocation" in navigator;
 
   const [location, setLocation] = useState(null);
