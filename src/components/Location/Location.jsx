@@ -7,6 +7,7 @@ function Location(props) {
   const gpsIsAvailable = "geolocation" in navigator;
 
   const [location, setLocation] = useState(null);
+  const [hasBeenAlerted, setHasBeenAlerted] = useState(false);
 
   const gpsOptions = {
     enableHighAccuracy: false
@@ -24,7 +25,10 @@ function Location(props) {
           setLocation(loc);
         },
         posErr => {
-          alert(posErr.message);
+          if (!hasBeenAlerted) {
+            alert(posErr.message);
+            setHasBeenAlerted(true);
+          }
         },
         gpsOptions
       );
