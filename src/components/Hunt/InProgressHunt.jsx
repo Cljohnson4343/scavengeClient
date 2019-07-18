@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import ItemsContainer from "../Items";
-import { Hunt, Team } from "../../models";
+import { Hunt, Medias, Team } from "../../models";
 import TimerIcon from "@material-ui/icons/Timer";
 import PointsIcon from "@material-ui/icons/ExposurePlus2";
 import Countdown from "../Countdown";
@@ -26,11 +26,32 @@ const styles = theme => ({
   }
 });
 
+const getPoints = (items, medias) => {
+  return medias.array.reduce((acc, m) => {
+    const item = items.getByItemID(m.itemID);
+    return acc + (item ? item.points : 0);
+  }, 0);
+};
+
 function InProgressHunt(props) {
   const { classes, hunt, team } = props;
   const items = hunt.items;
 
-  const points = 43;
+  //TODO workaround: rethink this conditional
+  if (!Boolean(team)) {
+    return <h3>Loading...</h3>;
+  }
+
+  const [medias, setMedias] = useState(new Medias([], team.teamID));
+
+  useEffect(() => {
+    new Medias([], team.teamID).apiRetrieveMedia().then(response => {
+      console.log("inprogresshunt medias:");
+      console.dir(response);
+    });
+  }, []);
+
+  const points = getPoints(items, medias);
 
   if (!Boolean(team)) {
     return (
