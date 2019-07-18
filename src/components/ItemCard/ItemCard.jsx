@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles, CardHeader, IconButton } from "@material-ui/core";
 import { Card } from "@material-ui/core";
@@ -30,7 +30,9 @@ const styles = theme => ({
 function ItemCard(props) {
   const { classes, item } = props;
 
-  const isDone = true;
+  const [capture, setCapture] = useState(false);
+
+  const isDone = false;
   const ActionIcon = isDone ? (
     <DeleteIcon className={classes.deleteIcon} />
   ) : (
@@ -47,16 +49,13 @@ function ItemCard(props) {
     }
   };
 
-  const handleCaptureMedia = function(e) {
-    const constraints = { video: true };
-
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then(stream => console.log(stream))
-      .catch(err => console.log(err));
-  };
+  const handleCaptureMedia = e => setCapture(true);
 
   const handleAction = isDone ? handleDeleteMedia : handleCaptureMedia;
+
+  if (capture) {
+    return <input type="file" accept="video/*" capture id="recorder" />;
+  }
 
   return (
     <Card square={true}>
