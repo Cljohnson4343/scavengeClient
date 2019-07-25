@@ -1,1 +1,1 @@
-export { default } from "MediaCapturer";
+export { default } from "./MediaCapturer";

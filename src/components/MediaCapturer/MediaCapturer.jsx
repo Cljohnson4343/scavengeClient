@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 // This component uses code from https://github.com/rico345100/react-multimedia-capture/blob/master/src/index.js
@@ -45,6 +45,7 @@ function MediaCapturer(props) {
     onDenied,
     onError,
     onGranted,
+    onInitStream,
     onPause,
     onRequestPermission,
     onResume,
@@ -62,20 +63,34 @@ function MediaCapturer(props) {
   const [recording, setRecording] = useState(false);
   const [paused, setPaused] = useState(false);
 
-  let stream = null;
-  let mediaRecorder = null;
-  let mediaChunks = [];
+  const stream = useRef(null);
+  const mediaRecorder = useRef(null);
+  const mediaChunks = useRef([]);
+
+  useEffect(() => {
+    getStream();
+
+    return () => {
+      mediaChunks.current = [];
+      mediaRecorder.current = null;
+
+      if (stream.current && "stopStream" in stream.current) {
+        stream.current.stopStream();
+      }
+    };
+  }, []);
 
   function getStream() {
+    console.log("getStream");
     const handleSuccess = st => {
-      stream = st;
-      mediaChunks = [];
+      stream.current = st;
+      mediaChunks.current = [];
 
       setPermission(true);
       setAsked(true);
       setRecording(false);
 
-      onGranted(this.stream);
+      onGranted(stream.current);
 
       initMediaRecorder();
     };
@@ -100,6 +115,7 @@ function MediaCapturer(props) {
     }
   }
   function initMediaRecorder() {
+    console.log("init");
     try {
       let options = {};
       let types = ["video/webm;codecs=vp8", "video/webm", ""];
@@ -117,13 +133,15 @@ function MediaCapturer(props) {
         console.warn(`${type} is not supported on your browser.`);
       }
 
-      mediaRecorder = new MediaRecorder(stream, options);
+      mediaRecorder.current = new MediaRecorder(stream.current, options);
 
-      mediaRecorder.ondataavailable = ev => {
+      mediaRecorder.current.ondataavailable = ev => {
         if (ev.data && ev.data.size > 0) {
-          mediaChunks.push(ev.data);
+          mediaChunks.current.push(ev.data);
         }
       };
+
+      onInitStream(stream.current);
 
       setAvailable(true);
     } catch (err) {
@@ -135,6 +153,7 @@ function MediaCapturer(props) {
   }
 
   function start() {
+    console.log("start");
     if (!available) return;
     if (!permission) {
       const error = new Error("You have to get permission to start recording.");
@@ -145,27 +164,29 @@ function MediaCapturer(props) {
       return onError(error);
     }
 
-    mediaChunks = [];
-    mediaRecorder.start(timeSlice);
+    mediaChunks.current = [];
+    mediaRecorder.current.start(timeSlice);
 
     setRecording(true);
 
-    onStart(this.stream);
+    onStart(stream.current);
   }
   function pause() {
+    console.log("pause");
     if (!recording) return;
     if (!permission) {
       const error = new Error("You have to get permission to start recording.");
       return onError(error);
     }
 
-    mediaRecorder.stop();
+    mediaRecorder.current.stop();
 
     setPaused(true);
 
     onPause();
   }
   function resume() {
+    console.log("resume");
     if (!recording) return;
     if (!permission) {
       const error = new Error("You have to get permission to start recording.");
@@ -173,24 +194,25 @@ function MediaCapturer(props) {
     }
 
     initMediaRecorder();
-    mediaRecorder.start(timeSlice);
+    mediaRecorder.current.start(timeSlice);
 
     setPaused(false);
 
-    onResume(stream);
+    onResume(stream.current);
   }
   function stop(stopSt) {
+    console.log("stop");
     if (!available) return;
     if (!permission) {
       const permissionError = new Error("You already stopped recording.");
       return onError(permissionError);
     }
 
-    mediaRecorder.stop();
+    mediaRecorder.current.stop();
 
     setRecording(false);
 
-    let blob = new Blob(mediaChunks, { type: "video/webm" });
+    let blob = new Blob(mediaChunks.current, { type: "video/webm" });
     onStop(blob);
 
     if (stopSt) {
@@ -198,9 +220,9 @@ function MediaCapturer(props) {
     }
   }
   function stopStream() {
-    stream.stop();
-    stream.getTracks().forEach(track => track.stop());
-    stream = null;
+    stream.current.stop();
+    stream.current.getTracks().forEach(track => track.stop());
+    stream.current = null;
 
     onStreamClosed();
 
@@ -225,7 +247,6 @@ function MediaCapturer(props) {
 }
 
 MediaCapturer.propTypes = {
-  classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   constraints: PropTypes.object,
   height: PropTypes.number,
@@ -233,6 +254,7 @@ MediaCapturer.propTypes = {
   onDenied: PropTypes.func,
   onError: PropTypes.func,
   onGranted: PropTypes.func,
+  onInitStream: PropTypes.func,
   onPause: PropTypes.func,
   onRequestPermission: PropTypes.func,
   onResume: PropTypes.func,
@@ -255,6 +277,7 @@ MediaCapturer.defaultProps = {
   onDenied: function() {},
   onError: function() {},
   onGranted: function() {},
+  onInitStream: function() {},
   onPause: function() {},
   onRequestPermission: function() {},
   onResume: function() {},

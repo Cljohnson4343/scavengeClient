@@ -5,6 +5,7 @@ import { Card } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Item } from "../../models";
+import VideoCapturer from "../VideoCapturer";
 
 const styles = theme => ({
   deleteIcon: {
@@ -54,7 +55,7 @@ function ItemCard(props) {
   const handleAction = isDone ? handleDeleteMedia : handleCaptureMedia;
 
   if (capture) {
-    return <input type="file" accept="video/*" capture id="recorder" />;
+    return <VideoCapturer onClose={() => setCapture(false)} />;
   }
 
   return (
