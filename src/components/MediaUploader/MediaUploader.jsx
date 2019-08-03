@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 function MediaUploader(props) {
-  const { classes, upload } = props;
+  const { classes, name, upload } = props;
 
   return (
     <div>
@@ -26,11 +26,11 @@ function MediaUploader(props) {
         className={classes.fileInput}
         type="file"
         accept="image/*,video/*"
-        name="file"
-        id="file"
+        name={name}
+        id={name}
         onChange={upload}
       />
-      <label htmlFor="file">
+      <label htmlFor={name}>
         <AddMediaIcon className={classes.mediaIcon} />
       </label>
     </div>
@@ -39,6 +39,7 @@ function MediaUploader(props) {
 
 MediaUploader.propTypes = {
   classes: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
   upload: PropTypes.func.isRequired
 };
 

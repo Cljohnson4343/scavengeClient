@@ -72,6 +72,7 @@ function InProgressHunt(props) {
             <ItemsContainer
               items={items}
               location={value}
+              medias={medias}
               teamID={team.teamID}
             />
           );

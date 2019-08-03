@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core";
 import ItemCard from "../ItemCard";
 import ItemsSortMenu from "./ItemsSortMenu";
 import Cards from "../Cards";
-import { Items as ItemsModel, Location } from "../../models";
+import { Items as ItemsModel, Location, Media } from "../../models";
 import { useInterval } from "../../utils";
 
 const styles = theme => ({
@@ -19,7 +19,7 @@ const styles = theme => ({
 });
 
 function HuntItemContainer(props) {
-  const { classes, items, location, teamID } = props;
+  const { classes, items, location, medias, teamID } = props;
 
   const [lastLoc, setLastLoc] = useState(location);
 
@@ -34,6 +34,23 @@ function HuntItemContainer(props) {
     1000,
     []
   );
+
+  const uploadMedia = itemID => {
+    return e => {
+      const media = new Media({
+        itemID: itemID,
+        location: location,
+        teamID: teamID
+      });
+      media.fileToUpload = e.target.files[0];
+
+      media.apiCreateMedia().then();
+    };
+  };
+
+  const deleteMedia = media => e => {
+    media.apiDeleteMedia().then();
+  };
 
   const defaultSort = (a, b) => -1;
   const [sortFunction, setSortFunction] = useState(() => defaultSort);
@@ -50,14 +67,17 @@ function HuntItemContainer(props) {
       }
       withDivider={false}
     >
-      {items.array.sort(sortFunction).map(item => (
-        <ItemCard
-          key={item.name}
-          item={item}
-          location={location}
-          teamID={teamID}
-        />
-      ))}
+      {items.array.sort(sortFunction).map(item => {
+        const media = medias.getMediaByItemID(item.itemID);
+        return (
+          <ItemCard
+            key={item.itemID}
+            item={item}
+            deleteMedia={media ? deleteMedia(media) : undefined}
+            uploadMedia={uploadMedia(item.itemID)}
+          />
+        );
+      })}
     </Cards>
   );
 }

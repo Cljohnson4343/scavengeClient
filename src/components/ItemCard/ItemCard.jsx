@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles, CardHeader, IconButton } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Item, Location, Media } from "../../models";
+import { Item } from "../../models";
 import MediaUploader from "../MediaUploader";
 
 const styles = theme => ({
@@ -25,9 +25,9 @@ const styles = theme => ({
 });
 
 function ItemCard(props) {
-  const { classes, item, location, teamID } = props;
+  const { classes, deleteMedia, item, uploadMedia } = props;
 
-  const isDone = false;
+  const isDone = !!deleteMedia;
 
   const handleDeleteMedia = function(e) {
     if (
@@ -36,21 +36,8 @@ function ItemCard(props) {
           " If so, this item will no longer be 'found'."
       )
     ) {
+      deleteMedia();
     }
-  };
-
-  const handleUploadMedia = e => {
-    const media = new Media({
-      itemID: item.itemID,
-      location: location,
-      teamID: teamID
-    });
-    media.fileToUpload = e.target.files[0];
-
-    console.log("ItemCard");
-    console.dir(media);
-
-    media.apiCreateMedia().then();
   };
 
   const deleteAvatar = (
@@ -59,7 +46,7 @@ function ItemCard(props) {
     </IconButton>
   );
 
-  const uploadAvatar = <MediaUploader upload={handleUploadMedia} />;
+  const uploadAvatar = <MediaUploader name={item.name} upload={uploadMedia} />;
 
   return (
     <Card square={true}>
@@ -78,9 +65,9 @@ function ItemCard(props) {
 }
 
 ItemCard.propTypes = {
+  deleteMedia: PropTypes.func,
   item: PropTypes.instanceOf(Item).isRequired,
-  location: PropTypes.instanceOf(Location).isRequired,
-  teamID: PropTypes.number.isRequired
+  uploadMedia: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ItemCard);

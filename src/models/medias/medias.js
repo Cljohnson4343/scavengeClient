@@ -63,4 +63,10 @@ Object.defineProperty(Medias.prototype, "remove", {
   }
 });
 
+Object.defineProperty(Medias.prototype, "getMediaByItemID", {
+  value: function(itemID) {
+    return this._container.get(m => m.itemID === itemID);
+  }
+});
+
 export default Medias;
