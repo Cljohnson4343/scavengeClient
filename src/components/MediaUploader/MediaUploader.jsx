@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
+import { withStyles, IconButton } from "@material-ui/core";
 import AddMediaIcon from "@material-ui/icons/AddAPhoto";
 
 const styles = theme => ({
@@ -21,7 +21,7 @@ function MediaUploader(props) {
   const { classes, name, upload } = props;
 
   return (
-    <div>
+    <IconButton>
       <input
         className={classes.fileInput}
         type="file"
@@ -33,7 +33,7 @@ function MediaUploader(props) {
       <label htmlFor={name}>
         <AddMediaIcon className={classes.mediaIcon} />
       </label>
-    </div>
+    </IconButton>
   );
 }
 

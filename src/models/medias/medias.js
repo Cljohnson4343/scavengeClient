@@ -3,6 +3,12 @@ import Media from "../media";
 import ScavengeResource from "../scavengeResource";
 import ScavengeMethod from "../scavengeMethod";
 
+export const getMediasFromResponse = (response, teamID) => {
+  if (!(response instanceof Array)) return new Medias([], teamID);
+  const ms = response.map(d => new Media(d));
+  return new Medias(ms, teamID);
+};
+
 const Medias = ScavengeResource.extend({
   path: "/teams/{teamID}/media",
 

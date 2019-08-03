@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import ItemsContainer from "../Items";
-import { Hunt, Medias, Team } from "../../models";
+import { Hunt, Medias, Team, getMediasFromResponse } from "../../models";
 import TimerIcon from "@material-ui/icons/Timer";
 import PointsIcon from "@material-ui/icons/ExposurePlus2";
 import Countdown from "../Countdown";
 import SectionHeader from "../SectionHeader";
 import { LocationContext } from "../Location";
+import LoadingDialog from "../LoadingDialog";
 
 const styles = theme => ({
   container: {
@@ -43,9 +44,12 @@ function InProgressHunt(props) {
   }
 
   const [medias, setMedias] = useState(new Medias([], team.teamID));
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    new Medias([], team.teamID).apiRetrieveMedia().then(response => {});
+    new Medias([], team.teamID).apiRetrieveMedia().then(response => {
+      setMedias(getMediasFromResponse(response.data, team.teamID));
+    });
   }, []);
 
   const points = getPoints(items, medias);
@@ -57,6 +61,11 @@ function InProgressHunt(props) {
       </span>
     );
   }
+
+  if (loading) {
+    return <LoadingDialog open={loading} onClose={() => {}} />;
+  }
+
   return (
     <div>
       <Countdown icon={TimerIcon} time={hunt.ends} title="Time Left" />
@@ -71,9 +80,11 @@ function InProgressHunt(props) {
           return (
             <ItemsContainer
               items={items}
+              setLoading={setLoading}
               location={value}
               medias={medias}
               teamID={team.teamID}
+              setMedias={setMedias}
             />
           );
         }}

@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core";
 import ItemCard from "../ItemCard";
 import ItemsSortMenu from "./ItemsSortMenu";
 import Cards from "../Cards";
-import { Items as ItemsModel, Location, Media } from "../../models";
+import { Items as ItemsModel, Location, Media, Medias } from "../../models";
 import { useInterval } from "../../utils";
 
 const styles = theme => ({
@@ -19,7 +19,15 @@ const styles = theme => ({
 });
 
 function HuntItemContainer(props) {
-  const { classes, items, location, medias, teamID } = props;
+  const {
+    classes,
+    items,
+    location,
+    medias,
+    setLoading,
+    setMedias,
+    teamID
+  } = props;
 
   const [lastLoc, setLastLoc] = useState(location);
 
@@ -44,7 +52,12 @@ function HuntItemContainer(props) {
       });
       media.fileToUpload = e.target.files[0];
 
-      media.apiCreateMedia().then();
+      media.apiCreateMedia().then(res => {
+        const m = new Media(res.data);
+        setMedias(medias.add(m));
+        setLoading(false);
+      });
+      setLoading(true);
     };
   };
 
@@ -85,7 +98,10 @@ function HuntItemContainer(props) {
 HuntItemContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   items: PropTypes.instanceOf(ItemsModel).isRequired,
-  location: PropTypes.instanceOf(Location)
+  location: PropTypes.instanceOf(Location),
+  medias: PropTypes.instanceOf(Medias).isRequired,
+  setLoading: PropTypes.func.isRequired,
+  setMedias: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(HuntItemContainer);
