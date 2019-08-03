@@ -51,7 +51,12 @@ function HuntItemContainer(props) {
       withDivider={false}
     >
       {items.array.sort(sortFunction).map(item => (
-        <ItemCard key={item.name} item={item} />
+        <ItemCard
+          key={item.name}
+          item={item}
+          location={location}
+          teamID={teamID}
+        />
       ))}
     </Cards>
   );

@@ -45,10 +45,7 @@ function InProgressHunt(props) {
   const [medias, setMedias] = useState(new Medias([], team.teamID));
 
   useEffect(() => {
-    new Medias([], team.teamID).apiRetrieveMedia().then(response => {
-      console.log("inprogresshunt medias:");
-      console.dir(response);
-    });
+    new Medias([], team.teamID).apiRetrieveMedia().then(response => {});
   }, []);
 
   const points = getPoints(items, medias);

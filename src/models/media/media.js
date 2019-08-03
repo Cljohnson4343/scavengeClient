@@ -27,8 +27,25 @@ const Media = ScavengeResource.extend({
       path: "/",
       method: "POST"
     },
-    self =>
-      getDataProperties(self.data, ["itemID", "teamID", "location", "url"])
+    self => {
+      let data = new FormData();
+      let media = {};
+      media.itemID = self.data.itemID;
+      media.teamID = self.data.teamID;
+      media.location = getDataProperties(self.data.location.data, [
+        "latitude",
+        "longitude",
+        "timestamp"
+      ]);
+      media.location.teamID = self.data.teamID;
+      let mediaJSON = JSON.stringify(media, null, 2);
+      let mediaBlob = new Blob([mediaJSON], { type: "application/json" });
+
+      data.append("file", self.fileToUpload);
+      data.append("json", mediaBlob);
+
+      return data;
+    }
   ),
 
   apiDeleteMedia: ScavengeMethod({

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { withStyles, CardHeader, IconButton } from "@material-ui/core";
 import { Card } from "@material-ui/core";
-import VideocamIcon from "@material-ui/icons/Videocam";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Item } from "../../models";
-import VideoCapturer from "../VideoCapturer";
+import { Item, Location, Media } from "../../models";
+import MediaUploader from "../MediaUploader";
 
 const styles = theme => ({
   deleteIcon: {
@@ -22,23 +21,13 @@ const styles = theme => ({
   title: {
     fontSize: "0.9rem",
     lineHeight: "1.2"
-  },
-  videoIcon: {
-    color: theme.palette.primary.main
   }
 });
 
 function ItemCard(props) {
-  const { classes, item } = props;
-
-  const [capture, setCapture] = useState(false);
+  const { classes, item, location, teamID } = props;
 
   const isDone = false;
-  const ActionIcon = isDone ? (
-    <DeleteIcon className={classes.deleteIcon} />
-  ) : (
-    <VideocamIcon className={classes.videoIcon} />
-  );
 
   const handleDeleteMedia = function(e) {
     if (
@@ -50,18 +39,32 @@ function ItemCard(props) {
     }
   };
 
-  const handleCaptureMedia = e => setCapture(true);
+  const handleUploadMedia = e => {
+    const media = new Media({
+      itemID: item.itemID,
+      location: location,
+      teamID: teamID
+    });
+    media.fileToUpload = e.target.files[0];
 
-  const handleAction = isDone ? handleDeleteMedia : handleCaptureMedia;
+    console.log("ItemCard");
+    console.dir(media);
 
-  if (capture) {
-    return <VideoCapturer onClose={() => setCapture(false)} />;
-  }
+    media.apiCreateMedia().then();
+  };
+
+  const deleteAvatar = (
+    <IconButton onClick={handleDeleteMedia}>
+      <DeleteIcon className={classes.deleteIcon} />
+    </IconButton>
+  );
+
+  const uploadAvatar = <MediaUploader upload={handleUploadMedia} />;
 
   return (
     <Card square={true}>
       <CardHeader
-        avatar={<IconButton onClick={handleAction}>{ActionIcon}</IconButton>}
+        avatar={isDone ? deleteAvatar : uploadAvatar}
         classes={{
           action: classes.points,
           title: classes.title,
@@ -75,7 +78,9 @@ function ItemCard(props) {
 }
 
 ItemCard.propTypes = {
-  item: PropTypes.instanceOf(Item).isRequired
+  item: PropTypes.instanceOf(Item).isRequired,
+  location: PropTypes.instanceOf(Location).isRequired,
+  teamID: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(ItemCard);
