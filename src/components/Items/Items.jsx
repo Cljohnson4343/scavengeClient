@@ -62,7 +62,11 @@ function HuntItemContainer(props) {
   };
 
   const deleteMedia = media => e => {
-    media.apiDeleteMedia().then();
+    media.apiDeleteMedia().then(res => {
+      setMedias(medias.remove(media));
+      setLoading(false);
+    });
+    setLoading(true);
   };
 
   const defaultSort = (a, b) => -1;
