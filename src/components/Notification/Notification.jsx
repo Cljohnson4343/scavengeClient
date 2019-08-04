@@ -5,7 +5,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  IconButton,
   Typography,
   withStyles
 } from "@material-ui/core";
@@ -14,7 +13,6 @@ import {
   Notification as NotificationModel,
   Notifications as NotificationsModel
 } from "../../models";
-import InfoIcon from "@material-ui/icons/Info";
 import Hunt from "../Hunt";
 import FullscreenDialog from "../FullscreenDialog/FullscreenDialog";
 
