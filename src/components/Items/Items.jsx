@@ -90,6 +90,7 @@ function HuntItemContainer(props) {
           <ItemCard
             key={item.itemID}
             item={item}
+            media={media}
             deleteMedia={media ? deleteMedia(media) : undefined}
             uploadMedia={uploadMedia(item.itemID)}
           />
