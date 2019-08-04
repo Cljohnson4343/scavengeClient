@@ -105,4 +105,26 @@ Object.defineProperty(Media.prototype, "teamID", {
   }
 });
 
+const getExt = (s = "") => {
+  const ss = s.split(".");
+  return ss[ss.length - 1];
+};
+
+const vids = ["mp4", "webm"];
+const imgs = ["jpeg", "jpg", "gif", "png", "apng", "svg", "bmp"];
+
+Object.defineProperty(Media.prototype, "isImage", {
+  get: function() {
+    const ext = getExt(this.url);
+    return imgs.includes(ext);
+  }
+});
+
+Object.defineProperty(Media.prototype, "isVideo", {
+  get: function() {
+    const ext = getExt(this.url);
+    return vids.includes(ext);
+  }
+});
+
 export default Media;

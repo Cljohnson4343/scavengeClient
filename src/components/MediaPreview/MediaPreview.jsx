@@ -11,6 +11,9 @@ const styles = theme => ({
     width: "100%",
     height: "100%",
     backgroundColor: theme.palette.background.main
+  },
+  vid: {
+    width: "100vw"
   }
 });
 
@@ -21,6 +24,13 @@ function MediaPreview(props) {
     <FullscreenDialog label={label} setClosed={setClosed}>
       <div className={classes.container}>
         {image && <img src={src} alt={label} />}
+        {video && (
+          <video className={classes.vid} controls>
+            <source src={src} type="video/webm" />
+            <source src={src} type="video/mp4" />
+            Sorry, your browser doesn't support embedded videos.
+          </video>
+        )}
       </div>
     </FullscreenDialog>
   );

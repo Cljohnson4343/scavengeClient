@@ -73,7 +73,8 @@ function ItemCard(props) {
     return (
       <MediaPreview
         src={media.url}
-        image
+        image={media.isImage}
+        video={media.isVideo}
         label={item.name}
         setClosed={() => setPreviewingMedia(false)}
       />
