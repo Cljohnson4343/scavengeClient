@@ -17,7 +17,6 @@ const styles = theme => ({
 function MediaPreview(props) {
   const { classes, image, label, setClosed, src, video } = props;
 
-  console.log("image attribute " + image);
   return (
     <FullscreenDialog label={label} setClosed={setClosed}>
       <div className={classes.container}>
