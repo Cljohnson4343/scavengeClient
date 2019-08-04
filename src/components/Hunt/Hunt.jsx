@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import { Hunt as HuntModel, Hunts, User } from "../../models";
 import PreStartHunt from "./PreStartHunt";
 import InProgressHunt from "./InProgressHunt";
+import FinishedHunt from "./FinishedHunt";
 import Loading from "../Loading";
 
 const styles = theme => ({
@@ -47,7 +48,7 @@ function Hunt(props) {
   }
 
   const page = {
-    "after-hunt": <h1>After Game</h1>,
+    "after-hunt": <FinishedHunt hunt={hunt} setHunt={setHunt} />,
     "in-hunt": (
       <InProgressHunt
         hunt={hunt}

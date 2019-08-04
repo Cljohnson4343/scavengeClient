@@ -65,6 +65,12 @@ Object.defineProperty(t, "huntID", {
   }
 });
 
+Object.defineProperty(t, "points", {
+  get: function() {
+    return this.data.points;
+  }
+});
+
 Object.defineProperty(t, "teamID", {
   get: function() {
     return this.data.teamID;
