@@ -36,7 +36,7 @@ function SectionHeader(props) {
 
 SectionHeader.propTypes = {
   classes: PropTypes.object.isRequired,
-  Icon: PropTypes.object
+  Icon: PropTypes.func
 };
 
 export default withStyles(styles)(SectionHeader);
