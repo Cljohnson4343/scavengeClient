@@ -79,7 +79,7 @@ function InProgressHunt(props) {
         {value => {
           return (
             <ItemsContainer
-              items={items}
+              items={items.setCompleted(medias)}
               setLoading={setLoading}
               location={value}
               medias={medias}

@@ -135,4 +135,16 @@ Object.defineProperty(Items.prototype, "copy", {
   }
 });
 
+Object.defineProperty(Items.prototype, "setCompleted", {
+  value: function(medias) {
+    let items = this.copy();
+    medias.array.forEach(m => {
+      let item = items.array.find(i => i.itemID === m.itemID);
+      if (item) {
+        item.isDone = true;
+      }
+    });
+    return items;
+  }
+});
 export default Items;
