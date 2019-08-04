@@ -72,7 +72,7 @@ function Notification(props) {
           <Typography className={classes.msg}>
             {notification.inviterUsername} has invited you to join hunt{" "}
             {notification.huntName}
-            <IconButton
+            {/*<IconButton
               className={classes.iconButton}
               onClick={e => {
                 setDialogIsOpen(true);
@@ -80,6 +80,8 @@ function Notification(props) {
             >
               <InfoIcon fontSize="small" color="primary" />.
             </IconButton>
+            */}
+            .
           </Typography>
         </CardContent>
         <CardActions className={classes.actionContainer}>
